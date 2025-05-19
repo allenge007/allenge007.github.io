@@ -2,30 +2,72 @@ site_name: My Docs
 site_url: https://example.com
 theme:
   name: material
-  logo: assets/sysu-logo.svg
+  # custom_dir: docs/overrides
   palette:
     #Dark Mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
-      primary: green
+      primary: teal
       accent: deep purple
     #Light Mode
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
-      primary: green
+      primary: teal
       accent: deep purple
+  features:
+    - announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
+    # - navigation.instant
+    #- header.autohide  #自动隐藏
+    - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
+    - navigation.tabs #顶级部分将呈现在上面视口标题下方的菜单层中，但在移动设备上保持原样
+    # - navigation.tabs.sticky  #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
+    - navigation.sections #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
+    - navigation.top # 返回顶部的按钮 在上滑时出现
+    - navigation.footer #页脚将呈现在边栏中，但在移动设备上保持原样
+    - search.suggest # 搜索输入一些字母时推荐补全整个单词
+    - search.highlight # 搜索出的文章关键词加入高亮
+    - search.share #搜索分享按钮
+    - navigation.expand # 打开Tab时左侧目录全部展开
+    - navigation.indexes #启用节索引页后，可以将文档直接附加到节
+    - content.tabs.link
+    - content.tooltips
+    - content.code.copy #代码复制
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+  language: zh # 一些提示性的文字会变成中文
+
+  icon:
+    repo: fontawesome/brands/github #右上角图标
+    logo: logo
+
+edit_uri: edit/main/docs
+repo_url: https://github.com/allenge007
+repo_name: allenge
 
 markdown_extensions:
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.caret
+  - pymdownx.betterem
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.details
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.critic
   - admonition
   - pymdownx.arithmatex:
       generic: true
@@ -34,6 +76,20 @@ extra_javascript:
   - javascripts/config.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+plugins:
+  - search
+  - tags: 
+      tags_file: blog/tags.md
+  - blog:
+      blog_toc: true
+  - meta
+
+nav:
+  - Home: index.md
+  - Blog:
+      - index: blog/index.md
+      - Tags: blog/tags.md
 
 extra:
   social:
