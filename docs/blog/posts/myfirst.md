@@ -3,11 +3,11 @@ title: My First Blog
 date:
   created: 2024-05-19
 categories:
-  - Test
+  - 随笔
 tags:
-  - happy
+  - 随笔
 authors:
-  - team
+  - allenge007
 comments: true
 ---
 

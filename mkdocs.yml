@@ -1,8 +1,8 @@
-site_name: My Docs
-site_url: https://example.com
+site_name: Allenge's Blog
+site_url: https://allenge007.github.io/My_Blog/
 theme:
   name: material
-  # custom_dir: docs/overrides
+  custom_dir: docs/overrides
   palette:
     #Dark Mode
     - media: "(prefers-color-scheme: dark)"
@@ -11,7 +11,7 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
       primary: teal
-      accent: deep purple
+      accent: pink
     #Light Mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -22,6 +22,7 @@ theme:
       accent: deep purple
   features:
     - announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
+    - navigation.instant #在页面加载时，导航栏将立即显示在页面上，而不是在用户滚动到顶部时显示
     # - navigation.instant
     #- header.autohide  #自动隐藏
     - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
@@ -45,7 +46,7 @@ theme:
 
   icon:
     repo: fontawesome/brands/github #右上角图标
-    logo: logo
+  logo: assets/cat.png
 
 edit_uri: edit/main/docs
 repo_url: https://github.com/allenge007
@@ -83,10 +84,23 @@ plugins:
       tags_file: blog/tags.md
   - blog:
       blog_toc: true
+      archive_date_format: MMMM yyyy
   - meta
 
 nav:
   - Home: index.md
+  - Math:
+      - index: math/index.md
+      - 线性代数: 
+        - 线性代数习题: math/linear_algebra_exercises.md
+        - 线性代数笔记: math/linear_algebra_notes.md
+      - 数学分析: math/math_analysis.md
+      - 概率论与数理统计: math/probability_and_statistics.md
+  - Computer Science:
+      - index: cs/index.md
+  - Project:
+      - index: project/index.md
+      - DeepseekCLI: project/DeepseekCLI.md
   - Blog:
       - index: blog/index.md
       - Tags: blog/tags.md
