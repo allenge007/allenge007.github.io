@@ -1,0 +1,36 @@
+site_name: My Docs
+site_url: https://example.com
+theme:
+  name: material
+  logo: assets/sysu-logo.svg
+  palette:
+    #Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+      primary: green
+      accent: deep purple
+    #Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+      primary: green
+      accent: deep purple
+
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/allenge007
+
+copyright: Copyright &copy; 2025 Allenge007
