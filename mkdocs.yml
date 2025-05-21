@@ -74,9 +74,12 @@ markdown_extensions:
       generic: true
 
 extra_javascript:
-  - javascripts/config.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - https://unpkg.com/katex@0/dist/katex.min.css
 
 plugins:
   - search
@@ -91,11 +94,11 @@ nav:
   - Home: index.md
   - Math:
       - index: math/index.md
-      - 线性代数: 
-        - 线性代数习题: math/linear_algebra_exercises.md
-        - 线性代数笔记: math/linear_algebra_notes.md
-      - 数学分析: math/math_analysis.md
-      - 概率论与数理统计: math/probability_and_statistics.md
+      - Signals and Systems:
+        - index: math/signals_and_systems/index.md
+        - math/signals_and_systems/chapter1.md
+        - math/signals_and_systems/chapter2.md
+        - FFT: math/signals_and_systems/FFT.md
   - Computer Science:
       - index: cs/index.md
   - Project:
