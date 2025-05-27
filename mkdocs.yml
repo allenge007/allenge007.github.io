@@ -98,6 +98,7 @@ nav:
         - index: math/signals_and_systems/index.md
         - math/signals_and_systems/chapter1.md
         - math/signals_and_systems/chapter2.md
+        - math/signals_and_systems/chapter3.md
         - FFT: math/signals_and_systems/FFT.md
   - Computer Science:
       - index: cs/index.md
