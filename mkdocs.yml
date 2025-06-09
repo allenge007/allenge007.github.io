@@ -102,6 +102,11 @@ nav:
         - FFT: math/signals_and_systems/FFT.md
   - Computer Science:
       - index: cs/index.md
+      - ai:
+        - index: cs/ai/index.md
+        - cs/ai/chapter1.md
+        - cs/ai/chapter2.md
+        - cs/ai/chapter3.md
   - Project:
       - index: project/index.md
       - DeepseekCLI: project/DeepseekCLI.md
