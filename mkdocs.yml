@@ -72,6 +72,11 @@ markdown_extensions:
   - admonition
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
 
 extra_javascript:
   - javascripts/katex.js
@@ -107,6 +112,11 @@ nav:
         - cs/ai/chapter1.md
         - cs/ai/chapter2.md
         - cs/ai/chapter3.md
+        - cs/ai/chapter4.md
+        - cs/ai/chapter5.md
+        - cs/ai/chapter6.md
+        - cs/ai/chapter7.md
+        - cs/ai/chapter8.md
   - Project:
       - index: project/index.md
       - DeepseekCLI: project/DeepseekCLI.md
