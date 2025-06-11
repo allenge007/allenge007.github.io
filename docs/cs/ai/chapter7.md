@@ -45,7 +45,6 @@
         *   将输入值映射到 (0, 1) 区间，可以被解释为概率。
         *   在远离0的区域梯度趋近于0，可能导致梯度消失问题。
     
-        <img src="https://i.imgur.com/n7l9QhQ.png" alt="Sigmoid Function" width="300"/>
         *(示意图，PPT中包含此图)*
 
 其他常用的激活函数还包括ReLU (Rectified Linear Unit), Tanh等。
@@ -146,7 +145,6 @@ CNN的设计借鉴了人类视觉皮层处理信息的方式：
 *   **局部连接**：卷积核只与输入数据的一个小区域（感受野）相连，提取该区域的特征。
 *   **权重共享 (Parameter Sharing)**：同一个卷积核在整个输入图像上滑动，用相同的权重参数去检测不同位置的相同特征。这大大减少了模型参数量，并使模型具有平移不变性。
 *   **特征图 (Feature Map)**：一个卷积核对输入进行卷积后生成的输出。每个特征图代表一种特定特征在图像中不同位置的激活强度。
-    <img src="https://i.imgur.com/TzJ4i49.png" alt="Convolution Operation" width="400"/>
     *(示意图：一个卷积核在图像上滑动生成特征图)*
 
 **卷积操作参数**：
@@ -184,7 +182,6 @@ $W_{out} = \lfloor \frac{W_{in} - K_w + 2P}{S} \rfloor + 1$
 *   **最大池化 (Max Pooling)**：在池化窗口内选取最大值作为输出。这是最常用的池化方式。
 *   **平均池化 (Average Pooling)**：计算池化窗口内元素的平均值。
 
-<img src="https://i.imgur.com/b3hO7tF.png" alt="Max Pooling" width="300"/>
 *(示意图：Max Pooling操作)*
 
 Max pooling保留了最显著的特征，同时减小了特征图的尺寸。
@@ -253,7 +250,7 @@ $y_t = \sigma_y (W_y h_t + b_y)$
 *   $W_h, U_h, W_y$: 权重矩阵 (在所有时间步共享)
 *   $b_h, b_y$: 偏置向量
 
-![]("fig/rnn.png")
+![](fig/rnn.png)
 
 *(示意图：RNN按时间步展开)*
 
@@ -307,7 +304,6 @@ LSTM引入了“门”结构来控制信息在网络中的流动和保存。
 
     $h_t = o_t \odot \tanh(c_t)$
 
-<img src="https://i.imgur.com/oT0A8N7.png" alt="LSTM Cell" width="500"/>
 *(示意图：LSTM单元结构，PPT中包含更详细的4输入1输出图)*
 
 *   门控信号（$f_t, i_t, o_t$）通常使用Sigmoid激活函数，输出值在0到1之间，模拟门的开关。
@@ -386,7 +382,6 @@ XAI的目标不是为了可解释性而牺牲性能（“削足适履”），�
         $x_{gen}^* = G(z^*)$
         其中 $G(z)$ 是生成器。
 
-<img src="https://i.imgur.com/lP6gT65.png" alt="Activation Maximization" width="400"/>
 
 *(示意图：通过优化输入或生成器潜在向量来可视化模型学到的特征)*
 
