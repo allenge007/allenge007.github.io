@@ -99,7 +99,8 @@ plugins:
   - meta
   - awesome-nav
   - macros
-  - git-revision-date-localized
+  - git-revision-date-localized:
+      timezone: Asia/Shanghai
 
 # nav:
 #   - Home: 
