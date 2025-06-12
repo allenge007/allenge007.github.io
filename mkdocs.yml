@@ -99,6 +99,7 @@ plugins:
   - meta
   - awesome-nav
   - macros
+  - git-revision-date-localized
 
 # nav:
 #   - Home: 
