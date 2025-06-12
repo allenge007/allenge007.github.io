@@ -1,24 +1,24 @@
-# 拉普拉斯变换
+# 离散时间傅里叶变换
 
-## 定义
-
-!!!note "定义"
-
-    $$
-    X(s) \triangleq \int_{-\infty}^{+\infty} x(t)e^{-st} dt
-    $$
-
-## 与傅立叶变换关系
+## 非周期信号
 
 $$
 \begin{aligned}
-X(s) = X(\sigma + j\omega) = \int_{-\infty}^{+\infty}[x(t)e^{-\sigma t}]e^{-j\omega t} dt \\
-\mathcal{L}\{x(t)\} = \mathcal{F}\{x(t)e^{-\sigma t}\}, \quad \sigma\in \R
+x[n] &= \frac{1}{2\pi}\int_{2\pi} X(e^{j\omega})e^{j\omega n} d\omega \\
+X(e^{j\omega}) &= \sum_{n = -\infty}^{+\infty} x[n]e^{-j\omega n}
 \end{aligned}
 $$
 
-## 逆变换
+## 周期信号
+
+考虑周期信号的傅立叶级数
 
 $$
-x(t) = \frac{1}{2\pi j}\int_{\sigma - j\infty}^{\sigma + j\infty}X(s)e^{st} ds
+x[n] = \sum_{k = \langle N \rangle} a_ke^{jk(2\pi/N)n}
+$$
+
+可以得到傅立叶变换
+
+$$
+X(e^{j\omega}) = \sum_{k = -\infty}^{+\infty} 2\pi a_k\delta(\omega - \frac{2\pi k}{N})
 $$
