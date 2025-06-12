@@ -1,0 +1,3141 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://allenge007.github.io/My_Blog/cs/ai/chapter4/">
+      
+      
+        <link rel="prev" href="../chapter3/">
+      
+      
+        <link rel="next" href="../chapter5/">
+      
+      
+      <link rel="icon" href="../../../assets/smile.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>机器学习 - 聚类 - allenge 的小站</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-Q64PQRHYP9"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-Q64PQRHYP9",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#-" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="allenge 的小站" class="md-header__button md-logo" aria-label="allenge 的小站" data-md-component="logo">
+      
+  <img src="../../../assets/oh_boy.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            allenge 的小站
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              机器学习 - 聚类
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+
+    <div class="md-header__option">
+      <div id="font-sizer-controls" style="display: flex; align-items: center;">
+        <button id="decrease-font-button" type="button" title="缩小字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 14 7.5 7.67 9.87 14M6.5 5 1 19h2.25l1.12-3h6.25l1.13 3H14L8.5 5zM18 17l5-5.07-1.41-1.43L19 13.1V7h-2v6.1l-2.59-2.6L13 11.93z"/></svg>
+        </button>
+        <!-- <button id="reset-font-button" type="button" title="重置字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m18.5 4 1.16 4.35-.96.26c-.45-.87-.91-1.74-1.44-2.18C16.73 6 16.11 6 15.5 6H13v10.5c0 .5 0 1 .33 1.25.34.25 1 .25 1.67.25v1H9v-1c.67 0 1.33 0 1.67-.25.33-.25.33-.75.33-1.25V6H8.5c-.61 0-1.23 0-1.76.43-.53.44-.99 1.31-1.44 2.18l-.96-.26L5.5 4z"/></svg>
+        </button> -->
+        <button id="increase-font-button" type="button" title="放大字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 14 7.5 7.67 9.87 14M6.5 5 1 19h2.25l1.12-3h6.25l1.13 3H14L8.5 5zM18 7l-5 5.07 1.41 1.43L17 10.9V17h2v-6.1l2.59 2.6L23 12.07z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/allenge007" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    allenge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  数学
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  计算机科学
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../project/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  项目
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  博客
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/about_me/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="allenge 的小站" class="md-nav__button md-logo" aria-label="allenge 的小站" data-md-component="logo">
+      
+  <img src="../../../assets/oh_boy.png" alt="logo">
+
+    </a>
+    allenge 的小站
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/allenge007" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    allenge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    数学
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/signals_and_systems/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    信号与系统
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            信号与系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    连续时间傅立叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散时间傅里叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    拉普拉斯变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    z 变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/FFT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    快速傅立叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    计算机科学
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            计算机科学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../os/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    操作系统
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            操作系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    操作系统概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    进程、线程与 CPU 调度
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    同步与死锁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    人工智能
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            人工智能
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    知识表示与推理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    搜索技术
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    不确定性推理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 聚类
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 聚类
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 什么是聚类 (Clustering)？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 什么是聚类 (Clustering)？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 聚类的应用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 聚类与监督分类/简单分割的区别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 关键问题：确定簇的数量
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 不同类型的聚类方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 不同类型的聚类方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 分割式聚类 vs. 层次聚类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 其他聚类类型的区分
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-types-of-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 不同类型的簇 (Types of Clusters)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proximity-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 相似性与不相似性度量 (Proximity Measures)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 主要聚类算法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 主要聚类算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-hierarchical-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 层次聚类 (Hierarchical Clustering)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-k-k-means-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 K-均值聚类 (K-Means Clustering)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-dbscan-density-based-spatial-clustering-of-applications-with-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-k-means-dbscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. K-Means 与 DBSCAN 的比较
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cluster-validity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 聚类有效性评估 (Cluster Validity)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 聚类有效性评估 (Cluster Validity)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 为什么需要评估？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 评估指标的分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 常用评估方法和指标
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    深度学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强化学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../project/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    项目
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            项目
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/DeepseekCLI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DeepSeek CLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    博客
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            博客
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    分类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    归档
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    六月 2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    分类
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/%E5%93%81%E9%89%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    品鉴
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    随笔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    关于
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            关于
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/about_me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    关于我
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 什么是聚类 (Clustering)？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 什么是聚类 (Clustering)？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 聚类的应用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 聚类与监督分类/简单分割的区别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 关键问题：确定簇的数量
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 不同类型的聚类方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 不同类型的聚类方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 分割式聚类 vs. 层次聚类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 其他聚类类型的区分
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-types-of-clusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 不同类型的簇 (Types of Clusters)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-proximity-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 相似性与不相似性度量 (Proximity Measures)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 主要聚类算法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 主要聚类算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-hierarchical-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 层次聚类 (Hierarchical Clustering)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-k-k-means-clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 K-均值聚类 (K-Means Clustering)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-dbscan-density-based-spatial-clustering-of-applications-with-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-k-means-dbscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. K-Means 与 DBSCAN 的比较
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cluster-validity" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 聚类有效性评估 (Cluster Validity)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 聚类有效性评估 (Cluster Validity)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 为什么需要评估？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 评估指标的分类
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 常用评估方法和指标
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/allenge007/edit/main/docs/cs/ai/chapter4.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/allenge007/raw/main/docs/cs/ai/chapter4.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="-">机器学习 - 聚类</h1>
+<h2 id="1-clustering">1. 什么是聚类 (Clustering)？</h2>
+<p>聚类是一种无监督学习技术，其目标是：</p>
+<blockquote>
+<p>Finding groups of objects such that the objects in a group will be similar (or related) to one another and different from (or unrelated to) the objects in other groups.
+(寻找一组对象，使得同一组内的对象彼此相似（或相关），而与不同组内的对象不同（或不相关）。)</p>
+</blockquote>
+<p><strong>核心思想：</strong></p>
+<ul>
+<li><strong>簇内距离最小化 (Intra-cluster distances are minimized)</strong></li>
+<li><strong>簇间距离最大化 (Inter-cluster distances are maximized)</strong></li>
+</ul>
+<h3 id="11">1.1 聚类的应用</h3>
+<ul>
+<li><strong>理解 (Understanding):</strong><ul>
+<li>将相关文档分组以便浏览</li>
+<li>将具有相似功能的基因和蛋白质分组</li>
+<li>将价格波动相似的股票分组</li>
+</ul>
+</li>
+<li><strong>概括 (Summarization):</strong><ul>
+<li>减少大型数据集的规模 (例如：Clustering precipitation in Australia)</li>
+</ul>
+</li>
+</ul>
+<h3 id="12">1.2 聚类与监督分类/简单分割的区别</h3>
+<ul>
+<li><strong>监督分类 (Supervised classification):</strong> 拥有类别标签信息 (Have class label information)。</li>
+<li><strong>简单分割 (Simple segmentation):</strong> 例如按姓氏字母顺序将学生分组注册，这并非基于数据内在相似性。</li>
+</ul>
+<h3 id="13">1.3 关键问题：确定簇的数量</h3>
+<p>聚类分析中一个基本的问题是确定数据中到底有多少个簇。例如，同一数据集可能被看作有2个、4个或6个簇。
+(PPT中图示：Six Clusters, Two Clusters, Four Clusters)</p>
+<hr />
+<h2 id="2">2. 不同类型的聚类方法</h2>
+<h3 id="21-vs">2.1 分割式聚类 vs. 层次聚类</h3>
+<ul>
+<li>
+<p><strong>分割式聚类 (Partitional Clustering):</strong></p>
+<ul>
+<li>将数据对象划分为不重叠的子集（簇），使得每个数据对象恰好属于一个子集。</li>
+<li>需要预先指定簇的数量 (e.g., K-Means)。</li>
+<li><em>(PPT图示：A Partitional Clustering)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>层次聚类 (Hierarchical clustering):</strong></p>
+<ul>
+<li>一组嵌套簇，组织为层次树结构 (树状图/谱系图 Dendrogram)。</li>
+<li>不需要预先指定簇的数量。</li>
+<li><em>(PPT图示：Traditional Hierarchical Clustering, Non-traditional Hierarchical Clustering, Traditional Dendrogram, Non-traditional Dendrogram)</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="22">2.2 其他聚类类型的区分</h3>
+<ul>
+<li><strong>模糊聚类 (Fuzzy) vs. 非模糊聚类 (Non-fuzzy):</strong><ul>
+<li>在模糊聚类中，一个数据点可以属于每个簇，但具有不同的权重（0到1之间），权重之和为1。概率聚类有相似特征。</li>
+</ul>
+</li>
+<li><strong>部分聚类 (Partial) vs. 完全聚类 (Complete):</strong><ul>
+<li>有时我们只想对数据的一部分进行聚类。</li>
+</ul>
+</li>
+<li><strong>异质聚类 (Heterogeneous) vs. 同质聚类 (Homogeneous):</strong><ul>
+<li>簇的大小、形状和密度可能差异很大。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="3-types-of-clusters">3. 不同类型的簇 (Types of Clusters)</h2>
+<p>根据簇的特性，可以分为以下几种类型：</p>
+<ul>
+<li>
+<p><strong>分离良好的簇 (Well-separated clusters):</strong></p>
+<ul>
+<li>簇是一组点，使得簇中的任何点与该簇中其他任何点的距离都小于其与簇外任何点的距离。</li>
+<li><em>(PPT图示：3 well-separated clusters)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>基于中心的簇 (Center-based clusters):</strong></p>
+<ul>
+<li>簇是一组对象，使得簇中的对象与其“中心”的距离比与其他任何簇中心的距离更近。</li>
+<li>中心通常是：<ul>
+<li><strong>质心 (Centroid):</strong> 簇中所有点的平均值。</li>
+<li><strong>中心点 (Medoid):</strong> 簇中最具“代表性”的点。</li>
+</ul>
+</li>
+<li><em>(PPT图示：4 center-based clusters)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>基于邻近性的簇 (Contiguous clusters / Nearest neighbor or Transitive):</strong></p>
+<ul>
+<li>簇是一组点，使得簇中的一个点与簇中一个或多个其他点的距离比与簇外任何点的距离更近。</li>
+<li><em>(PPT图示：8 contiguous clusters)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>基于密度的簇 (Density-based clusters):</strong></p>
+<ul>
+<li>簇是点的高密度区域，被低密度区域与其他高密度区域分隔开。</li>
+<li>适用于簇形状不规则或相互缠绕，且存在噪声和离群点的情况。</li>
+<li><em>(PPT图示：6 density-based clusters)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>基于属性或概念的簇 (Property or Conceptual / Shared Property):</strong></p>
+<ul>
+<li>寻找共享某些共同属性或代表特定概念的簇。</li>
+<li><em>(PPT图示：2 Overlapping Circles)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>基于目标函数的簇 (Described by an Objective Function):</strong></p>
+<ul>
+<li>寻找使目标函数最小化或最大化的簇。</li>
+<li>穷举法 (Enumerate all possible ways) 是NP难问题。</li>
+<li>层次聚类算法通常具有局部目标；分割式算法通常具有全局目标。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="4-proximity-measures">4. 相似性与不相似性度量 (Proximity Measures)</h2>
+<p>聚类的核心在于如何度量数据点之间的“远近”关系。</p>
+<ul>
+<li>
+<p><strong>图论视角：</strong></p>
+<ul>
+<li>将聚类问题映射到图论域：数据点为节点，点之间的邻近度（相似性/不相似性）为带权边。</li>
+<li>聚类等价于将图分解为连通分量。</li>
+<li>目标：最小化簇间边的权重，最大化簇内边的权重。</li>
+</ul>
+</li>
+<li>
+<p><strong>常用距离/相似度函数：</strong></p>
+<ul>
+<li>
+<p><strong>闵可夫斯基距离 (Minkowski Distance):</strong></p>
+<p><span class="arithmatex">\(d_p(x_i, x_j) = \left( \sum_{k=1}^{d} |x_{ik} - x_{jk}|^p \right)^{1/p}\)</span>
+其中 <span class="arithmatex">\(d\)</span> 是数据维度。</p>
+</li>
+<li>
+<p><strong>曼哈顿距离 (Manhattan Distance / L1 Norm):</strong> <span class="arithmatex">\(p=1\)</span></p>
+<p><span class="arithmatex">\(d_1(x_i, x_j) = \sum_{k=1}^{d} |x_{ik} - x_{jk}|\)</span></p>
+</li>
+<li>
+<p><strong>欧几里得距离 (Euclidean Distance / L2 Norm):</strong> <span class="arithmatex">\(p=2\)</span></p>
+<p><span class="arithmatex">\(d_2(x_i, x_j) = \sqrt{\sum_{k=1}^{d} (x_{ik} - x_{jk})^2}\)</span></p>
+</li>
+<li>
+<p><strong>切比雪夫距离 (Chebyshev Distance / L-infinity Norm):</strong> <span class="arithmatex">\(p \to \infty\)</span></p>
+<p><span class="arithmatex">\(d_{\infty}(x_i, x_j) = \max_{k} |x_{ik} - x_{jk}|\)</span></p>
+</li>
+<li>
+<p><strong>(PPT中提及) 最小距离 (L-minus-infinity Norm):</strong> <span class="arithmatex">\(p \to -\infty\)</span></p>
+<p><span class="arithmatex">\(d_{-\infty}(x_i, x_j) = \min_{k} |x_{ik} - x_{jk}|\)</span></p>
+</li>
+<li>
+<p><strong>余弦相似度 (Cosine Similarity) / 余弦距离 (Cosine Distance):</strong></p>
+<p>余弦相似度: <span class="arithmatex">\(\cos(x_i, x_j) = \frac{x_i \cdot x_j}{||x_i||_2 ||x_j||_2}\)</span>
+余弦距离: <span class="arithmatex">\(d_{cos}(x_i, x_j) = 1 - \cos(x_i, x_j)\)</span></p>
+</li>
+<li>
+<p><strong>关系：</strong> <code>Similarity = 1 - Dissimilarity</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="5">5. 主要聚类算法</h2>
+<h3 id="51-hierarchical-clustering">5.1 层次聚类 (Hierarchical Clustering)</h3>
+<ul>
+<li><strong>基本思想 (凝聚型 Agglomerative):</strong><ol>
+<li>开始时，将每个观测看作一个单独的簇。</li>
+<li>重复执行以下两步：
+    a.  识别出距离最近的两个簇。
+    b.  合并这两个最相似的簇。</li>
+<li>此迭代过程持续到所有簇都合并为一个簇。</li>
+</ol>
+</li>
+<li><em>(PPT中提及：Omit, because... 暗示本讲重点不在此，但基本概念已给出)</em></li>
+</ul>
+<h3 id="52-k-k-means-clustering">5.2 K-均值聚类 (K-Means Clustering)</h3>
+<p>K-Means是一种经典的分割式聚类算法。</p>
+<ul>
+<li>
+<p><strong>核心思想：</strong></p>
+<ul>
+<li>每个簇关联一个质心 (centroid)。</li>
+<li>每个点被分配给与其最近的质心所在的簇。</li>
+<li>必须预先指定簇的数量 <span class="arithmatex">\(K\)</span>。</li>
+</ul>
+</li>
+<li>
+<p><strong>基本算法步骤：</strong></p>
+<ol>
+<li><strong>选择初始质心 (Initialization):</strong> 随机选择 <span class="arithmatex">\(K\)</span> 个数据点作为初始质心。</li>
+<li><strong>分配数据点 (Assignment):</strong> 将每个数据点分配给离它最近的质心所代表的簇。</li>
+<li><strong>更新质心 (Update):</strong> 重新计算每个簇的质心（通常是簇内所有点的均值）。</li>
+<li><strong>迭代 (Iteration):</strong> 重复步骤2和3，直到质心不再发生显著变化或达到最大迭代次数。</li>
+</ol>
+</li>
+<li>
+<p><strong>重要特性：</strong></p>
+<ul>
+<li>初始质心通常随机选择，导致每次运行结果可能不同。</li>
+<li>“邻近度”通常用欧几里得距离、余弦相似度等度量。</li>
+<li>K-Means对于常见的相似性度量会收敛。</li>
+<li>大部分收敛发生在最初几次迭代中。</li>
+<li><strong>停止条件：</strong> 通常是质心不再变化，或只有很少的点改变簇分配。</li>
+<li><strong>复杂度：</strong> <span class="arithmatex">\(O(n \cdot K \cdot I \cdot d)\)</span><ul>
+<li><span class="arithmatex">\(n\)</span>: 数据点数量</li>
+<li><span class="arithmatex">\(K\)</span>: 簇的数量</li>
+<li><span class="arithmatex">\(I\)</span>: 迭代次数</li>
+<li><span class="arithmatex">\(d\)</span>: 数据点属性数量 (维度)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>评估K-Means聚类质量：SSE (Sum of Squared Error)</strong></p>
+<ul>
+<li>对于每个点，其误差是到最近簇中心的距离。SSE是这些误差的平方和。</li>
+<li>
+<p><span class="arithmatex">\(SSE = \sum_{i=1}^{K} \sum_{x \in C_i} dist(m_i, x)^2\)</span></p>
+<p>其中 <span class="arithmatex">\(C_i\)</span> 是第 <span class="arithmatex">\(i\)</span> 个簇，<span class="arithmatex">\(m_i\)</span> 是 <span class="arithmatex">\(C_i\)</span> 的质心 (代表点)。可以证明 <span class="arithmatex">\(m_i\)</span> 对应于簇的均值。
+    *   SSE越小，聚类效果越好。</p>
+</li>
+<li>
+<p><strong>注意：</strong> 简单增加K值会降低SSE，但这不一定代表更好的聚类。一个好的、K值较小的聚类可能比一个差的、K值较大的聚类有更低的SSE。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>选择K值：肘部法则 (Elbow Method)</strong></p>
+<ul>
+<li>绘制不同K值下的SSE折线图。</li>
+<li>如果折线图看起来像一个手臂，那么“肘部”对应的K值通常是最佳选择。</li>
+</ul>
+</li>
+<li>
+<p><strong>K-Means的初始化问题：</strong></p>
+<ul>
+<li>如果初始质心选择不当，可能导致次优聚类结果。</li>
+<li>随机选择K个初始质心时，恰好从每个“真实”簇中选出一个质心的概率较小，尤其当K较大时。<ul>
+<li>例如，若K=10，概率约为 <span class="arithmatex">\(10!/10^{10} \approx 0.00036\)</span>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>初始化问题的解决方案：</strong></p>
+<ul>
+<li><strong>多次运行 (Multiple runs):</strong> 运行多次K-Means，选择SSE最小的结果。</li>
+<li><strong>采样与层次聚类：</strong> 对数据采样，使用层次聚类确定初始质心。</li>
+<li><strong>选择多于K个初始质心：</strong> 然后从中选择分布最广的K个。</li>
+<li>
+<p><strong>二分K-Means (Bisecting K-Means):</strong> 不易受初始化问题影响。它是一种K-Means的变体，可以产生分割式或层次式聚类。</p>
+<ol>
+<li>初始将所有点视为一个簇。</li>
+<li>
+<p>重复以下步骤直到产生K个簇：</p>
+<ol>
+<li>
+<p>选择一个簇进行分裂（通常是SSE最大的簇或最大的簇）。</p>
+</li>
+<li>
+<p>对此簇应用基本的K-Means算法（K=2）将其一分为二。</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>处理空簇问题：</strong></p>
+<ul>
+<li>如果K-Means迭代中出现空簇，需要选择一个替换质心：<ul>
+<li>选择对SSE贡献最大的点。</li>
+<li>从SSE最高的簇中选择一个点。</li>
+<li>如果存在多个空簇，可重复上述策略。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>预处理和后处理：</strong></p>
+<ul>
+<li><strong>预处理 (Pre-processing):</strong> 标准化数据、消除离群点。</li>
+<li><strong>后处理 (Post-processing):</strong><ul>
+<li>消除可能代表离群点的小簇。</li>
+<li>分裂“松散”的簇（SSE相对较高的簇）。</li>
+<li>合并“相近”且SSE相对较低的簇。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>K-Means的局限性：</strong></p>
+<ul>
+<li>难以处理不同大小 (Sizes)、不同密度 (Densities)、非球状 (Non-globular shapes) 的簇。</li>
+<li>对离群点 (Outliers) 敏感。</li>
+<li><em>(PPT图示说明了K-Means在这些情况下的不良表现)</em></li>
+<li>一种解决方案是使用更多的簇来拟合复杂形状，然后合并。</li>
+</ul>
+</li>
+<li>
+<p><strong>K-Means++ 初始化：</strong></p>
+<ul>
+<li>一种更智能的初始化方法，旨在选择分散的初始质心。</li>
+<li>从数据集中均匀随机选择第一个质心 <span class="arithmatex">\(c_1\)</span>。</li>
+<li>对 <span class="arithmatex">\(i\)</span> 从 2 到 <span class="arithmatex">\(K\)</span> 重复：<ul>
+<li>对每个数据点 <span class="arithmatex">\(x\)</span>，计算其到已选择的最近质心的距离 <span class="arithmatex">\(D(x)\)</span>。</li>
+<li>根据概率 <span class="arithmatex">\(P(x) = \frac{D(x)^2}{\sum_{j} D(x_j)^2}\)</span> 从数据点中选择下一个质心 <span class="arithmatex">\(c_i\)</span>。</li>
+<li>（直观上，距离现有质心越远的点，越有可能被选为下一个质心。）</li>
+</ul>
+</li>
+<li><strong>缺点：</strong> 需要K轮数据遍历，对于大规模数据和大的K值，扩展性不佳。</li>
+</ul>
+</li>
+<li>
+<p><strong>K-Means|| 初始化：</strong></p>
+<ul>
+<li>针对K-Means++的扩展性问题提出。</li>
+<li><strong>主要思路：</strong> 并非每次遍历只采样一个点，而是每次遍历采样 <span class="arithmatex">\(O(K)\)</span> 个点，重复该采样过程约 <span class="arithmatex">\(O(\log n)\)</span> 次（实际中几次即可），得到 <span class="arithmatex">\(O(K \log n)\)</span> 个候选点。</li>
+<li>然后对这 <span class="arithmatex">\(O(K \log n)\)</span> 个点聚类成 <span class="arithmatex">\(K\)</span> 个点，作为初始聚类中心。</li>
+</ul>
+</li>
+<li>
+<p><strong>K-Means 示例计算：</strong></p>
+<div class="admonition question">
+<p class="admonition-title">问题</p>
+<p>假设有如下八个点：P1(1,2), P2(2,4), P3(1,9), P4(6,5), P5(4,2), P6(7,2), P7(8,2), P8(4,3)。</p>
+<p>使用K-Means算法对其进行聚类。</p>
+<p>设K=2，初始聚类两个中心点坐标分别为 <span class="arithmatex">\(c_1=(1,2)\)</span>，<span class="arithmatex">\(c_2=(8,2)\)</span>。算法使用曼哈顿距离（L1距离）作为距离度量。</p>
+<p>请计算一次迭代后的聚类中心坐标，并写出上述八个点分别属于哪个簇。</p>
+</div>
+<details class="answer">
+<summary>解答</summary>
+<ol>
+<li><strong>初始质心：</strong> <span class="arithmatex">\(c_1 = (1,2)\)</span>, <span class="arithmatex">\(c_2 = (8,2)\)</span></li>
+<li><strong>计算各点到质心的曼哈顿距离并分配簇：</strong>
+    <span class="arithmatex">\(d((x_a, y_a), (x_b, y_b)) = |x_a - x_b| + |y_a - y_b|\)</span></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>点</th>
+<th>坐标</th>
+<th>到 <span class="arithmatex">\(c_1(1,2)\)</span> 距离</th>
+<th>到 <span class="arithmatex">\(c_2(8,2)\)</span> 距离</th>
+<th>分配到簇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td>(1,2)</td>
+<td>$</td>
+<td>1-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>(2,4)</td>
+<td>$</td>
+<td>2-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>(1,9)</td>
+<td>$</td>
+<td>1-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P4</td>
+<td>(6,5)</td>
+<td>$</td>
+<td>6-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P5</td>
+<td>(4,2)</td>
+<td>$</td>
+<td>4-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P6</td>
+<td>(7,2)</td>
+<td>$</td>
+<td>7-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>(8,2)</td>
+<td>$</td>
+<td>8-1</td>
+<td>+</td>
+</tr>
+<tr>
+<td>P8</td>
+<td>(4,3)</td>
+<td>$</td>
+<td>4-1</td>
+<td>+</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p><strong>当前簇分配：</strong></p>
+<ul>
+<li>簇1: {P1(1,2), P2(2,4), P3(1,9), P5(4,2), P8(4,3)}</li>
+<li>簇2: {P4(6,5), P6(7,2), P7(8,2)}</li>
+</ul>
+</li>
+<li>
+<p><strong>重新计算质心（各簇内点的坐标均值）：</strong></p>
+<ul>
+<li>新 <span class="arithmatex">\(c_1'\)</span>:
+    <span class="arithmatex">\(x = (1+2+1+4+4)/5 = 12/5 = 2.4\)</span>
+    <span class="arithmatex">\(y = (2+4+9+2+3)/5 = 20/5 = 4\)</span>
+    <span class="arithmatex">\(c_1' = (2.4, 4)\)</span></li>
+<li>新 <span class="arithmatex">\(c_2'\)</span>:
+    <span class="arithmatex">\(x = (6+7+8)/3 = 21/3 = 7\)</span>
+    <span class="arithmatex">\(y = (5+2+2)/3 = 9/3 = 3\)</span>
+    <span class="arithmatex">\(c_2' = (7, 3)\)</span></li>
+</ul>
+</li>
+</ol>
+<p><strong>一次迭代后的结果：</strong>
+*   簇1的中心点变为 <span class="arithmatex">\((2.4, 4)\)</span>，包含点 {P1, P2, P3, P5, P8}。
+*   簇2的中心点变为 <span class="arithmatex">\((7, 3)\)</span>，包含点 {P4, P6, P7}。</p>
+</details>
+</li>
+</ul>
+<h3 id="53-dbscan-density-based-spatial-clustering-of-applications-with-noise">5.3 DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</h3>
+<p>DBSCAN是一种基于密度的聚类算法。</p>
+<ul>
+<li>
+<p><strong>核心概念：</strong></p>
+<ul>
+<li><strong>Eps (ε):</strong> 定义邻域的半径。</li>
+<li><strong>MinPts:</strong> 定义核心点所需的邻域内最小点数。</li>
+<li><strong>核心点 (Core point):</strong> 如果一个点在其Eps邻域内至少有MinPts个点（包括自身）。</li>
+<li><strong>边界点 (Border point):</strong> 不是核心点，但落在某个核心点的Eps邻域内。</li>
+<li><strong>噪声点 (Noise point):</strong> 既不是核心点也不是边界点。</li>
+<li><em>(PPT图示：Point types: core, border and noise)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>算法思想：</strong></p>
+<ol>
+<li>从任意未访问点开始。</li>
+<li>如果该点是核心点，则创建一个新簇，并将所有从该点密度可达（直接或间接通过其他核心点）的点加入该簇。</li>
+<li>如果该点是边界点或噪声点，则暂时标记为噪声点，并处理下一个未访问点。</li>
+<li>重复直到所有点都被访问。</li>
+</ol>
+</li>
+<li>
+<p><strong>优点：</strong></p>
+<ul>
+<li>能发现任意形状的簇。</li>
+<li>能有效处理噪声数据。</li>
+<li>不需要预先指定簇的数量。</li>
+<li><em>(PPT图示：Clusters (DBSCAN results showing resistance to noise and handling different shapes))</em></li>
+</ul>
+</li>
+<li>
+<p><strong>局限性：</strong></p>
+<ul>
+<li>对于密度差异很大的簇，效果不佳。</li>
+<li>对于高维数据，由于“维度灾难”，基于欧氏距离的密度定义可能失效。</li>
+</ul>
+</li>
+<li>
+<p><strong>参数选择 (Eps 和 MinPts):</strong></p>
+<ul>
+<li><strong>MinPts:</strong> 通常根据经验或领域知识设定，一般不小于3。</li>
+<li><strong>Eps:</strong> 可以通过绘制 <strong>k-距离图 (k-distance graph)</strong> 来辅助选择。<ul>
+<li>计算每个点到其第k个最近邻的距离 (k通常设为MinPts-1或MinPts)。</li>
+<li>将这些距离排序并绘制。</li>
+<li>图中的“拐点 (elbow/knee)”可以作为Eps的候选值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>DBSCAN 复杂度与学术严谨性 (重要启示)：</strong></p>
+<ul>
+<li>原始DBSCAN论文 (KDD 1996) 声称平均运行时复杂度为 <span class="arithmatex">\(O(N \log N)\)</span> (其中N为数据点数)。</li>
+<li>后续许多论文也错误地引用了这个复杂度。</li>
+<li>SIGMOD 2015最佳论文 "DBSCAN Revisited: Mis-Claim, Un-Fixability, and Approximation" 指出：<ul>
+<li>对于 <span class="arithmatex">\(d \ge 3\)</span> (维度)，DBSCAN 不可能有 <span class="arithmatex">\(O(N \log N)\)</span> 的时间复杂度。</li>
+<li>证明了在 <span class="arithmatex">\(d \ge 3\)</span> 时，DBSCAN问题至少需要 <span class="arithmatex">\(\Omega(N^{4/3})\)</span> 的时间来解决。</li>
+<li>提出了 <span class="arithmatex">\(\rho\)</span>-approximate DBSCAN 作为高维大数据集上DBSCAN的替代方案。</li>
+</ul>
+</li>
+<li><strong>启示：</strong> 保持怀疑精神、善于思考和发现问题。科学研究的发展是在曲折中不断前进的。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="6-k-means-dbscan">6. K-Means 与 DBSCAN 的比较</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>K-Means</th>
+<th>DBSCAN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>聚类类型</strong></td>
+<td>分割式，所有对象均分配到簇</td>
+<td>基于密度，可剔除噪声点</td>
+</tr>
+<tr>
+<td><strong>簇概念</strong></td>
+<td>基于原型/中心 (Prototype-based)</td>
+<td>基于密度 (Density-based)</td>
+</tr>
+<tr>
+<td><strong>簇形状</strong></td>
+<td>倾向于球状簇，难以处理非球状簇</td>
+<td>可处理任意形状的簇</td>
+</tr>
+<tr>
+<td><strong>簇大小/密度差异</strong></td>
+<td>对不同大小/密度的簇处理不佳</td>
+<td>对不同大小簇处理较好，但对密度差异大时表现不佳</td>
+</tr>
+<tr>
+<td><strong>参数定义</strong></td>
+<td>需要定义簇中心 (如均值)</td>
+<td>需要定义密度 (Eps, MinPts)</td>
+</tr>
+<tr>
+<td><strong>高维稀疏数据</strong></td>
+<td>表现良好 (如文本聚类)</td>
+<td>使用欧氏距离定义密度时表现差 (维度灾难)</td>
+</tr>
+<tr>
+<td><strong>数据分布假设</strong></td>
+<td>隐式假设数据呈球状高斯分布</td>
+<td>无特定假设，更灵活</td>
+</tr>
+<tr>
+<td><strong>属性使用</strong></td>
+<td>通常使用所有属性</td>
+<td>通常使用所有属性</td>
+</tr>
+<tr>
+<td><strong>簇数量</strong></td>
+<td>用户预先定义 (K)</td>
+<td>自动确定 (由Eps, MinPts间接决定)</td>
+</tr>
+<tr>
+<td><strong>对噪声敏感度</strong></td>
+<td>敏感</td>
+<td>不敏感，能识别噪声</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-cluster-validity">7. 聚类有效性评估 (Cluster Validity)</h2>
+<p>如何评估聚类结果的好坏？这是一个重要问题，但具有主观性 ("clusters are in the eye of the beholder!")。</p>
+<h3 id="71">7.1 为什么需要评估？</h3>
+<ul>
+<li>确定数据中是否存在非随机的簇结构 (聚类趋势)。</li>
+<li>比较不同聚类算法的结果。</li>
+<li>比较同一算法在不同参数下的两组簇。</li>
+<li>将聚类结果与外部已知信息 (如类别标签) 进行比较。</li>
+<li>评估聚类结果对数据的拟合程度 (不依赖外部信息)。</li>
+<li>确定“正确”的簇数量。</li>
+</ul>
+<h3 id="72">7.2 评估指标的分类</h3>
+<ul>
+<li>
+<p><strong>外部指标 (External Index):</strong></p>
+<ul>
+<li>用于衡量聚类标签与外部提供的类别标签的匹配程度。</li>
+<li>例如：熵 (Entropy)、F-measure, Jaccard Index, Rand Index.</li>
+</ul>
+</li>
+<li>
+<p><strong>内部指标 (Internal Index):</strong></p>
+<ul>
+<li>用于衡量聚类结构的优良性，不依赖外部信息。关注簇的<strong>内聚性 (Cohesion)</strong> 和 <strong>分离性 (Separation)</strong>。</li>
+<li>例如：SSE (Sum of Squared Error)、轮廓系数 (Silhouette Coefficient)、Davies-Bouldin Index。</li>
+</ul>
+</li>
+<li>
+<p><strong>相对指标 (Relative Index):</strong></p>
+<ul>
+<li>用于比较两种不同的聚类或簇。通常使用外部或内部指标来实现此功能。</li>
+<li>例如：使用SSE比较不同K值下K-Means的结果。</li>
+</ul>
+</li>
+</ul>
+<h3 id="73">7.3 常用评估方法和指标</h3>
+<ul>
+<li>
+<p><strong>基于矩阵的方法：</strong></p>
+<ul>
+<li><strong>邻近度矩阵 (Proximity Matrix):</strong> 存储点对间的相似性或不相似性。</li>
+<li><strong>关联矩阵 ("Incidence" Matrix):</strong> <span class="arithmatex">\(N \times N\)</span> 矩阵，若点 <span class="arithmatex">\(i\)</span> 和点 <span class="arithmatex">\(j\)</span> 属于同一簇，则 <span class="arithmatex">\((i,j)\)</span> 元素为1，否则为0。</li>
+<li>计算这两个矩阵之间的<strong>相关系数 (Correlation)</strong>。高相关性表示同簇的点彼此接近。</li>
+<li>对于某些基于密度或邻近度的簇，此方法可能效果不佳。</li>
+<li><em>(PPT图示：Correlation of incidence and proximity matrices for K-means clusterings)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>可视化检查：</strong></p>
+<ul>
+<li>根据簇标签对相似度矩阵进行排序，并进行可视化检查。</li>
+<li><em>(PPT图示：Visualizing similarity matrix for DBSCAN, K-means, Complete Linkage)</em></li>
+<li>随机数据中的簇通常不那么清晰。复杂图形中的簇分离性可能不好。</li>
+</ul>
+</li>
+<li>
+<p><strong>内部指标 - SSE (Sum of Squared Error):</strong></p>
+<ul>
+<li>已在K-Means部分讨论。可用于比较不同聚类或估计簇数量 (肘部法则)。</li>
+<li><em>(PPT图示：SSE curve for a more complicated data set)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>内聚性 (Cohesion) 与 分离性 (Separation):</strong></p>
+<ul>
+<li>
+<p><strong>内聚性：</strong> 衡量簇内对象的相关密切程度。</p>
+<ul>
+<li>例如：簇内平方和 (Within cluster sum of squares, WSS)，即SSE。</li>
+</ul>
+<p><span class="arithmatex">\(SSE = \sum_{i=1}^{K} \sum_{x \in C_i} dist^2(m_i, x)\)</span></p>
+</li>
+<li>
+<p><strong>分离性：</strong> 衡量一个簇与其他簇的区别或分离程度。</p>
+<ul>
+<li>例如：簇间平方和 (Between cluster sum of squares, BSS)。</li>
+</ul>
+<p><span class="arithmatex">\(SSB = \sum_{i=1}^{K} n_i \cdot dist^2(m_i, m)\)</span>
+其中 <span class="arithmatex">\(n_i\)</span> 是簇 <span class="arithmatex">\(C_i\)</span> 的大小，<span class="arithmatex">\(m_i\)</span> 是簇 <span class="arithmatex">\(C_i\)</span> 的中心，<span class="arithmatex">\(m\)</span> 是整个数据集的中心。</p>
+</li>
+<li>
+<p><strong>总平方和 (Total Sum of Squares, TSS):</strong></p>
+<p><span class="arithmatex">\(TSS = \sum_{x \in D} dist^2(x, m)\)</span> (D是整个数据集)</p>
+</li>
+<li>
+<p><strong>关系：</strong> <span class="arithmatex">\(TSS = SSE + SSB\)</span> (对于以均值为中心的平方距离度量)。当TSS固定时，最小化SSE等价于最大化SSB。</p>
+</li>
+<li>
+<p><em>(PPT图示：Example calculation of SSE, SSB, Total for K=1 and K=2 clusters)</em></p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>基于邻近图的方法：</strong></p>
+<ul>
+<li><strong>簇内聚性：</strong> 簇内所有链接的权重之和。</li>
+<li><strong>簇分离性：</strong> 簇内节点与簇外节点之间链接的权重之和。</li>
+<li><em>(PPT图示：cohesion &amp; separation in a graph)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="8">8. 总结</h2>
+<p>聚类是机器学习中的一个重要分支，旨在发现数据中潜在的群组结构。本讲介绍了聚类的基本概念、不同类型的聚类方法和簇、常用的相似性度量、核心算法（如K-Means和DBSCAN）及其优缺点、参数选择、以及聚类结果的评估方法。理解这些内容对于在实际应用中选择和使用合适的聚类技术至关重要。</p>
+<hr />
+<p><strong>参考文献与扩展阅读：</strong></p>
+<ul>
+<li>Ester, Martin, et al. "A density-based algorithm for discovering clusters in large spatial databases with noise." Kdd. Vol. 96. No. 34. 1996.</li>
+<li>Gan, Junhao, and Yufei Tao. "DBSCAN Revisited: Mis-Claim, Un-Fixability, and Approximation." Proceedings of the 2015 ACM SIGMOD International Conference on Management of Data. ACM, 2015.</li>
+<li><a href="https://www.naftaliharris.com/blog/visualizing-k-means-clustering/">K-Means可视化</a></li>
+<li><a href="https://bl.ocks.org/rpgove/0060ff3b656618e9136b">Elbow Method可视化</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月13日 00:43:07 CST">2025年6月13日</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        这个页面对您有帮助吗?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="有帮助" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="仍需改进" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢您的反馈!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢您的反馈! 可以联系作者以提供更多改进建议。
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+<script src="https://giscus.app/client.js"
+        data-repo="allenge008/Discussions"
+        data-repo-id="R_kgDOOsnx4A"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOsnx4M4CqVVF"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../chapter3/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 不确定性推理">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                不确定性推理
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../chapter5/" class="md-footer__link md-footer__link--next" aria-label="下一页: 机器学习 - 神经网络">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                机器学习 - 神经网络
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Allenge007
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/allenge007" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="../../../javascripts/font-adjuster.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
