@@ -97,43 +97,46 @@ plugins:
       blog_toc: true
       archive_date_format: MMMM yyyy
   - meta
+  - awesome-nav
   - macros
 
-nav:
-  - Home: index.md
-  - Math:
-      - index: math/index.md
-      - Signals and Systems:
-        - index: math/signals_and_systems/index.md
-        - math/signals_and_systems/chapter1.md
-        - math/signals_and_systems/chapter2.md
-        - math/signals_and_systems/chapter3.md
-        - FFT: math/signals_and_systems/FFT.md
-  - Computer Science:
-      - index: cs/index.md
-      - ai:
-        - index: cs/ai/index.md
-        - cs/ai/chapter1.md
-        - cs/ai/chapter2.md
-        - cs/ai/chapter3.md
-        - cs/ai/chapter4.md
-        - cs/ai/chapter5.md
-        - cs/ai/chapter6.md
-        - cs/ai/chapter7.md
-        - cs/ai/chapter8.md
-      - os:
-        - index: cs/os/index.md
-        - cs/os/chapter1.md
-        - cs/os/chapter2.md
-        - cs/os/chapter3.md
-        - cs/os/chapter4.md
-        - cs/os/chapter5.md
-  - Project:
-      - index: project/index.md
-      - DeepseekCLI: project/DeepseekCLI.md
-  - Blog:
-      - index: blog/index.md
-      - Tags: blog/tags.md
+# nav:
+#   - Home: 
+#     - index.md
+#     - About Me: about_me.md
+#   - Math:
+#       - index: math/index.md
+#       - Signals and Systems:
+#         - index: math/signals_and_systems/index.md
+#         - math/signals_and_systems/chapter1.md
+#         - math/signals_and_systems/chapter2.md
+#         - math/signals_and_systems/chapter3.md
+#         - FFT: math/signals_and_systems/FFT.md
+#   - Computer Science:
+#       - index: cs/index.md
+#       - ai:
+#         - index: cs/ai/index.md
+#         - cs/ai/chapter1.md
+#         - cs/ai/chapter2.md
+#         - cs/ai/chapter3.md
+#         - cs/ai/chapter4.md
+#         - cs/ai/chapter5.md
+#         - cs/ai/chapter6.md
+#         - cs/ai/chapter7.md
+#         - cs/ai/chapter8.md
+#       - os:
+#         - index: cs/os/index.md
+#         - cs/os/chapter1.md
+#         - cs/os/chapter2.md
+#         - cs/os/chapter3.md
+#         - cs/os/chapter4.md
+#         - cs/os/chapter5.md
+#   - Project:
+#       - index: project/index.md
+#       - DeepseekCLI: project/DeepseekCLI.md
+#   - Blog:
+#       - index: blog/index.md
+#       - Tags: blog/tags.md
 
 extra:
   social:

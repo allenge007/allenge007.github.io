@@ -1,9 +1,24 @@
-# 信号与系统
+# 傅立叶变换
 
-## 是什么？
+## 连续时间傅立叶变换
 
-!!! note "一些直观的理解（不一定正确"
+### 非周期信号
 
-    1. 信号：随时间变化的一系列数据。
-    2. 系统：数学上的函数，能够对信号作出响应。
-   
+$$
+\begin{aligned}
+x(t) &= \frac{1}{2\pi}\int_{-\infty}^{+\infty}X(j\omega)e^{j\omega t} d\omega \\
+X(j\omega) &= \int_{-\infty}^{+\infty} x(t)e^{-j\omega t} dt
+\end{aligned}
+$$
+
+### 周期信号
+
+$$
+\begin{aligned}
+X(j\omega) &= \sum_{k = -\infty}^{+\infty}2\pi a_k\delta(\omega - k\omega_0) \\
+x(t) &= \sum_{k = -\infty}^{+\infty}a_ke^{jk\omega_0t}
+\end{aligned}
+$$
+
+## 离散时间傅立叶变换
+
