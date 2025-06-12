@@ -69,6 +69,9 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.critic
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
   - admonition
   - pymdownx.arithmatex:
       generic: true

@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # 人工智能理论
 
 !!! warning "注意"
