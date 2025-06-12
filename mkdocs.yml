@@ -46,7 +46,8 @@ theme:
 
   icon:
     repo: fontawesome/brands/github #右上角图标
-  logo: assets/cat.png
+  logo: assets/oh_boy.png
+  favicon: assets/smile.ico
 
 edit_uri: edit/main/docs
 repo_url: https://github.com/allenge007
