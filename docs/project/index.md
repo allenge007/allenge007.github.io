@@ -5,3 +5,7 @@
 - [ ] 软工项目
 - [ ] AI Agent（人工智能大作业）
 - [ ] other
+
+## 已完成
+
+{{ list_docs_as_tree() }}
