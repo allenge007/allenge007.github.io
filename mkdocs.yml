@@ -1,5 +1,5 @@
 site_name: allenge 的小站
-site_url: https://allenge007.github.io/My_Blog/
+site_url: https://allenge007.github.io/
 theme:
   name: material
   custom_dir: docs/overrides

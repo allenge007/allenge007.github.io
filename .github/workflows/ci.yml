@@ -1,33 +1,51 @@
-name: ci 
+name: Deploy MkDocs Site
 on:
   push:
     branches:
-      - master 
+      - master
       - main
+  workflow_dispatch: # 允许手动触发
+
 permissions:
-  contents: write
+  contents: write # mkdocs gh-deploy 需要写权限来推送 gh-pages 分支
+
 jobs:
   deploy:
+    name: Build and Deploy Site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取所有历史记录，供 mkdocs-git-revision-date-localized-plugin 使用
+
       - name: Configure Git Credentials
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.x
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v4
+          python-version: 3.x # 您可以指定更精确的版本，如 '3.11'
+
+      - name: Cache MkDocs Material specific cache
+        uses: actions/cache@v4
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache 
+          key: ${{ runner.os }}-mkdocs-material-cache-${{ hashFiles('**/mkdocs.yml') }}
+          path: .cache # 这是 mkdocs-material 主题内部缓存的路径 (如果启用了 theme.features.caching)
           restore-keys: |
-            mkdocs-material-
-      - run: pip install mkdocs-material 
-      - run: pip install mkdocs-mermaid2-plugin
-      - run: pip install mkdocs-macros-plugin
-      - run: pip install mkdocs-awesome-nav
-      - run: pip install mkdocs-git-revision-date-localized-plugin
-      - run: mkdocs gh-deploy --force
+            ${{ runner.os }}-mkdocs-material-cache-
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-mermaid2-plugin
+          pip install mkdocs-macros-plugin
+          pip install mkdocs-awesome-nav
+          pip install mkdocs-git-revision-date-localized-plugin
+          # 如果您有其他插件在 mkdocs.yml 中定义，也请在此处添加安装命令
+          # 或者考虑使用 requirements.txt 文件来管理依赖
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --verbose # 添加 --verbose 以获取更详细的部署日志
