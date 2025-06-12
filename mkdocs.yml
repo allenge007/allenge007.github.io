@@ -1,4 +1,4 @@
-site_name: Allenge's Blog
+site_name: allenge 的小站
 site_url: https://allenge007.github.io/My_Blog/
 theme:
   name: material
@@ -9,7 +9,7 @@ theme:
       scheme: slate
       toggle:
         icon: material/weather-sunny
-        name: Switch to light mode
+        name: 切换到浅色模式
       primary: teal
       accent: pink
     #Light Mode
@@ -17,7 +17,7 @@ theme:
       scheme: default
       toggle:
         icon: material/weather-night
-        name: Switch to dark mode
+        name: 切换到深色模式
       primary: teal
       accent: deep purple
   features:
@@ -84,6 +84,7 @@ markdown_extensions:
 
 extra_javascript:
   - javascripts/katex.js
+  - javascripts/font-adjuster.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
 
@@ -103,47 +104,26 @@ plugins:
   - git-revision-date-localized:
       timezone: Asia/Shanghai
 
-# nav:
-#   - Home: 
-#     - index.md
-#     - About Me: about_me.md
-#   - Math:
-#       - index: math/index.md
-#       - Signals and Systems:
-#         - index: math/signals_and_systems/index.md
-#         - math/signals_and_systems/chapter1.md
-#         - math/signals_and_systems/chapter2.md
-#         - math/signals_and_systems/chapter3.md
-#         - FFT: math/signals_and_systems/FFT.md
-#   - Computer Science:
-#       - index: cs/index.md
-#       - ai:
-#         - index: cs/ai/index.md
-#         - cs/ai/chapter1.md
-#         - cs/ai/chapter2.md
-#         - cs/ai/chapter3.md
-#         - cs/ai/chapter4.md
-#         - cs/ai/chapter5.md
-#         - cs/ai/chapter6.md
-#         - cs/ai/chapter7.md
-#         - cs/ai/chapter8.md
-#       - os:
-#         - index: cs/os/index.md
-#         - cs/os/chapter1.md
-#         - cs/os/chapter2.md
-#         - cs/os/chapter3.md
-#         - cs/os/chapter4.md
-#         - cs/os/chapter5.md
-#   - Project:
-#       - index: project/index.md
-#       - DeepseekCLI: project/DeepseekCLI.md
-#   - Blog:
-#       - index: blog/index.md
-#       - Tags: blog/tags.md
-
 extra:
   social:
     - icon: simple/github
       link: https://github.com/allenge007
+  analytics: 
+    provider: google
+    property: G-Q64PQRHYP9 # Replace with your Google Analytics property ID
+    feedback:
+      title: 这个页面对您有帮助吗?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: 有帮助
+          data: 1
+          note: >-
+            感谢您的反馈!
+        - icon: material/emoticon-sad-outline
+          name: 仍需改进
+          data: 0
+          note: >- 
+            感谢您的反馈! 可以联系作者以提供更多改进建议。
+          # using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
 
 copyright: Copyright &copy; 2025 Allenge007

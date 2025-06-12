@@ -1,8 +1,7 @@
 nav:
-  - 主页:
-      - index.md
-      - 关于我: about_me.md
+  - 主页: index.md
   - 数学: math
   - 计算机科学: cs
   - 项目: project
   - 博客: blog
+  - 关于: about

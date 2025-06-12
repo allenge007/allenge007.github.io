@@ -1,4 +1,10 @@
-# 欢迎来到我的博客
+---
+hide:
+  - navigation
+title: 欢迎光临我的小站
+---
+
+# 欢迎光临我的小站
 
 !!! tip "为什么要搭建博客"
 
@@ -14,7 +20,7 @@
 
 总而言之，欢迎光临我的博客！这里是一个充满创意和灵感的天地，无论你是编程爱好者、科技极客，还是生活探索者，希望你都能在这里找到属于自己的精彩内容。
 
-![一只睡懒觉的猫](assets/cat.jpg)
+![一只睡懒觉的猫](assets/cat.jpg){ width="70%" style="display: block; margin-left: auto; margin-right: auto;" }
 
 一只睡懒觉的猫。
 
