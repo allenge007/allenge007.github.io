@@ -594,7 +594,7 @@
   
   
   <span class="md-ellipsis">
-    连续时间傅立叶变换
+    连续时间傅里叶变换
     
   </span>
   
@@ -662,18 +662,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1-dtft" class="md-nav__link">
     <span class="md-ellipsis">
-      非周期信号
+      1. 非周期序列的 DTFT
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#2-dtft" class="md-nav__link">
     <span class="md-ellipsis">
-      周期信号
+      2. 周期序列的 DTFT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtft" class="md-nav__link">
+    <span class="md-ellipsis">
+      DTFT 的性质
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtft_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      DTFT 与差分方程的联系
     </span>
   </a>
   
@@ -1789,18 +1807,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1-dtft" class="md-nav__link">
     <span class="md-ellipsis">
-      非周期信号
+      1. 非周期序列的 DTFT
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#2-dtft" class="md-nav__link">
     <span class="md-ellipsis">
-      周期信号
+      2. 周期序列的 DTFT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtft" class="md-nav__link">
+    <span class="md-ellipsis">
+      DTFT 的性质
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtft_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      DTFT 与差分方程的联系
     </span>
   </a>
   
@@ -1839,22 +1875,167 @@
 
 
 <h1 id="_1">离散时间傅里叶变换</h1>
-<h2 id="_2">非周期信号</h2>
+<p>离散时间傅里叶变换是将离散时间序列从时域转换到频域的数学工具。它揭示了离散时间信号中包含的频率成分。与连续时间傅里叶变换不同，DTFT 的结果 <span class="arithmatex">\(X(e^{j\omega})\)</span> 是一个关于连续频率变量 <span class="arithmatex">\(\omega\)</span> 的<strong>周期函数</strong>，周期为 <span class="arithmatex">\(2\pi\)</span>。</p>
+<h2 id="1-dtft">1. 非周期序列的 DTFT</h2>
+<p>对于一个非周期离散时间序列 <span class="arithmatex">\(x[n]\)</span>，其离散时间傅里叶变换 <span class="arithmatex">\(X(e^{j\omega})\)</span> 定义为：</p>
 <div class="arithmatex">\[
-\begin{aligned}
-x[n] &amp;= \frac{1}{2\pi}\int_{2\pi} X(e^{j\omega})e^{j\omega n} d\omega \\
-X(e^{j\omega}) &amp;= \sum_{n = -\infty}^{+\infty} x[n]e^{-j\omega n}
-\end{aligned}
+X(e^{j\omega}) = \mathcal{F}\{x[n]\} = \sum_{n = -\infty}^{+\infty} x[n]e^{-j\omega n} \quad \quad (1)
 \]</div>
-<h2 id="_3">周期信号</h2>
-<p>考虑周期信号的傅立叶级数</p>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(n\)</span> 是离散时间整数索引。</li>
+<li><span class="arithmatex">\(\omega\)</span> 是归一化数字角频率，单位是弧度/样本 (<span class="arithmatex">\(\text{rad/sample}\)</span>)。它是一个连续变量。</li>
+<li><span class="arithmatex">\(e^{j\omega}\)</span> 表示在复平面上的单位圆。</li>
+<li><span class="arithmatex">\(X(e^{j\omega})\)</span> 通常是一个复数函数，表示信号在频率 <span class="arithmatex">\(\omega\)</span> 处的幅度和相位。<ul>
+<li>幅度谱：<span class="arithmatex">\(|X(e^{j\omega})|\)</span></li>
+<li>相位谱：<span class="arithmatex">\(\angle X(e^{j\omega})\)</span></li>
+</ul>
+</li>
+</ul>
+<p><strong>周期性</strong>：<span class="arithmatex">\(X(e^{j\omega})\)</span> 是以 <span class="arithmatex">\(2\pi\)</span> 为周期的，即 <span class="arithmatex">\(X(e^{j(\omega+2\pi k)}) = X(e^{j\omega})\)</span> 对于任意整数 <span class="arithmatex">\(k\)</span>。因此，我们通常只分析主值区间，如 <span class="arithmatex">\(-\pi \le \omega &lt; \pi\)</span> 或 <span class="arithmatex">\(0 \le \omega &lt; 2\pi\)</span>。</p>
+<p>离散时间傅里叶反变换 (Inverse DTFT, IDTFT) 用于从频域表示 <span class="arithmatex">\(X(e^{j\omega})\)</span> 恢复时域序列 <span class="arithmatex">\(x[n]\)</span>：</p>
 <div class="arithmatex">\[
-x[n] = \sum_{k = \langle N \rangle} a_ke^{jk(2\pi/N)n}
+x[n] = \mathcal{F}^{-1}\{X(e^{j\omega})\} = \frac{1}{2\pi}\int_{2\pi} X(e^{j\omega})e^{j\omega n} d\omega \quad \quad (2)
 \]</div>
-<p>可以得到傅立叶变换</p>
+<p>积分区间可以是任何长度为 <span class="arithmatex">\(2\pi\)</span> 的区间，例如 <span class="arithmatex">\([-\pi, \pi]\)</span> 或 <span class="arithmatex">\([0, 2\pi]\)</span>。</p>
+<p>公式 (1) 和 (2) 构成了 DTFT 对。</p>
+<p><strong>存在条件</strong>：</p>
+<p>一个序列 <span class="arithmatex">\(x[n]\)</span> 存在 DTFT 的充分条件是该序列绝对可和，即：</p>
 <div class="arithmatex">\[
-X(e^{j\omega}) = \sum_{k = -\infty}^{+\infty} 2\pi a_k\delta(\omega - \frac{2\pi k}{N})
+\sum_{n = -\infty}^{+\infty} |x[n]| &lt; \infty
 \]</div>
+<p>对于不满足此条件的某些序列（如单位阶跃序列），其 DTFT 可能不收敛，或者需要在广义函数（如冲激函数）的意义下定义。有限能量序列（<span class="arithmatex">\(\sum_{n = -\infty}^{+\infty} |x[n]|^2 &lt; \infty\)</span>）也存在 DTFT，但求和可能只在均方意义下收敛。</p>
+<h2 id="2-dtft">2. 周期序列的 DTFT</h2>
+<p>对于周期为 <span class="arithmatex">\(N\)</span> 的周期序列 <span class="arithmatex">\(x[n]\)</span>（即 <span class="arithmatex">\(x[n] = x[n+N]\)</span>），它可以表示为离散傅里叶级数 (DFS)：</p>
+<div class="arithmatex">\[
+x[n] = \sum_{k = \langle N \rangle} a_k e^{jk(2\pi/N)n} = \sum_{k=0}^{N-1} a_k e^{jk\omega_k n}
+\]</div>
+<p>其中 <span class="arithmatex">\(\omega_k = \frac{2\pi k}{N}\)</span> 是离散的谐波频率，<span class="arithmatex">\(a_k\)</span> 是 DFS 系数：</p>
+<div class="arithmatex">\[
+a_k = \frac{1}{N}\sum_{n = \langle N \rangle} x[n]e^{-jk(2\pi/N)n} = \frac{1}{N}\sum_{n=0}^{N-1} x[n]e^{-jk\omega_k n}
+\]</div>
+<p>符号 <span class="arithmatex">\(\sum_{k = \langle N \rangle}\)</span> 表示对任意 <span class="arithmatex">\(N\)</span> 个连续整数求和。</p>
+<p>周期序列的 DTFT 可以通过对 DFS 中的每一项取 DTFT 得到。利用 <span class="arithmatex">\(e^{j\omega_0 n} \stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi\sum_{l=-\infty}^{+\infty}\delta(\omega - \omega_0 - 2\pi l)\)</span> 这一变换对（注意这里的冲激串是由于 DTFT 的周期性），我们得到：</p>
+<div class="arithmatex">\[
+X(e^{j\omega}) = \mathcal{F}\left\{\sum_{k=0}^{N-1} a_k e^{jk(2\pi/N)n}\right\} = \sum_{k=0}^{N-1} a_k \mathcal{F}\{e^{jk(2\pi/N)n}\}
+\]</div>
+<div class="arithmatex">\[
+X(e^{j\omega}) = \sum_{k=0}^{N-1} 2\pi a_k \sum_{l=-\infty}^{+\infty} \delta\left(\omega - \frac{2\pi k}{N} - 2\pi l\right)
+\]</div>
+<p>在主值区间 <span class="arithmatex">\([0, 2\pi)\)</span> 内，这简化为：</p>
+<div class="arithmatex">\[
+X(e^{j\omega}) = \sum_{k=0}^{N-1} 2\pi a_k \delta\left(\omega - \frac{2\pi k}{N}\right), \quad \text{for } \omega \in [0, 2\pi) \quad \quad (3)
+\]</div>
+<p>这表明周期序列的 DTFT 是在其谐波频率 <span class="arithmatex">\(\frac{2\pi k}{N}\)</span> 处的一系列冲激函数，冲激的强度（面积）为 <span class="arithmatex">\(2\pi a_k\)</span>。</p>
+<h2 id="dtft">DTFT 的性质</h2>
+<p>DTFT 具有许多与 CTFT 类似的性质。设 <span class="arithmatex">\(x[n] \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{j\omega})\)</span> 和 <span class="arithmatex">\(y[n] \stackrel{\mathcal{F}}{\longleftrightarrow} Y(e^{j\omega})\)</span>。</p>
+<ol>
+<li>
+<p><strong>线性 (Linearity)</strong>：</p>
+<p><span class="arithmatex">\(ax[n] + by[n] \stackrel{\mathcal{F}}{\longleftrightarrow} aX(e^{j\omega}) + bY(e^{j\omega})\)</span></p>
+</li>
+<li>
+<p><strong>时移 (Time Shifting)</strong>：</p>
+<p><span class="arithmatex">\(x[n-n_0] \stackrel{\mathcal{F}}{\longleftrightarrow} e^{-j\omega n_0}X(e^{j\omega})\)</span></p>
+<p>时域的整数延迟 <span class="arithmatex">\(n_0\)</span> 对应于频域乘以一个线性相移因子 <span class="arithmatex">\(e^{-j\omega n_0}\)</span>。</p>
+</li>
+<li>
+<p><strong>频移 (Frequency Shifting / Modulation)</strong>：</p>
+<p><span class="arithmatex">\(e^{j\omega_0 n}x[n] \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{j(\omega - \omega_0)})\)</span></p>
+<p>时域乘以复指数 <span class="arithmatex">\(e^{j\omega_0 n}\)</span> 对应于频域的频谱搬移。</p>
+</li>
+<li>
+<p><strong>时间反转 (Time Reversal)</strong>：</p>
+<p><span class="arithmatex">\(x[-n] \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{-j\omega})\)</span></p>
+<p>如果 <span class="arithmatex">\(x[n]\)</span> 是实序列，则 <span class="arithmatex">\(X(e^{-j\omega}) = X^*(e^{j\omega})\)</span>。</p>
+</li>
+<li>
+<p><strong>共轭对称性 (Conjugate Symmetry for Real Sequences)</strong>：</p>
+<p>如果 <span class="arithmatex">\(x[n]\)</span> 是实序列，则 <span class="arithmatex">\(X(e^{j\omega}) = X^*(e^{-j\omega})\)</span>。
+这意味着：</p>
+<ul>
+<li>幅度谱是偶对称的：<span class="arithmatex">\(|X(e^{j\omega})| = |X(e^{-j\omega})|\)</span></li>
+<li>相位谱是奇对称的：<span class="arithmatex">\(\angle X(e^{j\omega}) = -\angle X(e^{-j\omega})\)</span></li>
+</ul>
+</li>
+<li>
+<p><strong>卷积 (Convolution)</strong>：</p>
+<p><span class="arithmatex">\(x[n] * y[n] = \sum_{k = -\infty}^{+\infty} x[k]y[n-k] \stackrel{\mathcal{F}}{\longleftrightarrow} X(e^{j\omega})Y(e^{j\omega})\)</span></p>
+<p>时域卷积对应频域相乘。这是分析离散时间 LTI 系统的核心性质。</p>
+</li>
+<li>
+<p><strong>相乘 (Multiplication / Windowing)</strong>：</p>
+<p><span class="arithmatex">\(x[n]y[n] \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{2\pi}X(e^{j\omega}) \circledast Y(e^{j\omega}) = \frac{1}{2\pi}\int_{2\pi} X(e^{j\theta})Y(e^{j(\omega-\theta)})d\theta\)</span></p>
+<p>时域相乘对应频域的周期卷积（并除以 <span class="arithmatex">\(2\pi\)</span>）。</p>
+</li>
+<li>
+<p><strong>差分 (Differencing in Time Domain)</strong>：</p>
+<p><span class="arithmatex">\(x[n] - x[n-1] \stackrel{\mathcal{F}}{\longleftrightarrow} (1 - e^{-j\omega})X(e^{j\omega})\)</span></p>
+<p>这类似于连续时间中的微分，通常会增强高频成分。</p>
+</li>
+<li>
+<p><strong>累加 (Accumulation in Time Domain)</strong>：</p>
+<p><span class="arithmatex">\(\sum_{k=-\infty}^{n} x[k] \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{1-e^{-j\omega}}X(e^{j\omega}) + \pi X(e^{j0})\sum_{k=-\infty}^{+\infty}\delta(\omega - 2\pi k)\)</span></p>
+<p>其中 <span class="arithmatex">\(X(e^{j0}) = \sum_{n=-\infty}^{+\infty} x[n]\)</span> 是序列的直流分量（所有样本之和）。如果 <span class="arithmatex">\(X(e^{j0})=0\)</span>，则简化为 <span class="arithmatex">\(\frac{1}{1-e^{-j\omega}}X(e^{j\omega})\)</span>。</p>
+</li>
+<li>
+<p><strong>频域微分 (Differentiation in Frequency Domain)</strong>：</p>
+<p><span class="arithmatex">\(nx[n] \stackrel{\mathcal{F}}{\longleftrightarrow} j\frac{dX(e^{j\omega})}{d\omega}\)</span></p>
+</li>
+<li>
+<p><strong>帕塞瓦尔定理 (Parseval's Relation / Energy Conservation)</strong>：</p>
+<p><span class="arithmatex">\(\sum_{n=-\infty}^{+\infty} |x[n]|^2 = \frac{1}{2\pi}\int_{2\pi} |X(e^{j\omega})|^2 d\omega\)</span></p>
+<p>这表示序列在时域的总能量等于其在频域的总能量（在一个周期内积分并除以 <span class="arithmatex">\(2\pi\)</span>）。<span class="arithmatex">\(|X(e^{j\omega})|^2\)</span> 被称为能量谱密度。</p>
+</li>
+</ol>
+<h2 id="dtft_1">DTFT 与差分方程的联系</h2>
+<p>DTFT 是分析由线性常系数差分方程 (Linear Constant-Coefficient Difference Equations, LCCDEs) 描述的离散时间 LTI 系统的强大工具。</p>
+<p>考虑一个 LTI 系统，其输入 <span class="arithmatex">\(x[n]\)</span> 和输出 <span class="arithmatex">\(y[n]\)</span> 由以下差分方程描述：</p>
+<div class="arithmatex">\[
+\sum_{k=0}^{N} a_k y[n-k] = \sum_{m=0}^{M} b_m x[n-m]
+\]</div>
+<p>其中 <span class="arithmatex">\(a_k\)</span> 和 <span class="arithmatex">\(b_m\)</span> 是常数，通常假设 <span class="arithmatex">\(a_0 \neq 0\)</span>（如果 <span class="arithmatex">\(a_0=0\)</span>，可以通过移位使新的 <span class="arithmatex">\(a_0 \neq 0\)</span>）。通常将 <span class="arithmatex">\(a_0\)</span> 归一化为 1。</p>
+<p><strong>1. 求解频率响应 <span class="arithmatex">\(H(e^{j\omega})\)</span></strong></p>
+<p>对差分方程两边同时进行 DTFT，利用时移性质 <span class="arithmatex">\(\mathcal{F}\{z[n-n_0]\} = e^{-j\omega n_0}Z(e^{j\omega})\)</span>（这里假设初始条件为零，或者我们关心的是系统的零状态响应或频率特性）：</p>
+<div class="arithmatex">\[
+\mathcal{F}\left\{\sum_{k=0}^{N} a_k y[n-k]\right\} = \mathcal{F}\left\{\sum_{m=0}^{M} b_m x[n-m]\right\}
+\]</div>
+<div class="arithmatex">\[
+\sum_{k=0}^{N} a_k e^{-j\omega k} Y(e^{j\omega}) = \sum_{m=0}^{M} b_m e^{-j\omega m} X(e^{j\omega})
+\]</div>
+<p>整理得到：</p>
+<div class="arithmatex">\[
+Y(e^{j\omega}) \left(\sum_{k=0}^{N} a_k e^{-j\omega k}\right) = X(e^{j\omega}) \left(\sum_{m=0}^{M} b_m e^{-j\omega m}\right)
+\]</div>
+<p>系统的<strong>频率响应</strong> <span class="arithmatex">\(H(e^{j\omega})\)</span> 定义为输出的 DTFT 与输入的 DTFT 之比：</p>
+<div class="arithmatex">\[
+H(e^{j\omega}) = \frac{Y(e^{j\omega})}{X(e^{j\omega})} = \frac{\sum_{m=0}^{M} b_m e^{-j\omega m}}{\sum_{k=0}^{N} a_k e^{-j\omega k}}
+\]</div>
+<p>频率响应 <span class="arithmatex">\(H(e^{j\omega})\)</span> 描述了系统对不同频率复指数输入 <span class="arithmatex">\(e^{j\omega n}\)</span> 的响应特性。<span class="arithmatex">\(|H(e^{j\omega})|\)</span> 是系统的幅频响应，<span class="arithmatex">\(\angle H(e^{j\omega})\)</span> 是系统的相频响应。</p>
+<p><strong>2. 求解系统输出</strong></p>
+<p>一旦得到频率响应 <span class="arithmatex">\(H(e^{j\omega})\)</span> 和输入序列的 DTFT <span class="arithmatex">\(X(e^{j\omega})\)</span>，输出序列的 DTFT <span class="arithmatex">\(Y(e^{j\omega})\)</span> 就可以通过以下关系得到：</p>
+<div class="arithmatex">\[
+Y(e^{j\omega}) = H(e^{j\omega})X(e^{j\omega})
+\]</div>
+<p>然后，可以通过 DTFT 反变换得到时域输出 <span class="arithmatex">\(y[n]\)</span>：</p>
+<div class="arithmatex">\[
+y[n] = \mathcal{F}^{-1}\{Y(e^{j\omega})\} = \mathcal{F}^{-1}\{H(e^{j\omega})X(e^{j\omega})\}
+\]</div>
+<p>这对应于时域的卷积运算 <span class="arithmatex">\(y[n] = h[n] * x[n]\)</span>，其中 <span class="arithmatex">\(h[n] = \mathcal{F}^{-1}\{H(e^{j\omega})\}\)</span> 是系统的冲激响应。</p>
+<p><strong>3. 稳态响应</strong></p>
+<p>如果输入是一个复指数序列 <span class="arithmatex">\(x[n] = e^{j\omega_0 n}\)</span>，LTI 系统的稳态输出也是同频率的复指数序列，但幅度和相位会根据频率响应 <span class="arithmatex">\(H(e^{j\omega_0})\)</span> 进行调整。</p>
+<p>输入 <span class="arithmatex">\(x[n] = e^{j\omega_0 n}\)</span> 的 DTFT 是 <span class="arithmatex">\(X(e^{j\omega}) = 2\pi\sum_{l=-\infty}^{+\infty}\delta(\omega - \omega_0 - 2\pi l)\)</span>。</p>
+<p>则输出的 DTFT 为 <span class="arithmatex">\(Y(e^{j\omega}) = H(e^{j\omega}) \cdot 2\pi\sum_{l=-\infty}^{+\infty}\delta(\omega - \omega_0 - 2\pi l) = H(e^{j\omega_0}) \cdot 2\pi\sum_{l=-\infty}^{+\infty}\delta(\omega - \omega_0 - 2\pi l)\)</span>。</p>
+<p>对其进行 DTFT 反变换得到稳态输出：</p>
+<div class="arithmatex">\[
+y_{ss}[n] = H(e^{j\omega_0})e^{j\omega_0 n}
+\]</div>
+<p>这意味着如果输入是 <span class="arithmatex">\(e^{j\omega_0 n}\)</span>，输出就是输入乘以系统在该频率处的频率响应值 <span class="arithmatex">\(H(e^{j\omega_0})\)</span>。</p>
+<p>对于实正弦输入 <span class="arithmatex">\(x[n] = A\cos(\omega_0 n)\)</span>，稳态输出为：</p>
+<div class="arithmatex">\[
+y_{ss}[n] = A|H(e^{j\omega_0})|\cos(\omega_0 n + \angle H(e^{j\omega_0}))
+\]</div>
+<p>总结来说，DTFT 通过将差分方程转换为频域中的代数方程，极大地简化了离散时间 LTI 系统的分析，特别是对于求解频率响应和确定系统对各种频率成分的响应行为。</p>
 
 
 
@@ -1875,7 +2056,7 @@ X(e^{j\omega}) = \sum_{k = -\infty}^{+\infty} 2\pi a_k\delta(\omega - \frac{2\pi
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月12日 23:30:15 CST">2025年6月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月14日 01:29:31 CST">2025年6月14日</span>
   </span>
 
     
@@ -2019,7 +2200,7 @@ X(e^{j\omega}) = \sum_{k = -\infty}^{+\infty} 2\pi a_k\delta(\omega - \frac{2\pi
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../chapter1/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 连续时间傅立叶变换">
+          <a href="../chapter1/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 连续时间傅里叶变换">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2029,7 +2210,7 @@ X(e^{j\omega}) = \sum_{k = -\infty}^{+\infty} 2\pi a_k\delta(\omega - \frac{2\pi
                 上一页
               </span>
               <div class="md-ellipsis">
-                连续时间傅立叶变换
+                连续时间傅里叶变换
               </div>
             </div>
           </a>

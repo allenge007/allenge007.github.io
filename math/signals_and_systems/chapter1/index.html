@@ -22,7 +22,7 @@
     
     
       
-        <title>连续时间傅立叶变换 - allenge 的小站</title>
+        <title>连续时间傅里叶变换 - allenge 的小站</title>
       
     
     
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              连续时间傅立叶变换
+              连续时间傅里叶变换
             
           </span>
         </div>
@@ -603,7 +603,7 @@
   
   
   <span class="md-ellipsis">
-    连续时间傅立叶变换
+    连续时间傅里叶变换
     
   </span>
   
@@ -616,7 +616,7 @@
   
   
   <span class="md-ellipsis">
-    连续时间傅立叶变换
+    连续时间傅里叶变换
     
   </span>
   
@@ -639,9 +639,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 非周期信号的傅里叶变换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 周期信号的傅里叶变换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      非周期信号
+      傅里叶变换的性质
     </span>
   </a>
   
@@ -650,25 +668,7 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      周期信号
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      常用变换及其推导过程
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      推导过程
+      傅里叶变换与微分方程的联系
     </span>
   </a>
   
@@ -1807,9 +1807,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 非周期信号的傅里叶变换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 周期信号的傅里叶变换
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      非周期信号
+      傅里叶变换的性质
     </span>
   </a>
   
@@ -1818,25 +1836,7 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      周期信号
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      常用变换及其推导过程
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      推导过程
+      傅里叶变换与微分方程的联系
     </span>
   </a>
   
@@ -1874,30 +1874,177 @@
   
 
 
-<h1 id="_1">连续时间傅立叶变换</h1>
-<h2 id="_2">非周期信号</h2>
-<p>我们可以使用傅里叶变换对来分析非周期信号。而反变换如公式 (2) 所示。</p>
+<h1 id="_1">连续时间傅里叶变换</h1>
+<p>傅里叶变换是一种将时域信号转换为频域表示的数学工具。对于连续时间信号，它揭示了信号包含哪些频率成分以及这些成分的幅度和相位。</p>
+<h2 id="1">1. 非周期信号的傅里叶变换</h2>
+<p>对于一个非周期信号 <span class="arithmatex">\(x(t)\)</span>，其傅里叶变换 <span class="arithmatex">\(X(j\omega)\)</span> 定义为：</p>
 <div class="arithmatex">\[
-\begin{align}
-X(j\omega) &amp;= \int_{-\infty}^{+\infty} x(t)e^{-j\omega t} dt \\
-x(t) &amp;= \frac{1}{2\pi}\int_{-\infty}^{+\infty}X(j\omega)e^{j\omega t} d\omega
-\end{align}
+X(j\omega) = \mathcal{F}\{x(t)\} = \int_{-\infty}^{+\infty} x(t)e^{-j\omega t} dt \quad \quad (1)
 \]</div>
-<h2 id="_3">周期信号</h2>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(t\)</span> 是时间变量。</li>
+<li><span class="arithmatex">\(\omega\)</span> 是角频率，单位是弧度/秒 (<span class="arithmatex">\(\text{rad/s}\)</span>)。<span class="arithmatex">\(\omega = 2\pi f\)</span>，其中 <span class="arithmatex">\(f\)</span> 是频率，单位是赫兹 (Hz)。</li>
+<li><span class="arithmatex">\(j\)</span> 是虚数单位 (<span class="arithmatex">\(j^2 = -1\)</span>)。</li>
+<li><span class="arithmatex">\(X(j\omega)\)</span> 通常是一个复数函数，表示信号在频率 <span class="arithmatex">\(\omega\)</span> 处的幅度和相位。<ul>
+<li>幅度谱：<span class="arithmatex">\(|X(j\omega)|\)</span></li>
+<li>相位谱：<span class="arithmatex">\(\angle X(j\omega)\)</span></li>
+</ul>
+</li>
+</ul>
+<p>傅里叶反变换 (Inverse Fourier Transform, IFT) 用于从频域表示 <span class="arithmatex">\(X(j\omega)\)</span> 恢复时域信号 <span class="arithmatex">\(x(t)\)</span>：</p>
 <div class="arithmatex">\[
-\begin{aligned}
-X(j\omega) &amp;= \sum_{k = -\infty}^{+\infty}2\pi a_k\delta(\omega - k\omega_0) \\
-x(t) &amp;= \sum_{k = -\infty}^{+\infty}a_ke^{jk\omega_0t}
-\end{aligned}
+x(t) = \mathcal{F}^{-1}\{X(j\omega)\} = \frac{1}{2\pi}\int_{-\infty}^{+\infty}X(j\omega)e^{j\omega t} d\omega \quad \quad (2)
 \]</div>
-<h2 id="_4">常用变换及其推导过程</h2>
+<p>公式 (1) 和 (2) 构成了傅里叶变换对。</p>
+<p><strong>存在条件 (狄利克雷条件)</strong>：</p>
+<p>一个信号 <span class="arithmatex">\(x(t)\)</span> 存在傅里叶变换的充分条件是：</p>
+<ol>
+<li><span class="arithmatex">\(x(t)\)</span> 在任何有限区间内满足狄利克雷条件（即只有有限个第一类间断点，有限个极值点）。</li>
+<li><span class="arithmatex">\(x(t)\)</span> 绝对可积，即 <span class="arithmatex">\(\int_{-\infty}^{+\infty} |x(t)| dt &lt; \infty\)</span>。</li>
+</ol>
+<p>对于不满足绝对可积条件的某些信号（如阶跃函数、周期信号），可以通过引入冲激函数或在极限意义下定义其傅里叶变换。</p>
+<h2 id="2">2. 周期信号的傅里叶变换</h2>
+<p>对于周期为 <span class="arithmatex">\(T_0\)</span> 的周期信号 <span class="arithmatex">\(x(t)\)</span>，它可以表示为傅里叶级数：</p>
 <div class="arithmatex">\[
-\sum_{k = -\infty}^{+\infty} a_ke^{j\omega_0 t}\stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi{\sum_{k = -\infty}^{+\infty}}a_k\delta(\omega - k\omega_0)
+x(t) = \sum_{k = -\infty}^{+\infty}a_k e^{jk\omega_0t}
+\]</div>
+<p>其中 <span class="arithmatex">\(\omega_0 = \frac{2\pi}{T_0}\)</span> 是基波角频率，<span class="arithmatex">\(a_k\)</span> 是傅里叶级数系数：</p>
+<div class="arithmatex">\[
+a_k = \frac{1}{T_0}\int_{T_0} x(t)e^{-jk\omega_0t} dt
+\]</div>
+<p>周期信号的傅里叶变换可以通过对傅里叶级数中的每一项取傅里叶变换得到。利用 <span class="arithmatex">\(e^{j\omega_c t} \stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi\delta(\omega - \omega_c)\)</span> 这一变换对，我们得到：</p>
+<div class="arithmatex">\[
+X(j\omega) = \mathcal{F}\left\{\sum_{k = -\infty}^{+\infty}a_k e^{jk\omega_0t}\right\} = \sum_{k = -\infty}^{+\infty}a_k \mathcal{F}\{e^{jk\omega_0t}\}
 \]</div>
 <div class="arithmatex">\[
-e^{jk\omega_0t} \stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi\delta(\omega - k\omega_0)
+X(j\omega) = \sum_{k = -\infty}^{+\infty}2\pi a_k\delta(\omega - k\omega_0) \quad \quad (3)
 \]</div>
-<h2 id="_5">推导过程</h2>
+<p>这表明周期信号的傅里叶变换是在其谐波频率 <span class="arithmatex">\(k\omega_0\)</span> 处的一系列冲激函数，冲激的强度（面积）为 <span class="arithmatex">\(2\pi a_k\)</span>。</p>
+<h2 id="_2">傅里叶变换的性质</h2>
+<p>傅里叶变换具有许多重要的性质，这些性质在信号处理和系统分析中非常有用。设 <span class="arithmatex">\(x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(j\omega)\)</span> 和 <span class="arithmatex">\(y(t) \stackrel{\mathcal{F}}{\longleftrightarrow} Y(j\omega)\)</span>。</p>
+<ol>
+<li>
+<p><strong>线性 (Linearity)</strong>：</p>
+<p><span class="arithmatex">\(ax(t) + by(t) \stackrel{\mathcal{F}}{\longleftrightarrow} aX(j\omega) + bY(j\omega)\)</span></p>
+</li>
+<li>
+<p><strong>时移 (Time Shifting)</strong>：</p>
+<p><span class="arithmatex">\(x(t-t_0) \stackrel{\mathcal{F}}{\longleftrightarrow} e^{-j\omega t_0}X(j\omega)\)</span></p>
+<p>时域的延迟 <span class="arithmatex">\(t_0\)</span> 对应于频域乘以一个线性相移因子 <span class="arithmatex">\(e^{-j\omega t_0}\)</span>。幅度谱不变，相位谱改变。</p>
+</li>
+<li>
+<p><strong>频移 (Frequency Shifting / Modulation)</strong>：</p>
+<p><span class="arithmatex">\(e^{j\omega_c t}x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(j(\omega - \omega_c))\)</span></p>
+<p>时域乘以复指数 <span class="arithmatex">\(e^{j\omega_c t}\)</span> 对应于频域的频谱搬移。</p>
+</li>
+<li>
+<p><strong>尺度变换 (Time and Frequency Scaling)</strong>：</p>
+<p><span class="arithmatex">\(x(at) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{|a|}X\left(j\frac{\omega}{a}\right)\)</span></p>
+<ul>
+<li>如果 <span class="arithmatex">\(a&gt;1\)</span>，时域压缩，频域展宽且幅度减小。</li>
+<li>如果 <span class="arithmatex">\(0&lt;a&lt;1\)</span>，时域展宽，频域压缩且幅度增大。</li>
+<li>如果 <span class="arithmatex">\(a=-1\)</span>（时间反转）：<span class="arithmatex">\(x(-t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(-j\omega)\)</span>。如果 <span class="arithmatex">\(x(t)\)</span> 是实信号，则 <span class="arithmatex">\(X(-j\omega) = X^*(j\omega)\)</span>。</li>
+</ul>
+</li>
+<li>
+<p><strong>共轭对称性 (Conjugate Symmetry for Real Signals)</strong>：
+    如果 <span class="arithmatex">\(x(t)\)</span> 是实信号，则 <span class="arithmatex">\(X(j\omega) = X^*(-j\omega)\)</span>。</p>
+<p>这意味着：</p>
+<ul>
+<li>幅度谱是偶对称的：<span class="arithmatex">\(|X(j\omega)| = |X(-j\omega)|\)</span></li>
+<li>相位谱是奇对称的：<span class="arithmatex">\(\angle X(j\omega) = -\angle X(-j\omega)\)</span></li>
+</ul>
+</li>
+<li>
+<p><strong>卷积 (Convolution)</strong>：</p>
+<p><span class="arithmatex">\(x(t) * y(t) = \int_{-\infty}^{+\infty} x(\tau)y(t-\tau)d\tau \stackrel{\mathcal{F}}{\longleftrightarrow} X(j\omega)Y(j\omega)\)</span></p>
+<p>时域卷积对应频域相乘。这是傅里叶变换最重要的性质之一，极大地简化了线性时不变 (LTI) 系统的分析。</p>
+</li>
+<li>
+<p><strong>相乘 (Multiplication / Windowing)</strong>：</p>
+<p><span class="arithmatex">\(x(t)y(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{2\pi}X(j\omega) * Y(j\omega) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} X(j\Omega)Y(j(\omega-\Omega))d\Omega\)</span></p>
+<p>时域相乘对应频域卷积（并除以 <span class="arithmatex">\(2\pi\)</span>）。</p>
+</li>
+<li>
+<p><strong>微分 (Differentiation in Time Domain)</strong>：</p>
+<p><span class="arithmatex">\(\frac{dx(t)}{dt} \stackrel{\mathcal{F}}{\longleftrightarrow} j\omega X(j\omega)\)</span></p>
+<p><span class="arithmatex">\(\frac{d^n x(t)}{dt^n} \stackrel{\mathcal{F}}{\longleftrightarrow} (j\omega)^n X(j\omega)\)</span></p>
+<p>时域微分增强了信号的高频成分。</p>
+</li>
+<li>
+<p><strong>积分 (Integration in Time Domain)</strong>：</p>
+<p><span class="arithmatex">\(\int_{-\infty}^{t} x(\tau)d\tau \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{1}{j\omega}X(j\omega) + \pi X(0)\delta(\omega)\)</span></p>
+<p>其中 <span class="arithmatex">\(X(0) = \int_{-\infty}^{+\infty} x(t)dt\)</span> 是信号的直流分量。如果 <span class="arithmatex">\(X(0)=0\)</span>，则简化为 <span class="arithmatex">\(\frac{1}{j\omega}X(j\omega)\)</span>。</p>
+<p>时域积分增强了信号的低频成分。</p>
+</li>
+<li>
+<p><strong>频域微分 (Differentiation in Frequency Domain)</strong>：</p>
+<p><span class="arithmatex">\((-jt)x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{dX(j\omega)}{d\omega}\)</span></p>
+<p><span class="arithmatex">\((-jt)^n x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} \frac{d^n X(j\omega)}{d\omega^n}\)</span></p>
+</li>
+<li>
+<p><strong>对偶性 (Duality)</strong>：</p>
+<p>如果 <span class="arithmatex">\(x(t) \stackrel{\mathcal{F}}{\longleftrightarrow} X(j\omega)\)</span>，则 <span class="arithmatex">\(X(jt) \stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi x(-\omega)\)</span></p>
+<p>这意味着如果已知一个变换对，可以通过对偶性得到另一个变换对。例如，矩形脉冲的傅里叶变换是 Sa 函数，利用对偶性，Sa 函数的傅里叶变换是矩形脉冲。</p>
+</li>
+<li>
+<p><strong>帕塞瓦尔定理 (Parseval's Relation / Energy Conservation)</strong>：</p>
+<p><span class="arithmatex">\(\int_{-\infty}^{+\infty} |x(t)|^2 dt = \frac{1}{2\pi}\int_{-\infty}^{+\infty} |X(j\omega)|^2 d\omega\)</span></p>
+<p>这表示信号在时域的总能量等于其在频域的总能量（除以 <span class="arithmatex">\(2\pi\)</span>）。<span class="arithmatex">\(|X(j\omega)|^2\)</span> 被称为能量谱密度。</p>
+</li>
+</ol>
+<h2 id="_3">傅里叶变换与微分方程的联系</h2>
+<p>傅里叶变换是求解线性常系数微分方程 (Linear Constant-Coefficient Differential Equations, LCCDEs) 特别是分析其稳态响应的强大工具。</p>
+<p>考虑一个 LTI 系统，其输入 <span class="arithmatex">\(x(t)\)</span> 和输出 <span class="arithmatex">\(y(t)\)</span> 由以下微分方程描述：
+$$
+\sum_{k=0}^{N} a_k \frac{d^k y(t)}{dt^k} = \sum_{m=0}^{M} b_m \frac{d^m x(t)}{dt^m}
+$$
+其中 <span class="arithmatex">\(a_k\)</span> 和 <span class="arithmatex">\(b_m\)</span> 是常数。</p>
+<p><strong>1. 求解频率响应 <span class="arithmatex">\(H(j\omega)\)</span></strong></p>
+<p>对微分方程两边同时进行傅里叶变换，利用微分性质 <span class="arithmatex">\(\mathcal{F}\left\{\frac{d^k z(t)}{dt^k}\right\} = (j\omega)^k Z(j\omega)\)</span>（这里假设初始条件为零，或者我们关心的是系统的零状态响应或频率特性）：</p>
+<div class="arithmatex">\[
+\mathcal{F}\left\{\sum_{k=0}^{N} a_k \frac{d^k y(t)}{dt^k}\right\} = \mathcal{F}\left\{\sum_{m=0}^{M} b_m \frac{d^m x(t)}{dt^m}\right\}
+\]</div>
+<div class="arithmatex">\[
+\sum_{k=0}^{N} a_k (j\omega)^k Y(j\omega) = \sum_{m=0}^{M} b_m (j\omega)^m X(j\omega)
+\]</div>
+<p>整理得到：</p>
+<div class="arithmatex">\[
+Y(j\omega) \left(\sum_{k=0}^{N} a_k (j\omega)^k\right) = X(j\omega) \left(\sum_{m=0}^{M} b_m (j\omega)^m\right)
+\]</div>
+<p>系统的<strong>频率响应</strong> <span class="arithmatex">\(H(j\omega)\)</span> 定义为输出的傅里叶变换与输入的傅里叶变换之比：</p>
+<div class="arithmatex">\[
+H(j\omega) = \frac{Y(j\omega)}{X(j\omega)} = \frac{\sum_{m=0}^{M} b_m (j\omega)^m}{\sum_{k=0}^{N} a_k (j\omega)^k}
+\]</div>
+<p>频率响应 <span class="arithmatex">\(H(j\omega)\)</span> 描述了系统对不同频率正弦输入的响应特性。<span class="arithmatex">\(|H(j\omega)|\)</span> 是系统的幅频响应，<span class="arithmatex">\(\angle H(j\omega)\)</span> 是系统的相频响应。</p>
+<p><strong>2. 求解系统输出</strong></p>
+<p>一旦得到频率响应 <span class="arithmatex">\(H(j\omega)\)</span> 和输入信号的傅里叶变换 <span class="arithmatex">\(X(j\omega)\)</span>，输出信号的傅里叶变换 <span class="arithmatex">\(Y(j\omega)\)</span> 就可以通过以下关系得到：</p>
+<div class="arithmatex">\[
+Y(j\omega) = H(j\omega)X(j\omega)
+\]</div>
+<p>然后，可以通过傅里叶反变换得到时域输出 <span class="arithmatex">\(y(t)\)</span>：</p>
+<div class="arithmatex">\[
+y(t) = \mathcal{F}^{-1}\{Y(j\omega)\} = \mathcal{F}^{-1}\{H(j\omega)X(j\omega)\}
+\]</div>
+<p>这对应于时域的卷积运算 <span class="arithmatex">\(y(t) = h(t) * x(t)\)</span>，其中 <span class="arithmatex">\(h(t) = \mathcal{F}^{-1}\{H(j\omega)\}\)</span> 是系统的冲激响应。</p>
+<p><strong>3. 稳态响应</strong></p>
+<p>如果输入是一个正弦信号，例如 <span class="arithmatex">\(x(t) = A\cos(\omega_0 t + \phi)\)</span>，或者更一般地是复指数 <span class="arithmatex">\(x(t) = Ae^{j(\omega_0 t + \phi)}\)</span>，LTI 系统的稳态输出也是同频率的正弦（或复指数）信号，但幅度和相位会根据频率响应 <span class="arithmatex">\(H(j\omega_0)\)</span> 进行调整。</p>
+<p>对于输入 <span class="arithmatex">\(x(t) = e^{j\omega_0 t}\)</span>，其傅里叶变换是 <span class="arithmatex">\(X(j\omega) = 2\pi\delta(\omega - \omega_0)\)</span>。</p>
+<p>则输出的傅里叶变换为 <span class="arithmatex">\(Y(j\omega) = H(j\omega) \cdot 2\pi\delta(\omega - \omega_0) = H(j\omega_0) \cdot 2\pi\delta(\omega - \omega_0)\)</span>。
+对其进行傅里叶反变换得到稳态输出：</p>
+<div class="arithmatex">\[
+y_{ss}(t) = H(j\omega_0)e^{j\omega_0 t}
+\]</div>
+<p>这意味着如果输入是 <span class="arithmatex">\(e^{j\omega_0 t}\)</span>，输出就是输入乘以系统在该频率处的频率响应值 <span class="arithmatex">\(H(j\omega_0)\)</span>。</p>
+<p>对于实正弦输入 <span class="arithmatex">\(x(t) = A\cos(\omega_0 t)\)</span>，稳态输出为：</p>
+<div class="arithmatex">\[
+y_{ss}(t) = A|H(j\omega_0)|\cos(\omega_0 t + \angle H(j\omega_0))
+\]</div>
+<p><strong>局限性：</strong>
+*   傅里叶变换主要用于分析系统的稳态响应或零状态响应。对于包含初始条件的瞬态响应，拉普拉斯变换通常更为方便。
+*   傅里叶变换要求信号绝对可积（或在广义函数意义下存在变换）。</p>
+<p>总结来说，傅里叶变换通过将微分方程转换为频域中的代数方程，极大地简化了 LTI 系统的分析，特别是对于求解频率响应和确定系统对各种频率成分的响应行为。</p>
 
 
 
@@ -1918,7 +2065,7 @@ e^{jk\omega_0t} \stackrel{\mathcal{F}}{\longleftrightarrow} 2\pi\delta(\omega - 
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月12日 23:30:15 CST">2025年6月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月14日 01:29:31 CST">2025年6月14日</span>
   </span>
 
     
