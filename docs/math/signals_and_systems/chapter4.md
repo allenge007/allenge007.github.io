@@ -169,9 +169,11 @@ $$
 
 !!! abstract "单边 z 变换定义"
     对于一个序列 $x[n]$，其单边 z 变换 $\mathcal{X}(z)$ (有时也用 $X_u(z)$ 或 $X_+(z)$ 表示) 定义为：
+
     $$
     \mathcal{X}(z) \triangleq \mathcal{Z}_u\{x[n]\} = \sum_{n=0}^{+\infty} x[n] z^{-n}
     $$
+    
     注意积分下限是从 $n=0$ 开始。
 
 ### 主要特点和应用
