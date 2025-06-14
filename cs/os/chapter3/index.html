@@ -22,7 +22,7 @@
     
     
       
-        <title>同步与死锁 - allenge 的小站</title>
+        <title>进程同步与死锁 - allenge 的小站</title>
       
     
     
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              同步与死锁
+              进程同步与死锁
             
           </span>
         </div>
@@ -908,17 +908,343 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    进程同步与死锁
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    同步与死锁
+    进程同步与死锁
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      第七讲 — 同步 (Synchronization)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第七讲 — 同步 (Synchronization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 背景与概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-critical-section-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 临界区问题 (Critical Section Problem)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 同步解决方案
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 同步解决方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-peterson" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Peterson解决方案 (软件方案)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 硬件同步
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 硬件同步">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 中断禁用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 特殊原子指令
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-mutex-locks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 互斥锁 (Mutex Locks)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-semaphores" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 信号量 (Semaphores)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-monitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 管程 (Monitors)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 经典同步问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 经典同步问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 有界缓冲区 (生产者-消费者) 问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 读者-写者问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      c. 哲学家就餐问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadlock-starvation" class="md-nav__link">
+    <span class="md-ellipsis">
+      第八讲 — 并发: 死锁、饥饿 (Deadlock &amp; Starvation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第八讲 — 并发: 死锁、饥饿 (Deadlock &amp; Starvation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-deadlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 死锁 (Deadlock)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 死锁的必要条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-resource-allocation-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 资源分配图 (Resource-Allocation Graph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 处理死锁的方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 死锁预防策略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 死锁避免策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 死锁避免策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 资源分配图算法 (单实例资源)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 银行家算法 (多实例资源)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 死锁检测
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 死锁检测">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-wait-for-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 单实例资源类型的等待图 (Wait-for Graph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 多实例资源类型的检测算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 死锁恢复
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1735,6 +2061,308 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      第七讲 — 同步 (Synchronization)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第七讲 — 同步 (Synchronization)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 背景与概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-critical-section-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 临界区问题 (Critical Section Problem)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 同步解决方案
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 同步解决方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-peterson" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Peterson解决方案 (软件方案)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 硬件同步
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 硬件同步">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 中断禁用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 特殊原子指令
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-mutex-locks" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 互斥锁 (Mutex Locks)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-semaphores" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 信号量 (Semaphores)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-monitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 管程 (Monitors)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 经典同步问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 经典同步问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 有界缓冲区 (生产者-消费者) 问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 读者-写者问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c" class="md-nav__link">
+    <span class="md-ellipsis">
+      c. 哲学家就餐问题
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deadlock-starvation" class="md-nav__link">
+    <span class="md-ellipsis">
+      第八讲 — 并发: 死锁、饥饿 (Deadlock &amp; Starvation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第八讲 — 并发: 死锁、饥饿 (Deadlock &amp; Starvation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-deadlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 死锁 (Deadlock)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 死锁的必要条件
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-resource-allocation-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 资源分配图 (Resource-Allocation Graph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 处理死锁的方法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 死锁预防策略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 死锁避免策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 死锁避免策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 资源分配图算法 (单实例资源)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 银行家算法 (多实例资源)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 死锁检测
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 死锁检测">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-wait-for-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      a. 单实例资源类型的等待图 (Wait-for Graph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      b. 多实例资源类型的检测算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 死锁恢复
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1765,7 +2393,512 @@
   
 
 
-<h1 id="_1">同步与死锁</h1>
+<h1 id="_1">进程同步与死锁</h1>
+<p>本文档旨在总结操作系统中关于进程同步与死锁的核心概念，基于陈亮老师《操作系统》课程第七讲“同步”与第八讲“并发: 死锁、饥饿”的PPT内容。</p>
+<div class="admonition abstract">
+<p class="admonition-title">学习目标</p>
+<ul>
+<li>理解并发执行中数据不一致性与竞争条件。</li>
+<li>掌握临界区问题的概念及其解决方案的要求。</li>
+<li>学习并比较多种同步机制：Peterson算法、硬件同步（中断禁用、原子指令）、互斥锁、信号量、管程和条件变量。</li>
+<li>分析经典的同步问题：生产者-消费者、读者-写者、哲学家就餐。</li>
+<li>理解死锁的定义、产生的四个必要条件。</li>
+<li>掌握死锁处理的三种主要方法：预防、避免、检测与恢复。</li>
+<li>学习资源分配图、安全状态、银行家算法等死锁相关概念与算法。</li>
+</ul>
+</div>
+<hr />
+<h2 id="synchronization">第七讲 — 同步 (Synchronization)</h2>
+<h3 id="1">1. 背景与概述</h3>
+<p>在多道程序设计、多处理器及分布式处理环境中，多个进程或线程可能并发甚至并行执行。当这些并发实体访问共享数据时，若无适当控制，可能导致数据不一致性。</p>
+<div class="admonition note">
+<p class="admonition-title">竞争条件 (Race Condition)</p>
+<p>当多个进程并发访问和操作同一共享数据，并且最终的执行结果与特定访问顺序有关时，就称之为发生了竞争条件。竞争条件是不确定的，可能导致程序错误，是操作系统和并发编程中需要着重解决的问题。</p>
+</div>
+<p><strong>与并发相关的关键术语 (Slide 30):</strong></p>
+<ul>
+<li><strong>原子操作 (Atomic operation):</strong> 一个或一系列不可中断的操作。</li>
+<li><strong>临界区 (Critical section):</strong> 访问共享资源的代码段，一次只允许一个进程进入。</li>
+<li><strong>死锁 (Deadlock):</strong> 两个或多个进程无限期地等待一个只有该组中其他等待进程才能释放的事件。</li>
+<li><strong>活锁 (Livelock):</strong> 进程状态不断改变，但无法向前推进。</li>
+<li><strong>互斥 (Mutual exclusion):</strong> 当一个进程在临界区访问共享资源时，其他进程不能进入该临界区。</li>
+<li><strong>竞争条件 (Race condition):</strong> 如上定义。</li>
+<li><strong>饥饿 (Starvation):</strong> 一个可运行的进程尽管能够继续执行，但被调度器无限期地忽略，无法获得CPU时间。</li>
+</ul>
+<h3 id="2-critical-section-problem">2. 临界区问题 (Critical Section Problem)</h3>
+<p>对于 <span class="arithmatex">\(n\)</span> 个进程 <span class="arithmatex">\(\{P_0, P_1, \dots, P_{N-1}\}\)</span>，每个进程中都包含一段访问共享资源的代码，称为<strong>临界区</strong>。</p>
+<p><strong>典型进程结构:</strong></p>
+<div class="highlight"><pre><span></span><code>do {
+    // 入口区 (Entry Section)
+    // --- 临界区 (Critical Section) ---
+    // 退出区 (Exit Section)
+    // --- 剩余区 (Remainder Section) ---
+} while (TRUE);
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">临界区问题解决方案需满足的要求</p>
+<ol>
+<li><strong>互斥 (Mutual Exclusion):</strong> 如果进程 <span class="arithmatex">\(P_i\)</span> 在其临界区内执行，则其他任何进程都不能在其临界区内执行。</li>
+<li><strong>推进 (Progress):</strong> 如果没有进程在其临界区执行，并且存在一些希望进入其临界区的进程，那么选择下一个将进入临界区的进程不能被无限期推迟。</li>
+<li><strong>有限等待 (Bounded Waiting):</strong> 在一个进程发出进入其临界区的请求后，到该请求被批准之前，其他进程允许进入其临界区的次数必须存在一个上限。</li>
+</ol>
+</div>
+<h3 id="3">3. 同步解决方案</h3>
+<h4 id="31-peterson">3.1 Peterson解决方案 (软件方案)</h4>
+<p>一个经典的基于软件的、针对两个进程的临界区问题解决方案，满足上述三个要求。它使用共享变量 <code>turn</code> 和 <code>flag</code> 数组。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 针对进程 Pi</span>
+<span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="n">turn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">turn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">j</span><span class="p">);</span><span class="w"> </span><span class="c1">// 忙等待</span>
+<span class="w">    </span><span class="c1">// --- 临界区 ---</span>
+<span class="w">    </span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// --- 剩余区 ---</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+<span class="c1">// 针对进程 Pj</span>
+<span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">flag</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="w">    </span><span class="n">turn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">turn</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="p">);</span><span class="w"> </span><span class="c1">// 忙等待</span>
+<span class="w">    </span><span class="c1">// --- 临界区 ---</span>
+<span class="w">    </span><span class="n">flag</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// --- 剩余区 ---</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="32">3.2 硬件同步</h4>
+<h5 id="a">a. 中断禁用</h5>
+<p>在单处理器系统中，通过在进入临界区前禁用中断，并在退出时启用中断，可以保证互斥。</p>
+<ul>
+<li><strong>缺点:</strong> 代价高，降低效率；不适用于多处理器系统。</li>
+</ul>
+<h5 id="b">b. 特殊原子指令</h5>
+<p>硬件提供一些特殊的原子指令（不可中断）。</p>
+<ul>
+<li>
+<p><strong><code>test_and_set()</code> 指令:</strong>
+    <div class="highlight"><pre><span></span><code><span class="n">boolean</span><span class="w"> </span><span class="nf">test_and_set</span><span class="p">(</span><span class="n">boolean</span><span class="w"> </span><span class="o">*</span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">boolean</span><span class="w"> </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">target</span><span class="p">;</span>
+<span class="w">    </span><span class="o">*</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TRUE</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">rv</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+    使用共享布尔变量 <code>lock</code> (初始化为 <code>false</code>):
+    <div class="highlight"><pre><span></span><code><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">test_and_set</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">));</span><span class="w"> </span><span class="c1">// 忙等待</span>
+<span class="w">    </span><span class="c1">// --- 临界区 ---</span>
+<span class="w">    </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// --- 剩余区 ---</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong><code>compare_and_swap()</code> 指令:</strong>
+    <div class="highlight"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">compare_and_swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">new_value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">expected</span><span class="p">)</span>
+<span class="w">        </span><span class="o">*</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+    使用共享整型变量 <code>lock</code> (初始化为 <code>0</code>):
+    <div class="highlight"><pre><span></span><code><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">compare_and_swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// 忙等待</span>
+<span class="w">    </span><span class="c1">// --- 临界区 ---</span>
+<span class="w">    </span><span class="n">lock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// --- 剩余区 ---</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div></p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">硬件指令的局限性</p>
+<ul>
+<li>上述基本硬件指令方案满足互斥，但不直接满足有限等待。</li>
+<li>存在忙等待，消耗CPU时间。</li>
+<li>可能导致饥饿或死锁（若使用不当）。</li>
+<li>对程序员直接使用而言较为复杂。</li>
+</ul>
+</div>
+<h4 id="33-mutex-locks">3.3 互斥锁 (Mutex Locks)</h4>
+<p>操作系统提供的简单软件工具，用于解决临界区问题。
+核心操作：</p>
+<ul>
+<li><code>acquire()</code>: 获取锁，若锁已被占用则等待。</li>
+<li><code>release()</code>: 释放锁。</li>
+</ul>
+<p>这两个操作必须是原子的，通常通过硬件原子指令实现。</p>
+<p><div class="highlight"><pre><span></span><code><span class="n">mutex_lock</span><span class="w"> </span><span class="n">L</span><span class="p">;</span><span class="w"> </span><span class="c1">// 声明一个互斥锁</span>
+
+<span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">acquire</span><span class="p">(</span><span class="o">&amp;</span><span class="n">L</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// --- 临界区 ---</span>
+<span class="w">    </span><span class="n">release</span><span class="p">(</span><span class="o">&amp;</span><span class="n">L</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// --- 剩余区 ---</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+如果 <code>acquire()</code> 实现为忙等待，则称为<strong>自旋锁 (Spinlock)</strong>。自旋锁在锁持有时间很短的多处理器系统中有优势（避免上下文切换开销）。</p>
+<h4 id="34-semaphores">3.4 信号量 (Semaphores)</h4>
+<p>一个更强大的同步工具，是一个整数变量 <span class="arithmatex">\(S\)</span>，只能通过两个原子操作访问：</p>
+<ul>
+<li>
+<p><strong><code>wait(S)</code> (或 <code>P(S)</code>):</strong>
+    <div class="highlight"><pre><span></span><code>wait(S) {
+    while (S &lt;= 0)
+        ; // 忙等待 (或阻塞进程)
+    S--;
+}
+</code></pre></div>
+    当 <span class="arithmatex">\(S \le 0\)</span> 时，进程等待。若 <span class="arithmatex">\(S &gt; 0\)</span>，则 <span class="arithmatex">\(S\)</span> 减 1，进程继续。</p>
+</li>
+<li>
+<p><strong><code>signal(S)</code> (或 <code>V(S)</code>):</strong>
+    <div class="highlight"><pre><span></span><code>signal(S) {
+    S++;
+}
+</code></pre></div>
+    <span class="arithmatex">\(S\)</span> 加 1。如果有进程因 <span class="arithmatex">\(S \le 0\)</span> 而等待，则唤醒其中一个。</p>
+</li>
+</ul>
+<p><strong>类型:</strong></p>
+<ul>
+<li><strong>计数信号量 (Counting Semaphore):</strong> 整数值可以不受限制（非负）。</li>
+<li><strong>二元信号量 (Binary Semaphore):</strong> 整数值只能是 0 或 1，功能类似互斥锁，但加锁和解锁的主体可以不同。</li>
+</ul>
+<p><strong>实现无忙等待的信号量:</strong>
+通过将等待的进程放入一个与信号量关联的等待队列，并使用 <code>block()</code> 和 <code>wakeup()</code> 操作。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 信号量定义</span>
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">process</span><span class="w"> </span><span class="o">*</span><span class="n">list</span><span class="p">;</span><span class="w"> </span><span class="c1">// 等待队列</span>
+<span class="p">}</span><span class="w"> </span><span class="n">semaphore</span><span class="p">;</span>
+
+<span class="c1">// wait 操作</span>
+<span class="n">wait</span><span class="p">(</span><span class="n">semaphore</span><span class="w"> </span><span class="o">*</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">S</span><span class="o">-&gt;</span><span class="n">value</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// add this process to S-&gt;list;</span>
+<span class="w">        </span><span class="n">block</span><span class="p">();</span><span class="w"> </span><span class="c1">// 阻塞当前进程</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// signal 操作</span>
+<span class="n">signal</span><span class="p">(</span><span class="n">semaphore</span><span class="w"> </span><span class="o">*</span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">S</span><span class="o">-&gt;</span><span class="n">value</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">S</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// remove a process P from S-&gt;list;</span>
+<span class="w">        </span><span class="n">wakeup</span><span class="p">(</span><span class="n">P</span><span class="p">);</span><span class="w"> </span><span class="c1">// 唤醒一个等待进程</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">信号量使用不当的风险</p>
+<ul>
+<li><code>signal(S)</code> 后于 <code>wait(S)</code>：可能导致多个进程同时进入临界区。</li>
+<li><code>wait(S)</code> 替换 <code>signal(S)</code>：可能导致死锁。</li>
+<li>遗漏 <code>wait(S)</code> 或 <code>signal(S)</code>：破坏互斥或导致死锁。</li>
+</ul>
+</div>
+<h4 id="35-monitors">3.5 管程 (Monitors)</h4>
+<p>一种高级语言结构，提供了与信号量类似的功能，但更易于控制。它将共享数据以及对这些数据的操作封装起来。</p>
+<p><strong>特点:</strong></p>
+<ul>
+<li>管程内部的局部变量只能由管程内的过程访问。</li>
+<li>在任一时刻，管程中只能有一个进程处于活动状态，确保了对共享数据的互斥访问。</li>
+<li>通过<strong>条件变量 (Condition Variables)</strong> 实现更复杂的同步。条件变量有两种主要操作：<ul>
+<li><code>x.wait()</code>: 调用此操作的进程被挂起，并释放管程的互斥权，直到另一个进程对 <code>x</code> 调用 <code>x.signal()</code>。</li>
+<li><code>x.signal()</code>: 唤醒一个（如果有的话）因 <code>x</code> 而等待的进程。如果没有进程等待，则 <code>signal</code> 操作无效。</li>
+</ul>
+</li>
+</ul>
+<p><strong>MESA管程模型 (Java采用):</strong></p>
+<p>当一个进程P执行 <code>x.signal()</code> 唤醒等待在条件变量 <code>x</code> 上的进程Q时：</p>
+<ul>
+<li>P继续执行，Q从条件等待队列移到入口等待队列。</li>
+<li>当Q重新获得管程锁并执行时，之前 <code>x.wait()</code> 的条件可能已不再满足。因此，<code>x.wait()</code> 通常放在 <code>while</code> 循环中检查条件：
+    <div class="highlight"><pre><span></span><code><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">condition</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="na">wait</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></li>
+</ul>
+<h3 id="4">4. 经典同步问题</h3>
+<h4 id="a-">a. 有界缓冲区 (生产者-消费者) 问题</h4>
+<ul>
+<li><strong>共享数据:</strong> 大小为 <span class="arithmatex">\(n\)</span> 的缓冲区。</li>
+<li><strong>信号量:</strong><ul>
+<li><code>mutex</code>: (二元信号量，初值为1) 控制对缓冲区的互斥访问。</li>
+<li><code>empty</code>: (计数信号量，初值为 <span class="arithmatex">\(n\)</span>) 记录空缓冲槽位数。</li>
+<li><code>full</code>: (计数信号量，初值为0) 记录满缓冲槽位数。</li>
+</ul>
+</li>
+</ul>
+<p><strong>生产者伪代码:</strong>
+<div class="highlight"><pre><span></span><code>do {
+    // ... 生产一个项目 item ...
+    wait(empty);     // 等待空槽位
+    wait(mutex);     // 进入临界区
+    // ... 将 item 添加到缓冲区 ...
+    signal(mutex);   // 离开临界区
+    signal(full);    // 通知有满槽位
+} while (true);
+</code></pre></div></p>
+<p><strong>消费者伪代码:</strong>
+<div class="highlight"><pre><span></span><code>do {
+    wait(full);      // 等待满槽位
+    wait(mutex);     // 进入临界区
+    // ... 从缓冲区取出一个 item ...
+    signal(mutex);   // 离开临界区
+    signal(empty);   // 通知有空槽位
+    // ... 消费 item ...
+} while (true);
+</code></pre></div></p>
+<h4 id="b-">b. 读者-写者问题</h4>
+<p>多个进程共享数据，分为读者和写者：</p>
+<ul>
+<li><strong>读者:</strong> 只读取数据，不修改。</li>
+<li><strong>写者:</strong> 可读取和修改数据。</li>
+</ul>
+<p><strong>同步约束:</strong></p>
+<ol>
+<li>允许多个读者同时读取。</li>
+<li>一次只允许一个写者访问共享数据。</li>
+<li>当写者在访问数据时，不允许任何读者访问。</li>
+</ol>
+<p><strong>读者优先方案 (可能导致写者饥饿):</strong></p>
+<ul>
+<li><strong>共享数据:</strong><ul>
+<li><code>read_count</code>: (整数，初值为0) 当前读者数量。</li>
+</ul>
+</li>
+<li><strong>信号量:</strong><ul>
+<li><code>rw_mutex</code>: (二元信号量，初值为1) 控制写者互斥，或第一个/最后一个读者进入/退出。</li>
+<li><code>mutex</code>: (二元信号量，初值为1) 保护 <code>read_count</code> 的更新。</li>
+</ul>
+</li>
+</ul>
+<p><strong>写者伪代码:</strong>
+<div class="highlight"><pre><span></span><code>do {
+    wait(rw_mutex);
+    // ... 进行写操作 ...
+    signal(rw_mutex);
+} while (true);
+</code></pre></div></p>
+<p><strong>读者伪代码:</strong>
+<div class="highlight"><pre><span></span><code>do {
+    wait(mutex);
+    read_count++;
+    if (read_count == 1) { // 第一个读者
+        wait(rw_mutex);    // 阻止写者
+    }
+    signal(mutex);
+
+    // ... 进行读操作 ...
+
+    wait(mutex);
+    read_count--;
+    if (read_count == 0) { // 最后一个读者
+        signal(rw_mutex);   // 允许写者
+    }
+    signal(mutex);
+} while (true);
+</code></pre></div></p>
+<h4 id="c">c. 哲学家就餐问题</h4>
+<p>五个哲学家围坐圆桌，每人面前一碗饭，每两位哲学家之间放一只筷子。哲学家交替思考和吃饭。吃饭需要同时拿起左右两边的筷子。</p>
+<p><strong>问题:</strong> 如何设计协议，使得哲学家可以吃饭，且不会发生死锁或饥饿。</p>
+<p><strong>简单信号量方案 (可能导致死锁):</strong></p>
+<ul>
+<li><code>chopstick[5]</code>: 信号量数组，每个元素初值为1。</li>
+</ul>
+<p><strong>哲学家 <span class="arithmatex">\(i\)</span> 伪代码:</strong>
+<div class="highlight"><pre><span></span><code>do {
+    // ... 思考 ...
+    wait(chopstick[i]);             // 拿起左筷子
+    wait(chopstick[(i + 1) % 5]);   // 拿起右筷子
+    // ... 吃饭 ...
+    signal(chopstick[i]);             // 放下左筷子
+    signal(chopstick[(i + 1) % 5]);   // 放下右筷子
+} while (true);
+</code></pre></div>
+如果所有哲学家同时拿起左筷子，则都会等待右筷子，导致死锁。</p>
+<p><strong>无死锁解决方案包括:</strong></p>
+<ol>
+<li>最多允许四位哲学家同时坐在桌上。</li>
+<li>仅当哲学家的两根筷子都可用时，才允许他拿起它们（在临界区内完成）。</li>
+<li>非对称解决方案：奇数号哲学家先拿左筷子再拿右筷子，偶数号哲学家先拿右筷子再拿左筷子。</li>
+<li>使用管程。</li>
+</ol>
+<hr />
+<h2 id="deadlock-starvation">第八讲 — 并发: 死锁、饥饿 (Deadlock &amp; Starvation)</h2>
+<h3 id="1-deadlock">1. 死锁 (Deadlock)</h3>
+<div class="admonition danger">
+<p class="admonition-title">死锁定义</p>
+<p>当一组进程中的每个进程都在等待某个事件（通常是获取资源），而这个事件只能由该组中其他被阻塞的进程触发时，这组进程就发生了<strong>死锁</strong>。死锁是永久性的，涉及两个或多个进程对资源的冲突需求。</p>
+</div>
+<p><strong>资源分类:</strong></p>
+<ul>
+<li><strong>可重用资源 (Reusable Resource):</strong> 一次只能被一个进程安全使用，并且不会因使用而耗尽（如CPU、内存、磁盘驱动器、锁）。</li>
+<li><strong>可消耗资源 (Consumable Resource):</strong> 可以被创建（生产）和销毁（消费）的资源（如消息、信号、中断）。</li>
+</ul>
+<p><strong>进程使用资源顺序:</strong> 申请 (Request) -&gt; 使用 (Use) -&gt; 释放 (Release)</p>
+<h3 id="2">2. 死锁的必要条件</h3>
+<p>死锁的发生必须同时满足以下四个条件：</p>
+<div class="admonition failure">
+<p class="admonition-title">死锁的四个必要条件</p>
+<ol>
+<li><strong>互斥 (Mutual Exclusion):</strong> 至少有一个资源必须以非共享模式持有，即一次只有一个进程可以使用。</li>
+<li><strong>持有并等待 (Hold and Wait):</strong> 一个进程必须至少持有一个资源，并正在等待获取其他进程当前持有的额外资源。</li>
+<li><strong>无抢占 (No Preemption):</strong> 资源不能被抢占；即，资源只能在持有它的进程完成任务后自愿释放。</li>
+<li><strong>循环等待 (Circular Wait):</strong> 必须存在一组等待进程 <span class="arithmatex">\(\{P_0, P_1, \dots, P_n\}\)</span>，使得 <span class="arithmatex">\(P_0\)</span> 等待 <span class="arithmatex">\(P_1\)</span> 持有的资源，<span class="arithmatex">\(P_1\)</span> 等待 <span class="arithmatex">\(P_2\)</span> 持有的资源，...，<span class="arithmatex">\(P_{n-1}\)</span> 等待 <span class="arithmatex">\(P_n\)</span> 持有的资源，而 <span class="arithmatex">\(P_n\)</span> 等待 <span class="arithmatex">\(P_0\)</span> 持有的资源。</li>
+</ol>
+</div>
+<h3 id="3-resource-allocation-graph">3. 资源分配图 (Resource-Allocation Graph)</h3>
+<p>一种有向图，用于描述进程和资源之间的分配和请求关系。</p>
+<ul>
+<li><strong>节点:</strong> 进程节点 (圆圈 <span class="arithmatex">\(P_i\)</span>) 和资源类型节点 (方框 <span class="arithmatex">\(R_j\)</span>，方框内的点表示该类型资源的实例数)。</li>
+<li><strong>边:</strong><ul>
+<li><strong>请求边 (Request Edge):</strong> 从进程 <span class="arithmatex">\(P_i\)</span> 指向资源类型 <span class="arithmatex">\(R_j\)</span> (<span class="arithmatex">\(P_i \to R_j\)</span>)，表示 <span class="arithmatex">\(P_i\)</span> 请求 <span class="arithmatex">\(R_j\)</span> 的一个实例。</li>
+<li><strong>分配边 (Assignment Edge):</strong> 从资源类型 <span class="arithmatex">\(R_j\)</span> 的一个实例指向进程 <span class="arithmatex">\(P_i\)</span> (<span class="arithmatex">\(R_j \to P_i\)</span>)，表示 <span class="arithmatex">\(R_j\)</span> 的一个实例已分配给 <span class="arithmatex">\(P_i\)</span>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>资源分配图与死锁:</strong></p>
+<ul>
+<li><strong>如果图中没有环：</strong> 系统一定没有死锁。</li>
+<li><strong>如果图中有环：</strong><ul>
+<li>若每种资源类型只有一个实例，则环的存在<strong>必然</strong>导致死锁。</li>
+<li>若每种资源类型有多个实例，则环的存在<strong>可能</strong>导致死锁。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4_1">4. 处理死锁的方法</h3>
+<ol>
+<li><strong>死锁预防 (Deadlock Prevention):</strong> 通过破坏死锁发生的四个必要条件之一来确保系统永远不会进入死锁状态。</li>
+<li><strong>死锁避免 (Deadlock Avoidance):</strong> 系统在分配资源前，根据额外信息（如进程未来可能请求的最大资源量）判断此次分配是否会导致系统进入不安全状态，从而避免死锁。</li>
+<li><strong>死锁检测与恢复 (Deadlock Detection and Recovery):</strong> 允许系统进入死锁状态，然后通过算法检测它，并采取措施恢复。</li>
+<li><strong>忽略该问题:</strong> 假装系统中从未发生死锁。这是许多通用操作系统（如Windows、Linux）采用的方法，因为死锁发生概率较低，而预防或避免的代价较高。</li>
+</ol>
+<h3 id="5">5. 死锁预防策略</h3>
+<p>通过破坏四个必要条件之一：</p>
+<ul>
+<li><strong>破坏互斥:</strong> 对于可共享资源（如只读文件）可以，但对于本身不可共享的资源则不行。通常不能否定。</li>
+<li><strong>破坏持有并等待:</strong><ul>
+<li>策略1: 进程开始执行前，必须一次性请求并获得其所需的所有资源。</li>
+<li>策略2: 进程只有在不持有任何资源时，才允许请求资源。</li>
+<li><strong>缺点:</strong> 资源利用率低；可能导致饥饿。</li>
+</ul>
+</li>
+<li><strong>破坏无抢占:</strong><ul>
+<li>如果一个持有资源的进程请求另一个不能立即分配的资源，则它当前持有的所有资源都被隐式释放（被抢占）。</li>
+<li>或者，当进程P请求资源R时，如果R被进程Q持有，而Q又在等待其他资源，则可以抢占Q的资源R分配给P。</li>
+<li><strong>缺点:</strong> 实现复杂，可能需要保存和恢复状态。</li>
+</ul>
+</li>
+<li><strong>破坏循环等待:</strong><ul>
+<li>对所有资源类型进行完全排序，并要求每个进程按递增顺序请求资源。例如，若资源类型排序为 <span class="arithmatex">\(R_1 &lt; R_2 &lt; \dots &lt; R_m\)</span>，进程若持有 <span class="arithmatex">\(R_i\)</span>，则下次只能请求 <span class="arithmatex">\(R_j\)</span> 使得 <span class="arithmatex">\(j &gt; i\)</span>。</li>
+<li><strong>缺点:</strong> 资源编号困难，可能不符合进程实际需求顺序。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6">6. 死锁避免策略</h3>
+<p>要求系统具有关于进程未来资源需求的先验信息。</p>
+<div class="admonition - note">
+<p class="admonition-title">安全状态 (Safe State)</p>
+<p>如果系统可以按照某个顺序（称为<strong>安全序列</strong> <span class="arithmatex">\(&lt;P_1, P_2, \dots, P_n&gt;\)</span>）为每个进程分配资源（最多达到其声明的最大需求量），并且能避免死锁，则称系统处于<strong>安全状态</strong>。
+具体来说，对于序列中的每个进程 <span class="arithmatex">\(P_i\)</span>，它仍然可以请求的资源数量可以通过当前可用资源加上所有在它之前的进程 <span class="arithmatex">\(P_j (j &lt; i)\)</span> 持有的资源来满足。</p>
+<ul>
+<li>安全状态 <span class="arithmatex">\(\implies\)</span> 无死锁。</li>
+<li>不安全状态 <span class="arithmatex">\(\implies\)</span> <strong>可能</strong>导致死锁。死锁避免算法确保系统永远不会进入不安全状态。</li>
+</ul>
+</div>
+<h4 id="a_1">a. 资源分配图算法 (单实例资源)</h4>
+<ul>
+<li>引入<strong>需求边 (Claim Edge)</strong> <span class="arithmatex">\(P_i \dashrightarrow R_j\)</span>，表示进程 <span class="arithmatex">\(P_i\)</span> 将来可能请求资源 <span class="arithmatex">\(R_j\)</span>。</li>
+<li>当 <span class="arithmatex">\(P_i\)</span> 实际请求 <span class="arithmatex">\(R_j\)</span> 时，需求边变为请求边 <span class="arithmatex">\(P_i \to R_j\)</span>。</li>
+<li>当资源 <span class="arithmatex">\(R_j\)</span> 分配给 <span class="arithmatex">\(P_i\)</span> 时，请求边变为分配边 <span class="arithmatex">\(R_j \to P_i\)</span>。</li>
+<li>当 <span class="arithmatex">\(P_i\)</span> 释放 <span class="arithmatex">\(R_j\)</span> 时，分配边变回需求边。</li>
+<li><strong>分配决策:</strong> 只有当请求边转换为分配边后，图中不形成环路时，才允许分配。环路检测用于判断安全性。</li>
+</ul>
+<h4 id="b_1">b. 银行家算法 (多实例资源)</h4>
+<p>适用于每种资源类型有多个实例的系统。每个进程必须预先声明它可能需要的每种资源类型的最大数量。</p>
+<p><strong>数据结构 (设 <span class="arithmatex">\(n\)</span> 个进程, <span class="arithmatex">\(m\)</span> 种资源):</strong></p>
+<ul>
+<li><code>Available[m]</code>: 长度为 <span class="arithmatex">\(m\)</span> 的向量。<code>Available[j] = k</code> 表示资源类型 <span class="arithmatex">\(R_j\)</span> 有 <span class="arithmatex">\(k\)</span> 个可用实例。</li>
+<li><code>Max[n][m]</code>: <span class="arithmatex">\(n \times m\)</span> 矩阵。<code>Max[i][j] = k</code> 表示进程 <span class="arithmatex">\(P_i\)</span> 最多需要 <span class="arithmatex">\(k\)</span> 个 <span class="arithmatex">\(R_j\)</span> 实例。</li>
+<li><code>Allocation[n][m]</code>: <span class="arithmatex">\(n \times m\)</span> 矩阵。<code>Allocation[i][j] = k</code> 表示 <span class="arithmatex">\(P_i\)</span> 当前已分配 <span class="arithmatex">\(k\)</span> 个 <span class="arithmatex">\(R_j\)</span> 实例。</li>
+<li><code>Need[n][m]</code>: <span class="arithmatex">\(n \times m\)</span> 矩阵。<code>Need[i][j] = k</code> 表示 <span class="arithmatex">\(P_i\)</span> 还需 <span class="arithmatex">\(k\)</span> 个 <span class="arithmatex">\(R_j\)</span> 实例才能完成任务。
+    <span class="arithmatex">\(Need[i][j] = Max[i][j] - Allocation[i][j]\)</span></li>
+</ul>
+<p><strong>1. 安全性算法 (Safety Algorithm):</strong></p>
+<p>判断当前系统状态是否安全。</p>
+<ol>
+<li>初始化 <code>Work[m] = Available</code>，<code>Finish[n]</code> (布尔数组) <code>Finish[i] = false</code> for all <span class="arithmatex">\(i\)</span>.</li>
+<li>查找一个进程 <span class="arithmatex">\(P_i\)</span> 满足:
+      (a) <code>Finish[i] == false</code>
+      (b) <span class="arithmatex">\(Need_i \le Work\)</span>  (其中 <span class="arithmatex">\(Need_i\)</span> 是 <code>Need</code> 矩阵的第 <span class="arithmatex">\(i\)</span> 行)
+      如果没有这样的 <span class="arithmatex">\(P_i\)</span>，转到步骤 4。</li>
+<li><code>Work = Work + Allocation_i</code> (其中 <span class="arithmatex">\(Allocation_i\)</span> 是 <code>Allocation</code> 矩阵的第 <span class="arithmatex">\(i\)</span> 行)
+      <code>Finish[i] = true</code>
+      返回步骤 2。</li>
+<li>如果对所有 <span class="arithmatex">\(i\)</span>，<code>Finish[i] == true</code>，则系统处于安全状态。否则，不安全。</li>
+</ol>
+<p><strong>2. 资源请求算法 (Resource-Request Algorithm):</strong></p>
+<p>当进程 <span class="arithmatex">\(P_i\)</span> 请求资源时 (设请求向量为 <span class="arithmatex">\(Request_i\)</span>):</p>
+<ol>
+<li>如果 <span class="arithmatex">\(Request_i \le Need_i\)</span>，转到步骤 2。否则，出错 (请求超过最大声明)。</li>
+<li>如果 <span class="arithmatex">\(Request_i \le Available\)</span>，转到步骤 3。否则，<span class="arithmatex">\(P_i\)</span> 必须等待 (资源不足)。</li>
+<li><strong>假装</strong>分配资源给 <span class="arithmatex">\(P_i\)</span>:
+      <code>Available = Available - Request_i</code>
+      <code>Allocation_i = Allocation_i + Request_i</code>
+      <code>Need_i = Need_i - Request_i</code></li>
+<li>调用<strong>安全性算法</strong>检查新状态是否安全。<ul>
+<li>如果安全，则实际分配资源给 <span class="arithmatex">\(P_i\)</span>。</li>
+<li>如果不安全，<span class="arithmatex">\(P_i\)</span> 必须等待，并恢复到第3步之前的状态。</li>
+</ul>
+</li>
+</ol>
+<h3 id="7">7. 死锁检测</h3>
+<p>允许系统进入死锁状态，然后定期运行检测算法。</p>
+<h4 id="a-wait-for-graph">a. 单实例资源类型的等待图 (Wait-for Graph)</h4>
+<ul>
+<li>如果每种资源类型只有一个实例，可以构建等待图。</li>
+<li>节点是进程。</li>
+<li>从 <span class="arithmatex">\(P_i \to P_j\)</span> 的边表示 <span class="arithmatex">\(P_i\)</span> 正在等待 <span class="arithmatex">\(P_j\)</span> 释放其所需的资源。</li>
+<li><strong>图中存在环 <span class="arithmatex">\(\iff\)</span> 系统存在死锁。</strong></li>
+</ul>
+<h4 id="b_2">b. 多实例资源类型的检测算法</h4>
+<p>类似银行家算法的安全性算法，但不使用 <code>Max</code> 或 <code>Need</code>。</p>
+<ol>
+<li>初始化 <code>Work[m] = Available</code>，<code>Finish[n]</code>。如果 <code>Allocation_i</code> 非零，则 <code>Finish[i] = false</code>；否则 <code>Finish[i] = true</code> (已完成或未开始的进程不参与死锁)。</li>
+<li>查找一个进程 <span class="arithmatex">\(P_i\)</span> 满足:
+   (a) <code>Finish[i] == false</code>
+   (b) <span class="arithmatex">\(Request_i \le Work\)</span> (其中 <span class="arithmatex">\(Request_i\)</span> 是 <span class="arithmatex">\(P_i\)</span> 当前的请求向量)
+   如果没有这样的 <span class="arithmatex">\(P_i\)</span>，转到步骤 4。</li>
+<li><code>Work = Work + Allocation_i</code>
+   <code>Finish[i] = true</code>
+   返回步骤 2。</li>
+<li>如果存在某个 <span class="arithmatex">\(i\)</span> 使得 <code>Finish[i] == false</code>，则系统处于死锁状态，且所有 <code>Finish[i] == false</code> 的进程 <span class="arithmatex">\(P_i\)</span> 都是死锁进程。</li>
+</ol>
+<p><strong>检测算法的调用时机:</strong></p>
+<ul>
+<li>死锁发生频率？</li>
+<li>检测代价？</li>
+<li>可以周期性调用，或当CPU利用率低于某个阈值时调用。</li>
+</ul>
+<h3 id="8">8. 死锁恢复</h3>
+<ul>
+<li><strong>终止进程:</strong><ul>
+<li>终止所有死锁进程 (代价大)。</li>
+<li>一次终止一个进程，直到死锁环被打破。选择终止哪个进程基于代价最小原则（如优先级、已用CPU时间、预计剩余时间、已分配资源量等）。</li>
+</ul>
+</li>
+<li><strong>资源抢占:</strong><ul>
+<li>逐步从一个或多个死锁进程中抢占资源分配给其他进程，直到死锁环被打破。</li>
+<li><strong>选择牺牲者 (Victim Selection):</strong> 基于最小代价。</li>
+<li><strong>回滚 (Rollback):</strong> 被抢占资源的进程需要回滚到某个安全状态并重新启动。</li>
+<li><strong>饥饿 (Starvation):</strong> 确保同一进程不会总是被选为牺牲者（可在代价中计入回滚次数）。</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -1786,7 +2919,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月12日 10:20:59 CST">2025年6月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月14日 20:15:26 CST">2025年6月14日</span>
   </span>
 
     

@@ -904,7 +904,7 @@
   
   
   <span class="md-ellipsis">
-    同步与死锁
+    进程同步与死锁
     
   </span>
   
@@ -931,6 +931,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -942,6 +955,427 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第九讲：物理内存管理策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第九讲：物理内存管理策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 内存管理基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 内存保护
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-address-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 地址绑定 (Address Binding)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 逻辑地址空间 vs. 物理地址空间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-mmu" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 内存管理单元 (MMU)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-dynamic-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 动态加载 (Dynamic Loading)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-dynamic-linking-and-shared-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 动态链接与共享库 (Dynamic Linking and Shared Libraries)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-swapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 交换 (Swapping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-contiguous-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 连续分配 (Contiguous Allocation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 连续分配 (Contiguous Allocation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-fixed-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 固定分区 (Fixed Partitions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-variable-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 可变分区 (Variable Partitions) / 动态分区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-fragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 碎片 (Fragmentation)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. 分段 (Segmentation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. 分页 (Paging)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 分页 (Paging)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 地址转换
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-page-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 页表 (Page Table)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-tlb-translation-lookaside-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 转换检测缓冲区 (TLB, Translation Lookaside Buffer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 内存保护
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-shared-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 共享页 (Shared Pages)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.6 页表结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. 示例体系结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-buddy-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. 伙伴系统 (Buddy System)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第十讲：虚拟内存管理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第十讲：虚拟内存管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 虚拟内存背景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 虚拟地址空间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-demand-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 请求分页 (Demand Paging)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 请求分页 (Demand Paging)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 处理缺页错误
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 请求分页的性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-copy-on-write-cow" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 写时复制 (Copy-on-Write, COW)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-page-replacement" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 页面置换 (Page Replacement)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 页面置换 (Page Replacement)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 基本页面置换流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 页面置换算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-frame-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 帧分配 (Frame Allocation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-thrashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 系统抖动 (Thrashing)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 系统抖动 (Thrashing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-working-set-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 工作集模型 (Working-Set Model)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-pff-page-fault-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 缺页错误率 (PFF, Page-Fault Frequency)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 内核内存分配
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 其他注意事项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 操作系统示例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1735,6 +2169,416 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第九讲：物理内存管理策略
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第九讲：物理内存管理策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 内存管理基础
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 内存保护
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-address-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 地址绑定 (Address Binding)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 逻辑地址空间 vs. 物理地址空间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-mmu" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 内存管理单元 (MMU)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-dynamic-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 动态加载 (Dynamic Loading)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-dynamic-linking-and-shared-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 动态链接与共享库 (Dynamic Linking and Shared Libraries)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-swapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 交换 (Swapping)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-contiguous-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 连续分配 (Contiguous Allocation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 连续分配 (Contiguous Allocation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-fixed-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 固定分区 (Fixed Partitions)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-variable-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 可变分区 (Variable Partitions) / 动态分区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-fragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 碎片 (Fragmentation)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. 分段 (Segmentation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. 分页 (Paging)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 分页 (Paging)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 地址转换
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-page-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 页表 (Page Table)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-tlb-translation-lookaside-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 转换检测缓冲区 (TLB, Translation Lookaside Buffer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 内存保护
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-shared-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 共享页 (Shared Pages)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.6 页表结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. 示例体系结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-buddy-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. 伙伴系统 (Buddy System)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第十讲：虚拟内存管理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第十讲：虚拟内存管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 虚拟内存背景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 虚拟地址空间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-demand-paging" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 请求分页 (Demand Paging)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 请求分页 (Demand Paging)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 处理缺页错误
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 请求分页的性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-copy-on-write-cow" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 写时复制 (Copy-on-Write, COW)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-page-replacement" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 页面置换 (Page Replacement)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 页面置换 (Page Replacement)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 基本页面置换流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 页面置换算法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-frame-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 帧分配 (Frame Allocation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-thrashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 系统抖动 (Thrashing)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 系统抖动 (Thrashing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-working-set-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 工作集模型 (Working-Set Model)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-pff-page-fault-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 缺页错误率 (PFF, Page-Fault Frequency)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 内核内存分配
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 其他注意事项
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 操作系统示例
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1766,6 +2610,811 @@
 
 
 <h1 id="_1">内存管理</h1>
+<div class="admonition abstract">
+<p class="admonition-title">文档说明</p>
+<p>本文档根据《2025-OS-CH-9-物理内存管理clean.pptx》和《2025-OS-CH-10-虚拟内存管理.pptx》总结而成，旨在帮助学习和复习操作系统中的内存管理相关知识。</p>
+</div>
+<h2 id="_2">第九讲：物理内存管理策略</h2>
+<div class="admonition goal">
+<p class="admonition-title">学习目标</p>
+<ul>
+<li>讨论内存管理的多种方法</li>
+<li>理解内存分页和分段的概念</li>
+<li>了解内存硬件的各种组织方法</li>
+<li>掌握进程内存分配的各种技术</li>
+<li>详细讨论现代计算机系统的分页机制</li>
+<li>理解动态链接与共享</li>
+</ul>
+</div>
+<h3 id="1">1. 内存管理基础</h3>
+<ul>
+<li>程序必须从磁盘加载到内存并放入进程中才能运行。</li>
+<li>主存储器和寄存器是 CPU 可以直接访问的唯一存储。</li>
+<li>寄存器访问速度快（一个 CPU 时钟周期或更少），主内存访问可能导致暂停 (stall)。</li>
+<li>缓存 (Cache) 位于主内存和 CPU 寄存器之间，用于加速访问。</li>
+<li>内存管理不仅关心访问速度，还需确保操作正确、保护操作系统。这通常通过硬件实现，操作系统不直接干预 CPU 对内存的访问。</li>
+</ul>
+<h3 id="2">2. 内存保护</h3>
+<ul>
+<li><strong>目的</strong>：限制进程只能访问其自身的地址空间。</li>
+<li><strong>实现</strong>：通过一对<strong>基址寄存器 (Base Register)</strong> 和<strong>界限地址寄存器 (Limit Register)</strong> 定义进程可访问的地址范围。</li>
+<li>CPU 在用户模式下每次内存访问都会检查地址是否在 <code>[基地址, 基地址 + 界限地址)</code> 范围内。</li>
+<li>加载基址和界限寄存器的指令是<strong>特权指令</strong>，只能在内核模式下执行。</li>
+</ul>
+<h3 id="3-address-binding">3. 地址绑定 (Address Binding)</h3>
+<p>程序中的地址在生命周期的不同阶段有不同表示：</p>
+<ol>
+<li><strong>编译时 (Compile time)</strong>：<ul>
+<li>如果内存位置已知，可以生成<strong>绝对代码 (Absolute Code)</strong>。例如 MS-DOS 的 .COM 程序。</li>
+<li>如果起始位置改变，必须重新编译。</li>
+<li>符号地址（源代码中）被绑定到可重定位地址。</li>
+</ul>
+</li>
+<li><strong>加载时 (Load time)</strong>：<ul>
+<li>如果编译时内存位置未知，必须生成<strong>可重定位代码 (Relocatable Code)</strong>。</li>
+<li>链接器或加载程序将可重定位地址绑定到绝对地址（物理地址）。</li>
+</ul>
+</li>
+<li><strong>执行时 (Execution time)</strong>：<ul>
+<li>如果进程在执行期间可以从一个内存段移动到另一个内存段，则绑定延迟到运行时。</li>
+<li>需要硬件支持地址映射，如基址寄存器和界限寄存器。</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">用户程序的处理过程</p>
+<p>源代码 -&gt; 编译器/汇编器 -&gt; 目标模块 -&gt; 链接器 -&gt; 加载模块 -&gt; 加载器 -&gt; 内存中的进程</p>
+</div>
+<h3 id="4-vs">4. 逻辑地址空间 vs. 物理地址空间</h3>
+<ul>
+<li><strong>逻辑地址 (Logical Address)</strong>：由 CPU 生成，也称为<strong>虚拟地址 (Virtual Address)</strong>。</li>
+<li><strong>物理地址 (Physical Address)</strong>：内存单元实际看到的地址。</li>
+<li>编译时和加载时地址绑定：逻辑地址与物理地址相同。</li>
+<li>执行时地址绑定：逻辑地址与物理地址不同。</li>
+<li><strong>逻辑地址空间</strong>：程序生成的所有逻辑地址的集合。</li>
+<li><strong>物理地址空间</strong>：对应这些逻辑地址的物理地址的集合。</li>
+</ul>
+<h3 id="5-mmu">5. 内存管理单元 (MMU)</h3>
+<ul>
+<li><strong>功能</strong>：在运行时将虚拟地址映射到物理地址的硬件设备。</li>
+<li><strong>简单方案 (重定位寄存器)</strong>：<ul>
+<li>基址寄存器也称为<strong>重定位寄存器 (Relocation Register)</strong>。</li>
+<li>用户进程生成的每个逻辑地址在发送到内存前，都会加上重定位寄存器中的值。</li>
+<li>例如：重定位寄存器值为 <code>14000</code>，逻辑地址为 <code>346</code>，则物理地址为 <code>14000 + 346 = 14346</code>。</li>
+<li>用户程序处理逻辑地址，看不到真实的物理地址。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-dynamic-loading">6. 动态加载 (Dynamic Loading)</h3>
+<ul>
+<li><strong>目的</strong>：提高内存利用率。</li>
+<li><strong>机制</strong>：一个程序（或例程）在被调用之前不会被加载到内存中。</li>
+<li><strong>优点</strong>：<ul>
+<li>更好的内存空间利用率，不加载未使用的例程。</li>
+<li>对于处理不经常发生的情况（如错误处理）的大量代码特别有用。</li>
+</ul>
+</li>
+<li><strong>实现</strong>：通常由程序设计实现，操作系统可提供库支持。</li>
+</ul>
+<h3 id="7-dynamic-linking-and-shared-libraries">7. 动态链接与共享库 (Dynamic Linking and Shared Libraries)</h3>
+<ul>
+<li><strong>静态链接 (Static Linking)</strong>：加载程序将系统库和程序代码组合成单个二进制程序映像。</li>
+<li><strong>动态链接 (Dynamic Linking)</strong>：链接过程延迟到运行时。<ul>
+<li>使用一小段代码，称为<strong>存根 (Stub)</strong>，用于定位内存中适当的库例程。</li>
+<li>存根将自身替换为库例程的地址并执行。</li>
+<li>操作系统检查库例程是否已在进程内存中，若否则加载。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>方便库的更新和共享。</li>
+<li>多个进程可以共享同一份库代码的物理拷贝。</li>
+</ul>
+</li>
+<li>也称为<strong>共享库 (Shared Libraries)</strong>。</li>
+<li>可能需要版本控制。</li>
+</ul>
+<h3 id="8-swapping">8. 交换 (Swapping)</h3>
+<ul>
+<li><strong>概念</strong>：进程可以暂时从内存中交换到备份存储（如磁盘），之后再换回内存继续执行。</li>
+<li><strong>目的</strong>：允许多个进程的总物理地址空间超过真实的物理地址空间，提高多道程序设计的程度。</li>
+<li><strong>代价</strong>：交换操作（磁盘 I/O）非常耗时。</li>
+<li><strong>触发</strong>：通常在内存空闲空间低于某个阈值时启用，常与虚拟内存结合使用。</li>
+<li><strong>移动系统</strong>：通常禁止交换。内存不足时，可能终止进程，或将其状态保存到闪存以便快速恢复。</li>
+</ul>
+<h3 id="9-contiguous-allocation">9. 连续分配 (Contiguous Allocation)</h3>
+<p>早期内存分配方法，每个进程在内存中占据单个连续区域。</p>
+<ul>
+<li><strong>内存分区</strong>：<ul>
+<li>操作系统通常位于低地址（包含中断向量表）。</li>
+<li>用户进程位于高地址。</li>
+</ul>
+</li>
+<li><strong>保护</strong>：使用重定位寄存器（基址）和界限寄存器。</li>
+</ul>
+<h4 id="91-fixed-partitions">9.1 固定分区 (Fixed Partitions)</h4>
+<ul>
+<li>将用户内存空间划分为若干固定大小或不同大小的分区。</li>
+<li><strong>缺点</strong>：<ul>
+<li>分区数量限制了活动进程数量。</li>
+<li>小作业可能无法有效利用大分区空间，产生<strong>内部碎片</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="92-variable-partitions">9.2 可变分区 (Variable Partitions) / 动态分区</h4>
+<ul>
+<li>分区大小根据进程需求动态调整。</li>
+<li>内存中会产生多个分散的可用内存块，称为<strong>孔 (Hole)</strong>。</li>
+<li>进程到达时，从一个足够大的孔中分配。</li>
+<li>进程退出时，释放其分区，并可能与相邻空闲分区合并。</li>
+<li>
+<p>操作系统维护已分配分区和空闲分区（孔）的信息。</p>
+<p><strong>放置算法 (Placement Algorithms)</strong>：</p>
+<ul>
+<li><strong>首次适应 (First-fit)</strong>：分配第一个足够大的孔。速度快，可能在内存前端产生小碎片。</li>
+<li><strong>最佳适应 (Best-fit)</strong>：分配最小的、但足够大的孔。需搜索整个列表，易产生许多无法使用的小碎片。</li>
+<li><strong>最差适应 (Worst-fit)</strong>：分配最大的孔。也需搜索整个列表，试图留下较大的剩余孔。</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">放置算法比较</p>
+<p>首次适应通常是最好和最快的。最佳适应性能往往较差。</p>
+</div>
+</li>
+</ul>
+<h4 id="93-fragmentation">9.3 碎片 (Fragmentation)</h4>
+<ul>
+<li><strong>外部碎片 (External Fragmentation)</strong>：存在足够的总内存空间满足请求，但它们不连续。<ul>
+<li>例如，有 10KB 和 5KB 的两个孔，但无法满足 12KB 的请求。</li>
+<li>50% 规则：首次适应分析表明，给定N个块的分配，大约有0.5N个块由于碎片而丢失（即1/3的内存可能无法使用）。</li>
+</ul>
+</li>
+<li>
+<p><strong>内部碎片 (Internal Fragmentation)</strong>：分配给进程的内存块略大于其请求的内存，这部分差值在分区内部但未被使用。</p>
+<ul>
+<li>例如，进程请求 10KB，分配了 12KB 的分区，有 2KB 内部碎片。</li>
+</ul>
+<p><strong>解决外部碎片</strong>：</p>
+<ul>
+<li><strong>压缩 (Compaction)</strong>：移动内存内容，将所有空闲内存合并成一个大块。需要动态重定位（执行时地址绑定）。开销大。</li>
+<li><strong>非连续分配</strong>：允许进程的逻辑地址空间在物理上不连续，如分段和分页。</li>
+</ul>
+</li>
+</ul>
+<h3 id="10-segmentation">10. 分段 (Segmentation)</h3>
+<ul>
+<li><strong>概念</strong>：程序及其数据被划分为多个<strong>段 (Segment)</strong>，如代码段、数据段、堆栈段等。</li>
+<li>段的长度不固定，但有最大长度。</li>
+<li><strong>逻辑地址</strong>：一个二维地址，由 <code>&lt;段号, 段内偏移&gt;</code> 组成。</li>
+<li><strong>优点</strong>：<ul>
+<li>方便程序员组织程序和数据，支持模块化。</li>
+<li>消除了内部碎片（因为段大小可变）。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>会产生外部碎片。</li>
+<li>程序需要知道段的最大长度限制。</li>
+</ul>
+</li>
+<li><strong>分段硬件</strong>：</li>
+<li>
+<ul>
+<li><strong>段表 (Segment Table)</strong>：将二维逻辑地址映射到一维物理地址。</li>
+<li>每个段表条目包含：<ul>
+<li><strong>段基址 (Segment Base)</strong>：该段在物理内存中的起始地址。</li>
+<li><strong>段界限 (Segment Limit)</strong>：该段的长度。</li>
+</ul>
+</li>
+<li>地址转换：<ol>
+<li>检查段内偏移是否 <code>&lt;</code> 段界限。若否则地址越界陷阱。</li>
+<li>物理地址 = 段基址 + 段内偏移。</li>
+</ol>
+</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">分段示例</p>
+<p>假设段表如下：</p>
+<table>
+<thead>
+<tr>
+<th>段号</th>
+<th>基址</th>
+<th>界限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>1400</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>6300</td>
+<td>400</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4300</td>
+<td>400</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3200</td>
+<td>1100</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4700</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>逻辑地址 <code>&lt;2, 53&gt;</code>：段2基址4300，界限400。53 &lt; 400，有效。物理地址 = 4300 + 53 = 4353。</p>
+<p>逻辑地址 <code>&lt;0, 1222&gt;</code>：段0基址1400，界限1000。1222 &gt; 1000，地址越界。</p>
+</div>
+</li>
+</ul>
+<h3 id="11-paging">11. 分页 (Paging)</h3>
+<ul>
+<li><strong>概念</strong>：允许进程的物理地址空间非连续。</li>
+<li><strong>基本思想</strong>：<ul>
+<li>将<strong>物理内存</strong>划分为固定大小的块，称为<strong>帧 (Frame)</strong>。帧大小是2的幂（如 4KB, 8KB）。</li>
+<li>将<strong>逻辑内存</strong>划分为同样大小的块，称为<strong>页 (Page)</strong>。</li>
+</ul>
+</li>
+<li><strong>运行程序</strong>：要运行 N 页的程序，需找到 N 个空闲帧，加载程序页到这些帧中，并设置页表。</li>
+<li><strong>优点</strong>：<ul>
+<li>避免外部碎片。</li>
+<li>避免了紧缩的需要。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>仍然存在<strong>内部碎片</strong>（最后一页通常不会占满整个帧）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="111">11.1 地址转换</h4>
+<ul>
+<li>CPU 生成的逻辑地址分为两部分：<ul>
+<li><strong>页号 (Page number, p)</strong>：用作页表的索引。</li>
+<li><strong>页偏移 (Page offset, d)</strong>：在页内的相对地址。</li>
+</ul>
+</li>
+<li>如果逻辑地址空间大小为 <span class="arithmatex">\(2^m\)</span>，页面大小为 <span class="arithmatex">\(2^n\)</span> 字节：<ul>
+<li>页号占 <span class="arithmatex">\(m-n\)</span> 位。</li>
+<li>页偏移占 <span class="arithmatex">\(n\)</span> 位。</li>
+<li>逻辑地址 = <code>| 页号 (p) | 页偏移 (d) |</code></li>
+</ul>
+</li>
+<li>物理地址 = (帧号 <span class="arithmatex">\(\times\)</span> 页面大小) + 页偏移。
+    或者更直接地：物理地址 = <code>| 帧号 (f) | 页偏移 (d) |</code> (帧号和页偏移位数可能不同，但偏移量部分直接复制)</li>
+</ul>
+<h4 id="112-page-table">11.2 页表 (Page Table)</h4>
+<ul>
+<li><strong>功能</strong>：存储逻辑页到物理帧的映射关系。</li>
+<li>每个进程都有一个页表。</li>
+<li><strong>页表基址寄存器 (PTBR, Page Table Base Register)</strong>：指向当前进程页表在内存中的起始地址。</li>
+<li><strong>页表长度寄存器 (PTLR, Page Table Length Register)</strong>：指示页表的大小（条目数）。</li>
+<li>
+<p><strong>地址转换过程</strong>：</p>
+<ol>
+<li>从逻辑地址中提取页号 <code>p</code>。</li>
+<li>访问页表中第 <code>p</code> 个条目，获取对应的帧号 <code>f</code>。</li>
+<li>将帧号 <code>f</code> 与逻辑地址中的页偏移 <code>d</code> 组合成物理地址。</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">内存访问开销</p>
+<p>每次数据/指令访问需要两次内存访问：一次访问页表，一次访问实际数据/指令。</p>
+</div>
+</li>
+</ul>
+<h4 id="113-tlb-translation-lookaside-buffer">11.3 转换检测缓冲区 (TLB, Translation Lookaside Buffer)</h4>
+<ul>
+<li><strong>也称快表 (Associative Memory)</strong>，是一种特殊的快速查找硬件缓存。</li>
+<li><strong>键值存储</strong>：存储最近使用过的页号到帧号的映射。<ul>
+<li>键：页号</li>
+<li>值：帧号</li>
+</ul>
+</li>
+<li><strong>工作原理</strong>：<ol>
+<li>CPU 生成逻辑地址，提取页号 <code>p</code>。</li>
+<li>并行在 TLB 中查找 <code>p</code>。</li>
+<li><strong>TLB 命中 (TLB Hit)</strong>：若找到，直接获取帧号，计算物理地址。速度快。</li>
+<li><strong>TLB 未命中 (TLB Miss)</strong>：若未找到，则访问内存中的页表获取帧号，然后将此映射存入 TLB（可能替换旧条目），再计算物理地址。</li>
+</ol>
+</li>
+<li><strong>ASID (Address-Space Identifier)</strong>：TLB 中可存储 ASID 以区分不同进程的条目，避免上下文切换时刷新整个 TLB。</li>
+<li>
+<p><strong>有效访问时间 (EAT, Effective Access Time)</strong>：</p>
+<p>设 TLB 查找时间为 <span class="arithmatex">\(\epsilon\)</span> (可忽略不计或很小)，内存访问时间为 <span class="arithmatex">\(t\)</span>，TLB 命中率为 <span class="arithmatex">\(\alpha\)</span>。</p>
+<p><span class="arithmatex">\(EAT = \alpha \times (t) + (1-\alpha) \times (2t)\)</span>  (简化模型，TLB查找时间忽略，一次TLB miss导致两次内存访问：查页表+访数据)</p>
+<p>如果考虑TLB访问时间 <span class="arithmatex">\(\epsilon\)</span> 和内存访问时间 <span class="arithmatex">\(m\)</span>:</p>
+<p><span class="arithmatex">\(EAT = \alpha \times (\epsilon + m) + (1-\alpha) \times (\epsilon + m + m)\)</span></p>
+<p><span class="arithmatex">\(EAT = \epsilon + m + (1-\alpha)m\)</span></p>
+<p><span class="arithmatex">\(EAT = \text{TLB\_lookup} + \text{Hit\_Rate} \times (\text{Memory\_Access}) + (1-\text{Hit\_Rate}) \times (\text{Page\_Table\_Access} + \text{Memory\_Access})\)</span></p>
+<div class="admonition example">
+<p class="admonition-title">EAT 计算</p>
+<p>假设 TLB 查找时间为 0 ns (理想情况，实际很小)，内存访问时间为 10 ns。</p>
+<p>命中率 80%： <span class="arithmatex">\(EAT = 0.80 \times 10\text{ns} + 0.20 \times (10\text{ns} + 10\text{ns}) = 8\text{ns} + 0.20 \times 20\text{ns} = 8\text{ns} + 4\text{ns} = 12\text{ns}\)</span></p>
+<p>命中率 99%： <span class="arithmatex">\(EAT = 0.99 \times 10\text{ns} + 0.01 \times (10\text{ns} + 10\text{ns}) = 9.9\text{ns} + 0.01 \times 20\text{ns} = 9.9\text{ns} + 0.2\text{ns} = 10.1\text{ns}\)</span></p>
+</div>
+</li>
+</ul>
+<h4 id="114">11.4 内存保护</h4>
+<ul>
+<li>通过在页表条目中增加保护位实现。</li>
+<li><strong>有效-无效位 (Valid-Invalid Bit)</strong>：<ul>
+<li><strong>Valid (v)</strong>：关联页在进程的逻辑地址空间中，且已调入内存。</li>
+<li><strong>Invalid (i)</strong>：关联页不在进程的逻辑地址空间中，或未调入内存。</li>
+<li>访问无效页会产生陷阱 (trap) 给操作系统（缺页异常或段错误）。</li>
+</ul>
+</li>
+<li>其他保护位：如只读 (Read-Only)、读写 (Read-Write)、仅执行 (Execute-Only) 等。</li>
+</ul>
+<h4 id="115-shared-pages">11.5 共享页 (Shared Pages)</h4>
+<ul>
+<li><strong>共享代码 (Shared Code)</strong>：多个进程可以共享只读（可重入）代码的一个副本（如文本编辑器、编译器）。</li>
+<li><strong>共享数据 (Shared Data)</strong>：如果允许多个进程共享读写页面，可用于进程间通信。</li>
+<li>私有代码和数据：每个进程保留各自的副本。</li>
+</ul>
+<h4 id="116">11.6 页表结构</h4>
+<p>对于大地址空间（如32位或64位），简单页表可能非常庞大。</p>
+<p>例如：32位逻辑地址，页面大小 4KB (<span class="arithmatex">\(2^{12}\)</span> 字节)。
+页表条目数 = <span class="arithmatex">\(2^{32} / 2^{12} = 2^{20}\)</span> (约100万)。若每条目4字节，则页表大小为 4MB。</p>
+<p>解决方案：</p>
+<ol>
+<li>
+<p><strong>分层页表 (Hierarchical Paging / Multi-level Page Tables)</strong></p>
+<ul>
+<li>将页表本身进行分页。</li>
+<li><strong>二级页表</strong>：<ul>
+<li>逻辑地址分为：<code>| 外层页号 (p1) | 内层页号 (p2) | 页偏移 (d) |</code></li>
+<li><code>p1</code> 用于索引外层页表，找到内层页表的基址。</li>
+<li><code>p2</code> 用于索引内层页表，找到数据页对应的帧号。</li>
+</ul>
+</li>
+<li><strong>三级或更多级页表</strong>：对于64位系统，二级页表仍可能过大，可扩展到更多级。<ul>
+<li>缺点：多次内存访问才能获取最终物理地址（每级页表一次）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>散列页表 (Hashed Page Tables)</strong></p>
+<ul>
+<li>适用于大于32位的地址空间。</li>
+<li>虚拟页码经过哈希函数计算，得到页表中的索引。</li>
+<li>页表条目是一个链表头，存储哈希到同一位置的元素。</li>
+<li>每个元素包含：&lt;虚拟页码, 映射的帧号, 指向链表下一元素的指针&gt;。</li>
+<li><strong>聚簇页表 (Clustered Page Tables)</strong>：哈希页表的变体，每个条目引用多个页面（如16个），适用于稀疏地址空间。</li>
+</ul>
+</li>
+<li>
+<p><strong>倒排页表 (Inverted Page Tables)</strong></p>
+<ul>
+<li>不是每个进程一个页表，而是系统中只有一个页表，为每个物理帧建立一个条目。</li>
+<li>每个条目包含：&lt;存储在该帧的虚拟页号, 拥有该页的进程ID&gt;。</li>
+<li><strong>优点</strong>：大大减少了存储页表所需的内存。</li>
+<li><strong>缺点</strong>：搜索表所需时间增加（因为要根据&lt;进程ID, 虚拟页号&gt;搜索整个表）。通常使用哈希表辅助搜索。</li>
+<li>实现共享内存较复杂。</li>
+</ul>
+</li>
+</ol>
+<h3 id="12">12. 示例体系结构</h3>
+<ul>
+<li><strong>Intel IA-32 (32位)</strong><ul>
+<li>支持分段和分页。CPU生成逻辑地址 -&gt; 分段单元 (使用GDT/LDT) -&gt; 线性地址 -&gt; 分页单元 -&gt; 物理地址。</li>
+<li>页面大小可以是 4KB 或 4MB。</li>
+<li><strong>PAE (Page Address Extension)</strong>：允许32位应用访问超过4GB内存。使用3级分页，地址空间扩展到36位（64GB物理内存）。</li>
+</ul>
+</li>
+<li><strong>Intel x86-64 (64位)</strong><ul>
+<li>实际实现48位寻址。</li>
+<li>页面大小 4KB, 2MB, 1GB。</li>
+<li>通常使用4级分页层次结构。</li>
+</ul>
+</li>
+<li><strong>ARM</strong><ul>
+<li>主流移动平台。</li>
+<li>支持多种页面大小（如 4KB, 16KB, 1MB, 16MB）。</li>
+<li>一级或两级分页。</li>
+<li>两级TLB（微TLB + 主TLB）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-buddy-system">13. 伙伴系统 (Buddy System)</h3>
+<p>一种内存分配方案，试图融合固定分区和动态分区的优点。</p>
+<ul>
+<li><strong>原理</strong>：<ul>
+<li>内存块大小为 <span class="arithmatex">\(2^K\)</span> 字，其中 <span class="arithmatex">\(2^L\)</span> 是最小分配块， <span class="arithmatex">\(2^U\)</span> 是最大分配块（通常是整个可分配内存）。</li>
+<li>当请求大小为 <span class="arithmatex">\(S\)</span> 的内存时：<ul>
+<li>分配大小为 <span class="arithmatex">\(2^k\)</span> 的块，其中 <span class="arithmatex">\(2^{k-1} &lt; S \le 2^k\)</span>。</li>
+<li>如果找不到 <span class="arithmatex">\(2^k\)</span> 大小的块，则从更大的块 <span class="arithmatex">\(2^{k+1}\)</span>分裂成两个 <span class="arithmatex">\(2^k\)</span> 的“伙伴”块。</li>
+<li>重复分裂，直到得到合适大小的块。</li>
+</ul>
+</li>
+<li><strong>释放内存</strong>：<ul>
+<li>当一个块被释放时，检查其伙伴块是否也空闲。</li>
+<li>如果伙伴也空闲，则合并它们形成一个更大的块，并递归向上检查合并。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>优点</strong>：快速合并空闲块。</li>
+<li><strong>缺点</strong>：仍可能存在内部碎片（因为分配的是2的幂次方大小）。</li>
+</ul>
+<hr />
+<h2 id="_3">第十讲：虚拟内存管理</h2>
+<div class="admonition goal">
+<p class="admonition-title">学习目标</p>
+<ul>
+<li>定义虚拟内存及其优点</li>
+<li>解释请求调页、页面置换算法和页帧分配</li>
+<li>讨论工作集模型原理</li>
+<li>讨论共享内存和内存映射文件的关系</li>
+<li>讨论如何管理内核内存</li>
+</ul>
+</div>
+<h3 id="1_1">1. 虚拟内存背景</h3>
+<ul>
+<li><strong>核心思想</strong>：允许执行未完全加载入内存的程序。</li>
+<li><strong>优点</strong>：<ul>
+<li>程序不再受物理内存大小限制。</li>
+<li>每个程序占用更少物理内存，可同时运行更多程序，提高 CPU 利用率和吞吐量。</li>
+<li>加载或交换程序所需的 I/O 更少，程序运行更快。</li>
+</ul>
+</li>
+<li>
+<p><strong>实现</strong>：MMU 将逻辑地址（虚拟地址）转换为物理地址。</p>
+<div class="highlight"><pre><span></span><code>CPU -&gt; (Virtual Address) -&gt; MMU -&gt; (Physical Address) -&gt; Memory
+</code></pre></div>
+</li>
+<li>
+<p><strong>虚拟内存</strong>：将用户逻辑内存与物理内存分离。</p>
+<ul>
+<li>逻辑地址空间可以远大于物理地址空间。</li>
+<li>允许进程共享地址空间，高效创建进程。</li>
+</ul>
+</li>
+<li><strong>实现方式</strong>：<ul>
+<li><strong>请求分页 (Demand Paging)</strong></li>
+<li>请求分段 (Demand Segmentation)</li>
+</ul>
+</li>
+</ul>
+<h3 id="2_1">2. 虚拟地址空间</h3>
+<ul>
+<li>进程看到的内存是逻辑上连续的地址空间，通常从0开始。</li>
+<li>典型布局：代码区、数据区、堆（向上增长）、栈（向下增长）。</li>
+<li>堆栈之间的空洞允许动态增长。</li>
+<li>系统库、共享内存等通过映射到虚拟地址空间实现共享。</li>
+</ul>
+<h3 id="3-demand-paging">3. 请求分页 (Demand Paging)</h3>
+<ul>
+<li><strong>概念</strong>：只在需要时才将页面调入内存（惰性交换 Lazy Swapper）。</li>
+<li><strong>机制</strong>：<ul>
+<li>页表条目中增加<strong>有效-无效位 (Valid-Invalid Bit)</strong>：<ul>
+<li><code>v</code> (valid): 页在内存中。</li>
+<li><code>i</code> (invalid): 页不在内存中（或无效引用）。</li>
+</ul>
+</li>
+<li>访问标记为 <code>i</code> 的页，MMU 产生<strong>缺页错误 (Page Fault)</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="31">3.1 处理缺页错误</h4>
+<ol>
+<li>CPU 访问某页，MMU 发现该页在页表中标记为无效 (invalid)。</li>
+<li>MMU 产生一个<strong>缺页陷阱 (Page Fault Trap)</strong>给操作系统。</li>
+<li>
+<p><strong>操作系统响应</strong>：</p>
+<p>a.  检查进程内部表（如 PCB 中）确定引用是否合法（例如，地址是否在进程逻辑地址空间内）。
+b.  若非法引用，则终止进程。
+c.  若合法但页不在内存：
+    i.  找到一个空闲物理帧 (Free Frame)。(若无空闲帧，则需执行页面置换)
+    ii. 调度磁盘操作，将所需页面从磁盘读入该空闲帧。
+    iii.磁盘读取完成后，修改进程页表和内部表，将该页标记为有效 (valid)，并记录其物理帧号。
+5.  重新启动导致缺页的指令。</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">纯请求分页</p>
+<p>进程启动时，没有任何页在内存中。第一条指令就会导致缺页。</p>
+</div>
+<ul>
+<li><strong>硬件支持</strong>：<ul>
+<li>带有效-无效位的页表。</li>
+<li>辅助存储（如磁盘上的交换空间 Swap Space）。</li>
+<li>指令重启能力。</li>
+</ul>
+</li>
+</ul>
+<h4 id="32">3.2 请求分页的性能</h4>
+<ul>
+<li>
+<p><strong>有效访问时间 (EAT)</strong>：</p>
+<p>设 <span class="arithmatex">\(p\)</span> 为缺页率 (<span class="arithmatex">\(0 \le p \le 1\)</span>)，内存访问时间为 <span class="arithmatex">\(t_{mem}\)</span>，缺页处理时间为 <span class="arithmatex">\(t_{fault}\)</span>。</p>
+<p><span class="arithmatex">\(EAT = (1-p) \times t_{mem} + p \times t_{fault}\)</span></p>
+<p>其中 <span class="arithmatex">\(t_{fault}\)</span> 包括：陷阱处理、磁盘读页、进程重启等开销，远大于 <span class="arithmatex">\(t_{mem}\)</span>。</p>
+<div class="admonition example">
+<p class="admonition-title">EAT 计算</p>
+<p><span class="arithmatex">\(t_{mem} = 200 \text{ ns}\)</span></p>
+<p><span class="arithmatex">\(t_{fault} = 8 \text{ ms} = 8,000,000 \text{ ns}\)</span></p>
+<p><span class="arithmatex">\(EAT = (1-p) \times 200 + p \times 8,000,000 = 200 + 7,999,800 \times p\)</span></p>
+<p>如果 <span class="arithmatex">\(p = 0.001\)</span> (千分之一的访问缺页):</p>
+<p><span class="arithmatex">\(EAT = 200 + 7,999,800 \times 0.001 = 200 + 7999.8 \approx 8.2 \text{ μs}\)</span> (性能下降约40倍)</p>
+<p>要使性能下降 &lt; 10% (<span class="arithmatex">\(EAT &lt; 220 \text{ ns}\)</span>):</p>
+<p><span class="arithmatex">\(220 &gt; 200 + 7,999,800 \times p \implies 20 &gt; 7,999,800 \times p \implies p &lt; 0.0000025\)</span></p>
+<p>(即每40万次访问少于1次缺页)</p>
+</div>
+</li>
+<li>
+<p><strong>优化</strong>：</p>
+<ul>
+<li>使用快速交换空间。</li>
+<li>从程序二进制文件按需调页，丢弃只读页而不是换出。</li>
+<li>匿名内存（堆栈）需写入交换空间。</li>
+</ul>
+</li>
+</ul>
+<h4 id="33-copy-on-write-cow">3.3 写时复制 (Copy-on-Write, COW)</h4>
+<ul>
+<li><code>fork()</code> 系统调用创建子进程时，父子进程最初共享相同的物理页面。</li>
+<li>只有当任一进程试图<strong>写入</strong>共享页面时，才复制该页面，为写入方创建一个私有副本。</li>
+<li><strong>优点</strong>：提高 <code>fork()</code> 效率，因为只复制被修改的页面。</li>
+<li>空闲页面通常从“按需零填充”池中分配（分配前清零，保证安全性）。</li>
+</ul>
+<h3 id="4-page-replacement">4. 页面置换 (Page Replacement)</h3>
+<p>当发生缺页但没有空闲帧时，需要选择一个内存中的页（牺牲页, victim page）将其换出到磁盘，以腾出帧给新调入的页。</p>
+<ul>
+<li><strong>目标</strong>：选择一个未来最长时间内不会被访问的页，以最小化缺页率。</li>
+<li><strong>修改位/脏位 (Modify Bit / Dirty Bit)</strong>：<ul>
+<li>页表条目中增加一位。</li>
+<li>当页被写入（修改）时，硬件设置此位为1。</li>
+<li>如果牺牲页的脏位为0（未修改），则无需写回磁盘，直接覆盖。</li>
+<li>如果脏位为1，则必须先将其内容写回磁盘，再覆盖。</li>
+</ul>
+</li>
+</ul>
+<h4 id="41">4.1 基本页面置换流程</h4>
+<ol>
+<li>在磁盘上找到所需页面的位置。</li>
+<li>找到一个空闲帧：
+    a.  如果有空闲帧，使用它。
+    b.  如果没有空闲帧，使用页面置换算法选择一个<strong>牺牲帧 (Victim Frame)</strong>。
+    c.  如果牺牲帧对应的页面是“脏”的（被修改过），则将其写回磁盘。</li>
+<li>将所需页面读入（刚被释放或原为空闲的）帧中；更新页表和帧表。</li>
+<li>重新启动导致陷阱的指令。</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">开销增加</p>
+<p>若无空闲帧且牺牲页是脏的，一次缺页可能导致两次页面传输（一次写出牺牲页，一次读入新页）。</p>
+</div>
+<h4 id="42">4.2 页面置换算法</h4>
+<p>评估标准：在给定的内存引用字符串 (Reference String) 和可用帧数下，产生的缺页次数。</p>
+<ol>
+<li>
+<p><strong>先进先出 (FIFO, First-In First-Out)</strong></p>
+<ul>
+<li>替换最早进入内存的页面。</li>
+<li>实现简单（使用队列）。</li>
+<li><strong>Belady 异常 (Belady's Anomaly)</strong>：对于某些引用串，增加分配的帧数反而可能导致缺页率上升。</li>
+</ul>
+</li>
+<li>
+<p><strong>最优算法 (OPT / MIN, Optimal)</strong></p>
+<ul>
+<li>替换未来最长时间内不会被使用的页面。</li>
+<li>理论上缺页率最低，但无法实现（因为无法预测未来）。</li>
+<li>作为衡量其他算法性能的基准。</li>
+</ul>
+</li>
+<li>
+<p><strong>最近最少使用 (LRU, Least Recently Used)</strong></p>
+<ul>
+<li>替换过去最长时间内未被使用的页面。基于局部性原理，认为最近未用的将来也不太可能用。</li>
+<li>性能较好，不会有 Belady 异常。</li>
+<li><strong>实现方式</strong>：<ul>
+<li><strong>计数器 (Counter)</strong>：每页一个时间戳，记录最后访问时间。替换时找时间戳最小的。开销大。</li>
+<li><strong>栈 (Stack)</strong>：维护一个按访问时间排序的页号栈。页被访问则移到栈顶。替换栈底页。更新开销大。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>近似 LRU 算法</strong>
+    硬件支持有限，LRU 实现复杂，故采用近似算法。</p>
+<ul>
+<li><strong>引用位 (Reference Bit)</strong>：<ul>
+<li>页表条目中增加一位，由硬件设置。</li>
+<li>页被访问时，引用位置1。</li>
+<li>操作系统定期清零引用位。</li>
+</ul>
+</li>
+<li><strong>附加引用位算法 / 老化算法 (Aging)</strong>：<ul>
+<li>为每页维护一个多位寄存器（如8位）。</li>
+<li>定时将引用位移入寄存器的高位，寄存器右移，丢弃低位。</li>
+<li>寄存器值越小，表示越久未被访问。</li>
+</ul>
+</li>
+<li><strong>第二次机会算法 (Second-Chance / Clock Algorithm)</strong>：<ul>
+<li>FIFO 的改进，结合引用位。</li>
+<li>页面组织成循环队列，有一个指针指向下一个可能的牺牲者。</li>
+<li>选择牺牲页时：<ul>
+<li>若引用位为0：替换该页。</li>
+<li>若引用位为1：给它“第二次机会”，将其引用位置0，指针后移，继续查找。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>增强型第二次机会算法 (Enhanced Second-Chance Algorithm)</strong>：<ul>
+<li>同时考虑引用位和修改位 (dirty bit)。将页分为4类：<ol>
+<li><code>(0,0)</code>：最近未引用，未修改 (最佳牺牲者)</li>
+<li><code>(0,1)</code>：最近未引用，但已修改 (次佳，需写回)</li>
+<li><code>(1,0)</code>：最近引用，未修改</li>
+<li><code>(1,1)</code>：最近引用，已修改</li>
+</ol>
+</li>
+<li>按类别顺序查找牺牲者，替换类别编号最小的非空集合中的第一个页。可能需要多次扫描。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>计数算法 (Counting Algorithms)</strong></p>
+<ul>
+<li><strong>最不经常使用 (LFU, Least Frequently Used)</strong>：替换引用次数最少的页。可能将刚调入还未使用的页换出。</li>
+<li><strong>最常使用 (MFU, Most Frequently Used)</strong>：替换引用次数最多的页。理由是引用少的页可能刚调入。</li>
+</ul>
+</li>
+<li>
+<p><strong>页面缓冲算法 (Page Buffering Algorithms)</strong></p>
+<ul>
+<li>维护一个空闲帧池。</li>
+<li>发生缺页时，从空闲池取帧，并将牺牲页加入“待写出列表”或“待重用列表”。</li>
+<li>磁盘空闲时，将脏页写回。</li>
+<li>如果被“牺牲”但仍在缓冲区的页再次被访问，可快速恢复。</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-frame-allocation">5. 帧分配 (Frame Allocation)</h3>
+<p>如何为多个进程分配有限的物理帧？</p>
+<ul>
+<li><strong>最少帧数</strong>：每个进程需要一个最小帧数以保证运行（如指令跨多页，间接寻址等）。</li>
+<li>
+<p><strong>分配策略</strong>：</p>
+<ul>
+<li><strong>固定分配 (Fixed Allocation)</strong>：<ul>
+<li><strong>平均分配</strong>：每个进程分得相同数量的帧。</li>
+<li><strong>比例分配</strong>：根据进程大小或优先级按比例分配帧。
+    <span class="arithmatex">\(a_i = \frac{s_i}{S} \times m\)</span>, <span class="arithmatex">\(a_i\)</span> 为进程 <span class="arithmatex">\(i\)</span> 分配的帧数, <span class="arithmatex">\(s_i\)</span> 为进程 <span class="arithmatex">\(i\)</span> 大小, <span class="arithmatex">\(S = \sum s_j\)</span>, <span class="arithmatex">\(m\)</span> 为总可用帧数。</li>
+</ul>
+</li>
+<li><strong>优先级分配 (Priority Allocation)</strong>：根据进程优先级分配帧，高优先级进程可能从低优先级进程处获取帧。</li>
+</ul>
+</li>
+<li>
+<p><strong>全局置换 vs. 局布置换 (Global vs. Local Replacement)</strong></p>
+<ul>
+<li><strong>全局置换</strong>：进程可以从所有帧（包括属于其他进程的帧）中选择牺牲帧。<ul>
+<li>优点：系统吞吐量可能更高，灵活。</li>
+<li>缺点：一个进程的缺页行为受其他进程影响，缺页率不可控。</li>
+</ul>
+</li>
+<li><strong>局布置换</strong>：每个进程只能从分配给它自己的帧中选择牺牲帧。<ul>
+<li>优点：进程缺页行为更可预测和控制。</li>
+<li>缺点：可能造成内存浪费（某进程帧多不用，另一进程帧少急需）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-thrashing">6. 系统抖动 (Thrashing)</h3>
+<ul>
+<li><strong>现象</strong>：如果一个进程没有足够的帧来容纳其当前工作所需的“活动”页面集合，它会频繁发生缺页。CPU 大部分时间都在等待磁盘 I/O（调页），而不是执行用户代码，导致 CPU 利用率极低。</li>
+<li><strong>原因</strong>：进程的“局部性 (Locality)”所需页面总数大于分配给它的帧数。</li>
+<li>操作系统可能错误地认为 CPU 利用率低是由于多道程序数量不够，从而引入更多进程，加剧抖动。</li>
+<li><strong>局部性模型 (Locality Model)</strong>：进程在执行时，倾向于访问一组相对集中的页面，这个集合称为“局部”。局部性会随时间变化。</li>
+</ul>
+<h4 id="61-working-set-model">6.1 工作集模型 (Working-Set Model)</h4>
+<ul>
+<li>基于局部性假设。</li>
+<li><span class="arithmatex">\(\Delta\)</span>: 工作集窗口，一个固定的页面引用次数（如最近10000次内存引用）。</li>
+<li><span class="arithmatex">\(WSS_i\)</span> (进程 <span class="arithmatex">\(P_i\)</span> 的工作集)：在最近 <span class="arithmatex">\(\Delta\)</span> 次引用中实际访问到的不同页面的集合。<span class="arithmatex">\(|WSS_i|\)</span> 是工作集大小。</li>
+<li>如果 <span class="arithmatex">\(\Delta\)</span> 太小，不能包含整个局部；太大，则包含多个局部。</li>
+<li><span class="arithmatex">\(D = \sum |WSS_i|\)</span>: 系统总需求帧数。</li>
+<li>如果 <span class="arithmatex">\(D &gt; m\)</span> (总可用帧数)，则可能发生抖动。</li>
+<li>策略：为进程分配其工作集大小的帧。若内存不足，则挂起某些进程。</li>
+</ul>
+<h4 id="62-pff-page-fault-frequency">6.2 缺页错误率 (PFF, Page-Fault Frequency)</h4>
+<ul>
+<li>更直接的方法控制抖动。</li>
+<li>设定可接受的缺页率上限和下限。<ul>
+<li>如果某进程缺页率 &gt; 上限：说明帧不足，分配更多帧。</li>
+<li>如果某进程缺页率 &lt; 下限：说明帧有富余，可回收一些帧。</li>
+</ul>
+</li>
+<li>若所有进程缺页率都较高但无空闲帧可分配，则需挂起某些进程。</li>
+</ul>
+<h3 id="7">7. 内核内存分配</h3>
+<ul>
+<li>内核内存需求与用户内存不同，通常从单独的内存池中分配。</li>
+<li>某些内核数据结构需要物理上连续的内存（如 I/O 操作的缓冲区）。</li>
+<li>常见分配器：<ul>
+<li><strong>伙伴系统 (Buddy System)</strong>：(已在物理内存部分介绍) 将内存按 <span class="arithmatex">\(2^k\)</span> 大小管理，分裂和合并。</li>
+<li><strong>Slab 分配器 (Slab Allocator)</strong>：<ul>
+<li><strong>Slab</strong>: 一个或多个物理连续的页。</li>
+<li><strong>Cache</strong>: 由一个或多个 Slab 组成，专用于一种特定类型的内核数据结构（对象）。</li>
+<li>Cache 创建时，Slab 中填充了该类型的对象实例，标记为空闲。</li>
+<li>分配对象：从 Cache 中取一个空闲对象。</li>
+<li>释放对象：将其标记为空闲，放回 Cache。</li>
+<li><strong>优点</strong>:<ul>
+<li>消除内部碎片（对象大小固定）。</li>
+<li>分配和释放速度快（对象已预先初始化）。</li>
+</ul>
+</li>
+<li>Slab 状态：Full (全满), Empty (全空), Partial (部分使用)。优先从 Partial Slab 分配。</li>
+<li>Linux 中的 SLOB (Simple List of Blocks, 适用于内存受限系统) 和 SLUB (性能优化的 Slab) 也是类似机制。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="8">8. 其他注意事项</h3>
+<ul>
+<li><strong>预调页 (Prepaging)</strong>：<ul>
+<li>在进程启动或缺页时，除了调入所需页，还“预先”调入一些猜测可能很快会用到的页。</li>
+<li>目标是减少初始阶段的大量缺页。</li>
+<li>如果预调入的页未使用，则浪费了 I/O 和内存。</li>
+</ul>
+</li>
+<li><strong>页面大小 (Page Size)</strong>：<ul>
+<li>影响因素：内部碎片大小、页表大小、I/O 开销、TLB 覆盖率、局部性。</li>
+<li>通常是 <span class="arithmatex">\(2^k\)</span> (如 4KB, 8KB, ... 4MB)。</li>
+<li>趋势是页面大小逐渐增大。</li>
+</ul>
+</li>
+<li><strong>TLB 覆盖范围 (TLB Reach)</strong>：<ul>
+<li><span class="arithmatex">\(TLB\_Reach = (\text{TLB 条目数}) \times (\text{页面大小})\)</span></li>
+<li>理想情况下，进程工作集应能放入 TLB。</li>
+<li>增大页面大小或提供多种页面大小可以增加 TLB Reach。</li>
+</ul>
+</li>
+<li><strong>程序结构</strong>：<ul>
+<li>数据存储方式和访问模式会显著影响缺页率。</li>
+<li>例如，按行存储的二维数组，如果按列访问，且每行一页，会导致大量换页。
+    <div class="highlight"><pre><span></span><code><span class="c1">// 假设 int data[128][128]; 每行一页</span>
+<span class="c1">// 差的访问 (128*128 次缺页)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="c1">// 好的访问 (128 次缺页)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">128</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div></li>
+</ul>
+</li>
+<li><strong>I/O 互锁与页面锁定 (I/O Interlock and Page Locking)</strong>：<ul>
+<li>进行 I/O 操作的页面（如 DMA 缓冲区）必须<strong>锁定 (Pinning)</strong> 在内存中，不能被置换出去，直到 I/O 完成。</li>
+</ul>
+</li>
+</ul>
+<h3 id="9">9. 操作系统示例</h3>
+<ul>
+<li><strong>Windows</strong>：<ul>
+<li>使用请求调页，带有<strong>集群 (Clustering)</strong>（一次调入故障页及其周围页）。</li>
+<li>为进程分配工作集最小值和最大值。</li>
+<li>内存不足时进行工作集修整 (Working Set Trimming)。</li>
+</ul>
+</li>
+<li><strong>Solaris / (类 Unix 系统)</strong>：<ul>
+<li>维护空闲页列表。通过 <code>lotsfree</code>, <code>desfree</code>, <code>minfree</code> 等阈值控制调页和交换。</li>
+<li><code>pageout</code> 进程使用时钟算法扫描页面。</li>
+<li><code>scanrate</code> (扫描速率) 从 <code>slowscan</code> 到 <code>fastscan</code> 变化。</li>
+<li>优先级调页（如优先保留代码页）。</li>
+</ul>
+</li>
+</ul>
 
 
 
@@ -1786,7 +3435,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月12日 10:20:59 CST">2025年6月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月14日 20:15:26 CST">2025年6月14日</span>
   </span>
 
     
@@ -1930,7 +3579,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../chapter3/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 同步与死锁">
+          <a href="../chapter3/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 进程同步与死锁">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1940,7 +3589,7 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                同步与死锁
+                进程同步与死锁
               </div>
             </div>
           </a>
