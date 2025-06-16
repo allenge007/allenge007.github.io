@@ -1152,7 +1152,7 @@
   
   
   <span class="md-ellipsis">
-    搜索技术
+    搜索技术总结
     
   </span>
   
@@ -1880,41 +1880,51 @@
 <p>为了达成上述目标，操作系统需要具备多种核心功能，就像一位多才多艺的管家，精通各项事务。</p>
 <div class="admonition info">
 <p class="admonition-title">处理器管理 (CPU Management / Process Management)</p>
-<p>CPU 是计算机的大脑，处理器管理的核心任务是合理分配和调度 CPU 时间给各个运行中的程序（即进程）。
-*   <strong>进程控制：</strong> 负责进程的创建、终止、挂起、激活等生命周期管理。
-*   <strong>进程调度：</strong> 采用特定算法（如先来先服务、时间片轮转）决定哪个进程何时获得 CPU 使用权。
-*   <strong>进程同步与通信：</strong> 解决多个进程并发执行时可能出现的资源竞争和协作问题。</p>
+<p>CPU 是计算机的大脑，处理器管理的核心任务是合理分配和调度 CPU 时间给各个运行中的程序（即进程）。</p>
+<ul>
+<li><strong>进程控制：</strong> 负责进程的创建、终止、挂起、激活等生命周期管理。</li>
+<li><strong>进程调度：</strong> 采用特定算法（如先来先服务、时间片轮转）决定哪个进程何时获得 CPU 使用权。</li>
+<li><strong>进程同步与通信：</strong> 解决多个进程并发执行时可能出现的资源竞争和协作问题。</li>
+</ul>
 </div>
 <div class="admonition info">
 <p class="admonition-title">存储器管理 (Memory Management)</p>
-<p>内存是程序运行的“舞台”，存储器管理负责高效、安全地分配和管理内存资源。
-*   <strong>内存分配与回收：</strong> 为进程动态分配所需内存，并在进程结束后及时回收。
-*   <strong>地址映射/重定位：</strong> 将程序使用的逻辑地址转换为物理内存地址。
-*   <strong>内存保护：</strong> 防止进程越界访问，确保系统和其他进程的安全。
-*   <strong>内存扩充：</strong> 利用虚拟内存技术（如分页、分段），让程序感觉拥有比实际物理内存更大的空间。</p>
+<p>内存是程序运行的“舞台”，存储器管理负责高效、安全地分配和管理内存资源。</p>
+<ul>
+<li><strong>内存分配与回收：</strong> 为进程动态分配所需内存，并在进程结束后及时回收。</li>
+<li><strong>地址映射/重定位：</strong> 将程序使用的逻辑地址转换为物理内存地址。</li>
+<li><strong>内存保护：</strong> 防止进程越界访问，确保系统和其他进程的安全。</li>
+<li><strong>内存扩充：</strong> 利用虚拟内存技术（如分页、分段），让程序感觉拥有比实际物理内存更大的空间。</li>
+</ul>
 </div>
 <div class="admonition info">
 <p class="admonition-title">设备管理 (Device Management / I/O Management)</p>
-<p>计算机连接着各种输入输出设备（键盘、鼠标、磁盘、打印机等），设备管理负责协调它们的工作。
-*   <strong>设备分配与回收：</strong> 管理和分配设备给请求使用的进程。
-*   <strong>缓冲管理：</strong> 设置缓冲区以缓解 CPU 与 I/O 设备之间速度不匹配的问题。
-*   <strong>设备驱动：</strong> 提供与具体硬件交互的驱动程序，屏蔽硬件差异。
-*   <strong>中断处理：</strong> 响应和处理来自硬件设备的中断请求。</p>
+<p>计算机连接着各种输入输出设备（键盘、鼠标、磁盘、打印机等），设备管理负责协调它们的工作。</p>
+<ul>
+<li><strong>设备分配与回收：</strong> 管理和分配设备给请求使用的进程。</li>
+<li><strong>缓冲管理：</strong> 设置缓冲区以缓解 CPU 与 I/O 设备之间速度不匹配的问题。</li>
+<li><strong>设备驱动：</strong> 提供与具体硬件交互的驱动程序，屏蔽硬件差异。</li>
+<li><strong>中断处理：</strong> 响应和处理来自硬件设备的中断请求。</li>
+</ul>
 </div>
 <div class="admonition info">
 <p class="admonition-title">文件管理 (File Management)</p>
-<p>数据以文件的形式存储在外存（如硬盘）上，文件管理负责组织和存取这些文件。
-*   <strong>文件存储空间的管理：</strong> 在外存上组织和分配空间给文件。
-*   <strong>目录管理：</strong> 提供文件组织结构（如文件夹），方便用户查找和管理文件。
-*   <strong>文件的读写管理和保护：</strong> 控制用户对文件的访问权限，确保数据安全。
-*   <strong>文件操作：</strong> 提供创建、删除、打开、关闭、读写等基本文件操作接口。</p>
+<p>数据以文件的形式存储在外存（如硬盘）上，文件管理负责组织和存取这些文件。</p>
+<ul>
+<li><strong>文件存储空间的管理：</strong> 在外存上组织和分配空间给文件。</li>
+<li><strong>目录管理：</strong> 提供文件组织结构（如文件夹），方便用户查找和管理文件。</li>
+<li><strong>文件的读写管理和保护：</strong> 控制用户对文件的访问权限，确保数据安全。</li>
+<li><strong>文件操作：</strong> 提供创建、删除、打开、关闭、读写等基本文件操作接口。</li>
+</ul>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">用户接口 (User Interface)</p>
-<p>操作系统还需要提供用户与计算机交互的途径。
-*   <strong>命令接口 (CLI):</strong> 用户通过输入文本命令进行交互（如 Linux Shell, Windows CMD）。
-*   <strong>图形用户接口 (GUI):</strong> 用户通过窗口、图标、菜单等图形元素进行交互（如 Windows 桌面, macOS 桌面）。
-*   <strong>程序接口 (API) / 系统调用 (System Calls):</strong> 应用程序通过这些接口请求操作系统提供的服务。</p>
+<p>操作系统还需要提供用户与计算机交互的途径。</p>
+<ul>
+<li><strong>命令接口 (CLI):</strong> 用户通过输入文本命令进行交互（如 Linux Shell, Windows CMD）。</li>
+<li><strong>图形用户接口 (GUI):</strong> 用户通过窗口、图标、菜单等图形元素进行交互（如 Windows 桌面, macOS 桌面）。</li>
+<li><strong>程序接口 (API) / 系统调用 (System Calls):</strong> 应用程序通过这些接口请求操作系统提供的服务。</li>
+</ul>
 </div>
 <h2 id="_4">操作系统的四大基本特征</h2>
 <p>操作系统的功能实现依赖于其几个基本特征：</p>
@@ -1951,7 +1961,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月14日 20:15:26 CST">2025年6月14日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月16日 08:14:05 CST">2025年6月16日</span>
   </span>
 
     
