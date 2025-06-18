@@ -796,6 +796,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -950,7 +954,53 @@
   
   
   <span class="md-ellipsis">
+    大容量存储
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
     文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    I/O管理
     
   </span>
   
@@ -1106,7 +1156,7 @@
   
   
   <span class="md-ellipsis">
-    不确定性推理
+    不确定性知识表示与推理
     
   </span>
   
@@ -1455,6 +1505,15 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       六、总结
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      课后作业
     </span>
   </a>
   
@@ -2301,6 +2360,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      课后作业
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2485,11 +2553,15 @@ $$ z_j = g\left(\sum_{i=1}^{N} W_{ji} a_i\right) $$</p>
 <li>
 <p><strong>Sigmoid (Logistic) 函数：</strong></p>
 <div class="arithmatex">\[ \sigma(x) = \frac{1}{1 + e^{-x}} \]</div>
-<p>输出范围 (0, 1)，常用于二分类问题的输出层或旧式网络的隐藏层。
-*   <strong>Tanh (双曲正切) 函数：</strong></p>
+<p>输出范围 (0, 1)，常用于二分类问题的输出层或旧式网络的隐藏层。</p>
+</li>
+<li>
+<p><strong>Tanh (双曲正切) 函数：</strong></p>
 <div class="arithmatex">\[ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} = 2\sigma(2x) - 1 \]</div>
-<p>输出范围 (-1, 1)，通常比Sigmoid在隐藏层中表现更好，因为其输出均值为0。
-*   <strong>ReLU (Rectified Linear Unit) 函数：</strong></p>
+<p>输出范围 (-1, 1)，通常比Sigmoid在隐藏层中表现更好，因为其输出均值为0。</p>
+</li>
+<li>
+<p><strong>ReLU (Rectified Linear Unit) 函数：</strong></p>
 <div class="arithmatex">\[ \text{ReLU}(x) = \max(0, x) \]</div>
 <p>输出范围 <span class="arithmatex">\([0, \infty)\)</span>。目前在深度神经网络中非常流行，因其计算简单且能有效缓解梯度消失问题。</p>
 </li>
@@ -2592,6 +2664,83 @@ $$ \text{ReLU}'(x) = \begin{cases} 1, &amp; \text{if } x &gt; 0 \ 0, &amp; \text
 <li><strong>挑战与改进：</strong> 梯度消失问题可通过ReLU等激活函数得到缓解。</li>
 </ul>
 <p>神经网络是现代机器学习和人工智能领域的核心技术之一，在计算机视觉、语音识别、自然语言处理等众多领域取得了巨大成功。</p>
+<h2 id="_5">课后作业</h2>
+<div class="admonition question">
+<p class="admonition-title">问题一</p>
+<p>如图是一个MLP模型。现有一个仅包含一个数据的数据集，该数据输入 <span class="arithmatex">\(x_1=1\)</span>，<span class="arithmatex">\(x_2=0.5\)</span>，输出的目标值 <span class="arithmatex">\(t=4\)</span> 。如果随机初始化后，<span class="arithmatex">\(w_1=0.5\)</span>， <span class="arithmatex">\(w_2=1.5\)</span>，<span class="arithmatex">\(w_3=2.3\)</span>， <span class="arithmatex">\(w_4=3\)</span>， <span class="arithmatex">\(w_5=1\)</span>， <span class="arithmatex">\(w_6=1\)</span>，若学习率 <span class="arithmatex">\(η=0.1\)</span>，激活函数均为 ReLU，求经过1轮反向传播后，权重的更新值 <span class="arithmatex">\(w_5^+\)</span> 和 <span class="arithmatex">\(w_1^+\)</span>.</p>
+<p><img alt="" src="../fig/net.png" /></p>
+</div>
+<details class="note">
+<summary>答案（仅供参考）</summary>
+<p>给定的初始值：</p>
+<ul>
+<li><span class="arithmatex">\(x_1 = 1, x_2 = 0.5\)</span></li>
+<li><span class="arithmatex">\(t = 4\)</span></li>
+<li><span class="arithmatex">\(w_1=0.5, w_2=1.5, w_3=2.3, w_4=3, w_5=1, w_6=1\)</span></li>
+<li><span class="arithmatex">\(\eta = 0.1\)</span></li>
+<li>激活函数: ReLU, <span class="arithmatex">\(f(z) = \max(0, z)\)</span>, <span class="arithmatex">\(f'(z) = 1\)</span> if <span class="arithmatex">\(z &gt; 0\)</span>, <span class="arithmatex">\(0\)</span> if <span class="arithmatex">\(z \le 0\)</span>.</li>
+<li>损失函数: <span class="arithmatex">\(L = \frac{1}{2}(y-t)^2\)</span></li>
+</ul>
+<p><strong>1. 前向传播</strong></p>
+<ul>
+<li>
+<p>计算隐藏层输入：</p>
+<p><span class="arithmatex">\(net_{h1} = w_1 x_1 + w_2 x_2 = (0.5)(1) + (1.5)(0.5) = 0.5 + 0.75 = 1.25\)</span>
+<span class="arithmatex">\(net_{h2} = w_3 x_1 + w_4 x_2 = (2.3)(1) + (3)(0.5) = 2.3 + 1.5 = 3.8\)</span></p>
+</li>
+<li>
+<p>计算隐藏层输出 (经过ReLU)：</p>
+<p><span class="arithmatex">\(h_1 = \text{ReLU}(net_{h1}) = \text{ReLU}(1.25) = 1.25\)</span>
+<span class="arithmatex">\(h_2 = \text{ReLU}(net_{h2}) = \text{ReLU}(3.8) = 3.8\)</span></p>
+</li>
+<li>
+<p>计算输出层输入：</p>
+<p><span class="arithmatex">\(net_y = w_5 h_1 + w_6 h_2 = (1)(1.25) + (1)(3.8) = 1.25 + 3.8 = 5.05\)</span></p>
+</li>
+<li>
+<p>计算输出层输出 (经过ReLU)：</p>
+<p><span class="arithmatex">\(y = \text{ReLU}(net_y) = \text{ReLU}(5.05) = 5.05\)</span></p>
+</li>
+<li>
+<p>计算损失：</p>
+<p><span class="arithmatex">\(L = \frac{1}{2}(y-t)^2 = \frac{1}{2}(5.05 - 4)^2 = \frac{1}{2}(1.05)^2 = \frac{1}{2}(1.1025) = 0.55125\)</span></p>
+</li>
+</ul>
+<p><strong>2. 反向传播</strong></p>
+<p>由于 <span class="arithmatex">\(net_y=5.05 &gt; 0\)</span>, <span class="arithmatex">\(net_{h1}=1.25 &gt; 0\)</span>, <span class="arithmatex">\(net_{h2}=3.8 &gt; 0\)</span>，所有ReLU的导数在其激活区域内都为1。</p>
+<ul>
+<li>
+<p>计算输出层误差项 <span class="arithmatex">\(\delta_y\)</span>:</p>
+<p><span class="arithmatex">\(\delta_y = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial net_y} = (y-t) \cdot \text{ReLU}'(net_y) = (5.05 - 4) \cdot 1 = 1.05\)</span></p>
+</li>
+<li>
+<p><strong>更新 <span class="arithmatex">\(w_5\)</span>:</strong></p>
+<p><span class="arithmatex">\(w_5\)</span> 是连接 <span class="arithmatex">\(h_1\)</span> 到 <span class="arithmatex">\(y\)</span> 的权重。</p>
+<p><span class="arithmatex">\(\frac{\partial L}{\partial w_5} = \delta_y \cdot \frac{\partial net_y}{\partial w_5} = \delta_y \cdot h_1 = 1.05 \cdot 1.25 = 1.3125\)</span></p>
+<p><span class="arithmatex">\(\Delta w_5 = -\eta \frac{\partial L}{\partial w_5} = -0.1 \cdot 1.3125 = -0.13125\)</span></p>
+<p><span class="arithmatex">\(w_5^+ = w_5 + \Delta w_5 = 1 - 0.13125 = 0.86875\)</span></p>
+</li>
+<li>
+<p><strong>更新 <span class="arithmatex">\(w_1\)</span>:</strong></p>
+<p><span class="arithmatex">\(w_1\)</span> 是连接 <span class="arithmatex">\(x_1\)</span> 到 <span class="arithmatex">\(h_1\)</span> 的权重。</p>
+<p><span class="arithmatex">\(\frac{\partial L}{\partial w_1} = \delta_y \cdot \frac{\partial net_y}{\partial h_1} \cdot \frac{\partial h_1}{\partial net_{h1}} \cdot \frac{\partial net_{h1}}{\partial w_1}\)</span></p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\frac{\partial net_y}{\partial h_1} = w_5 = 1\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\frac{\partial h_1}{\partial net_{h1}} = \text{ReLU}'(net_{h1}) = \text{ReLU}'(1.25) = 1\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\frac{\partial net_{h1}}{\partial w_1} = x_1 = 1\)</span> (因为 <span class="arithmatex">\(net_{h1} = w_1 x_1 + w_2 x_2\)</span>)</p>
+</li>
+</ul>
+<p>所以, <span class="arithmatex">\(\frac{\partial L}{\partial w_1} = \delta_y \cdot w_5 \cdot 1 \cdot x_1 = 1.05 \cdot 1 \cdot 1 \cdot 1 = 1.05\)</span>
+<span class="arithmatex">\(\Delta w_1 = -\eta \frac{\partial L}{\partial w_1} = -0.1 \cdot 1.05 = -0.105\)</span></p>
+<p><span class="arithmatex">\(w_1^+ = w_1 + \Delta w_1 = 0.5 - 0.105 = 0.395\)</span></p>
+</li>
+</ul>
+</details>
 
 
 
@@ -2612,7 +2761,7 @@ $$ \text{ReLU}'(x) = \begin{cases} 1, &amp; \text{if } x &gt; 0 \ 0, &amp; \text
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月11日 19:23:55 CST">2025年6月11日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月18日 15:22:10 CST">2025年6月18日</span>
   </span>
 
     

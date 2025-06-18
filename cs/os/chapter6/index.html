@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://allenge007.github.io/cs/os/chapter1/">
+        <link rel="canonical" href="https://allenge007.github.io/cs/os/chapter6/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../chapter5/">
       
       
-        <link rel="next" href="../chapter2/">
+        <link rel="next" href="../chapter7/">
       
       
       <link rel="icon" href="../../../assets/smile.ico">
@@ -22,7 +22,7 @@
     
     
       
-        <title>操作系统概述 - allenge 的小站</title>
+        <title>文件系统 - allenge 的小站</title>
       
     
     
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              操作系统概述
+              文件系统
             
           </span>
         </div>
@@ -854,32 +854,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    操作系统概述
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../chapter1/" class="md-nav__link">
         
   
   
@@ -890,53 +868,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      操作系统为何如此重要？
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      操作系统的主要功能
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      操作系统的四大基本特征
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1038,10 +969,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../chapter6/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    文件系统
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1052,6 +1005,353 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      学习目标
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、文件基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、文件基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 什么是文件？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 文件逻辑结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 文件属性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、文件操作
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、文件操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 文件打开（Open）的管理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-file-locks" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 文件锁 (File Locks)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、文件类型与结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、文件类型与结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 文件类型识别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 文件结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、文件访问方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、文件访问方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-sequential-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 顺序访问 (Sequential Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-direct-access-relative-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 直接访问 (Direct Access / Relative Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indexed-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 其他访问方法 (Indexed Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、磁盘与存储结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、磁盘与存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 磁盘结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 存储结构层次
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 文件系统的类型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、目录结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 目录操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 目录组织目标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 常见目录结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 常见目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-single-level-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 单级目录 (Single-Level Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-two-level-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 两级目录 (Two-Level Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-tree-structured-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 树形目录 (Tree-Structured Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-acyclic-graph-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 无环图目录 (Acyclic-Graph Directories)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-general-graph-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 通用图目录 (General Graph Directory)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、文件系统保护
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、文件系统保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-types-of-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 访问类型 (Types of Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-linuxunix" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Linux/Unix 文件访问控制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1853,7 +2153,7 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      操作系统为何如此重要？
+      学习目标
     </span>
   </a>
   
@@ -1862,18 +2162,318 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
-      操作系统的主要功能
+      一、文件基本概念
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="一、文件基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 什么是文件？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 文件逻辑结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 文件属性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
-      操作系统的四大基本特征
+      二、文件操作
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="二、文件操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 文件打开（Open）的管理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-file-locks" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 文件锁 (File Locks)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、文件类型与结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、文件类型与结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 文件类型识别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 文件结构
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、文件访问方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、文件访问方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-sequential-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 顺序访问 (Sequential Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-direct-access-relative-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 直接访问 (Direct Access / Relative Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-indexed-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 其他访问方法 (Indexed Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、磁盘与存储结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、磁盘与存储结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 磁盘结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 存储结构层次
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 文件系统的类型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、目录结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 目录操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 目录组织目标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 常见目录结构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 常见目录结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-single-level-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 单级目录 (Single-Level Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-two-level-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 两级目录 (Two-Level Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-tree-structured-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 树形目录 (Tree-Structured Directory)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-acyclic-graph-directories" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 无环图目录 (Acyclic-Graph Directories)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-general-graph-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 通用图目录 (General Graph Directory)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、文件系统保护
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、文件系统保护">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-types-of-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 访问类型 (Types of Access)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-linuxunix" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Linux/Unix 文件访问控制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1893,7 +2493,7 @@
 
 
   
-    <a href="https://github.com/allenge007/edit/main/docs/cs/os/chapter1.md" title="编辑此页" class="md-content__button md-icon">
+    <a href="https://github.com/allenge007/edit/main/docs/cs/os/chapter6.md" title="编辑此页" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1902,95 +2502,398 @@
     
       
     
-    <a href="https://github.com/allenge007/raw/main/docs/cs/os/chapter1.md" title="查看本页的源代码" class="md-content__button md-icon">
+    <a href="https://github.com/allenge007/raw/main/docs/cs/os/chapter6.md" title="查看本页的源代码" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-<h1 id="_1">操作系统概述</h1>
-<p>操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。</p>
-<div class="admonition quote">
-<p class="admonition-title">什么是操作系统？</p>
-<p>操作系统是一组控制和管理计算机硬件和软件资源、合理地组织计算机工作流程以及方便用户使用的程序的集合。简单来说，它是硬件与用户（及应用程序）之间的桥梁。</p>
-</div>
-<h2 id="_2">操作系统为何如此重要？</h2>
-<p>操作系统并非凭空出现，它的设计和存在是为了实现一系列关键目标：</p>
-<div class="admonition success">
-<p class="admonition-title">操作系统的核心目标</p>
+<h1 id="_1">文件系统</h1>
+<div class="admonition note">
+<p class="admonition-title">课程信息</p>
+<p>本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。</p>
 <ul>
-<li><strong>方便性 (Convenience):</strong> 让用户更容易、更方便地使用计算机，无需关心底层硬件的复杂细节。</li>
-<li><strong>有效性 (Efficiency):</strong> 更高效地管理和利用计算机资源（CPU、内存、设备等），提高系统吞吐量和资源利用率。</li>
-<li><strong>可扩充性 (Extensibility):</strong> 允许在不修改现有核心代码的情况下，方便地增加新的功能和模块。</li>
-<li><strong>开放性 (Openness):</strong> 遵循标准规范，使得不同厂商的软硬件产品可以互操作。</li>
+<li><strong>主讲人</strong>: 陈亮</li>
+<li><strong>单位</strong>: 计算机学院</li>
+<li><strong>日期</strong>: 2025-5</li>
 </ul>
 </div>
-<h2 id="_3">操作系统的主要功能</h2>
-<p>为了达成上述目标，操作系统需要具备多种核心功能，就像一位多才多艺的管家，精通各项事务。</p>
-<div class="admonition info">
-<p class="admonition-title">处理器管理 (CPU Management / Process Management)</p>
-<p>CPU 是计算机的大脑，处理器管理的核心任务是合理分配和调度 CPU 时间给各个运行中的程序（即进程）。</p>
+<h2 id="_2">学习目标</h2>
 <ul>
-<li><strong>进程控制：</strong> 负责进程的创建、终止、挂起、激活等生命周期管理。</li>
-<li><strong>进程调度：</strong> 采用特定算法（如先来先服务、时间片轮转）决定哪个进程何时获得 CPU 使用权。</li>
-<li><strong>进程同步与通信：</strong> 解决多个进程并发执行时可能出现的资源竞争和协作问题。</li>
+<li>理解文件系统的基本功能。</li>
+<li>掌握文件系统提供的接口。</li>
+<li>探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。</li>
+<li>了解文件系统的保护机制。</li>
 </ul>
-</div>
-<div class="admonition info">
-<p class="admonition-title">存储器管理 (Memory Management)</p>
-<p>内存是程序运行的“舞台”，存储器管理负责高效、安全地分配和管理内存资源。</p>
+<h2 id="_3">一、文件基本概念</h2>
+<h3 id="11">1.1 什么是文件？</h3>
+<p>操作系统对存储设备的物理属性进行抽象，定义出逻辑存储单位——<strong>文件</strong>。文件由操作系统负责映射到物理设备上。</p>
 <ul>
-<li><strong>内存分配与回收：</strong> 为进程动态分配所需内存，并在进程结束后及时回收。</li>
-<li><strong>地址映射/重定位：</strong> 将程序使用的逻辑地址转换为物理内存地址。</li>
-<li><strong>内存保护：</strong> 防止进程越界访问，确保系统和其他进程的安全。</li>
-<li><strong>内存扩充：</strong> 利用虚拟内存技术（如分页、分段），让程序感觉拥有比实际物理内存更大的空间。</li>
+<li>文件是用户创建的数据集合（Data collections created by users）。</li>
+<li>对用户而言，文件系统是操作系统最重要的组成部分之一（The File System is one of the most important parts of the OS to a user）。</li>
 </ul>
-</div>
-<div class="admonition info">
-<p class="admonition-title">设备管理 (Device Management / I/O Management)</p>
-<p>计算机连接着各种输入输出设备（键盘、鼠标、磁盘、打印机等），设备管理负责协调它们的工作。</p>
+<h3 id="12">1.2 文件逻辑结构</h3>
+<p>文件表现为一段<strong>连续的逻辑地址空间</strong>。</p>
 <ul>
-<li><strong>设备分配与回收：</strong> 管理和分配设备给请求使用的进程。</li>
-<li><strong>缓冲管理：</strong> 设置缓冲区以缓解 CPU 与 I/O 设备之间速度不匹配的问题。</li>
-<li><strong>设备驱动：</strong> 提供与具体硬件交互的驱动程序，屏蔽硬件差异。</li>
-<li><strong>中断处理：</strong> 响应和处理来自硬件设备的中断请求。</li>
+<li><strong>文件类型</strong>:<ul>
+<li><strong>数据文件</strong>:<ul>
+<li>数值型 (Numeric)</li>
+<li>字符型 (Character)</li>
+<li>二进制型 (Binary)</li>
 </ul>
-</div>
-<div class="admonition info">
-<p class="admonition-title">文件管理 (File Management)</p>
-<p>数据以文件的形式存储在外存（如硬盘）上，文件管理负责组织和存取这些文件。</p>
+</li>
+<li><strong>程序文件</strong>:<ul>
+<li>源代码文件 (source file)</li>
+<li>可执行文件 (executable file)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件的<strong>内容</strong>由其创建者定义。常见的有文本文件、源文件、可执行文件等。</li>
+</ul>
+<h3 id="13">1.3 文件属性</h3>
+<p>文件属性是描述文件特性的元数据，保存在目录结构中（通常在磁盘上）。</p>
 <ul>
-<li><strong>文件存储空间的管理：</strong> 在外存上组织和分配空间给文件。</li>
-<li><strong>目录管理：</strong> 提供文件组织结构（如文件夹），方便用户查找和管理文件。</li>
-<li><strong>文件的读写管理和保护：</strong> 控制用户对文件的访问权限，确保数据安全。</li>
-<li><strong>文件操作：</strong> 提供创建、删除、打开、关闭、读写等基本文件操作接口。</li>
+<li><strong>名称 (Name)</strong>: 人类可读的文件标识。</li>
+<li><strong>标识符 (Identifier)</strong>: 文件系统内部唯一的标签（通常是数字）。</li>
+<li><strong>类型 (Type)</strong>: 支持不同文件类型的系统需要此属性。</li>
+<li><strong>位置 (Location)</strong>: 指向文件在设备上存储位置的指针。</li>
+<li><strong>大小 (Size)</strong>: 文件当前的大小。</li>
+<li><strong>保护 (Protection)</strong>: 控制用户对文件的读、写、执行等权限。</li>
+<li><strong>时间、日期和用户标识 (Time, date, and user identification)</strong>: 用于保护、安全和使用情况监控。</li>
+<li><strong>扩展属性</strong>: 例如文件校验和 (file checksum) 等。</li>
 </ul>
-</div>
+<!-- PPT Slide 10: Mac OS上的文件属性 (图片展示了Finder中文件的详细信息，如种类、大小、位置、创建修改时间、权限等) -->
+
+<h2 id="_4">二、文件操作</h2>
+<p>操作系统提供了一系列基本的文件操作：</p>
+<ol>
+<li><strong>创建 (Create)</strong>: 创建一个新文件。</li>
+<li><strong>写入 (Write)</strong>: 在文件的当前写指针位置写入数据。</li>
+<li><strong>读取 (Read)</strong>: 从文件的当前读指针位置读取数据。</li>
+<li><strong>文件内重定位 (Reposition within file / seek)</strong>: 移动文件读/写指针到指定位置。</li>
+<li><strong>删除 (Delete)</strong>: 删除文件，释放其占用的空间。</li>
+<li><strong>截断 (Truncate)</strong>: 清空文件内容，但保留文件本身，大小变为0。</li>
+</ol>
 <div class="admonition tip">
-<p class="admonition-title">用户接口 (User Interface)</p>
-<p>操作系统还需要提供用户与计算机交互的途径。</p>
-<ul>
-<li><strong>命令接口 (CLI):</strong> 用户通过输入文本命令进行交互（如 Linux Shell, Windows CMD）。</li>
-<li><strong>图形用户接口 (GUI):</strong> 用户通过窗口、图标、菜单等图形元素进行交互（如 Windows 桌面, macOS 桌面）。</li>
-<li><strong>程序接口 (API) / 系统调用 (System Calls):</strong> 应用程序通过这些接口请求操作系统提供的服务。</li>
-</ul>
+<p class="admonition-title">核心操作</p>
+<p>以上6个基本操作构成了文件操作的最小集合。</p>
 </div>
-<h2 id="_4">操作系统的四大基本特征</h2>
-<p>操作系统的功能实现依赖于其几个基本特征：</p>
-<div class="admonition abstract">
-<p class="admonition-title">操作系统的主要特征</p>
+<p>此外，还有两个重要的管理操作：</p>
 <ul>
-<li><strong>并发 (Concurrency):</strong>
-    允许多个程序在同一时间间隔内“同时”运行（宏观上并行，微观上可能是交替执行）。这是操作系统提高资源利用率和系统吞吐量的核心手段。</li>
-<li><strong>共享 (Sharing):</strong>
-    系统中的资源（CPU、内存、设备、文件等）可以被多个并发的进程共同使用，而非被某个进程独占。共享分为互斥共享（如打印机一次只能一个进程用）和同时访问（如只读文件可以多个进程同时读）。</li>
-<li><strong>虚拟 (Virtuality):</strong>
-    通过技术手段将一个物理实体转变为若干个逻辑上的对应物。例如，通过虚拟内存技术，让每个程序感觉拥有独立的、远大于实际物理内存的地址空间；通过虚拟处理器技术，让每个进程感觉自己独占一个CPU。</li>
-<li><strong>异步 (Asynchrony):</strong>
-    由于并发和资源共享，进程的执行过程并非一气呵成，而是走走停停，其推进速度是不可预知的。操作系统需要处理这种不确定性，确保系统在各种事件发生时都能正确响应。</li>
+<li><strong>打开 (Open)</strong>:<ol>
+<li>在磁盘上的目录结构中搜索文件条目 <code>Fi</code>。</li>
+<li>将该条目的内容加载到内存中（通常是打开文件表）。</li>
+</ol>
+</li>
+<li><strong>关闭 (Close)</strong>:<ol>
+<li>将内存中关于文件 <code>Fi</code> 的条目内容（可能已更新）写回到磁盘上的目录结构中。</li>
+<li>释放内存中占用的相关资源。</li>
+</ol>
+</li>
 </ul>
+<h3 id="21-open">2.1 文件打开（Open）的管理</h3>
+<p>当文件被打开时，操作系统需要维护以下信息来管理：</p>
+<ul>
+<li><strong>打开文件表 (Open-file table)</strong>: 跟踪系统中所有打开的文件。通常分为进程级打开文件表和系统级打开文件表。</li>
+<li><strong>文件指针 (File pointer)</strong>: 每个打开文件的进程都有一个指针，指向下一次读/写操作的位置。</li>
+<li><strong>文件打开计数 (File-open count)</strong>: 记录一个文件被多少个进程打开。当最后一个进程关闭该文件时，相关条目才能从系统打开文件表中移除。</li>
+<li><strong>文件在磁盘上的位置 (Disk location of the file)</strong>: 数据访问信息的缓存，加速后续I/O。</li>
+<li><strong>访问权限 (Access rights)</strong>: 每个进程对该文件的访问模式信息（如只读、读写）。</li>
+</ul>
+<h3 id="22-file-locks">2.2 文件锁 (File Locks)</h3>
+<p>某些操作系统和文件系统提供文件锁机制，用于协调对文件的并发访问。</p>
+<ul>
+<li>类似于<strong>读者-写者锁 (reader-writer locks)</strong>:<ul>
+<li><strong>共享锁 (Shared lock)</strong>: 类似读者锁，多个进程可以同时获取。</li>
+<li><strong>互斥锁 (Exclusive lock)</strong>: 类似写者锁，同一时间只允许一个进程获取。</li>
+</ul>
+</li>
+<li><strong>作用</strong>: 调节对文件的访问。</li>
+<li><strong>类型</strong>:<ul>
+<li><strong>强制锁 (Mandatory locks)</strong>: (如 Windows) 系统根据锁的持有情况和请求来决定是否拒绝访问。如果一个进程试图以与已持有的锁不兼容的方式访问文件，访问将被拒绝。</li>
+<li><strong>劝告锁 (Advisory locks)</strong>: (如 Unix) 系统允许进程查询锁的状态，但由进程自己决定如何行动。即使有锁，进程也可以选择忽略它（除非内核强制执行）。</li>
+</ul>
+</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Java 文件锁案例</p>
+<p>以下Java代码演示了如何使用文件通道 (FileChannel) 对文件部分内容进行加锁：
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.channels.*</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LockingExample</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">EXCLUSIVE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// true for exclusive lock in FileChannel.lock()</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">SHARED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">    </span><span class="c1">// false for shared lock in FileChannel.lock()</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">arsg</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FileLock</span><span class="w"> </span><span class="n">sharedLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="n">FileLock</span><span class="w"> </span><span class="n">exclusiveLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">RandomAccessFile</span><span class="w"> </span><span class="n">raf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">RandomAccessFile</span><span class="p">(</span><span class="s">&quot;file.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;rw&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="c1">// get the channel for the file</span>
+<span class="w">            </span><span class="n">FileChannel</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">raf</span><span class="p">.</span><span class="na">getChannel</span><span class="p">();</span>
+
+<span class="w">            </span><span class="c1">// this locks the first half of the file - exclusive</span>
+<span class="w">            </span><span class="c1">// Note: In FileChannel.lock(), the third parameter &#39;shared&#39;</span>
+<span class="w">            </span><span class="c1">// should be &#39;false&#39; for an exclusive lock and &#39;true&#39; for a shared lock.</span>
+<span class="w">            </span><span class="c1">// The constants in the PPT seem to have this reversed based on their names.</span>
+<span class="w">            </span><span class="c1">// Assuming EXCLUSIVE constant means we want an exclusive lock.</span>
+<span class="w">            </span><span class="n">exclusiveLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch</span><span class="p">.</span><span class="na">lock</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">raf</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"> </span><span class="c1">// Corrected based on standard API</span>
+<span class="w">            </span><span class="cm">/** Now modify the data . . . */</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Exclusive lock acquired on first half.&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="c1">// release the lock</span>
+<span class="w">            </span><span class="n">exclusiveLock</span><span class="p">.</span><span class="na">release</span><span class="p">();</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Exclusive lock released.&quot;</span><span class="p">);</span>
+
+<span class="w">            </span><span class="c1">// this locks the second half of the file - shared</span>
+<span class="w">            </span><span class="n">sharedLock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch</span><span class="p">.</span><span class="na">lock</span><span class="p">(</span><span class="n">raf</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">raf</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">raf</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"> </span><span class="c1">// Corrected</span>
+<span class="w">            </span><span class="cm">/** Now read the data . . . */</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Shared lock acquired on second half.&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="c1">// release the lock</span>
+<span class="w">            </span><span class="n">sharedLock</span><span class="p">.</span><span class="na">release</span><span class="p">();</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Shared lock released.&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="n">ioe</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">err</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">ioe</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">exclusiveLock</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">exclusiveLock</span><span class="p">.</span><span class="na">isValid</span><span class="p">())</span>
+<span class="w">                </span><span class="n">exclusiveLock</span><span class="p">.</span><span class="na">release</span><span class="p">();</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sharedLock</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">sharedLock</span><span class="p">.</span><span class="na">isValid</span><span class="p">())</span>
+<span class="w">                </span><span class="n">sharedLock</span><span class="p">.</span><span class="na">release</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<strong>注意</strong>: <code>FileChannel.lock()</code> 方法的第三个参数 <code>shared</code>：<code>true</code> 表示共享锁，<code>false</code> 表示互斥锁。PPT中的 <code>EXCLUSIVE = false</code> 和 <code>SHARED = true</code> 可能与 <code>FileChannel.lock()</code> API 的直接布尔参数含义相反，或者它们是用于自定义逻辑的常量。上述代码已根据标准API进行调整。</p>
 </div>
+<h2 id="_5">三、文件类型与结构</h2>
+<h3 id="31">3.1 文件类型识别</h3>
+<ul>
+<li><strong>Windows</strong>: 主要通过<strong>扩展名</strong> (e.g., <code>.txt</code>, <code>.exe</code>, <code>.docx</code>) 识别。</li>
+<li><strong>Unix/Linux</strong>: 通常通过文件开头的<strong>魔数 (magic number)</strong> 识别。这是一个特定字节序列，用于标识文件类型。</li>
+</ul>
+<h3 id="32">3.2 文件结构</h3>
+<p>文件内部数据的组织方式：</p>
+<ul>
+<li><strong>无结构 (None)</strong>: 文件被视为字节序列或字序列 (sequence of words, bytes)。</li>
+<li><strong>简单记录结构 (Simple record structure)</strong>:<ul>
+<li>行 (Lines)</li>
+<li>定长记录 (Fixed length)</li>
+<li>变长记录 (Variable length)</li>
+</ul>
+</li>
+<li><strong>复杂结构 (Complex Structures)</strong>:<ul>
+<li>格式化文档 (Formatted document)</li>
+<li>可重定位加载文件 (Relocatable load file)</li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">谁来决定结构？</p>
+<p>文件结构可以由操作系统定义，也可以由应用程序自己解释。简单的无结构方式可以通过在文件中插入适当的控制字符来模拟复杂结构。</p>
+</div>
+<h2 id="_6">四、文件访问方法</h2>
+<p>文件由定长的逻辑记录组成时，常见的访问方法有：</p>
+<h3 id="41-sequential-access">4.1 顺序访问 (Sequential Access)</h3>
+<p>文件信息按顺序处理，这是最常见的访问方法。</p>
+<ul>
+<li><strong>操作</strong>:<ul>
+<li><code>read next</code>: 读取下一个记录。</li>
+<li><code>write next</code>: 写入下一个记录。</li>
+<li><code>reset</code>: 将文件指针重置到文件开头。</li>
+</ul>
+</li>
+<li>磁带等设备天然支持顺序访问。</li>
+</ul>
+<!-- PPT Slide 24: 顺序访问示意图 (通常展示一个文件指针从头到尾依次移动) -->
+
+<h3 id="42-direct-access-relative-access">4.2 直接访问 (Direct Access / Relative Access)</h3>
+<p>文件被视为由编号的逻辑块或记录组成，可以快速访问任意块/记录。</p>
+<ul>
+<li><strong>操作</strong>:<ul>
+<li><code>read n</code>: 读取第 <code>n</code> 个块/记录。</li>
+<li><code>write n</code>: 写入第 <code>n</code> 个块/记录。</li>
+<li><code>position to n</code>: 将文件指针定位到第 <code>n</code> 个块/记录。</li>
+<li><code>read next</code>: 读取当前位置的下一个块/记录。</li>
+<li><code>write next</code>: 写入当前位置的下一个块/记录。</li>
+<li><code>rewrite n</code>: 重写第 <code>n</code> 个块/记录。</li>
+</ul>
+</li>
+<li><code>n</code> 是<strong>相对块号 (relative block number)</strong>。</li>
+<li>适用于由固定长度逻辑记录组成的文件。数据库通常采用此方式。</li>
+</ul>
+<!-- PPT Slide 25: 直接访问示意图 (通常展示可以直接跳转到文件的任意记录) -->
+
+<div class="admonition tip">
+<p class="admonition-title">模拟</p>
+<p>可以直接访问模拟顺序访问（例如，通过 <code>position to n</code> 然后 <code>read next</code>）。</p>
+</div>
+<h3 id="43-indexed-access">4.3 其他访问方法 (Indexed Access)</h3>
+<p>在基本访问方法之上构建更复杂的访问方法，通常涉及为文件创建<strong>索引 (index)</strong>。</p>
+<ul>
+<li>索引将文件的某些部分（键）映射到其在磁盘上的位置。</li>
+<li>索引可以保存在内存中以加速查找。</li>
+<li>如果索引过大，可以创建磁盘索引的内存索引（多级索引）。</li>
+<li><strong>示例</strong>: IBM 的索引顺序存取方法 (ISAM - Indexed Sequential-Access Method)。<ul>
+<li>小型主索引指向二级索引的磁盘块。</li>
+<li>文件按定义的键排序。</li>
+<li>通过记录的键，至多两次直接访问就可以定位记录。</li>
+</ul>
+</li>
+<li>VMS 操作系统也提供索引文件和相关文件。</li>
+</ul>
+<!-- PPT Slide 30: 索引文件和相关文件的例子 (通常展示数据文件和其对应的索引文件结构) -->
+
+<h2 id="_7">五、磁盘与存储结构</h2>
+<h3 id="51">5.1 磁盘结构</h3>
+<ul>
+<li>磁盘可以被划分为多个<strong>分区 (partitions)</strong> (也称作 minidisks, slices)。</li>
+<li>磁盘或分区可以通过 <strong>RAID</strong> 技术进行保护以防故障。</li>
+<li>磁盘或分区可以<strong>裸用 (raw)</strong>，即不带文件系统，或者用文件系统进行<strong>格式化 (formatted)</strong>。</li>
+<li>包含文件系统的实体称为<strong>卷 (volume)</strong>。</li>
+<li>每个包含文件系统的卷也会在<strong>设备目录 (device directory)</strong> 或 <strong>卷内容表 (volume table of contents)</strong> 中跟踪该文件系统的信息。</li>
+</ul>
+<h3 id="52">5.2 存储结构层次</h3>
+<!-- PPT Slide 32: 存储结构 (通常展示从应用程序到逻辑文件系统，再到物理文件系统，最后到存储设备的层次结构) -->
+<p>存储系统通常是分层的，从用户视角的文件到底层物理块的映射。</p>
+<h3 id="53">5.3 文件系统的类型</h3>
+<p>除了通用的文件系统，系统中常有多种特殊用途的文件系统。</p>
+<ul>
+<li><strong>示例 (Solaris)</strong>:<ul>
+<li><code>tmpfs</code>: 基于内存的易失性文件系统，用于快速临时I/O。</li>
+<li><code>objfs</code>: 内核内存接口，用于获取内核符号进行调试。</li>
+<li><code>ctfs</code>: 契约文件系统，用于管理守护进程。</li>
+<li><code>lofs</code>: 环回文件系统，允许一个文件系统在另一个位置被访问。</li>
+<li><code>procfs</code>: 内核到进程结构的接口。</li>
+<li><code>ufs</code>, <code>zfs</code>: 通用文件系统。</li>
+</ul>
+</li>
+</ul>
+<h2 id="_8">六、目录结构</h2>
+<p>目录是包含所有文件信息的节点的集合。目录结构和文件本身都驻留在磁盘上。</p>
+<h3 id="61">6.1 目录操作</h3>
+<ul>
+<li><strong>搜索文件 (Search for a file)</strong></li>
+<li><strong>创建文件 (Create a file)</strong></li>
+<li><strong>删除文件 (Delete a file)</strong></li>
+<li><strong>列出目录内容 (List a directory)</strong></li>
+<li><strong>重命名文件 (Rename a file)</strong></li>
+<li><strong>遍历文件系统 (Traverse the file system)</strong></li>
+</ul>
+<h3 id="62">6.2 目录组织目标</h3>
+<ul>
+<li><strong>效率 (Efficiency)</strong>: 快速定位文件。</li>
+<li><strong>命名 (Naming)</strong>: 方便用户。<ul>
+<li>不同用户可以为不同文件使用相同名称。</li>
+<li>同一文件可以有多个不同名称 (别名)。</li>
+</ul>
+</li>
+<li><strong>分组 (Grouping)</strong>: 按属性对文件进行逻辑分组 (例如，所有Java程序、所有游戏等)。</li>
+</ul>
+<h3 id="63">6.3 常见目录结构</h3>
+<h4 id="1-single-level-directory">1. 单级目录 (Single-Level Directory)</h4>
+<p>所有用户共享一个目录。</p>
+<ul>
+<li><strong>问题</strong>:<ul>
+<li>命名冲突 (Naming problem): 不同用户的文件名必须唯一。</li>
+<li>分组困难 (Grouping problem)。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-two-level-directory">2. 两级目录 (Two-Level Directory)</h4>
+<p>为每个用户创建一个独立的目录。</p>
+<ul>
+<li><strong>路径名 (Path name)</strong>: 通常是 <code>用户目录/文件名</code>。</li>
+<li>不同用户可以使用相同的文件名。</li>
+<li>搜索效率较高（在用户自己的目录内）。</li>
+</ul>
+<h4 id="3-tree-structured-directory">3. 树形目录 (Tree-Structured Directory)</h4>
+<p>目录可以包含文件和其他目录，形成树状结构。这是最常用的一种结构。</p>
+<ul>
+<li>每个文件都有唯一的路径名。</li>
+<li>可以方便地进行分组。</li>
+<li><strong>当前目录 (Current Directory / Working Directory)</strong>: 用户可以指定一个目录作为当前工作目录，文件引用可以相对于此目录。<ul>
+<li><code>cd /spell/mail/prog</code>：改变当前目录。</li>
+<li><code>mkdir &lt;dir-name&gt;</code>：在当前目录下创建新目录。</li>
+<li>删除一个目录（如 "mail"）通常意味着删除其下的整个子树。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-acyclic-graph-directories">4. 无环图目录 (Acyclic-Graph Directories)</h4>
+<p>允许目录共享子目录和文件，形成一个有向无环图 (DAG)。</p>
+<ul>
+<li><strong>别名 (Aliasing)</strong>: 同一个文件或子目录可以有两个或多个不同的路径名。</li>
+<li><strong>问题</strong>:<ul>
+<li><strong>悬空指针 (Dangling pointer)</strong>: 如果一个共享文件被删除，指向它的其他目录条目会变成悬空指针。<ul>
+<li><strong>解决方案</strong>:<ul>
+<li><strong>反向指针 (Backpointers)</strong>: 记录所有指向该文件的指针，删除文件时一并删除。实现复杂，尤其当记录大小可变时。可以使用菊花链组织反向指针。</li>
+<li><strong>入口保持计数 (Entry-hold-count / Reference count)</strong>: 每个文件维护一个计数器，记录有多少目录条目指向它。只有当计数为0时才真正删除文件。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>链接 (Link)</strong>:<ul>
+<li><strong>软链接 (Symbolic Link / Soft Link)</strong>: 创建一个特殊文件，内容是另一个文件的路径名。删除原文件会导致软链接失效。</li>
+<li><strong>硬链接 (Hard Link)</strong>: 创建一个指向文件物理数据块的目录条目。只有当所有硬链接都被删除（引用计数为0）时，文件数据才会被删除。通常不允许对目录创建硬链接（以防循环）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-general-graph-directory">5. 通用图目录 (General Graph Directory)</h4>
+<p>允许目录结构中存在<strong>循环 (cycles)</strong>。</p>
+<ul>
+<li><strong>问题</strong>: 搜索算法可能陷入死循环，计算空间占用等变得复杂。</li>
+<li><strong>如何保证无环或处理循环?</strong><ul>
+<li>只允许链接到文件，不允许链接到子目录（这是许多系统避免循环的方式）。</li>
+<li><strong>垃圾收集 (Garbage collection)</strong>: 定期扫描文件系统，回收不可达的块。</li>
+<li>每次添加新链接时，使用<strong>循环检测算法 (cycle detection algorithm)</strong> 来确定是否会形成循环。</li>
+</ul>
+</li>
+</ul>
+<h2 id="_9">七、文件系统保护</h2>
+<p>文件所有者/创建者应该能够控制：</p>
+<ul>
+<li><strong>可以执行哪些操作 (What can be done)</strong></li>
+<li><strong>由谁执行 (By whom)</strong></li>
+</ul>
+<h3 id="71-types-of-access">7.1 访问类型 (Types of Access)</h3>
+<ul>
+<li><strong>读取 (Read)</strong>: 从文件读取数据。</li>
+<li><strong>写入 (Write)</strong>: 修改或追加数据到文件。</li>
+<li><strong>执行 (Execute)</strong>: 将文件作为程序加载到内存并运行。</li>
+<li><strong>追加 (Append)</strong>: 只能在文件末尾添加数据，不能修改已有数据。</li>
+<li><strong>删除 (Delete)</strong>: 删除文件。</li>
+<li><strong>列出 (List)</strong>: 列出目录内容（适用于目录）。</li>
+</ul>
+<h3 id="72-linuxunix">7.2 Linux/Unix 文件访问控制</h3>
+<ul>
+<li><strong>访问模式 (Mode of access)</strong>: 读 (r), 写 (w), 执行 (x)。</li>
+<li><strong>三类用户</strong>:<ol>
+<li><strong>所有者 (Owner)</strong>: 创建文件的用户。</li>
+<li><strong>组 (Group)</strong>: 一组用户，共享访问权限。</li>
+<li><strong>其他/公共 (Public/Others)</strong>: 系统中的所有其他用户。</li>
+</ol>
+</li>
+<li><strong>权限表示</strong>:<ul>
+<li>通常用9个字符表示，如 <code>rwxr-xr--</code>。</li>
+<li>八进制表示：<code>r=4, w=2, x=1</code>。<ul>
+<li><code>owner access: 7 (rwx) implies 111_binary</code></li>
+<li><code>group access: 6 (rw-) implies 110_binary</code></li>
+<li><code>public access: 1 (--x) implies 001_binary</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>组管理</strong>: 管理员可以创建组，并将用户添加到组中。</li>
+<li><code>chgrp G filename</code>: 将文件 <code>filename</code> 的所属组更改为 <code>G</code>。</li>
+<li><code>chmod &lt;mode&gt; filename</code>: 更改文件 <code>filename</code> 的权限。</li>
+</ul>
+<!-- PPT Slide 38: Unix文件目录示例 (类似ls -l输出，展示了文件类型、权限、链接数、所有者、组、大小、修改时间、文件名) -->
+<!-- 例如: drwxr-xr-x 2 user group 4096 May 15 10:00 mydir -->
+<!-- -rw-r--r-- 1 user group 1024 May 14 09:30 myfile.txt -->
 
 
 
@@ -2011,7 +2914,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月16日 08:14:05 CST">2025年6月16日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月18日 15:22:10 CST">2025年6月18日</span>
   </span>
 
     
@@ -2155,7 +3058,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: 操作系统原理">
+          <a href="../chapter5/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 大容量存储">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2165,20 +3068,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                操作系统原理
+                大容量存储
               </div>
             </div>
           </a>
         
         
           
-          <a href="../chapter2/" class="md-footer__link md-footer__link--next" aria-label="下一页: 进程、线程与 CPU 调度">
+          <a href="../chapter7/" class="md-footer__link md-footer__link--next" aria-label="下一页: I/O管理">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                进程、线程与 CPU 调度
+                I/O管理
               </div>
             </div>
             <div class="md-footer__button md-icon">

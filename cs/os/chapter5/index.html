@@ -14,7 +14,7 @@
         <link rel="prev" href="../chapter4/">
       
       
-        <link rel="next" href="../../ai/">
+        <link rel="next" href="../chapter6/">
       
       
       <link rel="icon" href="../../../assets/smile.ico">
@@ -22,7 +22,7 @@
     
     
       
-        <title>文件系统 - allenge 的小站</title>
+        <title>大容量存储 - allenge 的小站</title>
       
     
     
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              文件系统
+              大容量存储
             
           </span>
         </div>
@@ -798,6 +798,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -954,7 +958,318 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    大容量存储
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    大容量存储
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、存储系统概述
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、磁盘结构 (HDD)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、磁盘结构 (HDD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 物理结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 磁盘工作机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 HDD 性能参数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、非易失性内存 (NVM)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、磁盘与主机的连接
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、地址映射
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、磁盘调度
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、磁盘调度">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 磁盘调度算法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 选择磁盘调度算法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-nvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 NVM 调度
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、错误检测与纠正
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      八、存储设备管理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、存储设备管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 格式化与分区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 引导与挂载
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 坏块管理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#swap-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      九、交换空间管理 (Swap Space)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      十、网络存储
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十、网络存储">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-nas-network-attached-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 网络附加存储 (NAS - Network Attached Storage)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-san-storage-area-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 存储区域网络 (SAN - Storage Area Network)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raid-redundant-array-of-independent-disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      十一、RAID (Redundant Array of Independent Disks)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十一、RAID (Redundant Array of Independent Disks)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 RAID 级别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-raid-zfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 RAID 扩展 (如 ZFS)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvm-scm" class="md-nav__link">
+    <span class="md-ellipsis">
+      十二、新兴 NVM 技术与存储级内存 (SCM)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter6/" class="md-nav__link">
         
   
   
@@ -965,7 +1280,29 @@
   
 
       </a>
-      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    I/O管理
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1116,7 +1453,7 @@
   
   
   <span class="md-ellipsis">
-    不确定性推理
+    不确定性知识表示与推理
     
   </span>
   
@@ -1735,6 +2072,269 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、存储系统概述
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、磁盘结构 (HDD)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、磁盘结构 (HDD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 物理结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 磁盘工作机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-hdd" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 HDD 性能参数
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、非易失性内存 (NVM)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、磁盘与主机的连接
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、地址映射
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、磁盘调度
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、磁盘调度">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 磁盘调度算法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 选择磁盘调度算法
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-nvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 NVM 调度
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、错误检测与纠正
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      八、存储设备管理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、存储设备管理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 格式化与分区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 引导与挂载
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 坏块管理
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#swap-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      九、交换空间管理 (Swap Space)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      十、网络存储
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十、网络存储">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-nas-network-attached-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 网络附加存储 (NAS - Network Attached Storage)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-san-storage-area-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 存储区域网络 (SAN - Storage Area Network)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#raid-redundant-array-of-independent-disks" class="md-nav__link">
+    <span class="md-ellipsis">
+      十一、RAID (Redundant Array of Independent Disks)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十一、RAID (Redundant Array of Independent Disks)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-raid" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 RAID 级别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-raid-zfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 RAID 扩展 (如 ZFS)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nvm-scm" class="md-nav__link">
+    <span class="md-ellipsis">
+      十二、新兴 NVM 技术与存储级内存 (SCM)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1765,7 +2365,511 @@
   
 
 
-<h1 id="_1">文件系统</h1>
+<h1 id="_1">大容量存储</h1>
+<div class="admonition abstract">
+<p class="admonition-title">课程目标</p>
+<ul>
+<li>描述外存设备的物理结构及其对设备使用的影响；</li>
+<li>解释大容量存储设备的性能特点；</li>
+<li>评估磁盘调度算法；</li>
+<li>讨论大容量存储（RAID）提供的操作系统服务。</li>
+</ul>
+</div>
+<h2 id="_2">一、存储系统概述</h2>
+<p>计算机系统中的存储设备是分层次组织的，主要目的是在成本、速度和容量之间取得平衡。</p>
+<div class="admonition note">
+<p class="admonition-title">存储分层 (Storage Hierarchy)</p>
+<p>典型的存储层次从上到下，速度递减，容量递增，每比特成本递减：</p>
+<ol>
+<li><strong>寄存器 (Registers)</strong></li>
+<li><strong>高速缓存 (Cache)</strong></li>
+<li><strong>主存 (Main Memory - DRAM)</strong></li>
+<li><strong>电子磁盘 (Solid State Disk - SSD)</strong></li>
+<li><strong>磁盘 (Magnetic Disk - HDD)</strong></li>
+<li><strong>光盘 (Optical Disk)</strong></li>
+<li><strong>磁带 (Magnetic Tapes)</strong></li>
+</ol>
+</div>
+<p>本章主要关注大容量存储，特别是磁盘驱动器（HDD）和非易失性存储器（NVM）。</p>
+<h2 id="hdd">二、磁盘结构 (HDD)</h2>
+<h3 id="21">2.1 物理结构</h3>
+<p>传统的机械硬盘（HDD）主要由以下物理组件构成：</p>
+<p><img alt="disk" src="../fig/disk.png" /></p>
+<ul>
+<li><strong>盘片 (Platters)</strong>：圆形盘片，表面涂有磁性材料用于存储数据。</li>
+<li><strong>磁头 (Heads)</strong>：每个盘面都有一个磁头，负责读写数据。所有磁头固定在一个磁头臂上，同步移动。</li>
+<li><strong>磁道 (Tracks)</strong>：盘片上的一系列同心圆，数据记录在磁道上。</li>
+<li><strong>柱面 (Cylinders)</strong>：所有盘片上半径相同的磁道的集合。磁头在不同盘面之间切换比在同一盘面移动磁道要快，因此数据倾向于按柱面存储。</li>
+<li><strong>扇区 (Sectors)</strong>：磁道被划分成的若干个弧段，是磁盘读写的最小物理单位，通常为 512 字节或 4KB。</li>
+<li><strong>簇 (Clusters)</strong>：文件系统层面，由一个或多个连续的扇区组成，是文件分配的最小逻辑单位。</li>
+</ul>
+<div class="admonition question">
+<p class="admonition-title">扇区大小与数量</p>
+<ul>
+<li><strong>扇区大小是固定的吗？</strong> 在低级格式化时确定，对于一个磁盘而言，其物理扇区大小是固定的。</li>
+<li><strong>每个磁道的扇区数量是一样的吗？</strong><ul>
+<li>传统磁盘（CAV - Constant Angular Velocity，恒定角速度）：内圈磁道和外圈磁道扇区数相同，但外圈磁道扇区物理长度更长，导致空间利用率不高。</li>
+<li>现代磁盘（CLV - Constant Linear Velocity，恒定线速度，或 ZBR - Zone Bit Recording，区域位记录）：外圈磁道比较内圈磁道拥有更多的扇区，以提高存储密度和数据传输率。</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="22">2.2 磁盘工作机制</h3>
+<p>读取或写入数据时，磁头必须被定位到期望的磁道，并等待所期望的扇区旋转到磁头下方。这个过程主要包含两个时间：</p>
+<ol>
+<li><strong>寻道时间 (Seek Time)</strong>：将磁头臂移动到目标磁道（柱面）所花费的时间。这是影响磁盘性能的最主要因素。<ul>
+<li>平均寻道时间通常在 3ms 到 12ms 之间。</li>
+</ul>
+</li>
+<li><strong>旋转延迟 (Rotational Latency)</strong>：等待目标扇区的起始位置旋转到磁头下方所花费的时间。<ul>
+<li>平均旋转延迟 = <span class="arithmatex">\(\frac{1}{2} \times \text{磁盘旋转一周所需时间}\)</span></li>
+<li>磁盘旋转一周所需时间 = <span class="arithmatex">\(\frac{60}{\text{RPM}}\)</span> (秒)，其中 RPM 是每分钟转数。</li>
+<li>例如，7200 RPM 的磁盘，平均旋转延迟 = <span class="arithmatex">\(\frac{1}{2} \times \frac{60}{7200} \text{ s} = 4.17 \text{ ms}\)</span>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="23-hdd">2.3 HDD 性能参数</h3>
+<ul>
+<li><strong>传输速率 (Transfer Rate)</strong>：数据从磁盘传输到内存（或反之）的速率。<ul>
+<li>理论传输速率 (e.g., 6 Gb/sec for SATA 3)</li>
+<li>有效传输速率 (e.g., 1 Gb/sec)</li>
+</ul>
+</li>
+<li>
+<p><strong>访问延迟 (Access Latency)</strong>：</p>
+<p><code>Access Latency = Average Seek Time + Average Rotational Latency</code></p>
+<ul>
+<li>例如，对于高速磁盘: <span class="arithmatex">\(3ms + 2ms = 5ms\)</span></li>
+<li>例如，对于低速磁盘: <span class="arithmatex">\(9ms + 5.56ms = 14.56ms\)</span></li>
+</ul>
+</li>
+<li>
+<p><strong>平均 I/O 时间 (Average I/O Time)</strong>：</p>
+<p><code>Average I/O Time = Access Latency + (Amount to Transfer / Transfer Rate) + Controller Overhead</code></p>
+<ul>
+<li>
+<p><strong>示例</strong>：传输一个 4KB 的块，磁盘参数为 7200 RPM，平均寻道时间 5ms，传输速率 1Gb/sec，控制器开销 0.1ms。</p>
+<ul>
+<li>平均寻道时间 = <span class="arithmatex">\(5ms\)</span></li>
+<li>平均旋转延迟 (7200 RPM) = <span class="arithmatex">\(\frac{1}{2} \times \frac{60}{7200}s = 4.17ms\)</span></li>
+<li>控制器开销 = <span class="arithmatex">\(0.1ms\)</span></li>
+<li>传输时间 = <span class="arithmatex">\(\frac{4KB}{1Gb/s} = \frac{4 \times 1024 \times 8 \text{ bits}}{1 \times 10^9 \text{ bits/s}} \approx \frac{4 \times 8}{1024^2 \times 1000 / (1024^2)} \text{ ms} = \frac{32 \text{ Kb}}{1000 \text{ Mb/s}} = \frac{0.032 \text{ Mb}}{1000 \text{ Mb/s}} = 0.000032s = 0.032ms\)</span><ul>
+<li>PPT 中的计算: <code>Transfer time = 4KB / 1Gb/s * 8Gb / GB * 1GB / 1024^2KB = 32 / (1024^2) = 0.031 ms</code> (这里 PPT 的单位转换有点简化，但结果近似)</li>
+</ul>
+</li>
+<li>平均 I/O 时间 = <span class="arithmatex">\(5ms + 4.17ms + 0.1ms + 0.031ms = 9.301ms\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">第一块硬盘</p>
+<p>1956 年，IBM RAMDAC 计算机包含了 IBM Model 350 磁盘存储系统，容量为 5M (7位) 字符，由 50 个 24 英寸的盘片组成，访问时间小于 1 秒。</p>
+</div>
+<h2 id="nvm">三、非易失性内存 (NVM)</h2>
+<p>NVM（如固态硬盘 SSD）是一种即使在断电后也能保持数据存储的内存技术。</p>
+<ul>
+<li><strong>特点</strong>：<ul>
+<li>比 HDD 更可靠（无移动部件）。</li>
+<li>每 MB 成本更高。</li>
+<li>可能有较短的寿命（写入次数限制），需要磨损均衡等管理技术。</li>
+<li>容量相对 HDD 可能较小（但差距在缩小）。</li>
+<li><strong>速度远快于 HDD</strong>。</li>
+<li>无寻道时间或旋转延迟。</li>
+</ul>
+</li>
+<li><strong>接口</strong>：传统 SATA 总线可能成为瓶颈，新的接口如 <strong>NVMe (NVM Express)</strong> 直接连接到 PCI-e 总线，提供更高带宽和更低延迟。</li>
+<li><strong>形式</strong>：SSD、USB 驱动器、主板集成存储、智能手机存储等。</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">易失性存储用作大容量存储</p>
+<p>DRAM 也可以配置为 RAM 驱动器（RAM disk），提供极快的 I/O 性能，但数据在断电后会丢失。
+*   操作系统通过 RAM 进行缓冲和缓存。
+*   RAM 驱动器由用户控制，可用作高速临时存储。
+*   Linux 中有 <code>/dev/ram</code>，macOS 可用 <code>diskutil</code> 创建，文件系统类型如 <code>tmpfs</code>。</p>
+</div>
+<h2 id="_3">四、磁盘与主机的连接</h2>
+<p>磁盘驱动器通过 I/O 总线与主机系统连接。</p>
+<ul>
+<li><strong>总线类型</strong>：ATA, SATA (最常见), eSATA, SAS, USB, Fibre Channel (FC)。</li>
+<li><strong>控制器</strong>：<ul>
+<li><strong>主机控制器 (Host Bus Adapter - HBA)</strong>：在计算机端，管理总线。</li>
+<li><strong>磁盘控制器 (Device Controller)</strong>：内置于磁盘驱动器中。</li>
+</ul>
+</li>
+<li><strong>通信</strong>：主机通过内存映射 I/O 端口向主机控制器发送命令，主机控制器再向设备控制器发送消息。数据传输通常通过 DMA (Direct Memory Access) 在设备和主存之间进行。</li>
+</ul>
+<h2 id="_4">五、地址映射</h2>
+<p>操作系统将磁盘视为一个由<strong>逻辑块 (Logical Blocks)</strong> 构成的一维数组。逻辑块是最小的传输单元。</p>
+<ul>
+<li><strong>低级格式化 (Low-Level Formatting / Physical Formatting)</strong>：在物理介质上创建逻辑块（扇区），并写入扇区头、数据区和 ECC（纠错码）。</li>
+<li><strong>映射方式</strong>：逻辑块号按顺序映射到磁盘扇区。通常从最外层柱面的第一个磁道的第一个扇区开始 (扇区0)，依次映射完一个磁道，然后是该柱面中的其余磁道，再从外向内扫描其他柱面。</li>
+<li><strong>挑战</strong>：<ul>
+<li><strong>坏扇区 (Bad Sectors)</strong>：磁盘控制器通常会维护一个坏扇区列表，并透明地将坏扇区重映射到备用扇区。</li>
+<li><strong>可变扇区数</strong>：对于采用 CLV/ZBR 技术的磁盘，外圈磁道扇区更多，逻辑到物理地址的映射更复杂。</li>
+</ul>
+</li>
+</ul>
+<h2 id="_5">六、磁盘调度</h2>
+<p>操作系统负责高效使用磁盘硬件，主要目标是：</p>
+<ol>
+<li><strong>快速的访问时间 (Fast Access Time)</strong>：主要通过最小化寻道时间实现。</li>
+<li><strong>高磁盘带宽 (High Disk Bandwidth)</strong>：单位时间内传输的总字节数。
+    <code>Disk Bandwidth = Total Bytes Transferred / (Time of First Request - Time of Last Transfer Completion)</code></li>
+</ol>
+<p>磁盘 I/O 请求可能来自操作系统、系统进程或用户进程。操作系统为每个磁盘维护一个请求队列。当磁盘繁忙时，新的请求必须排队，此时调度算法才有意义。</p>
+<h3 id="61">6.1 磁盘调度算法</h3>
+<p>假设当前磁头位置在 <strong>53</strong>，请求队列为：<strong>98, 183, 37, 122, 14, 124, 65, 67</strong></p>
+<ol>
+<li>
+<p><strong>先来先服务 (FCFS - First-Come, First-Served)</strong></p>
+<ul>
+<li>按请求到达顺序处理。</li>
+<li>公平，但效率不高，可能导致磁头臂移动距离过大。</li>
+<li>移动序列: 53 → 98 → 183 → 37 → 122 → 14 → 124 → 65 → 67</li>
+<li>总寻道长度: (98-53) + (183-98) + (183-37) + (122-37) + (122-14) + (124-14) + (124-65) + (67-65) = 45 + 85 + 146 + 85 + 108 + 110 + 59 + 2 = <strong>640</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>最短寻道时间优先 (SSTF - Shortest Seek Time First)</strong></p>
+<ul>
+<li>选择使磁头臂从当前位置移动最少的请求。</li>
+<li>可能导致某些请求饥饿（Starvation）。</li>
+<li>移动序列: 53 → 65 → 67 → 37 → 14 → 98 → 122 → 124 → 183</li>
+<li>总寻道长度: (65-53) + (67-65) + (67-37) + (37-14) + (98-14) + (122-98) + (124-122) + (183-124) = 12 + 2 + 30 + 23 + 84 + 24 + 2 + 59 = <strong>236</strong> 个柱面。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">SSTF 缺点</p>
+<p>SSTF 算法虽然平均寻道时间较短，但如果不断有靠近当前磁头位置的新请求到达，远离磁头位置的请求可能会长时间得不到服务，产生“饥饿”现象。</p>
+</div>
+</li>
+<li>
+<p><strong>扫描算法 (SCAN / 电梯算法 - Elevator Algorithm)</strong></p>
+<ul>
+<li>磁头在一个方向上移动，服务所有该方向上的请求，直到到达磁盘末端，然后反向。</li>
+<li>对两端的请求更友好。</li>
+<li>假设当前磁头从 53 开始向磁道号减小的方向移动 (朝0移动)。</li>
+<li>移动序列: 53 → 37 → 14 → 0 (到达端点) → 65 → 67 → 98 → 122 → 124 → 183</li>
+<li>总寻道长度: (53-37) + (37-14) + (14-0) + (65-0) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) = 16 + 23 + 14 + 65 + 2 + 31 + 24 + 2 + 59 = <strong>236</strong> 个柱面 (如果假设磁盘柱面从0到199)。</li>
+<li>如果磁头从 53 开始向磁道号增大的方向移动 (朝199移动)。</li>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 → 199 (到达端点) → 37 → 14</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (199-183) + (199-37) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 16 + 162 + 23 = <strong>331</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>循环扫描算法 (C-SCAN - Circular SCAN)</strong></p>
+<ul>
+<li>磁头只在一个方向上扫描并服务请求（例如，从外到内）。当到达磁盘一端后，立即返回到另一端（不服务任何请求），然后重新开始扫描。</li>
+<li>提供更均匀的等待时间。</li>
+<li>假设当前磁头从 53 开始向磁道号增大的方向移动。</li>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 → 199 (到达端点) → 0 (快速返回) → 14 → 37</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (199-183) + (199-0) + (14-0) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 16 + 199 + 14 + 23 = <strong>382</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>LOOK 和 C-LOOK 算法</strong></p>
+<ul>
+<li>SCAN 和 C-SCAN 的改进版。磁头只移动到最远端的请求处，而不是磁盘的物理末端，然后反向。</li>
+<li><strong>C-LOOK 示例 (从53向大号移动)</strong>:<ul>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 (最远请求) → 14 (直接跳到最小号请求) → 37</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (183-14) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 169 + 23 = <strong>322</strong> 个柱面。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>N步SCAN (N-Step SCAN)</strong></p>
+<ul>
+<li>将磁盘请求队列分成长度为 N 的子队列。</li>
+<li>按 SCAN 算法依次处理每个子队列。</li>
+<li>处理一个子队列时，新请求加入其他队列。</li>
+</ul>
+</li>
+<li>
+<p><strong>FSCAN</strong></p>
+<ul>
+<li>使用两个子队列。一个队列用于当前扫描，另一个队列用于收集扫描期间到达的新请求。</li>
+<li>当前队列处理完毕后，再处理新请求队列。</li>
+</ul>
+</li>
+</ol>
+<h3 id="62">6.2 选择磁盘调度算法</h3>
+<ul>
+<li><strong>SSTF</strong>：常见且有吸引力，但有饥饿风险。</li>
+<li><strong>SCAN / C-SCAN</strong>：对于磁盘负载较大的系统性能更好，减少饥饿。</li>
+<li><strong>Linux 中的调度器</strong>：<ul>
+<li><strong>Deadline Scheduler</strong>: 维护读/写队列，读优先。实现四个队列（2个读，2个写），其中读/写各有一个按 LBA 排序（类似 C-SCAN），各有一个按 FCFS 排序。批处理后检查 FCFS 队列中是否有超时请求。</li>
+<li><strong>NOOP (No Operation)</strong>: 简单的 FCFS，但会合并相邻请求。适用于随机访问性能好的设备（如 SSD）。</li>
+<li><strong>CFQ (Completely Fair Queuing)</strong>: 为每个进程维护请求队列，试图公平分配 I/O 带宽。</li>
+</ul>
+</li>
+</ul>
+<h3 id="63-nvm">6.3 NVM 调度</h3>
+<ul>
+<li>NVM (如 SSD) 没有磁头移动或旋转延迟，传统调度算法优化寻道时间的意义不大。</li>
+<li>调度目标可能变为：<ul>
+<li>合并相邻的 LBA 请求以减少 I/O 次数。</li>
+<li>考虑 NVM 的内部并行性。</li>
+<li>减少写入放大 (Write Amplification)。</li>
+</ul>
+</li>
+<li>RHEL 7 中，对于 NVM 设备，通常使用 <strong>NOOP</strong> 调度器，并合并相邻 LBA 请求。</li>
+<li>NVM 的 IOPS (Input/Output Operations Per Second) 远高于 HDD。</li>
+</ul>
+<h2 id="_6">七、错误检测与纠正</h2>
+<ul>
+<li><strong>错误检测</strong>：确定是否发生数据错误（如位翻转）。<ul>
+<li><strong>奇偶校验位 (Parity Bit)</strong>：一种简单的校验和。</li>
+<li><strong>循环冗余校验 (CRC - Cyclic Redundancy Check)</strong>：使用哈希函数检测多个位错误，常用于网络。</li>
+</ul>
+</li>
+<li><strong>纠错码 (ECC - Error-Correcting Code)</strong>：不仅能检测错误，还能纠正一定程度的错误。<ul>
+<li>软错误可纠正，硬错误（物理损坏）可检测但通常无法纠正。</li>
+</ul>
+</li>
+</ul>
+<h2 id="_7">八、存储设备管理</h2>
+<h3 id="81">8.1 格式化与分区</h3>
+<ol>
+<li><strong>低级格式化 (物理格式化)</strong>：<ul>
+<li>将磁盘划分为扇区，每个扇区包含头信息、数据区和 ECC。</li>
+<li>通常在出厂时完成。</li>
+</ul>
+</li>
+<li><strong>分区 (Partitioning)</strong>：<ul>
+<li>将磁盘划分为一个或多个逻辑区域（分区），每个分区可以被视为一个独立的逻辑磁盘。</li>
+<li>根分区包含操作系统。</li>
+</ul>
+</li>
+<li><strong>逻辑格式化 (创建文件系统)</strong>：<ul>
+<li>在分区上建立文件系统的数据结构（如目录、inode 表、空闲空间管理结构）。</li>
+<li>文件系统通常将块 (逻辑块) 分组成簇 (Cluster) 进行管理。磁盘 I/O 以块为单位，文件 I/O 以簇为单位。</li>
+</ul>
+</li>
+</ol>
+<h3 id="82">8.2 引导与挂载</h3>
+<ul>
+<li><strong>引导块 (Boot Block)</strong>：磁盘的特定位置（如 MBR - Master Boot Record）存储引导加载程序 (Bootloader)，用于加载操作系统内核。</li>
+<li><strong>挂载 (Mounting)</strong>：将一个文件系统（通常在某个分区上）连接到操作系统的目录树中的一个点（挂载点），使其内容可访问。<ul>
+<li>挂载时会检查文件系统一致性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="83">8.3 坏块管理</h3>
+<ul>
+<li>磁盘控制器或操作系统可以管理坏块。</li>
+<li>常用方法是<strong>扇区备用 (Sector Sparing)</strong> 或<strong>扇区转发 (Sector Forwarding)</strong>：将坏扇区逻辑上重映射到一个备用好扇区。</li>
+</ul>
+<h2 id="swap-space">九、交换空间管理 (Swap Space)</h2>
+<p>当物理内存 (DRAM) 不足以容纳所有进程时，操作系统使用辅助存储（如磁盘）作为交换空间。</p>
+<ul>
+<li><strong>交换 (Swapping)</strong>：将整个进程移出/移入内存。</li>
+<li><strong>分页 (Paging)</strong>：将进程的页面移出/移入内存。</li>
+<li><strong>位置</strong>：交换空间可以在专用分区（性能较好）或文件系统中的文件（灵活性较高）。</li>
+<li><strong>管理</strong>：操作系统管理交换空间的使用，例如 Linux 使用特定的数据结构来跟踪交换区。</li>
+<li><strong>优化</strong>：可以使用多个交换空间分布在不同设备上，以减少 I/O 瓶颈。</li>
+</ul>
+<h2 id="_8">十、网络存储</h2>
+<h3 id="101-nas-network-attached-storage">10.1 网络附加存储 (NAS - Network Attached Storage)</h3>
+<ul>
+<li>通过网络提供文件级访问的存储设备。</li>
+<li>客户端通过网络文件系统协议（如 NFS, CIFS/SMB）访问 NAS 上的文件。</li>
+<li>协议通常在 IP 网络上通过 TCP 或 UDP 实现，使用 RPC (Remote Procedure Calls)。</li>
+</ul>
+<h3 id="102-san-storage-area-network">10.2 存储区域网络 (SAN - Storage Area Network)</h3>
+<ul>
+<li>提供块级访问的高速专用网络，连接服务器与存储阵列。</li>
+<li>主机将 SAN 上的存储视为本地连接的磁盘。</li>
+<li><strong>协议</strong>：<ul>
+<li><strong>Fibre Channel (FC)</strong>：传统的 SAN 协议。</li>
+<li><strong>iSCSI (Internet SCSI)</strong>：在 IP 网络上传输 SCSI 命令，允许使用标准以太网硬件构建 SAN。</li>
+<li><strong>FCoE (Fibre Channel over Ethernet)</strong>：在以太网上传输光纤通道帧。</li>
+</ul>
+</li>
+<li><strong>特点</strong>：<ul>
+<li>多台主机可连接到多个存储阵列，灵活性高。</li>
+<li>通过 LUN (Logical Unit Number) 屏蔽，将特定存储阵列的存储分配给特定服务器。</li>
+<li>易于扩展和管理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="raid-redundant-array-of-independent-disks">十一、RAID (Redundant Array of Independent Disks)</h2>
+<p>RAID 是一种将多个独立磁盘驱动器组合成一个逻辑单元的技术，旨在提高性能、数据冗余或两者兼备。</p>
+<div class="admonition note">
+<p class="admonition-title">RAID 的核心思想</p>
+<ul>
+<li><strong>数据分布 (Data Striping)</strong>：将数据分成块，并分布在多个磁盘上，提高并行访问能力和性能。</li>
+<li><strong>冗余 (Redundancy)</strong>：通过存储额外的校验信息（如奇偶校验）或数据副本，实现在磁盘故障时的数据恢复。</li>
+</ul>
+</div>
+<h3 id="111-raid">11.1 RAID 级别</h3>
+<ul>
+<li>
+<p><strong>RAID 0 (Striping - 条带化)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据分块（条带）存储在多个磁盘上。</li>
+<li><strong>优点</strong>：读写性能高（并行访问）。</li>
+<li><strong>缺点</strong>：无冗余，任何一个磁盘损坏都会导致所有数据丢失。</li>
+<li><strong>磁盘数</strong>：至少 2 个。</li>
+<li><strong>容量</strong>：N * (单个磁盘容量)，N 为磁盘数。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 1 (Mirroring - 镜像)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据完全复制到另一个（或多个）磁盘上。</li>
+<li><strong>优点</strong>：高数据可靠性（一个磁盘坏了，数据仍在另一个上）。读取性能可能提高。</li>
+<li><strong>缺点</strong>：写入性能略有下降（需写两份），成本高（有效容量减半）。</li>
+<li><strong>磁盘数</strong>：至少 2 个 (通常为偶数)。</li>
+<li><strong>容量</strong>：(单个磁盘容量)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 2 (Hamming Code ECC)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据位级条带化，使用汉明码进行错误检测和纠正。需要专门的同步磁盘。</li>
+<li><strong>缺点</strong>：控制器复杂，成本高，很少实际使用。所有磁盘必须同步旋转。</li>
+<li><strong>磁盘数</strong>：N (数据) + m (ECC，m与logN成正比)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 3 (Byte-Level Striping with Dedicated Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据字节级条带化，使用一个专用磁盘存储奇偶校验信息。</li>
+<li><strong>优点</strong>：高传输率（适合大块顺序读写）。</li>
+<li><strong>缺点</strong>：校验盘可能成为瓶颈，不适合大量小 I/O。</li>
+<li><strong>磁盘数</strong>：至少 3 个 (N数据盘 + 1校验盘)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 4 (Block-Level Striping with Dedicated Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，使用一个专用磁盘存储奇偶校验信息。</li>
+<li><strong>优点</strong>：并发小块读取性能好。</li>
+<li><strong>缺点</strong>：写入时校验盘仍是瓶颈（写惩罚：每次写数据盘，都要读旧数据、旧校验，计算新校验，写新数据、新校验）。</li>
+<li><strong>磁盘数</strong>：至少 3 个。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 5 (Block-Level Striping with Distributed Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，奇偶校验信息分布式存储在所有磁盘上。</li>
+<li><strong>优点</strong>：读性能好，写性能优于 RAID 4（校验分布，减轻单一校验盘瓶颈）。允许一个磁盘故障。</li>
+<li><strong>缺点</strong>：写操作仍有一定开销（读-修改-写）。</li>
+<li><strong>磁盘数</strong>：至少 3 个。</li>
+<li><strong>容量</strong>：(N-1) * (单个磁盘容量)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 6 (Block-Level Striping with Dual Distributed Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，使用两种独立的分布式奇偶校验信息。</li>
+<li><strong>优点</strong>：极高的数据可用性，允许两个磁盘同时故障。</li>
+<li><strong>缺点</strong>：写入开销大（需要更新两个校验块），控制器复杂，成本更高。</li>
+<li><strong>磁盘数</strong>：至少 4 个。</li>
+<li><strong>容量</strong>：(N-2) * (单个磁盘容量)。</li>
+</ul>
+</li>
+</ul>
+<div class="admonition summary">
+<p class="admonition-title">RAID 级别对比</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">RAID 级别</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">最小磁盘数</th>
+<th style="text-align: left;">冗余性</th>
+<th style="text-align: left;">读性能</th>
+<th style="text-align: left;">写性能</th>
+<th style="text-align: left;">容量利用率</th>
+<th style="text-align: left;">主要应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">RAID 0</td>
+<td style="text-align: left;">条带化</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">++</td>
+<td style="text-align: left;">++</td>
+<td style="text-align: left;">100%</td>
+<td style="text-align: left;">高性能，非关键数据</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAID 1</td>
+<td style="text-align: left;">镜像</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">高</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">o</td>
+<td style="text-align: left;">50%</td>
+<td style="text-align: left;">高可靠性，操作系统盘</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAID 3</td>
+<td style="text-align: left;">字节级条带+专用校验</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">++</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">(N-1)/N</td>
+<td style="text-align: left;">大文件，视频编辑 (较少用)</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAID 4</td>
+<td style="text-align: left;">块级条带+专用校验</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">--</td>
+<td style="text-align: left;">(N-1)/N</td>
+<td style="text-align: left;">(较少用，被RAID 5取代)</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAID 5</td>
+<td style="text-align: left;">块级条带+分布式校验</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">中</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">o</td>
+<td style="text-align: left;">(N-1)/N</td>
+<td style="text-align: left;">通用，兼顾性能、容量、可靠性</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAID 6</td>
+<td style="text-align: left;">块级条带+双分布式校验</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">高</td>
+<td style="text-align: left;">+</td>
+<td style="text-align: left;">--</td>
+<td style="text-align: left;">(N-2)/N</td>
+<td style="text-align: left;">对数据可靠性要求极高的场景</td>
+</tr>
+</tbody>
+</table>
+<p><em>(++: 很好, +: 好, o: 一般, -: 差, --: 很差)</em></p>
+</div>
+<h3 id="112-raid-zfs">11.2 RAID 扩展 (如 ZFS)</h3>
+<ul>
+<li>RAID 本身主要防止磁盘物理故障，不能防止数据损坏（如位衰减、写错误）。</li>
+<li><strong>ZFS (Zettabyte File System)</strong>：<ul>
+<li>集成了文件系统和卷管理器功能。</li>
+<li>对所有数据和元数据进行<strong>校验和 (Checksumming)</strong>，并与指向该数据的指针一起存储。</li>
+<li>可以检测并纠正数据损坏（静默错误）。</li>
+<li>使用存储池 (Pools of storage) 的概念，文件系统动态共享池中的空间。</li>
+<li>支持类似 RAID 的冗余级别 (RAID-Z, RAID-Z2, RAID-Z3)。</li>
+</ul>
+</li>
+</ul>
+<h2 id="nvm-scm">十二、新兴 NVM 技术与存储级内存 (SCM)</h2>
+<ul>
+<li><strong>3D XPoint 技术 (Intel Optane)</strong>：一种介于 DRAM 和 NAND Flash 之间的存储技术，旨在提供比 NAND 更高的性能和耐用性，以及比 DRAM 更高的密度和非易失性。</li>
+<li><strong>存储级内存 (SCM - Storage Class Memory)</strong>：一类具有内存般访问速度和存储般持久性的技术。</li>
+<li><strong>目标</strong>：打破 I/O 瓶颈，实现新的内存计算架构。</li>
+</ul>
 
 
 
@@ -1786,7 +2890,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月12日 10:20:59 CST">2025年6月12日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月18日 15:22:10 CST">2025年6月18日</span>
   </span>
 
     
@@ -1947,13 +3051,13 @@
         
         
           
-          <a href="../../ai/" class="md-footer__link md-footer__link--next" aria-label="下一页: 人工智能理论">
+          <a href="../chapter6/" class="md-footer__link md-footer__link--next" aria-label="下一页: 文件系统">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                人工智能理论
+                文件系统
               </div>
             </div>
             <div class="md-footer__button md-icon">
