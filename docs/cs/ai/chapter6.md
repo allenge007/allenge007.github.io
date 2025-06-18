@@ -413,3 +413,114 @@ $$
     1.  将数据集分成 $K$ 个互不相交的子集（折）。
     2.  进行 $K$ 次训练和测试：每次选择 $K-1$ 个子集用于训练，剩下的1个子集用于测试。
     3.  最终性能是 $K$ 次测试结果的平均值。
+
+## 课后作业
+
+!!! question "问题一"
+
+    根据以下数据集，使用ID3算法计算属性“天气”和“湿度”的信息增益，并说明哪个属性更适合作为根节点。
+
+    |天气|湿度|活动（是否进行）|
+    | ---- | ---- | ---- |
+    |晴|高|否|
+    |晴|高|否|
+    |多云|高|是|
+    |雨|中|是|
+    |雨|中|是|
+
+??? note "答案（仅供参考）"
+
+    总样本数 $|D| = 5$
+    活动“是”的样本数 = 3
+    活动“否”的样本数 = 2
+
+    计算整个数据集D的熵 ($Entropy(D)$)
+
+    $Entropy(D) = - \left( P(\text{是}) \cdot \log_2(P(\text{是})) + P(\text{否}) \cdot \log_2(P(\text{否})) \right)$
+    
+    $P(\text{是}) = \frac{3}{5}$
+    
+    $P(\text{否}) = \frac{2}{5}$
+
+    $Entropy(D) = - \left( \frac{3}{5} \cdot \log_2\left(\frac{3}{5}\right) + \frac{2}{5} \cdot \log_2\left(\frac{2}{5}\right) \right)$
+    $Entropy(D) = - \left( 0.6 \cdot (-0.736965594) + 0.4 \cdot (-1.321928095) \right)$
+    
+    $Entropy(D) = - \left( -0.4421793564 - 0.528771238 \right)$
+    $Entropy(D) = - ( -0.9709505944 )$
+    $Entropy(D) \approx 0.971$
+
+    计算属性“天气”的信息增益 ($Gain(D, \text{天气})$)
+
+    属性“天气”有三个取值：晴、多云、雨。
+
+    *   **天气 = 晴 ($D_{\text{晴}}$)**: 2个样本 (否, 否)
+        *   $P(\text{是}) = \frac{0}{2} = 0$
+        *   $P(\text{否}) = \frac{2}{2} = 1$
+        *   $Entropy(D_{\text{晴}}) = - \left( 0 \cdot \log_2(0) + 1 \cdot \log_2(1) \right) = 0$  (约定 $0 \cdot \log_2(0) = 0$)
+
+    *   **天气 = 多云 ($D_{\text{多云}}$)**: 1个样本 (是)
+        *   $P(\text{是}) = \frac{1}{1} = 1$
+        *   $P(\text{否}) = \frac{0}{1} = 0$
+        *   $Entropy(D_{\text{多云}}) = - \left( 1 \cdot \log_2(1) + 0 \cdot \log_2(0) \right) = 0$
+
+    *   **天气 = 雨 ($D_{\text{雨}}$)**: 2个样本 (是, 是)
+        *   $P(\text{是}) = \frac{2}{2} = 1$
+        *   $P(\text{否}) = \frac{0}{2} = 0$
+        *   $Entropy(D_{\text{雨}}) = - \left( 1 \cdot \log_2(1) + 0 \cdot \log_2(0) \right) = 0$
+
+    计算按“天气”划分后的条件熵:
+
+    $Entropy(D|\text{天气}) = \frac{|D_{\text{晴}}|}{|D|} \cdot Entropy(D_{\text{晴}}) + \frac{|D_{\text{多云}}|}{|D|} \cdot Entropy(D_{\text{多云}}) + \frac{|D_{\text{雨}}|}{|D|} \cdot Entropy(D_{\text{雨}})$
+    
+    $Entropy(D|\text{天气}) = \frac{2}{5} \cdot 0 + \frac{1}{5} \cdot 0 + \frac{2}{5} \cdot 0$
+    
+    $Entropy(D|\text{天气}) = 0$
+
+    信息增益 $Gain(D, \text{天气})$:
+
+    $Gain(D, \text{天气}) = Entropy(D) - Entropy(D|\text{天气})$
+    
+    $Gain(D, \text{天气}) = 0.971 - 0$
+    
+    $Gain(D, \text{天气}) = 0.971$
+
+    计算属性“湿度”的信息增益 ($Gain(D, \text{湿度})$)
+
+    属性“湿度”有两个取值：高、中。
+
+    *   **湿度 = 高 ($D_{\text{高}}$)**: 3个样本 (否, 否, 是)
+        *   $P(\text{是}) = \frac{1}{3}$
+        *   $P(\text{否}) = \frac{2}{3}$
+        *   $Entropy(D_{\text{高}}) = - \left( \frac{1}{3} \cdot \log_2\left(\frac{1}{3}\right) + \frac{2}{3} \cdot \log_2\left(\frac{2}{3}\right) \right)$
+        *   $Entropy(D_{\text{高}}) = - \left( \frac{1}{3} \cdot (-1.584962501) + \frac{2}{3} \cdot (-0.584962501) \right)$
+        *   $Entropy(D_{\text{高}}) = - \left( -0.5283208337 - 0.3899750007 \right)$
+        *   $Entropy(D_{\text{高}}) = - ( -0.9182958344 )$
+        *   $Entropy(D_{\text{高}}) \approx 0.918$
+
+    *   **湿度 = 中 ($D_{\text{中}}$)**: 2个样本 (是, 是)
+        *   $P(\text{是}) = \frac{2}{2} = 1$
+        *   $P(\text{否}) = \frac{0}{2} = 0$
+        *   $Entropy(D_{\text{中}}) = - \left( 1 \cdot \log_2(1) + 0 \cdot \log_2(0) \right) = 0$
+
+    计算按“湿度”划分后的条件熵:
+    
+    $Entropy(D|\text{湿度}) = \frac{|D_{\text{高}}|}{|D|} \cdot Entropy(D_{\text{高}}) + \frac{|D_{\text{中}}|}{|D|} \cdot Entropy(D_{\text{中}})$
+    $Entropy(D|\text{湿度}) = \frac{3}{5} \cdot 0.918 + \frac{2}{5} \cdot 0$
+    
+    $Entropy(D|\text{湿度}) = 0.6 \cdot 0.918 + 0$
+    $Entropy(D|\text{湿度}) \approx 0.551$
+
+    信息增益 $Gain(D, \text{湿度})$:
+    
+    $Gain(D, \text{湿度}) = Entropy(D) - Entropy(D|\text{湿度})$
+    
+    $Gain(D, \text{湿度}) = 0.971 - 0.551$
+    
+    $Gain(D, \text{湿度}) = 0.420$
+
+    比较两个属性的信息增益：
+    
+    *   $Gain(D, \text{天气}) = 0.971$
+    *   $Gain(D, \text{湿度}) = 0.420$
+
+    由于 $Gain(D, \text{天气}) > Gain(D, \text{湿度})$，属性“天气”的信息增益更大。因此，根据ID3算法，**属性“天气”更适合作为根节点**。

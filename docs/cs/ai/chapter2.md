@@ -844,88 +844,9 @@ Minimax算法的优化，通过剪枝避免搜索不影响最终决策的子树�
 
     在下图所示的博弈树中，方框表示极大方，圆圈表示极小方。以优先生成左边结点的顺序来进行α-β剪枝搜索，试在博弈树上给出何处发生剪枝的标记。
 
-    ![alt text](fig/tree.png)
+    ![](fig/minimax_tree_before.png)
 
 ??? note "答案（仅供参考）"
-    ```mermaid
-    graph TD
-    Root[ ] --- M1(( ))
-    Root --- M2(( ))
-    Root --- M3(( ))
-
-    M1 --- M1A[ ]
-    M1 --- M1B[ ]
-
-    M1A --- M1A1(( ))
-    M1A --- M1A2(( ))
-    M1A1 --- L1A11(4)
-    M1A1 --- L1A12(7)
-    M1A2 --- L1A21(5)
-    M1A2 --- L1A22(1)
-
-    M1B --- M1B1(( ))
-    M1B --- M1B2(( ))
-    M1B1 --- L1B11(9)
-    M1B1 --- L1B12(3)
-    M1B2 --- L1B21(6)
-    M1B2 --- L1B22(9)
-
-    M2 --- M2A[ ]
-    M2 --- M2B[ ]
-    M2 --- M2C[ ]
-
-    M2A --- M2A1(( ))
-    M2A --- M2A2(( ))
-    M2A1 --- L2A11(8)
-    M2A1 --- L2A12(7)
-    M2A2 --- L2A21(2)
-    M2A2 --- L2A22(5)
-
-    M2B --- M2B1(( ))
-    M2B --- M2B2(( ))
-    M2B1 --- L2B11(6)
-    M2B1 --- L2B12(3)
-    M2B2 --- L2B21(6)
-    M2B2 --- L2B22(5)
-
-    M2C --- M2C1(( ))
-    M2C --- M2C2(( ))
-    M2C1 --- L2C11(2)
-    M2C1 --- L2C12(7)
-    M2C2 --- L2C21(2)
-    M2C2 --- L2C22(6)
-
-    M3 --- M3A[ ]
-    M3 --- M3B[ ]
-    M3 --- M3C[ ]
-
-    M3A --- M3A1(( ))
-    M3A --- M3A2(( ))
-    M3A1 --- L3A11(3)
-    M3A1 --- L3A12(8)
-    M3A2 --- L3A21(1)
-    M3A2 --- L3A22(4)
-
-    M3B --- M3B1(( ))
-    M3B --- M3B2(( ))
-    M3B1 --- L3B11(0)
-    M3B1 --- L3B12(3)
-    M3B2 --- L3B21(1)
-    M3B2 --- L3B22(8)
-    M3B2 --- L3B23(9)
-
-    M3C --- M3C1(( ))
-    M3C --- M3C2(( ))
-    M3C1 --- L3C11(3)
-    M3C1 --- L3C12(7)
-    M3C1 --- L3C13(4)
-    M3C2 --- L3C21(2)
-    M3C2 --- L3C22(8)
-
-    linkStyle 11 stroke:red,stroke-width:2px,stroke-dasharray: 5 5; text-decoration:line-through;
-    linkStyle 13 stroke:red,stroke-width:2px,stroke-dasharray: 5 5;
-    linkStyle 17 stroke:red,stroke-width:2px,stroke-dasharray: 5 5;
-    linkStyle 19 stroke:red,stroke-width:2px,stroke-dasharray: 5 5;
-    linkStyle 2 stroke:red,stroke-width:2px,stroke-dasharray: 5 5;
-    linkStyle 3 stroke:red,stroke-width:2px,stroke-dasharray: 5 5;
-    ```
+    ![](fig/minimax_tree_after_ab.png)
+    
+    [参考代码（code）](minmaxtree.hidden.md)

@@ -181,11 +181,13 @@ $$ \mathbf{\hat{y}} = g_2(\mathbf{W}^{(2)} g_1(\mathbf{W}^{(1)}\mathbf{x} + \mat
     $$ \sigma(x) = \frac{1}{1 + e^{-x}} $$
 
     输出范围 (0, 1)，常用于二分类问题的输出层或旧式网络的隐藏层。
+
 *   **Tanh (双曲正切) 函数：**
 
     $$ \tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} = 2\sigma(2x) - 1 $$
 
     输出范围 (-1, 1)，通常比Sigmoid在隐藏层中表现更好，因为其输出均值为0。
+
 *   **ReLU (Rectified Linear Unit) 函数：**
 
     $$ \text{ReLU}(x) = \max(0, x) $$
@@ -305,3 +307,80 @@ $$ \text{ReLU}'(x) = \begin{cases} 1, & \text{if } x > 0 \\ 0, & \text{if } x \l
 *   **挑战与改进：** 梯度消失问题可通过ReLU等激活函数得到缓解。
 
 神经网络是现代机器学习和人工智能领域的核心技术之一，在计算机视觉、语音识别、自然语言处理等众多领域取得了巨大成功。
+
+## 课后作业
+
+!!! question "问题一"
+
+    如图是一个MLP模型。现有一个仅包含一个数据的数据集，该数据输入 $x_1=1$，$x_2=0.5$，输出的目标值 $t=4$ 。如果随机初始化后，$w_1=0.5$， $w_2=1.5$，$w_3=2.3$， $w_4=3$， $w_5=1$， $w_6=1$，若学习率 $η=0.1$，激活函数均为 ReLU，求经过1轮反向传播后，权重的更新值 $w_5^+$ 和 $w_1^+$.
+
+    ![](fig/net.png)
+
+??? note "答案（仅供参考）"
+    给定的初始值：
+
+    *   $x_1 = 1, x_2 = 0.5$
+    *   $t = 4$
+    *   $w_1=0.5, w_2=1.5, w_3=2.3, w_4=3, w_5=1, w_6=1$
+    *   $\eta = 0.1$
+    *   激活函数: ReLU, $f(z) = \max(0, z)$, $f'(z) = 1$ if $z > 0$, $0$ if $z \le 0$.
+    *   损失函数: $L = \frac{1}{2}(y-t)^2$
+
+    **1. 前向传播**
+
+    *   计算隐藏层输入：
+
+        $net_{h1} = w_1 x_1 + w_2 x_2 = (0.5)(1) + (1.5)(0.5) = 0.5 + 0.75 = 1.25$
+        $net_{h2} = w_3 x_1 + w_4 x_2 = (2.3)(1) + (3)(0.5) = 2.3 + 1.5 = 3.8$
+
+    *   计算隐藏层输出 (经过ReLU)：
+
+        $h_1 = \text{ReLU}(net_{h1}) = \text{ReLU}(1.25) = 1.25$
+        $h_2 = \text{ReLU}(net_{h2}) = \text{ReLU}(3.8) = 3.8$
+
+    *   计算输出层输入：
+
+        $net_y = w_5 h_1 + w_6 h_2 = (1)(1.25) + (1)(3.8) = 1.25 + 3.8 = 5.05$
+
+    *   计算输出层输出 (经过ReLU)：
+
+        $y = \text{ReLU}(net_y) = \text{ReLU}(5.05) = 5.05$
+
+    *   计算损失：
+
+        $L = \frac{1}{2}(y-t)^2 = \frac{1}{2}(5.05 - 4)^2 = \frac{1}{2}(1.05)^2 = \frac{1}{2}(1.1025) = 0.55125$
+
+    **2. 反向传播**
+
+    由于 $net_y=5.05 > 0$, $net_{h1}=1.25 > 0$, $net_{h2}=3.8 > 0$，所有ReLU的导数在其激活区域内都为1。
+
+    *   计算输出层误差项 $\delta_y$:
+
+        $\delta_y = \frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial net_y} = (y-t) \cdot \text{ReLU}'(net_y) = (5.05 - 4) \cdot 1 = 1.05$
+
+    *   **更新 $w_5$:**
+
+        $w_5$ 是连接 $h_1$ 到 $y$ 的权重。
+        
+        $\frac{\partial L}{\partial w_5} = \delta_y \cdot \frac{\partial net_y}{\partial w_5} = \delta_y \cdot h_1 = 1.05 \cdot 1.25 = 1.3125$
+
+        $\Delta w_5 = -\eta \frac{\partial L}{\partial w_5} = -0.1 \cdot 1.3125 = -0.13125$
+
+        $w_5^+ = w_5 + \Delta w_5 = 1 - 0.13125 = 0.86875$
+
+    *   **更新 $w_1$:**
+        
+        $w_1$ 是连接 $x_1$ 到 $h_1$ 的权重。
+        
+        $\frac{\partial L}{\partial w_1} = \delta_y \cdot \frac{\partial net_y}{\partial h_1} \cdot \frac{\partial h_1}{\partial net_{h1}} \cdot \frac{\partial net_{h1}}{\partial w_1}$
+        
+        *   $\frac{\partial net_y}{\partial h_1} = w_5 = 1$
+        
+        *   $\frac{\partial h_1}{\partial net_{h1}} = \text{ReLU}'(net_{h1}) = \text{ReLU}'(1.25) = 1$
+        
+        *   $\frac{\partial net_{h1}}{\partial w_1} = x_1 = 1$ (因为 $net_{h1} = w_1 x_1 + w_2 x_2$)
+
+        所以, $\frac{\partial L}{\partial w_1} = \delta_y \cdot w_5 \cdot 1 \cdot x_1 = 1.05 \cdot 1 \cdot 1 \cdot 1 = 1.05$
+        $\Delta w_1 = -\eta \frac{\partial L}{\partial w_1} = -0.1 \cdot 1.05 = -0.105$
+        
+        $w_1^+ = w_1 + \Delta w_1 = 0.5 - 0.105 = 0.395$
