@@ -394,13 +394,12 @@ $C_{NB} = \arg\max_C P(C) \prod_{i=1}^n P(A_i|C)$
 
     **网络结构**：
     ```mermaid
-    B → A ← E
-
-    &nbsp;&nbsp;&nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;↓
-    &nbsp;&nbsp;&nbsp;&nbsp;J&nbsp;&nbsp;&nbsp;&nbsp;M
+    graph TD
+    B[Burglary] --> A[Alarm];
+    E[Earthquake] --> A[Alarm];
+    A --> J[JohnCalls];
+    A --> M[MaryCalls];
     ```
-
-    (更准确地是 A→J, A→M)
 
     **CPTs (示例值)**：
 

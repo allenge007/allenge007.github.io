@@ -198,8 +198,19 @@ Max pooling保留了最显著的特征，同时减小了特征图的尺寸。
 6.  **全连接层 (Fully Connected Layer / Dense Layer)**：与MLP类似，用于分类或回归。
 7.  **输出层 (Softmax用于分类)**
 
-```
-Input -> [Conv -> ReLU -> Pool]*N -> Flatten -> [FC -> ReLU]*M -> Output
+```mermaid
+graph TD
+    subgraph "CNN Architecture"
+        direction LR
+        A[Input Tensor] --> B;
+        B["<b>Feature Extraction Head</b><br/>[Conv → Activation → Pooling]<sup>N</sup>"] --> C;
+        C[Flatten] --> D;
+        D["<b>Classifier Head</b><br/>[Fully-Connected → Activation]<sup>M</sup>"] --> E;
+        E[Output Layer];
+    end
+
+    style B fill:#eaf, stroke:#333, stroke-width:2px
+    style D fill:#aef, stroke:#333, stroke-width:2px
 ```
 
 ### 5. CNN的优势
@@ -438,6 +449,77 @@ XAI的目标不是为了可解释性而牺牲性能（“削足适履”），�
 
     (2) 分别使用平均池化和最大池化处理上述卷积结果。
 
-!!! note "答案（仅供参考）"
+??? note "答案（仅供参考）"
+    (1)
 
-    
+    对于卷积核 1 和 2，输出的宽和高为：
+
+    $W = H = \lfloor \frac{3 + 2 - 2}{1} \rfloor + 1 = 4$
+
+    卷积核 1 输出：
+
+    $$
+    \begin{bmatrix}
+    1 & 2 & 3 & 0\\
+    2 & 4 & 3 & 3\\
+    3 & 3 & 5 & 1\\
+    0 & 3 & 1 & 2
+    \end{bmatrix} + \begin{bmatrix}
+    0 & 3 & 2 & 1\\
+    3 & 4 & 2 & 3\\
+    2 & 2 & 6 & 2\\
+    1 & 3 & 2 & 0
+    \end{bmatrix} + 1 = \begin{bmatrix}
+    2 & 6 & 6 & 2 \\
+    6 & 9 & 6 & 7 \\
+    6 & 6 & 12 & 4\\
+    2 & 7 & 4 & 3
+    \end{bmatrix}
+    $$
+
+    卷积核 2 输出：
+
+    $$
+    \begin{bmatrix}
+    -1 & -2 & -3 & 0\\
+    -2 & -2 & 1 & 3\\
+    -3 & 1 & 1 & 1\\
+    0 & 3 & 1 & 2
+    \end{bmatrix} + \begin{bmatrix}
+    0 & -3 & -2 & -1\\
+    3 & 0 & 0 & -3\\
+    2 & 0 & 0 & -2\\
+    1 & 3 & 2 & 0
+    \end{bmatrix} + 2=\begin{bmatrix}
+    1 & -3 & -3 & 1 \\
+    3 & 0 & 3 & 2 \\
+    1 & 3 & 3 & 1\\
+    3 & 8 & 5 & 4
+    \end{bmatrix}
+    $$
+
+    (2)
+
+    平均池化（分别为）：
+
+    $$
+    \begin{bmatrix}
+    5.75 & 5.25 \\
+    5.25 & 5.75
+    \end{bmatrix}, \quad \begin{bmatrix}
+    0.25 & 0.75 \\
+    3.75 & 3.25
+    \end{bmatrix}
+    $$
+
+    最大池化（分别为）：
+
+    $$
+    \begin{bmatrix}
+    9 & 7\\
+    7 & 12
+    \end{bmatrix}, \quad \begin{bmatrix}
+    3 & 3\\
+    8 & 5
+    \end{bmatrix}
+    $$
