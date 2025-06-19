@@ -14,7 +14,7 @@
         <link rel="prev" href="../chapter7/">
       
       
-        <link rel="next" href="../../../project/">
+        <link rel="next" href="../chapter9/">
       
       
       <link rel="icon" href="../../../assets/smile.ico">
@@ -22,7 +22,7 @@
     
     
       
-        <title>强化学习 - allenge 的小站</title>
+        <title>Transformer - allenge 的小站</title>
       
     
     
@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#transformer" class="md-skip">
           跳转至
         </a>
       
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              强化学习
+              Transformer
             
           </span>
         </div>
@@ -1050,6 +1050,8 @@
       
         
       
+        
+      
     
     
     
@@ -1280,7 +1282,7 @@
   
   
   <span class="md-ellipsis">
-    强化学习
+    Transformer
     
   </span>
   
@@ -1293,7 +1295,7 @@
   
   
   <span class="md-ellipsis">
-    强化学习
+    Transformer
     
   </span>
   
@@ -1316,82 +1318,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1-nlp" class="md-nav__link">
     <span class="md-ellipsis">
-      什么是强化学习？
+      1. 自然语言处理 (NLP) 概览
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#2-word-representations" class="md-nav__link">
     <span class="md-ellipsis">
-      一、强化学习基本概念
+      2. 词的表示 (Word Representations)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="一、强化学习基本概念">
+    <nav class="md-nav" aria-label="2. 词的表示 (Word Representations)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-markov-property" class="md-nav__link">
+  <a href="#21-one-hot" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 马尔可夫性质 (Markov Property)
+      2.1 传统表示：One-hot 向量
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-markov-decision-process-mdp" class="md-nav__link">
+  <a href="#22-word-embeddings" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 马尔可夫决策过程 (Markov Decision Process, MDP)
+      2.2 分布式表示：词嵌入 (Word Embeddings)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-policy" class="md-nav__link">
+  <a href="#23-word2vec" class="md-nav__link">
     <span class="md-ellipsis">
-      3. 策略 (Policy)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-return" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. 回报 (Return)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-value-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. 价值函数 (Value Function)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-optimal-value-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. 最优价值函数 (Optimal Value Function)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-bellman-equations" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. 贝尔曼方程 (Bellman Equations)
+      2.3 Word2Vec
     </span>
   </a>
   
@@ -1403,147 +1369,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#3-machine-translation-mt" class="md-nav__link">
     <span class="md-ellipsis">
-      二、表格型强化学习
+      3. 机器翻译 (Machine Translation, MT)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="二、表格型强化学习">
+    <nav class="md-nav" aria-label="3. 机器翻译 (Machine Translation, MT)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-dynamic-programming-dp" class="md-nav__link">
+  <a href="#31-smt-vs-nmt" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 动态规划 (Dynamic Programming, DP)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. 动态规划 (Dynamic Programming, DP)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#11-policy-evaluation" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.1 策略评估 (Policy Evaluation)
+      3.1 统计机器翻译 (SMT) vs. 神经机器翻译 (NMT)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-policy-improvement" class="md-nav__link">
+  <a href="#32-seq2seq" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 策略提升 (Policy Improvement)
+      3.2 Seq2Seq 模型
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#13-policy-iteration" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.3 策略迭代 (Policy Iteration)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#14-value-iteration" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.4 值迭代 (Value Iteration)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-monte-carlo-mc" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. 蒙特卡洛方法 (Monte Carlo, MC)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 蒙特卡洛方法 (Monte Carlo, MC)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.1 蒙特卡洛策略评估
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#22-mc-control" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.2 蒙特卡洛控制 (MC Control)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-temporal-difference-td" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. 时序差分学习 (Temporal Difference, TD)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 时序差分学习 (Temporal Difference, TD)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-n-td-n-step-td-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.1 n-步TD学习 (n-step TD Learning)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-tdlambda" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.2 TD(\(\lambda\))
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-sarsa-state-action-reward-state-action" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.3 SARSA (State-Action-Reward-State-Action)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-q-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.4 Q-Learning
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1553,102 +1402,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deep-reinforcement-learning-drl" class="md-nav__link">
+  <a href="#4-attention-mechanism" class="md-nav__link">
     <span class="md-ellipsis">
-      三、深度强化学习 (Deep Reinforcement Learning, DRL)
+      4. 注意力机制 (Attention Mechanism)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="三、深度强化学习 (Deep Reinforcement Learning, DRL)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-transformer-attention-is-all-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Transformer: Attention Is All You Need?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Transformer: Attention Is All You Need?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-drl-value-based-drl" class="md-nav__link">
+  <a href="#51-self-attention" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 基于值函数的DRL (Value-Based DRL)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. 基于值函数的DRL (Value-Based DRL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#11-naive-dqn-deep-q-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.1 Naïve DQN (Deep Q-Network)
+      5.1 自注意力 (Self-Attention)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-dqn-mnih-et-al-2013-2015" class="md-nav__link">
+  <a href="#52" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 经典DQN (Mnih et al., 2013, 2015)
+      5.2 解决自注意力的局限
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#13-dqn" class="md-nav__link">
+  <a href="#53-multi-head-attention" class="md-nav__link">
     <span class="md-ellipsis">
-      1.3 DQN的改进
+      5.3 多头注意力 (Multi-Head Attention)
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-drl-policy-based-drl" class="md-nav__link">
+  <a href="#54-transformer" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 基于策略的DRL (Policy-Based DRL)
+      5.4 Transformer 整体架构
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2. 基于策略的DRL (Policy-Based DRL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21-reinforce-monte-carlo-policy-gradient" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.1 REINFORCE (Monte Carlo Policy Gradient)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-actor-critic-ac-drl" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. 基于演员-评论家 (Actor-Critic, AC) 的DRL
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 基于演员-评论家 (Actor-Critic, AC) 的DRL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-advantage-actor-critic-a2c" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1658,35 +1462,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-agent-reinforcement-learning-marl" class="md-nav__link">
+  <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
-      四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)
+      6. 总结与展望
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-marl-maddpg" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. 基于策略的MARL —— MADDPG
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-marl-vdn" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. 基于值函数的MARL —— VDN
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1694,6 +1474,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    强化学习
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -2199,82 +2002,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1-nlp" class="md-nav__link">
     <span class="md-ellipsis">
-      什么是强化学习？
+      1. 自然语言处理 (NLP) 概览
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#2-word-representations" class="md-nav__link">
     <span class="md-ellipsis">
-      一、强化学习基本概念
+      2. 词的表示 (Word Representations)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="一、强化学习基本概念">
+    <nav class="md-nav" aria-label="2. 词的表示 (Word Representations)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-markov-property" class="md-nav__link">
+  <a href="#21-one-hot" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 马尔可夫性质 (Markov Property)
+      2.1 传统表示：One-hot 向量
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-markov-decision-process-mdp" class="md-nav__link">
+  <a href="#22-word-embeddings" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 马尔可夫决策过程 (Markov Decision Process, MDP)
+      2.2 分布式表示：词嵌入 (Word Embeddings)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-policy" class="md-nav__link">
+  <a href="#23-word2vec" class="md-nav__link">
     <span class="md-ellipsis">
-      3. 策略 (Policy)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-return" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. 回报 (Return)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-value-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. 价值函数 (Value Function)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-optimal-value-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. 最优价值函数 (Optimal Value Function)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-bellman-equations" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. 贝尔曼方程 (Bellman Equations)
+      2.3 Word2Vec
     </span>
   </a>
   
@@ -2286,147 +2053,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#3-machine-translation-mt" class="md-nav__link">
     <span class="md-ellipsis">
-      二、表格型强化学习
+      3. 机器翻译 (Machine Translation, MT)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="二、表格型强化学习">
+    <nav class="md-nav" aria-label="3. 机器翻译 (Machine Translation, MT)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-dynamic-programming-dp" class="md-nav__link">
+  <a href="#31-smt-vs-nmt" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 动态规划 (Dynamic Programming, DP)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. 动态规划 (Dynamic Programming, DP)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#11-policy-evaluation" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.1 策略评估 (Policy Evaluation)
+      3.1 统计机器翻译 (SMT) vs. 神经机器翻译 (NMT)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-policy-improvement" class="md-nav__link">
+  <a href="#32-seq2seq" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 策略提升 (Policy Improvement)
+      3.2 Seq2Seq 模型
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#13-policy-iteration" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.3 策略迭代 (Policy Iteration)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#14-value-iteration" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.4 值迭代 (Value Iteration)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-monte-carlo-mc" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. 蒙特卡洛方法 (Monte Carlo, MC)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. 蒙特卡洛方法 (Monte Carlo, MC)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.1 蒙特卡洛策略评估
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#22-mc-control" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.2 蒙特卡洛控制 (MC Control)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-temporal-difference-td" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. 时序差分学习 (Temporal Difference, TD)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 时序差分学习 (Temporal Difference, TD)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-n-td-n-step-td-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.1 n-步TD学习 (n-step TD Learning)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-tdlambda" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.2 TD(\(\lambda\))
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-sarsa-state-action-reward-state-action" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.3 SARSA (State-Action-Reward-State-Action)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-q-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.4 Q-Learning
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2436,102 +2086,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deep-reinforcement-learning-drl" class="md-nav__link">
+  <a href="#4-attention-mechanism" class="md-nav__link">
     <span class="md-ellipsis">
-      三、深度强化学习 (Deep Reinforcement Learning, DRL)
+      4. 注意力机制 (Attention Mechanism)
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="三、深度强化学习 (Deep Reinforcement Learning, DRL)">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-transformer-attention-is-all-you-need" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Transformer: Attention Is All You Need?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Transformer: Attention Is All You Need?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-drl-value-based-drl" class="md-nav__link">
+  <a href="#51-self-attention" class="md-nav__link">
     <span class="md-ellipsis">
-      1. 基于值函数的DRL (Value-Based DRL)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1. 基于值函数的DRL (Value-Based DRL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#11-naive-dqn-deep-q-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.1 Naïve DQN (Deep Q-Network)
+      5.1 自注意力 (Self-Attention)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-dqn-mnih-et-al-2013-2015" class="md-nav__link">
+  <a href="#52" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 经典DQN (Mnih et al., 2013, 2015)
+      5.2 解决自注意力的局限
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#13-dqn" class="md-nav__link">
+  <a href="#53-multi-head-attention" class="md-nav__link">
     <span class="md-ellipsis">
-      1.3 DQN的改进
+      5.3 多头注意力 (Multi-Head Attention)
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-drl-policy-based-drl" class="md-nav__link">
+  <a href="#54-transformer" class="md-nav__link">
     <span class="md-ellipsis">
-      2. 基于策略的DRL (Policy-Based DRL)
+      5.4 Transformer 整体架构
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2. 基于策略的DRL (Policy-Based DRL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21-reinforce-monte-carlo-policy-gradient" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.1 REINFORCE (Monte Carlo Policy Gradient)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-actor-critic-ac-drl" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. 基于演员-评论家 (Actor-Critic, AC) 的DRL
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. 基于演员-评论家 (Actor-Critic, AC) 的DRL">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-advantage-actor-critic-a2c" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2541,35 +2146,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multi-agent-reinforcement-learning-marl" class="md-nav__link">
+  <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
-      四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)
+      6. 总结与展望
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-marl-maddpg" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. 基于策略的MARL —— MADDPG
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-marl-vdn" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. 基于值函数的MARL —— VDN
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2605,845 +2186,260 @@
   
 
 
-<h1 id="_1">强化学习</h1>
-<div class="admonition abstract">
-<p class="admonition-title">前情知识回顾：机器学习</p>
-<p>机器学习需要提前给定大量静态数据，其学习目标是发现数据中的潜在结构或映射关系。</p>
-<ul>
-<li><strong>监督学习：</strong> 在拥有输入和对应输出（标签）的情况下训练模型，用于寻找输入与输出之间的映射关系。</li>
-<li><strong>无监督学习：</strong> 在训练数据没有标签或目标值的情况下训练模型，用于探索数据中隐含的模式和分布。</li>
-</ul>
+<h1 id="transformer">Transformer</h1>
+<div class="admonition info">
+<p class="admonition-title">课程信息</p>
+<p>本笔记总结自《人工智能》课程第17讲：深度学习II - Transformer。
+主要内容包括自然语言处理（NLP）基础、词向量表示（Word2Vec）、序列到序列模型（Seq2Seq）、注意力机制（Attention）以及Transformer模型的核心架构。</p>
 </div>
-<p>在许多如棋牌博弈、机器人控制等序列决策场景中，智能体（Agent）需要与环境（Environment）进行动态交互，并通过交互获得的数据来学习其决策策略。这些动态决策场景十分广泛，包括博弈游戏、无人机空战、交通灯控制、无人驾驶以及智能电网等。</p>
-<h2 id="_2">什么是强化学习？</h2>
-<div class="admonition quote">
-<p class="admonition-title">强化学习核心定义</p>
-<p>强化学习讨论的核心问题是：在一个复杂且不确定的环境中，智能体如何通过与环境进行大量的试错交互来学习一个最优的决策策略。</p>
-</div>
-<div class="admonition contrast">
-<p class="admonition-title">强化学习 vs. 监督/无监督学习</p>
-<p>强化学习是机器学习的第三种主要学习范式，与监督学习和无监督学习有着显著的不同：</p>
-<ul>
-<li><strong>监督学习：</strong><ul>
-<li>目标：分类或预测标签。</li>
-<li>特点：无交互、无序列决策、无探索（试错）。</li>
-</ul>
-</li>
-<li><strong>无监督学习：</strong><ul>
-<li>目标：发现数据的内部模式或结构。</li>
-<li>特点：无交互、无序列决策、无探索（试错）。</li>
-</ul>
-</li>
-<li><strong>强化学习：</strong><ul>
-<li><strong>试错学习 (Trial-and-Error Learning)：</strong> 通过尝试不同的动作，并根据接收到的奖励信号调整策略，从而学习最优行为。</li>
-<li><strong>延迟奖励 (Delayed Reward)：</strong> 可能需要经过一系列动作后才能获得最终的奖励，因此必须考虑长期回报。</li>
-<li><strong>动态策略 (Dynamic Policy)：</strong> 智能体需要根据当前状态选择行动，其选择动作的策略是动态调整的。</li>
-<li><strong>序列决策 (Sequential Decision Making)：</strong> 智能体和环境的交互是一个序列决策过程。</li>
-</ul>
-</li>
-</ul>
-</div>
+<h2 id="1-nlp">1. 自然语言处理 (NLP) 概览</h2>
+<p>自然语言处理 (NLP) 是探索计算机与人类语言之间交互的领域，旨在实现人与计算机之间使用自然语言进行有效通信。</p>
 <div class="admonition tip">
-<p class="admonition-title">本章学习目标与要求</p>
-<p><strong>学习目标 (Goal):</strong></p>
+<p class="admonition-title">NLP发展阶段</p>
 <ol>
-<li>理解强化学习的基本概念。</li>
-<li>掌握表格型强化学习的三类主要算法。</li>
-<li>掌握深度强化学习的基本算法。</li>
-<li>了解多智能体强化学习的相关概念和算法。</li>
+<li><strong>基于规则的经验主义</strong>：早期依赖人工定义的规则和语法。</li>
+<li><strong>基于统计的理性主义</strong>：利用统计模型从大规模语料中学习语言规律。</li>
+<li><strong>基于深度学习的方法</strong>：受益于预训练语言模型和Transformer等架构，NLP取得了跨越式提升。</li>
 </ol>
-<p><strong>重点内容 (Importance):</strong></p>
-<ol>
-<li>掌握建模强化学习问题的形式化过程。</li>
-<li>能够训练强化学习算法在复杂场景上的策略模型。</li>
-</ol>
-<p><strong>学习难点 (Difficulty):</strong></p>
+</div>
+<h2 id="2-word-representations">2. 词的表示 (Word Representations)</h2>
+<h3 id="21-one-hot">2.1 传统表示：One-hot 向量</h3>
+<p>在传统NLP中，单词被视为离散符号，可以用 one-hot 向量表示。</p>
 <ul>
-<li>能够灵活地将强化学习算法应用到任意复杂的环境中。</li>
+<li>例如：<ul>
+<li><code>motel = [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0]</code></li>
+<li><code>hotel = [0 0 0 0 0 0 0 1 0 0 0 0 0 0 0]</code></li>
+</ul>
+</li>
+<li>向量维度 = 词典大小 (可能非常大, e.g., 500,000+)。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">One-hot 向量的问题</p>
+<ul>
+<li><strong>高维稀疏</strong>：向量维度过大，且大部分元素为0。</li>
+<li><strong>无法表达语义相似性</strong>：任意两个不同单词的one-hot向量都是正交的，无法体现它们在概念上的相似性。例如，<code>motel</code> 和 <code>hotel</code> 的点积为0。</li>
 </ul>
 </div>
-<hr />
-<h2 id="_3">一、强化学习基本概念</h2>
-<p>强化学习（Reinforcement Learning, RL）从动物学习过程中汲取灵感，强调在与环境的不断交互和试错中学习，通过获取经验来优化行为。</p>
-<p><strong>强化学习过程的四个基本要素：</strong></p>
-<ol>
-<li><strong>智能体 (Agent)：</strong> 学习者和决策者。</li>
-<li><strong>环境 (Environment)：</strong> 智能体外部的一切，与智能体交互。</li>
-<li><strong>动作 (Action)：</strong> 智能体可以执行的操作。</li>
-<li><strong>奖励 (Reward)：</strong> 环境对智能体动作的即时反馈信号，用于评估动作的好坏。</li>
-<li><strong>状态 (State)：</strong> 对环境某个时刻的描述，是智能体决策的依据。<ul>
-<li><em>(PPT中环境模型和交互样本是要素，这里结合通用表述调整为Agent, Environment, Action, Reward, State)</em></li>
-</ul>
-</li>
-</ol>
-<div class="admonition example">
-<p class="admonition-title">《冒险岛》游戏中的强化学习元素</p>
+<h3 id="22-word-embeddings">2.2 分布式表示：词嵌入 (Word Embeddings)</h3>
+<p><strong>分布语义学 (Distributional Semantics)</strong>：一个词的含义由其上下文（经常一起出现的词）给出。</p>
+<blockquote>
+<p>"You shall know a word by the company it keeps" (J. R. Firth 1957: 11)</p>
+</blockquote>
 <ul>
-<li><strong>智能体 (Agent)：</strong> 玩家操控的角色。</li>
-<li><strong>环境 (Environment)：</strong> 游戏地图、怪物、道具等。</li>
-<li><strong>状态 (State)：</strong> 当前游戏画面（例如，角色位置、怪物位置、血量等）。</li>
-<li><strong>动作 (Action)：</strong> 角色可以执行的操作（如：前进、后退、跳跃、攻击）。</li>
-<li><strong>奖励 (Reward)：</strong><ul>
-<li><strong>正向奖励：</strong> 收集苹果 (+50)，攻击小怪 (+100)。</li>
-<li><strong>负向奖励：</strong> 每消耗一秒时间 (-5)，接触小怪 (−∞，游戏结束)。
-<strong>强化学习的目标是最大化智能体在环境中能获得的累积奖励。</strong></li>
+<li>为每个单词构建一个<strong>简短而密集</strong>的实数向量（通常50-300维）。</li>
+<li>使得在相似上下文中出现的单词具有相似的向量表示（通过点积衡量相似性）。</li>
+<li>这些向量也称为词嵌入 (Word Embeddings) 或词表征 (Word Representations)。</li>
 </ul>
-</li>
-</ul>
-</div>
-<h3 id="1-markov-property">1. 马尔可夫性质 (Markov Property)</h3>
-<p>一个状态如果具有马尔可夫性质，意味着给定当前状态后，未来状态的概率分布仅与当前状态有关，而与过去的状态（即该过程的历史状态）无关。</p>
-<p><span class="arithmatex">\(P[S_{t+1} | S_t] = P[S_{t+1} | S_1, S_2, \dots, S_t]\)</span></p>
-<p>或者如PPT中更一般的形式：</p>
-<p><span class="arithmatex">\(P\{S_{t+h}=s'|S_t=s_t, S_{t-1}=s_{t-1}, \dots, S_0=s_0\} = P\{S_{t+h}=s'|S_t=s_t\}, \forall h &gt; 0\)</span></p>
-<ul>
-<li>当前状态包含了历史中的所有相关信息。</li>
-<li>一旦当前状态已知，就可以忽略其余的历史状态信息。</li>
-</ul>
-<h3 id="2-markov-decision-process-mdp">2. 马尔可夫决策过程 (Markov Decision Process, MDP)</h3>
-<p>MDP 是对强化学习问题进行形式化描述的框架。一个MDP通常由一个五元组 <span class="arithmatex">\(\langle S, A, P, R, \gamma \rangle\)</span> 定义：</p>
-<ul>
-<li>
-<p><strong>状态空间 <span class="arithmatex">\(S\)</span> (State Space)：</strong> 所有可能状态的集合。</p>
-</li>
-<li>
-<p><strong>动作空间 <span class="arithmatex">\(A\)</span> (Action Space)：</strong> 所有可能动作的集合。</p>
-</li>
-<li>
-<p><strong>状态转移函数 <span class="arithmatex">\(P\)</span> (Transition Function)：</strong> <span class="arithmatex">\(P(s'|s,a) = P\{S_{t+1}=s'|S_t=s, A_t=a\}\)</span>，表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 后，转移到状态 <span class="arithmatex">\(s'\)</span> 的概率。</p>
-</li>
-<li>
-<p><strong>奖励函数 <span class="arithmatex">\(R\)</span> (Reward Function)：</strong> <span class="arithmatex">\(R(s,a,s')\)</span> 表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 转移到状态 <span class="arithmatex">\(s'\)</span> 后获得的即时奖励。PPT中表示为 <span class="arithmatex">\(R_t = R(S_t, A_t, S_{t+1})\)</span>。有时也定义为 <span class="arithmatex">\(R(s,a) = E[R_{t+1}|S_t=s, A_t=a]\)</span>。</p>
-</li>
-<li>
-<p><strong>折扣因子 <span class="arithmatex">\(\gamma\)</span> (Discount Factor)：</strong> <span class="arithmatex">\(\gamma \in [0,1]\)</span>，用于衡量未来奖励在当前时刻的价值。</p>
-</li>
-</ul>
-<h3 id="3-policy">3. 策略 (Policy)</h3>
-<p>策略 <span class="arithmatex">\(\pi\)</span> 是智能体在给定状态下选择动作的方式，即从状态到动作的映射。</p>
-<ul>
-<li><strong>随机性策略 (Stochastic Policy) <span class="arithmatex">\(\pi(a|s)\)</span>：</strong> 输出在状态 <span class="arithmatex">\(s\)</span> 下选择动作 <span class="arithmatex">\(a\)</span> 的概率。满足 <span class="arithmatex">\(\sum_{a \in A} \pi(a|s) = 1\)</span>。</li>
-<li><strong>确定性策略 (Deterministic Policy) <span class="arithmatex">\(a = \pi(s)\)</span>：</strong> 输出在状态 <span class="arithmatex">\(s\)</span> 下选择的唯一确定动作。</li>
-</ul>
-<p><strong>策略的具体形式：</strong></p>
-<ul>
-<li><strong>表格策略 (Tabular Policy)：</strong> 对于每一个状态 <span class="arithmatex">\(s\)</span>，直接存储采取动作 <span class="arithmatex">\(a\)</span> 的概率 <span class="arithmatex">\(\pi(a|s)\)</span> 或确定的动作 <span class="arithmatex">\(\pi(s)\)</span>。</li>
-<li><strong>参数化策略 (Parameterized Policy)：</strong> 使用带有参数 <span class="arithmatex">\(\theta\)</span> 的函数来表示策略，例如神经网络。<ul>
-<li>确定性: <span class="arithmatex">\(a = \pi_\theta(s) \triangleq \pi(s;\theta)\)</span></li>
-<li>随机性: <span class="arithmatex">\(\pi_\theta(a|s) \triangleq \pi(a|s;\theta)\)</span></li>
-</ul>
-</li>
-</ul>
-<h3 id="4-return">4. 回报 (Return)</h3>
-<p>回报 <span class="arithmatex">\(G_t\)</span> 是从时间步 <span class="arithmatex">\(t\)</span> 开始的所有未来折扣奖励的总和：</p>
-<p><span class="arithmatex">\(G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\)</span></p>
-<ul>
-<li>折扣因子 <span class="arithmatex">\(\gamma\)</span> 使得未来的奖励在当前看来价值有所衰减。</li>
-<li>强化学习的目标是最大化期望累积回报。</li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">折扣因子的意义</p>
-<ul>
-<li><strong>数学便利性：</strong> 确保回报是有限的，有助于算法收敛。</li>
-<li><strong>避免无限循环：</strong> 防止在循环状态中累积无限奖励。</li>
-<li><strong>不确定性：</strong> 未来的奖励往往具有更高的不确定性。</li>
-<li><strong>即时偏好：</strong> 生物系统（包括人类）通常更偏好即时奖励。</li>
-<li><strong>经济学类比：</strong> 类似利率，今天的钱比未来的钱更有价值。</li>
-</ul>
-</div>
-<h3 id="5-value-function">5. 价值函数 (Value Function)</h3>
-<p>价值函数用于评估一个状态或状态-动作对的好坏程度，即从该状态或状态-动作对开始，遵循特定策略所能获得的期望回报。</p>
-<ul>
-<li><strong>状态价值函数 (State-value function) <span class="arithmatex">\(V_\pi(s)\)</span>：</strong> 从状态 <span class="arithmatex">\(s\)</span> 开始，遵循策略 <span class="arithmatex">\(\pi\)</span> 的期望回报。
-    <span class="arithmatex">\(V_\pi(s) \triangleq E_\pi[G_t | S_t=s]\)</span></li>
-<li>
-<p><strong>动作价值函数 (Action-value function) <span class="arithmatex">\(Q_\pi(s,a)\)</span>：</strong> 在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span>后，继续遵循策略 <span class="arithmatex">\(\pi\)</span> 的期望回报。</p>
-<p><span class="arithmatex">\(Q_\pi(s,a) \triangleq E_\pi[G_t | S_t=s, A_t=a]\)</span></p>
-</li>
-</ul>
-<p><strong><span class="arithmatex">\(V_\pi(s)\)</span> 和 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 之间的关系：</strong></p>
-<p><span class="arithmatex">\(V_\pi(s) = \sum_{a \in A} \pi(a|s) Q_\pi(s,a)\)</span>
-<span class="arithmatex">\(Q_\pi(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span></p>
-<p>(PPT中的写法: <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s')\)</span>，其中 <span class="arithmatex">\(\mathcal{R}_s^a\)</span> 是期望立即奖励)</p>
-<h3 id="6-optimal-value-function">6. 最优价值函数 (Optimal Value Function)</h3>
-<p>最优价值函数是在所有可能的策略中能达到的最大期望回报。</p>
-<ul>
-<li><strong>最优状态价值函数 <span class="arithmatex">\(V^*(s)\)</span>：</strong>
-    <span class="arithmatex">\(V^*(s) = \max_{\pi} V_\pi(s), \forall s \in S\)</span></li>
-<li><strong>最优动作价值函数 <span class="arithmatex">\(Q^*(s,a)\)</span>：</strong>
-    <span class="arithmatex">\(Q^*(s,a) = \max_{\pi} Q_\pi(s,a)\)</span></li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title"><span class="arithmatex">\(V^*(s)\)</span> 与 <span class="arithmatex">\(Q^*(s,a)\)</span> 之间的关系：</p>
-<p><span class="arithmatex">\(V^*(s) = \max_{a \in A} Q^*(s,a)\)</span></p>
-<p><span class="arithmatex">\(Q^*(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span></p>
-<p>(PPT中的写法: <span class="arithmatex">\(Q^*(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V^*(s')\)</span> )</p>
-</div>
-<p><strong>最优策略 <span class="arithmatex">\(\pi^*(a|s)\)</span>：</strong> 任何使得 <span class="arithmatex">\(Q^*(s,a)\)</span> 达到最大的动作都是最优动作。</p>
-<p><span class="arithmatex">\(\pi^*(a|s) = \begin{cases} 1 &amp; \text{if } a = \arg\max_{a' \in A} Q^*(s,a') \\ 0 &amp; \text{otherwise} \end{cases}\)</span> (对于确定性最优策略)</p>
-<h3 id="7-bellman-equations">7. 贝尔曼方程 (Bellman Equations)</h3>
-<p>贝尔曼方程是价值函数必须满足的一组自洽性方程，它们将一个状态（或状态-动作对）的价值与其后继状态的价值联系起来。</p>
-<p>描述了在给定策略 <span class="arithmatex">\(\pi\)</span> 下，价值函数与其后继价值函数之间的关系。</p>
-<ul>
-<li>
-<p><strong>状态价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>：</strong></p>
-<div class="arithmatex">\[V_\pi(s) = E_\pi[R_{t+1} + \gamma V_\pi(S_{t+1}) | S_t=s]\]</div>
-<div class="arithmatex">\[V_\pi(s) = \sum_{a \in A} \pi(a|s) \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\]</div>
-<p>(PPT中: <span class="arithmatex">\(V_\pi(s) = \sum_{a \in A} \pi(a|s) (\mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s'))\)</span>)</p>
-</li>
-<li>
-<p><strong>动作价值函数 <span class="arithmatex">\(Q_\pi(s,a)\)</span>：</strong></p>
-<div class="arithmatex">\[Q_\pi(s,a) = E_\pi[R_{t+1} + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t=s, A_t=a]\]</div>
-<div class="arithmatex">\[Q_\pi(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma \sum_{a' \in A} \pi(a'|s') Q_\pi(s',a')]\]</div>
-<p>PPT中: <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a \sum_{a' \in A} \pi(a'|s')Q_\pi(s',a')\)</span></p>
-<p>注意PPT中 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 的贝尔曼方程有一页是 <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s')\)</span>，另一页是展开形式</p>
-</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">重点：贝尔曼最优方程 (Bellman Optimality Equations)</p>
-<p>描述了最优价值函数 <span class="arithmatex">\(V^*(s)\)</span> 或 <span class="arithmatex">\(Q^*(s,a)\)</span> 与其后继状态的最优价值之间的关系。</p>
-<ul>
-<li>
-<p><strong>最优状态价值函数 <span class="arithmatex">\(V^*(s)\)</span>：</strong></p>
-<div class="arithmatex">\[V^*(s) = \max_a E[R_{t+1} + \gamma V^*(S_{t+1}) | S_t=s, A_t=a]\]</div>
-<div class="arithmatex">\[V^*(s) = \max_a \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\]</div>
-<p>(PPT中: <span class="arithmatex">\(V^*(s) = \max_a (\mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V^*(s'))\)</span>)</p>
-</li>
-<li>
-<p><strong>最优动作价值函数 <span class="arithmatex">\(Q^*(s,a)\)</span>：</strong></p>
-<div class="arithmatex">\[Q^*(s,a) = E[R_{t+1} + \gamma \max_{a'} Q^*(S_{t+1}, a') | S_t=s, A_t=a]\]</div>
-<div class="arithmatex">\[Q^*(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]\]</div>
-<p>(PPT中: <span class="arithmatex">\(Q^*(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a \max_{a'} Q^*(s',a')\)</span>)</p>
-</li>
-</ul>
-</div>
 <div class="admonition success">
-<p class="admonition-title">强化学习的应用进展</p>
-<p>强化学习已在多个领域取得突破性进展，例如：</p>
+<p class="admonition-title">为什么使用简短密集的词向量？</p>
 <ul>
-<li><strong>机器人控制：</strong> Tokamak（核聚变反应堆）等离子体控制 (Nature 2022, 2024), 冠军级无人机竞速 (Nature 2023), 模拟果蝇运动 (Nature 2025)。</li>
-<li><strong>游戏AI：</strong> AlphaGo (围棋, Science 2018), DouZero (斗地主), 掌握多种控制任务的世界模型 (Nature 2025)。</li>
-<li><strong>科学发现：</strong> 蛋白质结构设计 (Science 2023), 发现更快的矩阵乘法算法 (Nature 2022)。</li>
-<li><strong>工程设计：</strong> 芯片设计中的图布局优化 (Nature 2021)。</li>
-<li><strong>自动驾驶：</strong> 自动驾驶汽车的安全性验证 (Nature 2023)。</li>
+<li><strong>易于作为机器学习特征</strong>：维度较低。</li>
+<li><strong>泛化能力强</strong>：比显式计数更能捕捉词义。</li>
+<li><strong>捕捉同义关系</strong>：语义相近的词向量也相近。</li>
 </ul>
 </div>
-<details class="summary">
-<summary>本节小结：强化学习基本概念</summary>
-<ul>
-<li><strong>强化学习基本要素：</strong> 智能体 (Agent), 环境 (Environment), 状态 (State), 动作 (Action), 奖励 (Reward)。</li>
-<li><strong>马尔可夫决策过程 (MDP)：</strong><ul>
-<li>五元组: <span class="arithmatex">\(\langle S, A, P, R, \gamma \rangle\)</span>。</li>
-<li>策略函数: 确定性 <span class="arithmatex">\(\pi(s)\)</span> 或随机性 <span class="arithmatex">\(\pi(a|s)\)</span>。</li>
-<li>累计折扣回报: <span class="arithmatex">\(G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\)</span>。</li>
-<li>状态值函数: <span class="arithmatex">\(V_\pi(s) = E_\pi[G_t | S_t=s]\)</span>。</li>
-<li>动作值函数: <span class="arithmatex">\(Q_\pi(s,a) = E_\pi[G_t | S_t=s, A_t=a]\)</span>。</li>
-</ul>
-</li>
-<li><strong>贝尔曼方程：</strong><ul>
-<li>状态值函数 (<span class="arithmatex">\(V_\pi\)</span>): <span class="arithmatex">\(V_\pi(s) = \sum_a \pi(a|s) \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span>。</li>
-<li>动作值函数 (<span class="arithmatex">\(Q_\pi\)</span>): <span class="arithmatex">\(Q_\pi(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q_\pi(s',a')]\)</span>。</li>
-<li>最优状态值函数 (<span class="arithmatex">\(V^*\)</span>): <span class="arithmatex">\(V^*(s) = \max_a \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span>。</li>
-<li>最优动作值函数 (<span class="arithmatex">\(Q^*\)</span>): <span class="arithmatex">\(Q^*(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]\)</span>。</li>
-</ul>
-</li>
-</ul>
-</details>
-<hr />
-<h2 id="_4">二、表格型强化学习</h2>
-<p>当状态空间 <span class="arithmatex">\(S\)</span> 和动作空间 <span class="arithmatex">\(A\)</span> 都是有限的时，我们可以用表格（如Q表）来存储价值函数或策略。这类方法适用于状态和动作数量较少的场景。</p>
-<div class="admonition example">
-<p class="admonition-title">表格型强化学习场景：冰湖 (Frozen Lake - Gym)</p>
-<ul>
-<li><strong>环境描述：</strong> 智能体在一个冰冻的湖面上行走，起点在左上角，目标（宝箱）在右下角，湖面上有若干冰洞。</li>
-<li><strong>状态：</strong> 智能体在网格地图上的位置。</li>
-<li><strong>动作：</strong> 上、下、左、右。由于冰面光滑，采取的动作不一定会导致预期的移动方向，存在一定的随机性。</li>
-<li><strong>奖励：</strong> 到达宝箱位置获得正奖励，其他情况（如移动一步）无奖励或小的负奖励。掉入冰洞或到达目标状态则回合结束。</li>
-<li><strong>Q表：</strong> 可以构建一个表格，行表示状态，列表示动作，单元格的值 <span class="arithmatex">\(Q(s,a)\)</span> 表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 的期望回报。根据Q表，每个状态的最优策略是选择具有最大Q值的动作。</li>
-</ul>
-</div>
-<p><strong>Q表更新方法分类：</strong></p>
-<p>Q表通常初始化为全零或随机值，然后通过智能体与环境的交互不断更新。当Q表中的值收敛时，对应的策略即为最优策略。</p>
-<ul>
-<li><strong>有环境模型的求解方法 (Model-based)：</strong> 需要知道环境的状态转移函数 <span class="arithmatex">\(P\)</span> 和奖励函数 <span class="arithmatex">\(R\)</span>。<ul>
-<li>常用算法：<strong>动态规划 (DP)</strong>，包括策略迭代和值迭代。</li>
-</ul>
-</li>
-<li><strong>无环境模型的求解方法 (Model-free)：</strong> 无需显式知道环境的 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>。通过智能体与环境交互产生的样本数据来更新Q值。<ul>
-<li>常用算法：<strong>蒙特卡洛方法 (MC)</strong>，<strong>时序差分方法 (TD)</strong>。</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-dynamic-programming-dp">1. 动态规划 (Dynamic Programming, DP)</h3>
-<p>动态规划是一类在已知环境模型（MDP的 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>）的情况下，求解最优策略的方法。它利用价值函数的贝尔曼方程进行计算。</p>
+<h3 id="23-word2vec">2.3 Word2Vec</h3>
+<p>Word2Vec (Mikolov et al. 2013) 是一个学习词向量的框架。</p>
+<p><strong>核心思想</strong>：
+1.  拥有一个大型文本语料库。
+2.  固定词汇表中的每个单词都由一个向量表示。
+3.  遍历文本中的每个位置 <code>t</code>，包含一个中心词 <code>c</code> 和上下文（“外部”）词 <code>o</code>。
+4.  使用 <code>c</code> 和 <code>o</code> 的词向量相似性来计算给定 <code>c</code> 时 <code>o</code> 的概率（反之亦然）。
+5.  不断调整单词向量来最大化此概率。</p>
+<p><strong>目标函数</strong>：
+最小化负对数似然的均值。对于中心词 <span class="arithmatex">\(w_t\)</span> 和窗口大小为 <span class="arithmatex">\(m\)</span> 的上下文词 <span class="arithmatex">\(w_{t+j}\)</span>（<span class="arithmatex">\(j \ne 0, -m \le j \le m\)</span>）：
+$$ J(\theta) = -\frac{1}{T} \sum_{t=1}^{T} \sum_{-m \le j \le m, j \ne 0} \log P(w_{t+j} | w_t; \theta) $$</p>
+<p><strong>计算概率 <span class="arithmatex">\(P(o|c; \theta)\)</span></strong>：
+对每个单词 <code>w</code>，使用两个向量：
+*   <span class="arithmatex">\(v_w\)</span>：当 <code>w</code> 是中心词时。
+*   <span class="arithmatex">\(u_w\)</span>：当 <code>w</code> 是上下文词时。
+这两个向量都是模型参数 <span class="arithmatex">\(\theta\)</span> 的一部分。
+对于中心词 <code>c</code> 和上下文词 <code>o</code>：
+$$ P(o|c) = \frac{\exp(u_o^T v_c)}{\sum_{w' \in V} \exp(u_{w'}^T v_c)} $$
+其中 <span class="arithmatex">\(V\)</span> 是词汇表。</p>
+<p><strong>Word2Vec的两种模型架构</strong>：
+1.  <strong>Continuous Bag of Words (CBOW)</strong>：使用窗口中的上下文单词来预测中心词。
+    *   输入：上下文词向量的平均 (或拼接)。
+    *   输出：中心词的概率分布。
+2.  <strong>Skip-grams</strong>：使用中心词来预测窗口中的上下文单词。
+    *   输入：中心词向量。
+    *   输出：各个上下文词的概率分布。</p>
+<pre><code>![Word2Vec CBOW and Skip-gram](https://i.imgur.com/Q0bZg2j.png)
+*(示意图，实际PPT中为更详细的结构图)*
+</code></pre>
+<p><strong>Word2Vec 训练参数 (以Skip-gram为例，预测一个上下文词)</strong>:
+*   输入层: 中心词 <span class="arithmatex">\(x\)</span> (one-hot vector, <span class="arithmatex">\(R^{|V|}\)</span>)
+*   隐藏层: <span class="arithmatex">\(h = W^T x = v_c\)</span> (中心词的词向量, <span class="arithmatex">\(R^N\)</span>)
+    *   <span class="arithmatex">\(W\)</span> 是输入到隐藏层的权重矩阵 (<span class="arithmatex">\(R^{|V| \times N}\)</span>)，其行是中心词向量 <span class="arithmatex">\(v_w\)</span>。
+*   输出层: <span class="arithmatex">\(z = W' h\)</span> (<span class="arithmatex">\(R^{|V|}\)</span>)
+    *   <span class="arithmatex">\(W'\)</span> 是隐藏层到输出层的权重矩阵 (<span class="arithmatex">\(R^{N \times |V|}\)</span>)，其列是上下文词向量 <span class="arithmatex">\(u_w\)</span>。
+*   <span class="arithmatex">\(P(o|c) = \text{softmax}(z)\)</span>
+*   需要学习的参数是 <span class="arithmatex">\(W\)</span> 和 <span class="arithmatex">\(W'\)</span>。</p>
 <div class="admonition note">
-<p class="admonition-title">动态规划的核心思想</p>
-<p>DP适用于具有以下两个性质的问题：</p>
-<ol>
-<li><strong>最优子结构 (Optimal Substructure)：</strong> 问题的最优解包含其子问题的最优解。贝尔曼方程正是这种性质的体现。</li>
-<li><strong>重叠子问题 (Overlapping Subproblems)：</strong> 在求解过程中，子问题会被多次重复计算。DP通过存储和复用子问题的解（如价值函数）来提高效率。</li>
+<p class="admonition-title">词向量的线性关系</p>
+<p>训练好的词向量可以捕捉到一些线性关系，例如：
+<code>vector('king') - vector('man') + vector('woman') ≈ vector('queen')</code></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Word2Vec的盲点</p>
+<ul>
+<li>无法有效处理训练语料中距离较远的词之间的关系。</li>
+<li>对于有相似词缀（前缀/后缀）的词，无法在词向量中直接表示这种构词法上的相似性。</li>
+<li>GloVe 和 FastText 等方法被提出来解决这些问题。</li>
+</ul>
+</div>
+<h2 id="3-machine-translation-mt">3. 机器翻译 (Machine Translation, MT)</h2>
+<p>MT任务：将一种语言（源语言）的句子 <span class="arithmatex">\(x\)</span> 翻译为另一种语言（目标语言）的句子 <span class="arithmatex">\(y\)</span>。</p>
+<h3 id="31-smt-vs-nmt">3.1 统计机器翻译 (SMT) vs. 神经机器翻译 (NMT)</h3>
+<ul>
+<li><strong>SMT (1990s-2010s)</strong>：<ul>
+<li>系统复杂，包含许多单独设计的子组件。</li>
+<li>需要大量特征工程和额外的语言资源（如短语表）。</li>
+<li>人力维护成本高。</li>
+</ul>
+</li>
+<li><strong>NMT (2014 onwards)</strong>：<ul>
+<li>使用编码器-解码器 (Encoder-Decoder) 神经网络模型。</li>
+<li>端到端训练，减少了特征工程。</li>
+<li>迅速成为主流，性能超越SMT。</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-seq2seq">3.2 Seq2Seq 模型</h3>
+<ul>
+<li><strong>核心思想</strong>：<ol>
+<li><strong>编码器 (Encoder)</strong>：一个神经网络（通常是RNN，如LSTM/GRU）读取输入序列 <span class="arithmatex">\(x = (x_1, \dots, x_{T_x})\)</span> 并将其压缩成一个固定长度的上下文向量 (context vector) <span class="arithmatex">\(c\)</span>。</li>
+<li><strong>解码器 (Decoder)</strong>：另一个神经网络（通常是RNN）以 <span class="arithmatex">\(c\)</span> 为初始状态，逐个生成目标序列 <span class="arithmatex">\(y = (y_1, \dots, y_{T_y})\)</span> 中的词。</li>
 </ol>
+</li>
+<li>Seq2Seq 模型是<strong>条件语言模型</strong>：解码器预测下一个词，其预测以源句子 <span class="arithmatex">\(x\)</span> (通过 <span class="arithmatex">\(c\)</span>) 为条件。</li>
+<li><strong>应用广泛</strong>：文本摘要、对话系统、代码生成等。</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">NMT的巨大成功</p>
+<p>NMT 从2014年的边缘研究迅速发展成为2016年的领先标准方法。例如，谷歌翻译在2016年从SMT转向NMT。</p>
 </div>
-<h4 id="11-policy-evaluation">1.1 策略评估 (Policy Evaluation)</h4>
-<div class="admonition note">
-<p class="admonition-title">重点：策略评估</p>
-<p><strong>目标：</strong> 对于给定的策略 <span class="arithmatex">\(\pi\)</span>，计算其状态价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>。</p>
-<p><strong>方法：</strong> 迭代应用贝尔曼期望方程进行更新（同步更新，即一次迭代中更新所有状态的价值）：</p>
-<p><span class="arithmatex">\(V_{k+1}(s) \leftarrow \sum_{a \in A} \pi(a|s) \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_k(s')]\)</span></p>
-<p>这个迭代过程保证收敛到 <span class="arithmatex">\(V_\pi(s)\)</span>。</p>
-<p><strong>收敛性：</strong> 贝尔曼期望算子 <span class="arithmatex">\(T^\pi\)</span> 是一个 <span class="arithmatex">\(\gamma\)</span>-压缩映射， <span class="arithmatex">\(\|T^\pi U - T^\pi W\|_\infty \le \gamma \|U - W\|_\infty\)</span>。根据压缩映射定理，迭代 <span class="arithmatex">\(V_{k+1} = T^\pi V_k\)</span> 会收敛到唯一的固定点 <span class="arithmatex">\(V_\pi\)</span>。</p>
+<h2 id="4-attention-mechanism">4. 注意力机制 (Attention Mechanism)</h2>
+<p>Seq2Seq模型的一个瓶颈是编码器需要将源句子的所有信息压缩到一个固定长度的向量 <span class="arithmatex">\(c\)</span> 中，这对于长句子来说很困难。</p>
+<p><strong>注意力机制的核心思想</strong>：
+在解码器的每一步，允许解码器<strong>直接查看并关注 (attend to)</strong> 源序列的不同部分，而不是仅仅依赖于最终的上下文向量 <span class="arithmatex">\(c\)</span>。</p>
+<ul>
+<li>解码器在生成每个目标词时，会计算源序列中每个词的<strong>注意力权重 (attention weights)</strong>。</li>
+<li>这些权重决定了在当前解码步骤中，源序列的哪些部分更重要。</li>
+<li>然后，根据这些权重对编码器的隐藏状态进行加权求和，得到一个动态的上下文向量，用于当前词的预测。</li>
+</ul>
+<div class="admonition abstract">
+<p class="admonition-title">注意力机制的优势</p>
+<ul>
+<li><strong>提升NMT性能</strong>：允许解码器专注于源句子的相关部分。</li>
+<li><strong>解决瓶颈问题</strong>：解码器可以直接查看源序列，无需将所有信息压缩到单一向量。</li>
+<li><strong>缓解梯度消失</strong>：提供了到源序列较远状态的“捷径”。</li>
+<li><strong>提供可解释性</strong>：通过注意力分布，可以看到解码器在生成某个词时关注了源句子的哪些部分，相当于获得了“软对齐”。</li>
+</ul>
 </div>
-<h4 id="12-policy-improvement">1.2 策略提升 (Policy Improvement)</h4>
-<div class="admonition note">
-<p class="admonition-title">重点：策略提升</p>
-<p><strong>目标：</strong> 基于当前策略 <span class="arithmatex">\(\pi\)</span> 的价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>（或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>），找到一个更好的策略 <span class="arithmatex">\(\pi'\)</span>。</p>
-<p><strong>方法：</strong> 对于每个状态 <span class="arithmatex">\(s\)</span>，贪心地选择能够最大化 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 的动作：</p>
-<p><span class="arithmatex">\(\pi'(s) = \arg\max_{a \in A} Q_\pi(s,a) = \arg\max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span></p>
-<p>可以证明，这样得到的策略 <span class="arithmatex">\(\pi'\)</span> 满足 <span class="arithmatex">\(V_{\pi'}(s) \ge V_\pi(s)\)</span> 对所有 <span class="arithmatex">\(s \in S\)</span>。</p>
+<p><strong>更一般的注意力定义</strong>：
+给定一个查询向量 (query) 和一组键值对 (key-value pairs)，注意力机制计算一个输出，该输出是值的加权和，其中每个值的权重由查询和对应键的相似度计算得出。
+*   在Seq2Seq+Attention中：解码器隐藏状态是query，编码器隐藏状态是keys和values。</p>
+<div class="admonition quote">
+<p class="admonition-title">核心结论</p>
+<p>注意力机制已成为深度学习模型中强大、灵活、普适的指路牌与记忆操作范式。</p>
 </div>
-<h4 id="13-policy-iteration">1.3 策略迭代 (Policy Iteration)</h4>
-<div class="admonition note">
-<p class="admonition-title">重点：策略迭代</p>
-<p>策略迭代通过交替执行策略评估和策略提升来寻找最优策略。</p>
+<h2 id="5-transformer-attention-is-all-you-need">5. Transformer: Attention Is All You Need?</h2>
+<p>[Vaswani et al., 2017] 提出的Transformer模型，完全摒弃了RNN结构，仅依赖注意力机制来捕捉输入和输出之间的依赖关系。</p>
+<h3 id="51-self-attention">5.1 自注意力 (Self-Attention)</h3>
+<p>自注意力允许输入序列中的每个位置关注输入序列中的所有其他位置（包括自身），以计算该位置的新表示。</p>
+<p><strong>将自注意力类比为“模糊的”哈希表</strong>：
+*   <strong>Query (Q)</strong>: 当前词，用于查询信息。
+*   <strong>Key (K)</strong>: 序列中的其他词，用于与Query匹配。
+*   <strong>Value (V)</strong>: 序列中其他词的实际内容。
+Query和Key计算相似度（注意力分数），该分数作为权重，对Values进行加权求和。</p>
+<p><strong>自注意力计算步骤</strong> (对于输入词嵌入 <span class="arithmatex">\(x_i\)</span>):
+1.  <strong>生成Q, K, V向量</strong>：
+    $$ q_i = W^Q x_i $$
+    $$ k_i = W^K x_i $$
+    $$ v_i = W^V x_i $$
+    其中 <span class="arithmatex">\(W^Q, W^K, W^V\)</span> 是可学习的权重矩阵。</p>
 <ol>
-<li><strong>初始化：</strong> 随机初始化策略 <span class="arithmatex">\(\pi\)</span> 和价值函数 <span class="arithmatex">\(V\)</span> (通常为0)。</li>
-<li><strong>策略评估 (E)：</strong> 根据当前策略 <span class="arithmatex">\(\pi\)</span>，使用迭代的贝尔曼期望方程计算 <span class="arithmatex">\(V_\pi(s)\)</span> 直到收敛。</li>
-<li><strong>策略提升 (I)：</strong> 根据 <span class="arithmatex">\(V_\pi(s)\)</span>，使用贪心方法更新策略 <span class="arithmatex">\(\pi'(s) = \arg\max_a Q_\pi(s,a)\)</span>。</li>
-<li>如果 <span class="arithmatex">\(\pi' = \pi\)</span>，则策略已收敛到最优策略 <span class="arithmatex">\(\pi^*\)</span>，算法结束。否则，令 <span class="arithmatex">\(\pi \leftarrow \pi'\)</span>，返回步骤2。</li>
+<li>
+<p><strong>计算注意力分数 (Attention Scores)</strong>：Query与所有Keys的点积。为了梯度稳定，通常会进行缩放。
+    $$ e_{ij} = \frac{q_i^T k_j}{\sqrt{d_k}} $$
+    其中 <span class="arithmatex">\(d_k\)</span> 是key向量的维度。</p>
+</li>
+<li>
+<p><strong>归一化分数 (Softmax)</strong>：对分数进行softmax，得到注意力权重 <span class="arithmatex">\(\alpha_{ij}\)</span>。
+    $$ \alpha_{ij} = \text{softmax}<em ij="ij">j(e</em> $$}) = \frac{\exp(e_{ij})}{\sum_{l=1}^{T_x} \exp(e_{il})</p>
+</li>
+<li>
+<p><strong>计算输出 (Weighted Sum of Values)</strong>：用注意力权重对Value向量进行加权求和。
+    $$ o_i = \sum_{j=1}^{T_x} \alpha_{ij} v_j $$
+    <span class="arithmatex">\(o_i\)</span> 即为词 <span class="arithmatex">\(x_i\)</span> 经过自注意力层后的新表示。</p>
+</li>
 </ol>
-<p>这个过程最终会收敛到最优策略 <span class="arithmatex">\(\pi^*\)</span> 和最优价值函数 <span class="arithmatex">\(V^*\)</span>。</p>
-</div>
-<h4 id="14-value-iteration">1.4 值迭代 (Value Iteration)</h4>
-<div class="admonition note">
-<p class="admonition-title">重点：值迭代</p>
-<p>值迭代是另一种DP方法，它直接通过迭代贝尔曼最优方程来寻找最优价值函数 <span class="arithmatex">\(V^*(s)\)</span>，从而避免了策略评估中可能需要的多次完整迭代。</p>
-<p><strong>方法：</strong> 迭代更新价值函数（同步更新）：</p>
-<p><span class="arithmatex">\(V_{k+1}(s) \leftarrow \max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_k(s')]\)</span>
-当 <span class="arithmatex">\(V_k(s)\)</span> 收敛到 <span class="arithmatex">\(V^*(s)\)</span> 后，最优策略 <span class="arithmatex">\(\pi^*(s)\)</span> 可以通过一步策略提升直接提取：
-<span class="arithmatex">\(\pi^*(s) = \arg\max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span></p>
-</div>
-<details class="summary">
-<summary>动态规划算法总结</summary>
-<table>
-<thead>
-<tr>
-<th>求解问题</th>
-<th>使用贝尔曼方程类型</th>
-<th>算法名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>预测 (求解价值函数)</td>
-<td>贝尔曼期望方程</td>
-<td>策略评估</td>
-</tr>
-<tr>
-<td>控制 (求解最优策略)</td>
-<td>贝尔曼期望方程 + 贪心提升</td>
-<td>策略迭代</td>
-</tr>
-<tr>
-<td>控制 (求解最优策略)</td>
-<td>贝尔曼最优方程</td>
-<td>值迭代</td>
-</tr>
-<tr>
-<td><em>DP算法的迭代复杂度对于 <span class="arithmatex">\(N\)</span> 个状态和 <span class="arithmatex">\(M\)</span> 个动作的MDP，每次迭代通常是 <span class="arithmatex">\(O(MN^2)\)</span> 或 <span class="arithmatex">\(O(M^2N)\)</span> (取决于实现和 <span class="arithmatex">\(P\)</span> 的稀疏性)。</em></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</details>
-<h3 id="2-monte-carlo-mc">2. 蒙特卡洛方法 (Monte Carlo, MC)</h3>
-<p>蒙特卡洛方法是无模型的，它通过从环境中采样完整的经验轨迹 (episodes) 来学习价值函数和策略，不需要知道环境的动态特性 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>。</p>
-<h4 id="21">2.1 蒙特卡洛策略评估</h4>
-<div class="admonition note">
-<p class="admonition-title">重点：蒙特卡洛策略评估</p>
-<p><strong>目标：</strong> 在给定策略 <span class="arithmatex">\(\pi\)</span> 的情况下，估计其价值函数 <span class="arithmatex">\(V_\pi(s)\)</span> 或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>。</p>
-<p><strong>方法：</strong></p>
+<p><strong>向量化表示</strong>：
+输入词嵌入矩阵 <span class="arithmatex">\(X \in \mathbb{R}^{T_x \times d_{model}}\)</span>
+1.  <span class="arithmatex">\(Q = X W^Q\)</span>
+2.  <span class="arithmatex">\(K = X W^K\)</span>
+3.  <span class="arithmatex">\(V = X W^V\)</span>
+4.  <span class="arithmatex">\(Scores = \frac{QK^T}{\sqrt{d_k}}\)</span>
+5.  <span class="arithmatex">\(A = \text{softmax}(Scores)\)</span> (按行softmax)
+6.  <span class="arithmatex">\(Output = AV\)</span></p>
+<h3 id="52">5.2 解决自注意力的局限</h3>
 <ol>
-<li>智能体遵循策略 <span class="arithmatex">\(\pi\)</span> 与环境交互，生成多条完整的经验轨迹。</li>
-<li>对于每个状态 <span class="arithmatex">\(s\)</span>（或状态-动作对 <span class="arithmatex">\((s,a)\)</span>）：<ul>
-<li><strong>首次访问MC (First-Visit MC)：</strong> 在每条轨迹中，只考虑状态 <span class="arithmatex">\(s\)</span> (或 <span class="arithmatex">\((s,a)\)</span>) 第一次出现后的回报 <span class="arithmatex">\(G_t\)</span>。</li>
-<li><strong>每次访问MC (Every-Visit MC)：</strong> 在每条轨迹中，考虑状态 <span class="arithmatex">\(s\)</span> (或 <span class="arithmatex">\((s,a)\)</span>) 每次出现后的回报 <span class="arithmatex">\(G_t\)</span>。</li>
+<li>
+<p><strong>缺乏非线性</strong>：自注意力本身是线性操作（加权平均）。</p>
+<ul>
+<li><strong>解决方案</strong>：在自注意力层之后添加一个<strong>前馈神经网络 (Feed-Forward Network, FFN)</strong>，通常包含两层线性变换和一个ReLU激活函数。
+    $$ \text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2 $$</li>
 </ul>
 </li>
 <li>
-<p>将所有这些回报取平均值作为 <span class="arithmatex">\(V_\pi(s)\)</span> (或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>) 的估计。</p>
-<p><span class="arithmatex">\(V_\pi(s) \approx \text{Average}(G_t \text{ for first/every visit to } s)\)</span></p>
-<p><span class="arithmatex">\(Q_\pi(s,a) \approx \text{Average}(G_t \text{ for first/every visit to } (s,a))\)</span></p>
+<p><strong>无法感知序列顺序</strong>：自注意力对输入顺序不敏感（置换不变性）。</p>
+<ul>
+<li><strong>解决方案</strong>：<strong>位置编码 (Positional Encoding)</strong>。将位置信息编码成向量 <span class="arithmatex">\(p_i\)</span>，并将其加到输入词嵌入 <span class="arithmatex">\(x_i\)</span> 上。
+    $$ x'_{i} = x_i + p_i $$</li>
+<li>位置编码向量 <span class="arithmatex">\(p_i\)</span> 可以是学习得到的，也可以是固定的（如使用不同频率的正弦和余弦函数）。</li>
+</ul>
 </li>
 </ol>
-<p>首次访问MC是 <span class="arithmatex">\(V_\pi(s)\)</span> 的无偏估计。每次访问MC虽然有偏，但通常方差更小，且在访问次数趋于无穷时也会收敛。</p>
-</div>
-<h4 id="22-mc-control">2.2 蒙特卡洛控制 (MC Control)</h4>
-<p>为了找到最优策略，MC方法同样采用广义策略迭代 (GPI) 的思想：交替进行策略评估和策略提升。</p>
-<ul>
-<li><strong>策略评估：</strong> 使用MC方法估计当前策略 <span class="arithmatex">\(\pi\)</span> 的 <span class="arithmatex">\(Q_\pi(s,a)\)</span>。</li>
-<li><strong>策略提升：</strong> 基于估计的 <span class="arithmatex">\(Q_\pi(s,a)\)</span>，使用 <span class="arithmatex">\(\epsilon\)</span>-贪心策略来改进 <span class="arithmatex">\(\pi\)</span>。</li>
-</ul>
+<h3 id="53-multi-head-attention">5.3 多头注意力 (Multi-Head Attention)</h3>
+<p>与其只用一组 <span class="arithmatex">\(W^Q, W^K, W^V\)</span> 计算一次注意力，多头注意力机制允许模型并行地多次执行注意力计算。
+1.  将Q, K, V分别线性投影 <span class="arithmatex">\(h\)</span> 次（<span class="arithmatex">\(h\)</span> 是头的数量），得到 <span class="arithmatex">\(h\)</span> 组不同的 <span class="arithmatex">\(Q_head, K_head, V_head\)</span>。
+2.  对每一组 <span class="arithmatex">\(Q_{head_i}, K_{head_i}, V_{head_i}\)</span> 并行计算自注意力，得到 <span class="arithmatex">\(h\)</span> 个输出向量 <span class="arithmatex">\(o_i\)</span>。
+3.  将这 <span class="arithmatex">\(h\)</span> 个输出向量拼接 (concatenate) 起来，再通过一个线性变换得到最终输出。
+    $$ \text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h) W^O $$
+    $$ \text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V) $$
+    其中 <span class="arithmatex">\(W_i^Q, W_i^K, W_i^V, W^O\)</span> 是可学习的参数矩阵。</p>
+<p><strong>优势</strong>：允许模型在不同位置关注来自不同子空间表征的信息，增强了模型的表达能力。</p>
+<p><em>(示意图，源自 "Attention Is All You Need" 论文)</em></p>
+<h3 id="54-transformer">5.4 Transformer 整体架构</h3>
+<p>Transformer模型主要由编码器 (Encoder) 和解码器 (Decoder) 堆栈组成。</p>
 <div class="admonition note">
-<p class="admonition-title">重点：<span class="arithmatex">\(\epsilon\)</span>-贪心策略 (Epsilon-Greedy Policy)</p>
-<p>为了确保在学习过程中进行充分的探索（即尝试所有可能的动作，而不仅仅是当前认为最优的动作），通常采用 <span class="arithmatex">\(\epsilon\)</span>-贪心策略：</p>
-<ul>
-<li>以 <span class="arithmatex">\(1-\epsilon\)</span> 的概率选择当前估计的具有最大 <span class="arithmatex">\(Q(s,a)\)</span> 值的动作 (exploitation)。</li>
-<li>以 <span class="arithmatex">\(\epsilon\)</span> 的概率从所有可用动作中随机选择一个动作 (exploration)。</li>
-</ul>
-<p><span class="arithmatex">\(\pi(a|s) = \begin{cases} 1-\epsilon + \epsilon/|A(s)| &amp; \text{if } a = \arg\max_{a' \in A(s)} Q(s,a') \\ \epsilon/|A(s)| &amp; \text{otherwise} \end{cases}\)</span></p>
-<p>其中 <span class="arithmatex">\(|A(s)|\)</span> 是状态 <span class="arithmatex">\(s\)</span> 下可用动作的数量。</p>
-</div>
-<p><strong>MC控制算法（首次访问，<span class="arithmatex">\(\epsilon\)</span>-贪心）：</strong></p>
-<ol>
-<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 和 <span class="arithmatex">\(\pi(s)\)</span> (例如，<span class="arithmatex">\(\epsilon\)</span>-贪心于 <span class="arithmatex">\(Q\)</span>)。</li>
-<li>对每个回合 (episode)：
-    a.  使用当前策略 <span class="arithmatex">\(\pi\)</span> 生成一个完整的轨迹：<span class="arithmatex">\(S_0, A_0, R_1, S_1, A_1, R_2, \dots, S_T\)</span>.
-    b.  对于轨迹中的每个时间步 <span class="arithmatex">\(t=0, 1, \dots, T-1\)</span>:
-        i.  计算从该步开始的回报 <span class="arithmatex">\(G_t = \sum_{k=0}^{T-1-t} \gamma^k R_{t+k+1}\)</span>。
-        ii. 如果 <span class="arithmatex">\((S_t, A_t)\)</span> 是首次出现在从时间0到 <span class="arithmatex">\(t\)</span> 的序列中：
-            1.  将 <span class="arithmatex">\(G_t\)</span> 添加到 <span class="arithmatex">\(Returns(S_t, A_t)\)</span> 列表中。
-            2.  更新 <span class="arithmatex">\(Q(S_t, A_t) = \text{Average}(Returns(S_t, A_t))\)</span>。
-            3.  更新策略 <span class="arithmatex">\(\pi(S_t)\)</span> 使其对 <span class="arithmatex">\(Q(S_t, \cdot)\)</span> 是 <span class="arithmatex">\(\epsilon\)</span>-贪心的。</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">增量式更新 (Incremental Update)</p>
-<p>为了避免存储所有回报然后计算平均值，可以使用增量式均值更新：</p>
-<p><span class="arithmatex">\(Q_{k+1}(s,a) = Q_k(s,a) + \frac{1}{N_k(s,a)+1} (G_{k+1} - Q_k(s,a))\)</span></p>
-<p>或者使用固定学习率 <span class="arithmatex">\(\alpha\)</span>:</p>
-<p><span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (G_t - Q(S_t, A_t))\)</span></p>
-</div>
-<p><strong>MC方法的优缺点：</strong></p>
-<ul>
-<li><strong>优点：</strong><ul>
-<li>无模型，不需环境动态。</li>
-<li>可从实际或模拟经验中学习。</li>
-<li>适用于非马尔可夫环境（因为它不依赖于单步转移）。</li>
-<li>评估某个状态的价值与其他状态无关。</li>
-</ul>
-</li>
-<li><strong>缺点：</strong><ul>
-<li>只能用于有明确结束的回合制任务 (episodic tasks)。</li>
-<li>策略评估需要等到整个回合结束后才能进行，学习效率可能较低。</li>
-<li>如果采样回合数不足，容易收敛到次优策略。</li>
-<li>回报的方差可能较大。</li>
-</ul>
-</li>
-</ul>
-<h3 id="3-temporal-difference-td">3. 时序差分学习 (Temporal Difference, TD)</h3>
-<p>TD学习是强化学习中一种核心且新颖的思想，它结合了DP和MC方法的优点。TD方法像MC一样从经验中学习，无需环境模型；像DP一样，它也使用自举 (bootstrapping)，即用当前估计的价值函数来更新自身。</p>
-<div class="admonition note">
-<p class="admonition-title">TD学习的核心思想</p>
-<p>TD学习在每一步之后（或几步之后）就更新价值估计，而不是等到整个回合结束。它使用当前获得的即时奖励和下一状态的估计价值来更新当前状态的价值。
-基本TD(0)更新规则 (用于策略评估 <span class="arithmatex">\(V_\pi\)</span>):</p>
-<p><span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]\)</span></p>
-<ul>
-<li>
-<p><strong>TD目标 (TD Target)：</strong> <span class="arithmatex">\(R_{t+1} + \gamma V(S_{t+1})\)</span></p>
-</li>
-<li>
-<p><strong>TD误差 (TD Error) <span class="arithmatex">\(\delta_t\)</span>：</strong> <span class="arithmatex">\(\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\)</span></p>
-</li>
-<li>
-<p><span class="arithmatex">\(\alpha\)</span> 是学习率。</p>
-</li>
-</ul>
-</div>
-<p><strong>TD vs. MC vs. DP:</strong></p>
-<ul>
-<li><strong>DP：</strong> 需要完整模型，进行期望更新。</li>
-<li><strong>MC：</strong> 无需模型，使用完整样本回报进行更新，方差大，偏差小（对于<span class="arithmatex">\(V_\pi\)</span>的估计）。</li>
-<li><strong>TD：</strong> 无需模型，使用单步实际奖励和估计的下一状态价值进行更新，方差小，有偏（因为依赖于<span class="arithmatex">\(V(S_{t+1})\)</span>的估计）。</li>
-</ul>
-<p><strong>偏差 (Bias) 与方差 (Variance) 权衡：</strong></p>
-<ul>
-<li><strong>MC：</strong> <span class="arithmatex">\(G_t\)</span> 是 <span class="arithmatex">\(V_\pi(S_t)\)</span> 的无偏估计，但由于依赖于一个完整轨迹中的所有随机奖励和动作，其方差较大。</li>
-<li><strong>TD(0)：</strong> TD目标 <span class="arithmatex">\(R_{t+1} + \gamma V(S_{t+1})\)</span> 是 <span class="arithmatex">\(V_\pi(S_t)\)</span> 的有偏估计（因为 <span class="arithmatex">\(V(S_{t+1})\)</span> 本身是估计值），但由于只依赖于一个实际奖励 <span class="arithmatex">\(R_{t+1}\)</span> 和一个估计值 <span class="arithmatex">\(V(S_{t+1})\)</span>，其方差通常比MC小。</li>
-</ul>
-<h4 id="31-n-td-n-step-td-learning">3.1 n-步TD学习 (n-step TD Learning)</h4>
-<p>n-步TD是MC和TD(0)之间的一个折中。它向前看 <span class="arithmatex">\(n\)</span> 步的实际奖励，然后使用第 <span class="arithmatex">\(n\)</span> 步之后状态的估计价值。</p>
-<ul>
-<li><strong>n-步回报 <span class="arithmatex">\(G_t^{(n)}\)</span>：</strong>
-    <span class="arithmatex">\(G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} + \gamma^n V(S_{t+n})\)</span></li>
-<li><strong>n-步TD更新：</strong>
-    <span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [G_t^{(n)} - V(S_t)]\)</span>
-    当 <span class="arithmatex">\(n=1\)</span> 时，是TD(0)。当 <span class="arithmatex">\(n \rightarrow \infty\)</span> (或 <span class="arithmatex">\(n\)</span> 达到回合结束)，则近似于MC。</li>
-</ul>
-<h4 id="32-tdlambda">3.2 TD(<span class="arithmatex">\(\lambda\)</span>)</h4>
-<p>TD(<span class="arithmatex">\(\lambda\)</span>) 结合了所有不同 <span class="arithmatex">\(n\)</span> 步回报的优点，通过对它们进行加权平均。</p>
-<ul>
-<li><strong><span class="arithmatex">\(\lambda\)</span>-回报 <span class="arithmatex">\(G_t^\lambda\)</span>：</strong>
-    <span class="arithmatex">\(G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}\)</span>
-    其中 <span class="arithmatex">\(\lambda \in [0,1]\)</span>。当 <span class="arithmatex">\(\lambda=0\)</span> 时，是TD(0)回报。当 <span class="arithmatex">\(\lambda=1\)</span> 时，是MC回报。</li>
-<li><strong>前向视角TD(<span class="arithmatex">\(\lambda\)</span>)更新：</strong>
-    <span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [G_t^\lambda - V(S_t)]\)</span>
-    前向视角在概念上简单，但计算上需要在回合结束后才能进行。实际中常用资格迹 (eligibility traces) 实现后向视角TD(<span class="arithmatex">\(\lambda\)</span>)，可以在线更新。</li>
-</ul>
-<h4 id="33-sarsa-state-action-reward-state-action">3.3 SARSA (State-Action-Reward-State-Action)</h4>
-<p>SARSA是一种<strong>同策略 (on-policy)</strong> TD控制算法。它学习动作价值函数 <span class="arithmatex">\(Q(s,a)\)</span>。</p>
-<p>"同策略"意味着用于生成行为的策略与正在评估和改进的策略是同一个。</p>
-<p><strong>SARSA更新规则：</strong></p>
-<p>基于转移 <span class="arithmatex">\((S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})\)</span>:
-<span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]\)</span></p>
-<p>智能体在状态 <span class="arithmatex">\(S_t\)</span> 选择动作 <span class="arithmatex">\(A_t\)</span>，观察到奖励 <span class="arithmatex">\(R_{t+1}\)</span> 和下一状态 <span class="arithmatex">\(S_{t+1}\)</span>，然后在 <span class="arithmatex">\(S_{t+1}\)</span> 根据当前策略选择动作 <span class="arithmatex">\(A_{t+1}\)</span>，之后用 <span class="arithmatex">\(Q(S_{t+1}, A_{t+1})\)</span> 来更新 <span class="arithmatex">\(Q(S_t, A_t)\)</span>。</p>
-<p><strong>SARSA算法流程 (<span class="arithmatex">\(\epsilon\)</span>-贪心策略)：</strong></p>
-<ol>
-<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 对所有 <span class="arithmatex">\(s,a\)</span> (例如，为0)，<span class="arithmatex">\(\epsilon &gt; 0\)</span>。</li>
-<li>对每个回合：
-    a.  初始化 <span class="arithmatex">\(S\)</span>。
-    b.  使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S\)</span> 选择动作 <span class="arithmatex">\(A\)</span>。
-    c.  只要 <span class="arithmatex">\(S\)</span> 不是终止状态：
-        i.   执行动作 <span class="arithmatex">\(A\)</span>，观察 <span class="arithmatex">\(R, S'\)</span>。
-        ii.  使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S'\)</span> 选择动作 <span class="arithmatex">\(A'\)</span>。
-        iii. 更新 <span class="arithmatex">\(Q(S,A) \leftarrow Q(S,A) + \alpha [R + \gamma Q(S',A') - Q(S,A)]\)</span>。
-        iv.  <span class="arithmatex">\(S \leftarrow S'\)</span>, <span class="arithmatex">\(A \leftarrow A'\)</span>。</li>
-</ol>
-<h4 id="34-q-learning">3.4 Q-Learning</h4>
-<p>Q-Learning是一种<strong>异策略 (off-policy)</strong> TD控制算法。它也学习动作价值函数 <span class="arithmatex">\(Q(s,a)\)</span>。</p>
-<p>"异策略"意味着用于生成行为的策略（行为策略）可以不同于正在评估和改进的策略（目标策略）。Q-Learning的目标策略是贪心策略，而其行为策略通常是 <span class="arithmatex">\(\epsilon\)</span>-贪心策略以保证探索。</p>
-<p><strong>Q-Learning更新规则：</strong></p>
-<p>基于转移 <span class="arithmatex">\((S_t, A_t, R_{t+1}, S_{t+1})\)</span>:
-<span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a') - Q(S_t, A_t)]\)</span></p>
-<p>注意，更新中使用的 <span class="arithmatex">\(\max_{a'} Q(S_{t+1}, a')\)</span> 是基于目标策略（贪心策略）在下一状态 <span class="arithmatex">\(S_{t+1}\)</span> 所能获得的最好价值，而实际在 <span class="arithmatex">\(S_{t+1}\)</span> 采取的动作（由行为策略决定）并不直接用于这个更新目标。</p>
-<p><strong>Q-Learning算法流程 (<span class="arithmatex">\(\epsilon\)</span>-贪心行为策略)：</strong></p>
-<ol>
-<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 对所有 <span class="arithmatex">\(s,a\)</span> (例如，为0)，<span class="arithmatex">\(\epsilon &gt; 0\)</span>。</li>
-<li>对每个回合：
-    a.  初始化 <span class="arithmatex">\(S\)</span>。
-    b.  只要 <span class="arithmatex">\(S\)</span> 不是终止状态：
-        i.   使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S\)</span> 选择动作 <span class="arithmatex">\(A\)</span> (行为策略)。
-        ii.  执行动作 <span class="arithmatex">\(A\)</span>，观察 <span class="arithmatex">\(R, S'\)</span>。
-        iii. 更新 <span class="arithmatex">\(Q(S,A) \leftarrow Q(S,A) + \alpha [R + \gamma \max_{a'} Q(S',a') - Q(S,A)]\)</span> (目标策略是贪心)。
-        iv.  <span class="arithmatex">\(S \leftarrow S'\)</span>。</li>
-</ol>
-<div class="admonition contrast">
-<p class="admonition-title">同策略 (On-Policy) vs. 异策略 (Off-Policy)</p>
-<ul>
-<li><strong>同策略 (On-Policy)：</strong> 学习的策略和用于收集数据的行为策略是同一个。例如SARSA。<ul>
-<li>优点：通常更稳定，直接优化当前行为策略的性能。</li>
-<li>缺点：探索和利用的平衡直接影响学习效果。如果行为策略为了探索而不选择最优动作，那么学习到的价值也是基于这种次优探索行为的。</li>
-</ul>
-</li>
-<li><strong>异策略 (Off-Policy)：</strong> 学习的策略（目标策略）和用于收集数据的行为策略可以不同。例如Q-Learning。<ul>
-<li>优点：可以从历史数据或其他策略（甚至是人类演示）中学习。行为策略可以大胆探索，而目标策略仍然学习最优行为。</li>
-<li>缺点：更新可能方差更大，收敛性有时更难保证（需要重要性采样等技术，但Q-Learning的特定形式避免了显式重要性采样）。</li>
-</ul>
-</li>
-</ul>
-</div>
-<details class="summary">
-<summary>表格型强化学习算法小结</summary>
-<ul>
-<li><strong>动态规划 (DP)：</strong><ul>
-<li>基于模型，使用期望更新。</li>
-<li>策略评估：计算给定策略的价值函数。</li>
-<li>策略提升：根据价值函数改进策略。</li>
-<li>策略迭代/值迭代：找到最优策略和价值函数。</li>
-</ul>
-</li>
-<li><strong>蒙特卡洛方法 (MC)：</strong><ul>
-<li>无模型，使用完整回合的样本回报更新。</li>
-<li>首次访问/每次访问MC。</li>
-<li>高方差，零偏差（对于<span class="arithmatex">\(V_\pi\)</span>）。</li>
-</ul>
-</li>
-<li><strong>时序差分学习 (TD)：</strong><ul>
-<li>无模型，使用单步或多步的实际奖励和后续状态的估计价值（自举）更新。</li>
-<li>TD(0), n-step TD, TD(<span class="arithmatex">\(\lambda\)</span>)。</li>
-<li>SARSA (同策略)，Q-Learning (异策略)。</li>
-<li>通常比MC方差小，但有偏。</li>
-</ul>
-</li>
-</ul>
-</details>
-<hr />
-<h2 id="deep-reinforcement-learning-drl">三、深度强化学习 (Deep Reinforcement Learning, DRL)</h2>
-<p>表格型强化学习方法在状态和动作空间较小的问题上表现良好。然而，当状态或动作空间非常大，甚至是连续的时候（例如，从图像输入学习，或控制机器人手臂），表格方法面临“维度灾难”，无法存储和有效学习Q表或策略表。</p>
-<p><strong>深度强化学习 (DRL) 的出现：</strong>
-DRL将深度学习（特别是深度神经网络DNN）与强化学习相结合。DNN作为函数逼近器，可以用来表示：
-*   价值函数 (例如, <span class="arithmatex">\(Q(s,a;\theta)\)</span>)
-*   策略函数 (例如, <span class="arithmatex">\(\pi(a|s;\theta)\)</span>)
-*   甚至环境模型</p>
-<p>这使得RL能够处理高维输入（如图像、文本）和复杂的、大规模的状态/动作空间。</p>
-<h3 id="1-drl-value-based-drl">1. 基于值函数的DRL (Value-Based DRL)</h3>
-<p>这类算法的核心是学习一个动作价值函数 <span class="arithmatex">\(Q(s,a;\theta)\)</span>（Q网络），然后通过最大化Q值来得到策略。</p>
-<h4 id="11-naive-dqn-deep-q-network">1.1 Naïve DQN (Deep Q-Network)</h4>
-<p>最直接的想法是将Q-Learning中的Q表替换为一个神经网络 <span class="arithmatex">\(Q(s,a;\theta)\)</span>。</p>
-<p><strong>损失函数：</strong> 最小化均方贝尔曼误差 (MSBE):</p>
-<p><span class="arithmatex">\(L(\theta) = E_{(s,a,r,s') \sim \mathcal{D}} \left[ (y - Q(s,a;\theta))^2 \right]\)</span>
-其中，TD目标 <span class="arithmatex">\(y = r + \gamma \max_{a'} Q(s',a';\theta)\)</span>。
-梯度更新：<span class="arithmatex">\(\theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)\)</span>。</p>
-<p><strong>在线Naïve DQN存在的问题：</strong></p>
-<ol>
-<li><strong>样本相关性：</strong> 连续的样本 <span class="arithmatex">\((s_t, a_t, r_{t+1}, s_{t+1})\)</span> 和 <span class="arithmatex">\((s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})\)</span> 高度相关，违反了许多监督学习算法的独立同分布 (i.i.d) 假设，导致训练不稳定。</li>
-<li><strong>目标非平稳性：</strong> 在计算TD目标 <span class="arithmatex">\(y\)</span> 时， <span class="arithmatex">\(Q(s',a';\theta)\)</span> 自身也在随着 <span class="arithmatex">\(\theta\)</span> 的更新而改变。这意味着我们追逐一个移动的目标，可能导致训练震荡或发散。这被称为半梯度 (semi-gradient) 问题，因为目标 <span class="arithmatex">\(y\)</span> 依赖于参数 <span class="arithmatex">\(\theta\)</span>，但在计算梯度时我们通常忽略这一点。</li>
-</ol>
-<h4 id="12-dqn-mnih-et-al-2013-2015">1.2 经典DQN (Mnih et al., 2013, 2015)</h4>
-<p>为了解决Naïve DQN的问题，经典DQN引入了两个关键技术：</p>
-<div class="admonition note">
-<p class="admonition-title">重点：经验回放 (Experience Replay)</p>
-<ul>
-<li><strong>机制：</strong> 将智能体与环境交互产生的转移 <span class="arithmatex">\((s_t, a_t, r_{t+1}, s_{t+1})\)</span> 存储在一个固定大小的回放缓冲区 (replay buffer) <span class="arithmatex">\(\mathcal{B}\)</span> 中。</li>
-<li><strong>训练：</strong> 在训练Q网络时，从缓冲区中随机采样一个小批量 (mini-batch) 的转移数据进行学习。</li>
-<li><strong>优点：</strong><ul>
-<li><strong>打破样本相关性：</strong> 随机采样使得训练样本近似i.i.d。</li>
-<li><strong>数据重用：</strong> 一条经验可以被多次用于训练，提高数据利用率。</li>
-<li><strong>平滑学习：</strong> 平均了许多先前状态的行为，避免了策略的剧烈摆动。</li>
-</ul>
-</li>
-</ul>
+<p class="admonition-title">Encoder 结构</p>
+<p>每个编码器层包含两个主要的子层：
+1.  <strong>多头自注意力机制 (Multi-Head Self-Attention)</strong>
+2.  <strong>位置全连接前馈网络 (Position-wise Feed-Forward Network)</strong>
+每个子层都采用了残差连接 (Residual Connection) 和层归一化 (Layer Normalization)。
+$$ \text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x)) $$</p>
+<p><em>(示意图，源自 "Attention Is All You Need" 论文，左半部分)</em></p>
 </div>
 <div class="admonition note">
-<p class="admonition-title">重点：目标网络 (Target Network)</p>
-<ul>
-<li><strong>机制：</strong> 使用两个独立的Q网络：<ul>
-<li><strong>在线网络 (Online Network) <span class="arithmatex">\(Q(s,a;\theta)\)</span>：</strong> 用于选择当前动作和进行参数更新。</li>
-<li><strong>目标网络 (Target Network) <span class="arithmatex">\(Q(s,a;\theta^-)\)</span>：</strong> 用于计算TD目标 <span class="arithmatex">\(y = r + \gamma \max_{a'} Q(s',a';\theta^-)\)</span>。</li>
-</ul>
-</li>
-<li><strong>更新：</strong> 在线网络的参数 <span class="arithmatex">\(\theta\)</span> 正常通过梯度下降更新。目标网络的参数 <span class="arithmatex">\(\theta^-\)</span> 则定期（例如每 <span class="arithmatex">\(C\)</span> 步）从在线网络复制过来：<span class="arithmatex">\(\theta^- \leftarrow \theta\)</span>。或者使用软更新：<span class="arithmatex">\(\theta^- \leftarrow \tau\theta + (1-\tau)\theta^-\)</span>。</li>
-<li><strong>优点：</strong><ul>
-<li><strong>稳定目标：</strong> 目标网络参数在一段时间内保持固定，使得TD目标 <span class="arithmatex">\(y\)</span> 更加稳定，减少了训练的震荡。</li>
-</ul>
-</li>
-</ul>
+<p class="admonition-title">Decoder 结构</p>
+<p>每个解码器层包含三个主要的子层：
+1.  <strong>掩码多头自注意力机制 (Masked Multi-Head Self-Attention)</strong>：
+    *   在自注意力计算中，为了防止解码器在预测当前词时“看到”未来的词（作弊），需要对未来的位置进行掩码 (masking)，即将其注意力分数设为 <span class="arithmatex">\(-\infty\)</span>。
+2.  <strong>多头编码器-解码器注意力机制 (Multi-Head Encoder-Decoder Attention)</strong>：
+    *   Query (<span class="arithmatex">\(Q\)</span>) 来自前一个解码器层的输出。
+    *   Key (<span class="arithmatex">\(K\)</span>) 和 Value (<span class="arithmatex">\(V\)</span>) 来自编码器的最终输出。
+    *   这允许解码器的每个位置关注输入序列的所有位置。
+3.  <strong>位置全连接前馈网络 (Position-wise Feed-Forward Network)</strong>
+同样，每个子层都采用了残差连接和层归一化。</p>
+<p><em>(示意图，源自 "Attention Is All You Need" 论文，右半部分)</em></p>
 </div>
-<p><strong>经典DQN的损失函数：</strong></p>
-<p><span class="arithmatex">\(L(\theta) = E_{(s,a,r,s') \sim U(\mathcal{B})} \left[ (r + \gamma \max_{a'} Q(s',a';\theta^-) - Q(s,a;\theta))^2 \right]\)</span></p>
-<h4 id="13-dqn">1.3 DQN的改进</h4>
-<div class="admonition note">
-<p class="admonition-title">Double DQN (DDQN)</p>
-<ul>
-<li><strong>问题：</strong> 标准DQN中的 <span class="arithmatex">\(\max\)</span> 操作符会导致对Q值的系统性高估 (maximization bias)。这是因为 <span class="arithmatex">\(E[\max_a X_a] \ge \max_a E[X_a]\)</span>。</li>
-<li><strong>解决方案：</strong> 解耦目标Q值计算中的动作选择和动作评估。使用在线网络选择最优动作，使用目标网络评估该动作的Q值。
-    <span class="arithmatex">\(y^{DDQN} = r + \gamma Q(s', \arg\max_{a'} Q(s',a';\theta);\theta^-)\)</span></li>
-<li><strong>优点：</strong> 显著减少了Q值的高估，通常能学习到更好的策略。</li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Dueling DQN</p>
-<ul>
-<li><strong>思想：</strong> 将Q网络分解为两个独立的流：<ul>
-<li><strong>状态价值函数 <span class="arithmatex">\(V(s;\theta_V, \beta)\)</span>：</strong> 估计状态 <span class="arithmatex">\(s\)</span> 的价值。</li>
-<li><strong>优势函数 <span class="arithmatex">\(A(s,a;\theta_A, \alpha)\)</span>：</strong> 估计在状态 <span class="arithmatex">\(s\)</span> 下采取动作 <span class="arithmatex">\(a\)</span> 相对于平均动作的优势。<span class="arithmatex">\(A(s,a) = Q(s,a) - V(s)\)</span>。</li>
-</ul>
-</li>
-<li><strong>合并：</strong> <span class="arithmatex">\(Q(s,a) = V(s) + (A(s,a) - \text{mean}_{a'} A(s,a'))\)</span> 或 <span class="arithmatex">\(Q(s,a) = V(s) + (A(s,a) - \max_{a'} A(s,a'))\)</span> (后者需要 <span class="arithmatex">\(A(s, \arg\max_a A(s,a)) = 0\)</span> 的约束)。
-    PPT中给出的是 <span class="arithmatex">\(Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + (A(s,a;\theta,\alpha) - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha))\)</span></li>
-<li><strong>优点：</strong><ul>
-<li>能够更有效地学习状态价值，即使某些动作不重要。</li>
-<li>当动作对状态价值影响不大时，网络主要学习 <span class="arithmatex">\(V(s)\)</span>。</li>
-<li>通常能更快收敛并达到更好的性能。</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">优先经验回放 (Prioritized Experience Replay - PER)</p>
-<ul>
-<li><strong>思想：</strong> 并非所有经验都是同等重要的。TD误差大的转移（即智能体感到“惊讶”的转移）包含更多学习信息。</li>
-<li><strong>机制：</strong><ul>
-<li>赋予每个转移 <span class="arithmatex">\((s,a,r,s')\)</span> 一个优先级 <span class="arithmatex">\(p_i \propto |\delta_i|^\omega + \epsilon_{per}\)</span>，其中 <span class="arithmatex">\(\delta_i\)</span> 是TD误差，<span class="arithmatex">\(\omega\)</span> 控制优先化程度。</li>
-<li>从回放缓冲区中根据优先级进行采样，高优先级的样本更容易被选中。</li>
-<li>为了修正这种有偏采样引入的偏差，使用重要性采样 (Importance Sampling, IS) 权重 <span class="arithmatex">\(w_i = (N \cdot P(i))^{-\beta_{is}}\)</span> 来调整梯度更新，其中 <span class="arithmatex">\(N\)</span> 是缓冲区大小，<span class="arithmatex">\(P(i)\)</span> 是采样概率，<span class="arithmatex">\(\beta_{is}\)</span> 随训练从0退火到1。</li>
-</ul>
-</li>
-<li><strong>优点：</strong> 显著提高学习效率和最终性能。</li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Rainbow DQN</p>
-<p>Rainbow DQN 整合了DQN的多种重要改进技术，包括：</p>
-<ul>
-<li>Double DQN</li>
-<li>Dueling DQN</li>
-<li>Prioritized Experience Replay (PER)</li>
-<li>Multi-step Learning (使用n-步回报作为TD目标)</li>
-<li>Distributional RL (学习Q值的完整分布，而不仅仅是期望)</li>
-<li>Noisy Nets (在网络权重中加入参数化噪声以进行探索，替代<span class="arithmatex">\(\epsilon\)</span>-greedy)</li>
-</ul>
-<p>Rainbow DQN在许多Atari游戏上取得了当时SOTA的性能。</p>
-</div>
-<h3 id="2-drl-policy-based-drl">2. 基于策略的DRL (Policy-Based DRL)</h3>
-<p>这类算法直接参数化策略 <span class="arithmatex">\(\pi(a|s;\theta)\)</span>，并通过优化某个性能指标 <span class="arithmatex">\(J(\theta)\)</span> (通常是期望累积回报) 来学习策略参数 <span class="arithmatex">\(\theta\)</span>。</p>
-<div class="admonition note">
-<p class="admonition-title">策略梯度定理 (Policy Gradient Theorem)</p>
-<p>该定理提供了一种计算性能指标 <span class="arithmatex">\(J(\theta)\)</span> 关于策略参数 <span class="arithmatex">\(\theta\)</span> 的梯度的方法，而不需要对状态分布或环境动态求导。</p>
-<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(A_t|S_t) G_t \right]\)</span></p>
-<p>或者，更常用的形式是：</p>
-<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t) \right]\)</span></p>
-<p>其中 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span> 是在策略 <span class="arithmatex">\(\pi_\theta\)</span> 下，状态 <span class="arithmatex">\(S_t\)</span> 执行动作 <span class="arithmatex">\(A_t\)</span> 的动作价值。</p>
-<p><span class="arithmatex">\(\nabla_\theta \log \pi_\theta(A_t|S_t)\)</span> 称为得分函数 (score function)。</p>
-</div>
-<h4 id="21-reinforce-monte-carlo-policy-gradient">2.1 REINFORCE (Monte Carlo Policy Gradient)</h4>
-<p>REINFORCE是最早也是最简单的策略梯度算法之一。它使用蒙特卡洛方法估计 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span>，即使用整个回合的实际回报 <span class="arithmatex">\(G_t\)</span>。</p>
-<p><strong>更新规则：</strong></p>
-<p><span class="arithmatex">\(\theta \leftarrow \theta + \alpha \nabla_\theta \log \pi_\theta(A_t|S_t) G_t\)</span>
-(通常在一个回合结束后，对该回合内所有步的梯度进行累加或平均)</p>
-<p><strong>REINFORCE算法流程：</strong></p>
-<ol>
-<li>初始化策略参数 <span class="arithmatex">\(\theta\)</span>。</li>
-<li>重复：
-    a.  使用当前策略 <span class="arithmatex">\(\pi_\theta\)</span> 生成一个完整的经验轨迹：<span class="arithmatex">\(S_0, A_0, R_1, \dots, S_{T-1}, A_{T-1}, R_T\)</span>。
-    b.  对于轨迹中的每个时间步 <span class="arithmatex">\(t=0, \dots, T-1\)</span>：
-        i.   计算从该步开始的回报 <span class="arithmatex">\(G_t = \sum_{k=t}^{T-1} \gamma^{k-t} R_{k+1}\)</span>。
-        ii.  更新参数：<span class="arithmatex">\(\theta \leftarrow \theta + \alpha \gamma^t \nabla_\theta \log \pi_\theta(A_t|S_t) G_t\)</span> (有时 <span class="arithmatex">\(\gamma^t\)</span> 因子被省略或学习率吸收)。</li>
-</ol>
-<p><strong>REINFORCE的缺点：</strong></p>
-<ul>
-<li><strong>高方差：</strong> <span class="arithmatex">\(G_t\)</span> 作为 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span> 的估计，其方差非常大，导致学习过程缓慢且不稳定。</li>
-<li><strong>同策略：</strong> 必须使用当前策略采样，数据利用率低。</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">基线 (Baseline) 技巧</p>
-<p>为了减小策略梯度的方差，可以从回报 <span class="arithmatex">\(G_t\)</span> 中减去一个不依赖于动作 <span class="arithmatex">\(A_t\)</span> 的基线 <span class="arithmatex">\(b(S_t)\)</span>。</p>
-<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(A_t|S_t) (G_t - b(S_t)) \right]\)</span></p>
-<p>一个常用的基线是状态价值函数 <span class="arithmatex">\(V^{\pi_\theta}(S_t)\)</span>。此时 <span class="arithmatex">\((G_t - V^{\pi_\theta}(S_t))\)</span> 是优势函数 <span class="arithmatex">\(A^{\pi_\theta}(S_t,A_t)\)</span> 的一个（有偏）估计。</p>
-<p>减去基线不改变梯度的期望，但可以显著降低其方差。</p>
-</div>
-<h3 id="3-actor-critic-ac-drl">3. 基于演员-评论家 (Actor-Critic, AC) 的DRL</h3>
-<p>Actor-Critic方法结合了基于值函数和基于策略方法的优点。它维护两个网络：</p>
-<ul>
-<li><strong>演员 (Actor)：</strong> 策略网络 <span class="arithmatex">\(\pi(a|s;\theta_\pi)\)</span>，负责选择动作。</li>
-<li><strong>评论家 (Critic)：</strong> 价值网络 <span class="arithmatex">\(V(s;\theta_v)\)</span> 或 <span class="arithmatex">\(Q(s,a;\theta_q)\)</span>，负责评估演员选择的动作的好坏。</li>
-</ul>
-<p><strong>基本思想：</strong></p>
-<ol>
-<li><strong>演员</strong> 根据当前策略 <span class="arithmatex">\(\pi_\theta\)</span> 选择动作 <span class="arithmatex">\(A_t\)</span>。</li>
-<li><strong>评论家</strong> 评估这个动作，例如计算TD误差：<span class="arithmatex">\(\delta_t = R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v)\)</span> (如果评论家是 <span class="arithmatex">\(V\)</span> 网络)。</li>
-<li>
-<p><strong>演员</strong> 根据评论家的评估（如TD误差）更新其策略参数 <span class="arithmatex">\(\theta_\pi\)</span>：</p>
-<p><span class="arithmatex">\(\theta_\pi \leftarrow \theta_\pi + \alpha_\pi \nabla_{\theta_\pi} \log \pi(A_t|S_t;\theta_\pi) \delta_t\)</span></p>
-</li>
-<li>
-<p><strong>评论家</strong> 也根据TD学习规则更新其价值参数 <span class="arithmatex">\(\theta_v\)</span>：
-    <span class="arithmatex">\(\theta_v \leftarrow \theta_v + \alpha_v \delta_t \nabla_{\theta_v} V(S_t;\theta_v)\)</span></p>
-</li>
-</ol>
-<h4 id="31-advantage-actor-critic-a2c">3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)</h4>
-<p>A2C是一种常用的AC变体，其中评论家学习状态价值函数 <span class="arithmatex">\(V(s)\)</span>，并使用优势函数 <span class="arithmatex">\(A(s,a) = Q(s,a) - V(s)\)</span> 来指导演员的学习。</p>
-<p>优势函数可以用TD误差来估计： <span class="arithmatex">\(A(S_t, A_t) \approx R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\)</span>。</p>
-<ul>
-<li><strong>演员更新 (策略梯度)：</strong>
-    <span class="arithmatex">\(\nabla_{\theta_\pi} J(\theta_\pi) \approx \nabla_{\theta_\pi} \log \pi(A_t|S_t;\theta_\pi) [R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v)]\)</span></li>
-<li><strong>评论家更新 (最小化 <span class="arithmatex">\(V\)</span> 的预测误差)：</strong>
-    <span class="arithmatex">\(L(\theta_v) = (R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v))^2\)</span></li>
-</ul>
-<p><strong>A3C (Asynchronous Advantage Actor-Critic):</strong></p>
-<p>A3C是A2C的一个重要变种，它使用多个并行的actor-learner在环境的不同副本中异步地收集经验和更新全局参数。这有助于打破样本相关性并加速学习。</p>
-<p><strong>AC算法的神经网络架构：</strong></p>
-<ul>
-<li><strong>方案一：</strong> 两个独立的神经网络分别拟合Actor (策略) 和 Critic (价值)。<ul>
-<li>优点：简单，训练可能更稳定。</li>
-<li>缺点：训练效率可能较低。</li>
-</ul>
-</li>
-<li><strong>方案二：</strong> Actor和Critic共享前面几层的特征提取网络，最后有各自的输出层。<ul>
-<li>优点：参数量少，训练效率可能更高。</li>
-<li>缺点：策略和价值可能需要不同的特征，共享可能导致冲突，训练稳定性可能稍差。</li>
-</ul>
-</li>
-</ul>
-<details class="summary">
-<summary>深度强化学习小结</summary>
-<ul>
-<li><strong>基于值的DRL：</strong><ul>
-<li><strong>DQN：</strong> 核心思想是使用神经网络逼近Q函数。</li>
-<li><strong>关键技术：</strong> 经验回放、目标网络。</li>
-<li><strong>改进：</strong> Double DQN (减少过高估计), Dueling DQN (分解V和A), Prioritized Experience Replay (优先处理重要样本), Rainbow DQN (集大成者)。</li>
-</ul>
-</li>
-<li><strong>基于策略的DRL：</strong><ul>
-<li><strong>REINFORCE：</strong> 蒙特卡洛策略梯度，方差大。</li>
-<li><strong>基线：</strong> 引入基线 (如状态价值函数) 减小方差。</li>
-</ul>
-</li>
-<li><strong>基于Actor-Critic的DRL：</strong><ul>
-<li><strong>Actor (策略网络) + Critic (价值网络)。</strong></li>
-<li><strong>A2C/A3C：</strong> 使用优势函数指导策略学习。</li>
-<li>结合了值方法和策略方法的优点，通常具有较好的稳定性和样本效率。</li>
-</ul>
-</li>
-</ul>
-</details>
-<hr />
-<h2 id="multi-agent-reinforcement-learning-marl">四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)</h2>
-<p>当环境中存在多个智能体同时学习和交互时，问题就从单智能体强化学习 (SARL) 扩展到了多智能体强化学习 (MARL)。</p>
-<p><strong>SARL vs. MARL:</strong></p>
-<ul>
-<li><strong>SARL：</strong><ul>
-<li>单个智能体与环境交互。</li>
-<li>环境状态转移和奖励主要由环境本身决定。</li>
-<li>智能体决策相对独立。</li>
-<li>环境通常被视为“静态”的（从智能体学习的角度）。</li>
-</ul>
-</li>
-<li><strong>MARL：</strong><ul>
-<li>多个智能体同时与环境（以及彼此）交互。</li>
-<li>一个智能体的动作不仅影响环境，也可能影响其他智能体的状态、观察和奖励。</li>
-<li>智能体的决策是相互依赖的。</li>
-<li>环境是“非平稳”的：当一个智能体改变其策略时，对于其他智能体来说，环境的动态特性也随之改变。</li>
-<li>每个智能体可能有自己的奖励函数，或者共享团队奖励。</li>
-</ul>
-</li>
-</ul>
-<p><strong>MARL面临的困境：</strong></p>
-<ul>
-<li><strong>环境的非平稳性 (Non-stationarity)：</strong> 其他智能体的策略变化使得当前智能体感知的环境动态不稳定。</li>
-<li><strong>部分可观测性 (Partial Observability)：</strong> 智能体通常只能观察到环境的局部信息。</li>
-<li><strong>维度灾难 (Curse of Dimensionality)：</strong> 联合状态空间和联合动作空间随智能体数量指数增长。</li>
-<li><strong>策略协同与通信 (Strategy Coordination and Communication)：</strong> 在合作任务中，智能体需要协同策略，有时需要显式通信。</li>
-<li><strong>博弈与对抗 (Game Theory and Adversarial Behavior)：</strong> 在竞争性环境中，智能体行为可能是对抗性的。</li>
-<li><strong>信任分配 (Credit Assignment)：</strong> 在团队奖励下，难以判断个体智能体的贡献。</li>
-</ul>
-<p><strong>MARL算法分类思路：</strong></p>
-<ul>
-<li><strong>独立学习 (Independent Learners, IL)：</strong> 每个智能体独立使用SARL算法学习，将其他智能体视为环境的一部分。例如，IQL (Independent Q-Learning)。</li>
-<li><strong>通信机制 (Communication)：</strong> 允许智能体之间传递信息以辅助决策。</li>
-<li><strong>协同学习 (Coordination)：</strong> 设计机制使智能体能够协同行动，即使只有局部观察。</li>
-<li><strong>智能体建模 (Agent Modeling)：</strong> 智能体尝试推理或学习其他智能体的策略或目标。</li>
-</ul>
-<p><strong>MARL场景分类：</strong></p>
-<ul>
-<li><strong>合作型场景 (Cooperative)：</strong> 所有智能体共享一个团队目标，最大化共同奖励。</li>
-<li><strong>竞争性场景 (Competitive)：</strong> 智能体目标冲突，通常是零和博弈（一个赢则另一个输）。</li>
-<li><strong>混合场景 (Mixed/General-sum)：</strong> 智能体之间既有合作也有竞争。</li>
-</ul>
-<h3 id="1-marl-maddpg">1. 基于策略的MARL —— MADDPG</h3>
-<p><strong>MADDPG (Multi-Agent Deep Deterministic Policy Gradient)</strong> 是一种适用于混合合作竞争场景的算法，它采用了<strong>中心化训练，分布式执行 (Centralized Training with Decentralized Execution, CTDE)</strong> 的框架。</p>
-<ul>
-<li><strong>中心化训练：</strong> 在训练阶段，每个智能体的评论家 (Critic) 可以访问所有智能体的全局状态和动作信息，从而更好地评估当前联合动作的价值，缓解非平稳性问题。</li>
-<li><strong>分布式执行：</strong> 在执行阶段，每个智能体的演员 (Actor) 仅根据自己的局部观察来选择动作。
-每个智能体 <span class="arithmatex">\(i\)</span> 学习一个确定性策略 <span class="arithmatex">\(\mu_i(o_i;\theta_i)\)</span> 和一个中心化的Q函数 <span class="arithmatex">\(Q_i(x, a_1, \dots, a_N;\phi_i)\)</span>，其中 <span class="arithmatex">\(x\)</span> 是全局状态，<span class="arithmatex">\(a_j\)</span> 是智能体 <span class="arithmatex">\(j\)</span> 的动作。</li>
-</ul>
-<h3 id="2-marl-vdn">2. 基于值函数的MARL —— VDN</h3>
-<p><strong>VDN (Value Decomposition Networks)</strong> 是一种适用于合作型MARL的算法，旨在解决信任分配问题。</p>
-<ul>
-<li><strong>核心思想：</strong> 将团队的联合Q值函数 <span class="arithmatex">\(Q_{tot}\)</span> 分解为每个智能体局部Q值函数 <span class="arithmatex">\(Q_i\)</span> 的和：
-    <span class="arithmatex">\(Q_{tot}(\mathbf{\tau}, \mathbf{u}) = \sum_{i=1}^N Q_i(\tau_i, u_i)\)</span>
-    其中 <span class="arithmatex">\(\mathbf{\tau}\)</span> 是联合观察，<span class="arithmatex">\(\mathbf{u}\)</span> 是联合动作，<span class="arithmatex">\(\tau_i, u_i\)</span> 是智能体 <span class="arithmatex">\(i\)</span> 的局部观察和动作。</li>
-<li><strong>优点：</strong><ul>
-<li>简化了联合Q函数的学习。</li>
-<li>通过加性分解，隐式地将团队奖励分配给各个智能体。</li>
-<li>也遵循CTDE框架：训练时使用 <span class="arithmatex">\(Q_{tot}\)</span>，执行时每个智能体根据自己的 <span class="arithmatex">\(Q_i\)</span> 贪心选择动作。</li>
-</ul>
-</li>
-<li><strong>Mixing Network：</strong> VDN使用一个简单的求和作为混合网络。后续的QMIX等算法使用了更复杂的非线性混合网络，同时保证了IGM (Individual-Global-Max) 原则，即全局最优动作可以通过每个智能体的局部最优动作得到。</li>
-</ul>
-<details class="summary">
-<summary>多智能体强化学习小结</summary>
-<ul>
-<li><strong>MARL定义：</strong> 多个智能体在共享环境中交互学习。</li>
-<li><strong>MARL困境：</strong> 非平稳性、部分可观测性、维度灾难、协同/通信、信任分配等。</li>
-<li><strong>MARL算法分类：</strong> 独立学习、通信、协同、智能体建模。</li>
-<li><strong>MARL场景：</strong> 合作、竞争、混合。</li>
-<li><strong>代表性算法：</strong><ul>
-<li>MADDPG (基于策略，CTDE，适用于混合场景)。</li>
-<li>VDN (基于值函数，值分解，CTDE，适用于合作场景)。</li>
-</ul>
-</li>
-</ul>
-</details>
+<p><strong>最终输出</strong>：
+解码器堆栈的输出会经过一个线性层，将向量投影到词汇表大小的维度，然后通过一个Softmax层生成下一个词的概率分布。</p>
+<p><em>(示意图，源自 "Attention Is All You Need" 论文)</em></p>
+<h2 id="6">6. 总结与展望</h2>
+<p>Transformer架构凭借其强大的并行计算能力和对长距离依赖的出色建模，已成为现代NLP领域几乎所有最先进模型的基础。随着模型大小、训练数据和计算资源的增加，基于Transformer的语言模型性能仍在持续提升，展现出巨大的潜力。</p>
 
 
 
@@ -3464,7 +2460,7 @@ DRL将深度学习（特别是深度神经网络DNN）与强化学习相结合�
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月11日 19:23:55 CST">2025年6月11日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月19日 11:37:48 CST">2025年6月19日</span>
   </span>
 
     
@@ -3625,13 +2621,13 @@ DRL将深度学习（特别是深度神经网络DNN）与强化学习相结合�
         
         
           
-          <a href="../../../project/" class="md-footer__link md-footer__link--next" aria-label="下一页: 一些小项目">
+          <a href="../chapter9/" class="md-footer__link md-footer__link--next" aria-label="下一页: 强化学习">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                一些小项目
+                强化学习
               </div>
             </div>
             <div class="md-footer__button md-icon">

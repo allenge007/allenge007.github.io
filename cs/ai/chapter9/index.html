@@ -1,0 +1,3729 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://allenge007.github.io/cs/ai/chapter9/">
+      
+      
+        <link rel="prev" href="../chapter8/">
+      
+      
+        <link rel="next" href="../../../project/">
+      
+      
+      <link rel="icon" href="../../../assets/smile.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>强化学习 - allenge 的小站</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-Q64PQRHYP9"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-Q64PQRHYP9",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="allenge 的小站" class="md-header__button md-logo" aria-label="allenge 的小站" data-md-component="logo">
+      
+  <img src="../../../assets/oh_boy.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            allenge 的小站
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              强化学习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="pink"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+
+    <div class="md-header__option">
+      <div id="font-sizer-controls" style="display: flex; align-items: center;">
+        <button id="decrease-font-button" type="button" title="缩小字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 14 7.5 7.67 9.87 14M6.5 5 1 19h2.25l1.12-3h6.25l1.13 3H14L8.5 5zM18 17l5-5.07-1.41-1.43L19 13.1V7h-2v6.1l-2.59-2.6L13 11.93z"/></svg>
+        </button>
+        <!-- <button id="reset-font-button" type="button" title="重置字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m18.5 4 1.16 4.35-.96.26c-.45-.87-.91-1.74-1.44-2.18C16.73 6 16.11 6 15.5 6H13v10.5c0 .5 0 1 .33 1.25.34.25 1 .25 1.67.25v1H9v-1c.67 0 1.33 0 1.67-.25.33-.25.33-.75.33-1.25V6H8.5c-.61 0-1.23 0-1.76.43-.53.44-.99 1.31-1.44 2.18l-.96-.26L5.5 4z"/></svg>
+        </button> -->
+        <button id="increase-font-button" type="button" title="放大字体" class="md-header__button md-icon" style="border: none; background: none; cursor: pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.12 14 7.5 7.67 9.87 14M6.5 5 1 19h2.25l1.12-3h6.25l1.13 3H14L8.5 5zM18 7l-5 5.07 1.41 1.43L17 10.9V17h2v-6.1l2.59 2.6L23 12.07z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/allenge007" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    allenge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  数学
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  计算机科学
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../project/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  项目
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  博客
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/about_me/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="allenge 的小站" class="md-nav__button md-logo" aria-label="allenge 的小站" data-md-component="logo">
+      
+  <img src="../../../assets/oh_boy.png" alt="logo">
+
+    </a>
+    allenge 的小站
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/allenge007" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    allenge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    主页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    数学
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            数学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../math/signals_and_systems/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    信号与系统
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            信号与系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    连续时间傅里叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    离散时间傅里叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    拉普拉斯变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/chapter4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    z 变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/signals_and_systems/FFT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    快速傅立叶变换
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    计算机科学
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            计算机科学
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../os/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    操作系统
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            操作系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    操作系统概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    进程、线程与 CPU 调度
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    进程同步与死锁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    内存管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大容量存储
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文件系统
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../os/chapter7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    I/O管理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    人工智能
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            人工智能
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    知识表示与推理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    搜索技术总结
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    不确定性知识表示与推理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 聚类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 神经网络
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器学习 - 决策树
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    深度学习
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    强化学习
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    强化学习
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是强化学习？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、强化学习基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、强化学习基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-markov-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 马尔可夫性质 (Markov Property)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-markov-decision-process-mdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 马尔可夫决策过程 (Markov Decision Process, MDP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 策略 (Policy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 回报 (Return)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-value-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 价值函数 (Value Function)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-optimal-value-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 最优价值函数 (Optimal Value Function)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-bellman-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 贝尔曼方程 (Bellman Equations)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、表格型强化学习
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、表格型强化学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dynamic-programming-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 动态规划 (Dynamic Programming, DP)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 动态规划 (Dynamic Programming, DP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-policy-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 策略评估 (Policy Evaluation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-policy-improvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 策略提升 (Policy Improvement)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-policy-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 策略迭代 (Policy Iteration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-value-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 值迭代 (Value Iteration)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-monte-carlo-mc" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 蒙特卡洛方法 (Monte Carlo, MC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 蒙特卡洛方法 (Monte Carlo, MC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 蒙特卡洛策略评估
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mc-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 蒙特卡洛控制 (MC Control)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-temporal-difference-td" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 时序差分学习 (Temporal Difference, TD)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 时序差分学习 (Temporal Difference, TD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-n-td-n-step-td-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 n-步TD学习 (n-step TD Learning)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tdlambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 TD(\(\lambda\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-sarsa-state-action-reward-state-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 SARSA (State-Action-Reward-State-Action)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Q-Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-reinforcement-learning-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、深度强化学习 (Deep Reinforcement Learning, DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、深度强化学习 (Deep Reinforcement Learning, DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-drl-value-based-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 基于值函数的DRL (Value-Based DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 基于值函数的DRL (Value-Based DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-naive-dqn-deep-q-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Naïve DQN (Deep Q-Network)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dqn-mnih-et-al-2013-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 经典DQN (Mnih et al., 2013, 2015)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-dqn" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 DQN的改进
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-drl-policy-based-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 基于策略的DRL (Policy-Based DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 基于策略的DRL (Policy-Based DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-reinforce-monte-carlo-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 REINFORCE (Monte Carlo Policy Gradient)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-actor-critic-ac-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 基于演员-评论家 (Actor-Critic, AC) 的DRL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 基于演员-评论家 (Actor-Critic, AC) 的DRL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-advantage-actor-critic-a2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-agent-reinforcement-learning-marl" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-marl-maddpg" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 基于策略的MARL —— MADDPG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-marl-vdn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 基于值函数的MARL —— VDN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../project/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    项目
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            项目
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project/DeepseekCLI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DeepSeek CLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    博客
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            博客
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    分类
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    归档
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    六月 2025
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    分类
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/%E5%93%81%E9%89%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    品鉴
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/category/%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    随笔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    关于
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            关于
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/about_me/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    关于我
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是强化学习？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、强化学习基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、强化学习基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-markov-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 马尔可夫性质 (Markov Property)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-markov-decision-process-mdp" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 马尔可夫决策过程 (Markov Decision Process, MDP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 策略 (Policy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 回报 (Return)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-value-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 价值函数 (Value Function)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-optimal-value-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 最优价值函数 (Optimal Value Function)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-bellman-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 贝尔曼方程 (Bellman Equations)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、表格型强化学习
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、表格型强化学习">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dynamic-programming-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 动态规划 (Dynamic Programming, DP)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 动态规划 (Dynamic Programming, DP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-policy-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 策略评估 (Policy Evaluation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-policy-improvement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 策略提升 (Policy Improvement)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-policy-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 策略迭代 (Policy Iteration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-value-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 值迭代 (Value Iteration)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-monte-carlo-mc" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 蒙特卡洛方法 (Monte Carlo, MC)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 蒙特卡洛方法 (Monte Carlo, MC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 蒙特卡洛策略评估
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-mc-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 蒙特卡洛控制 (MC Control)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-temporal-difference-td" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 时序差分学习 (Temporal Difference, TD)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 时序差分学习 (Temporal Difference, TD)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-n-td-n-step-td-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 n-步TD学习 (n-step TD Learning)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-tdlambda" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 TD(\(\lambda\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-sarsa-state-action-reward-state-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 SARSA (State-Action-Reward-State-Action)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Q-Learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-reinforcement-learning-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、深度强化学习 (Deep Reinforcement Learning, DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、深度强化学习 (Deep Reinforcement Learning, DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-drl-value-based-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 基于值函数的DRL (Value-Based DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 基于值函数的DRL (Value-Based DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-naive-dqn-deep-q-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Naïve DQN (Deep Q-Network)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-dqn-mnih-et-al-2013-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 经典DQN (Mnih et al., 2013, 2015)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-dqn" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 DQN的改进
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-drl-policy-based-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 基于策略的DRL (Policy-Based DRL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 基于策略的DRL (Policy-Based DRL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-reinforce-monte-carlo-policy-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 REINFORCE (Monte Carlo Policy Gradient)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-actor-critic-ac-drl" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 基于演员-评论家 (Actor-Critic, AC) 的DRL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 基于演员-评论家 (Actor-Critic, AC) 的DRL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-advantage-actor-critic-a2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-agent-reinforcement-learning-marl" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-marl-maddpg" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 基于策略的MARL —— MADDPG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-marl-vdn" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 基于值函数的MARL —— VDN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/allenge007/edit/main/docs/cs/ai/chapter9.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/allenge007/raw/main/docs/cs/ai/chapter9.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="_1">强化学习</h1>
+<div class="admonition abstract">
+<p class="admonition-title">前情知识回顾：机器学习</p>
+<p>机器学习需要提前给定大量静态数据，其学习目标是发现数据中的潜在结构或映射关系。</p>
+<ul>
+<li><strong>监督学习：</strong> 在拥有输入和对应输出（标签）的情况下训练模型，用于寻找输入与输出之间的映射关系。</li>
+<li><strong>无监督学习：</strong> 在训练数据没有标签或目标值的情况下训练模型，用于探索数据中隐含的模式和分布。</li>
+</ul>
+</div>
+<p>在许多如棋牌博弈、机器人控制等序列决策场景中，智能体（Agent）需要与环境（Environment）进行动态交互，并通过交互获得的数据来学习其决策策略。这些动态决策场景十分广泛，包括博弈游戏、无人机空战、交通灯控制、无人驾驶以及智能电网等。</p>
+<h2 id="_2">什么是强化学习？</h2>
+<div class="admonition quote">
+<p class="admonition-title">强化学习核心定义</p>
+<p>强化学习讨论的核心问题是：在一个复杂且不确定的环境中，智能体如何通过与环境进行大量的试错交互来学习一个最优的决策策略。</p>
+</div>
+<div class="admonition contrast">
+<p class="admonition-title">强化学习 vs. 监督/无监督学习</p>
+<p>强化学习是机器学习的第三种主要学习范式，与监督学习和无监督学习有着显著的不同：</p>
+<ul>
+<li><strong>监督学习：</strong><ul>
+<li>目标：分类或预测标签。</li>
+<li>特点：无交互、无序列决策、无探索（试错）。</li>
+</ul>
+</li>
+<li><strong>无监督学习：</strong><ul>
+<li>目标：发现数据的内部模式或结构。</li>
+<li>特点：无交互、无序列决策、无探索（试错）。</li>
+</ul>
+</li>
+<li><strong>强化学习：</strong><ul>
+<li><strong>试错学习 (Trial-and-Error Learning)：</strong> 通过尝试不同的动作，并根据接收到的奖励信号调整策略，从而学习最优行为。</li>
+<li><strong>延迟奖励 (Delayed Reward)：</strong> 可能需要经过一系列动作后才能获得最终的奖励，因此必须考虑长期回报。</li>
+<li><strong>动态策略 (Dynamic Policy)：</strong> 智能体需要根据当前状态选择行动，其选择动作的策略是动态调整的。</li>
+<li><strong>序列决策 (Sequential Decision Making)：</strong> 智能体和环境的交互是一个序列决策过程。</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">本章学习目标与要求</p>
+<p><strong>学习目标 (Goal):</strong></p>
+<ol>
+<li>理解强化学习的基本概念。</li>
+<li>掌握表格型强化学习的三类主要算法。</li>
+<li>掌握深度强化学习的基本算法。</li>
+<li>了解多智能体强化学习的相关概念和算法。</li>
+</ol>
+<p><strong>重点内容 (Importance):</strong></p>
+<ol>
+<li>掌握建模强化学习问题的形式化过程。</li>
+<li>能够训练强化学习算法在复杂场景上的策略模型。</li>
+</ol>
+<p><strong>学习难点 (Difficulty):</strong></p>
+<ul>
+<li>能够灵活地将强化学习算法应用到任意复杂的环境中。</li>
+</ul>
+</div>
+<hr />
+<h2 id="_3">一、强化学习基本概念</h2>
+<p>强化学习（Reinforcement Learning, RL）从动物学习过程中汲取灵感，强调在与环境的不断交互和试错中学习，通过获取经验来优化行为。</p>
+<p><strong>强化学习过程的四个基本要素：</strong></p>
+<ol>
+<li><strong>智能体 (Agent)：</strong> 学习者和决策者。</li>
+<li><strong>环境 (Environment)：</strong> 智能体外部的一切，与智能体交互。</li>
+<li><strong>动作 (Action)：</strong> 智能体可以执行的操作。</li>
+<li><strong>奖励 (Reward)：</strong> 环境对智能体动作的即时反馈信号，用于评估动作的好坏。</li>
+<li><strong>状态 (State)：</strong> 对环境某个时刻的描述，是智能体决策的依据。<ul>
+<li><em>(PPT中环境模型和交互样本是要素，这里结合通用表述调整为Agent, Environment, Action, Reward, State)</em></li>
+</ul>
+</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">《冒险岛》游戏中的强化学习元素</p>
+<ul>
+<li><strong>智能体 (Agent)：</strong> 玩家操控的角色。</li>
+<li><strong>环境 (Environment)：</strong> 游戏地图、怪物、道具等。</li>
+<li><strong>状态 (State)：</strong> 当前游戏画面（例如，角色位置、怪物位置、血量等）。</li>
+<li><strong>动作 (Action)：</strong> 角色可以执行的操作（如：前进、后退、跳跃、攻击）。</li>
+<li><strong>奖励 (Reward)：</strong><ul>
+<li><strong>正向奖励：</strong> 收集苹果 (+50)，攻击小怪 (+100)。</li>
+<li><strong>负向奖励：</strong> 每消耗一秒时间 (-5)，接触小怪 (−∞，游戏结束)。
+<strong>强化学习的目标是最大化智能体在环境中能获得的累积奖励。</strong></li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="1-markov-property">1. 马尔可夫性质 (Markov Property)</h3>
+<p>一个状态如果具有马尔可夫性质，意味着给定当前状态后，未来状态的概率分布仅与当前状态有关，而与过去的状态（即该过程的历史状态）无关。</p>
+<p><span class="arithmatex">\(P[S_{t+1} | S_t] = P[S_{t+1} | S_1, S_2, \dots, S_t]\)</span></p>
+<p>或者如PPT中更一般的形式：</p>
+<p><span class="arithmatex">\(P\{S_{t+h}=s'|S_t=s_t, S_{t-1}=s_{t-1}, \dots, S_0=s_0\} = P\{S_{t+h}=s'|S_t=s_t\}, \forall h &gt; 0\)</span></p>
+<ul>
+<li>当前状态包含了历史中的所有相关信息。</li>
+<li>一旦当前状态已知，就可以忽略其余的历史状态信息。</li>
+</ul>
+<h3 id="2-markov-decision-process-mdp">2. 马尔可夫决策过程 (Markov Decision Process, MDP)</h3>
+<p>MDP 是对强化学习问题进行形式化描述的框架。一个MDP通常由一个五元组 <span class="arithmatex">\(\langle S, A, P, R, \gamma \rangle\)</span> 定义：</p>
+<ul>
+<li>
+<p><strong>状态空间 <span class="arithmatex">\(S\)</span> (State Space)：</strong> 所有可能状态的集合。</p>
+</li>
+<li>
+<p><strong>动作空间 <span class="arithmatex">\(A\)</span> (Action Space)：</strong> 所有可能动作的集合。</p>
+</li>
+<li>
+<p><strong>状态转移函数 <span class="arithmatex">\(P\)</span> (Transition Function)：</strong> <span class="arithmatex">\(P(s'|s,a) = P\{S_{t+1}=s'|S_t=s, A_t=a\}\)</span>，表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 后，转移到状态 <span class="arithmatex">\(s'\)</span> 的概率。</p>
+</li>
+<li>
+<p><strong>奖励函数 <span class="arithmatex">\(R\)</span> (Reward Function)：</strong> <span class="arithmatex">\(R(s,a,s')\)</span> 表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 转移到状态 <span class="arithmatex">\(s'\)</span> 后获得的即时奖励。PPT中表示为 <span class="arithmatex">\(R_t = R(S_t, A_t, S_{t+1})\)</span>。有时也定义为 <span class="arithmatex">\(R(s,a) = E[R_{t+1}|S_t=s, A_t=a]\)</span>。</p>
+</li>
+<li>
+<p><strong>折扣因子 <span class="arithmatex">\(\gamma\)</span> (Discount Factor)：</strong> <span class="arithmatex">\(\gamma \in [0,1]\)</span>，用于衡量未来奖励在当前时刻的价值。</p>
+</li>
+</ul>
+<h3 id="3-policy">3. 策略 (Policy)</h3>
+<p>策略 <span class="arithmatex">\(\pi\)</span> 是智能体在给定状态下选择动作的方式，即从状态到动作的映射。</p>
+<ul>
+<li><strong>随机性策略 (Stochastic Policy) <span class="arithmatex">\(\pi(a|s)\)</span>：</strong> 输出在状态 <span class="arithmatex">\(s\)</span> 下选择动作 <span class="arithmatex">\(a\)</span> 的概率。满足 <span class="arithmatex">\(\sum_{a \in A} \pi(a|s) = 1\)</span>。</li>
+<li><strong>确定性策略 (Deterministic Policy) <span class="arithmatex">\(a = \pi(s)\)</span>：</strong> 输出在状态 <span class="arithmatex">\(s\)</span> 下选择的唯一确定动作。</li>
+</ul>
+<p><strong>策略的具体形式：</strong></p>
+<ul>
+<li><strong>表格策略 (Tabular Policy)：</strong> 对于每一个状态 <span class="arithmatex">\(s\)</span>，直接存储采取动作 <span class="arithmatex">\(a\)</span> 的概率 <span class="arithmatex">\(\pi(a|s)\)</span> 或确定的动作 <span class="arithmatex">\(\pi(s)\)</span>。</li>
+<li><strong>参数化策略 (Parameterized Policy)：</strong> 使用带有参数 <span class="arithmatex">\(\theta\)</span> 的函数来表示策略，例如神经网络。<ul>
+<li>确定性: <span class="arithmatex">\(a = \pi_\theta(s) \triangleq \pi(s;\theta)\)</span></li>
+<li>随机性: <span class="arithmatex">\(\pi_\theta(a|s) \triangleq \pi(a|s;\theta)\)</span></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-return">4. 回报 (Return)</h3>
+<p>回报 <span class="arithmatex">\(G_t\)</span> 是从时间步 <span class="arithmatex">\(t\)</span> 开始的所有未来折扣奖励的总和：</p>
+<p><span class="arithmatex">\(G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\)</span></p>
+<ul>
+<li>折扣因子 <span class="arithmatex">\(\gamma\)</span> 使得未来的奖励在当前看来价值有所衰减。</li>
+<li>强化学习的目标是最大化期望累积回报。</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">折扣因子的意义</p>
+<ul>
+<li><strong>数学便利性：</strong> 确保回报是有限的，有助于算法收敛。</li>
+<li><strong>避免无限循环：</strong> 防止在循环状态中累积无限奖励。</li>
+<li><strong>不确定性：</strong> 未来的奖励往往具有更高的不确定性。</li>
+<li><strong>即时偏好：</strong> 生物系统（包括人类）通常更偏好即时奖励。</li>
+<li><strong>经济学类比：</strong> 类似利率，今天的钱比未来的钱更有价值。</li>
+</ul>
+</div>
+<h3 id="5-value-function">5. 价值函数 (Value Function)</h3>
+<p>价值函数用于评估一个状态或状态-动作对的好坏程度，即从该状态或状态-动作对开始，遵循特定策略所能获得的期望回报。</p>
+<ul>
+<li><strong>状态价值函数 (State-value function) <span class="arithmatex">\(V_\pi(s)\)</span>：</strong> 从状态 <span class="arithmatex">\(s\)</span> 开始，遵循策略 <span class="arithmatex">\(\pi\)</span> 的期望回报。
+    <span class="arithmatex">\(V_\pi(s) \triangleq E_\pi[G_t | S_t=s]\)</span></li>
+<li>
+<p><strong>动作价值函数 (Action-value function) <span class="arithmatex">\(Q_\pi(s,a)\)</span>：</strong> 在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span>后，继续遵循策略 <span class="arithmatex">\(\pi\)</span> 的期望回报。</p>
+<p><span class="arithmatex">\(Q_\pi(s,a) \triangleq E_\pi[G_t | S_t=s, A_t=a]\)</span></p>
+</li>
+</ul>
+<p><strong><span class="arithmatex">\(V_\pi(s)\)</span> 和 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 之间的关系：</strong></p>
+<p><span class="arithmatex">\(V_\pi(s) = \sum_{a \in A} \pi(a|s) Q_\pi(s,a)\)</span>
+<span class="arithmatex">\(Q_\pi(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span></p>
+<p>(PPT中的写法: <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s')\)</span>，其中 <span class="arithmatex">\(\mathcal{R}_s^a\)</span> 是期望立即奖励)</p>
+<h3 id="6-optimal-value-function">6. 最优价值函数 (Optimal Value Function)</h3>
+<p>最优价值函数是在所有可能的策略中能达到的最大期望回报。</p>
+<ul>
+<li><strong>最优状态价值函数 <span class="arithmatex">\(V^*(s)\)</span>：</strong>
+    <span class="arithmatex">\(V^*(s) = \max_{\pi} V_\pi(s), \forall s \in S\)</span></li>
+<li><strong>最优动作价值函数 <span class="arithmatex">\(Q^*(s,a)\)</span>：</strong>
+    <span class="arithmatex">\(Q^*(s,a) = \max_{\pi} Q_\pi(s,a)\)</span></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title"><span class="arithmatex">\(V^*(s)\)</span> 与 <span class="arithmatex">\(Q^*(s,a)\)</span> 之间的关系：</p>
+<p><span class="arithmatex">\(V^*(s) = \max_{a \in A} Q^*(s,a)\)</span></p>
+<p><span class="arithmatex">\(Q^*(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span></p>
+<p>(PPT中的写法: <span class="arithmatex">\(Q^*(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V^*(s')\)</span> )</p>
+</div>
+<p><strong>最优策略 <span class="arithmatex">\(\pi^*(a|s)\)</span>：</strong> 任何使得 <span class="arithmatex">\(Q^*(s,a)\)</span> 达到最大的动作都是最优动作。</p>
+<p><span class="arithmatex">\(\pi^*(a|s) = \begin{cases} 1 &amp; \text{if } a = \arg\max_{a' \in A} Q^*(s,a') \\ 0 &amp; \text{otherwise} \end{cases}\)</span> (对于确定性最优策略)</p>
+<h3 id="7-bellman-equations">7. 贝尔曼方程 (Bellman Equations)</h3>
+<p>贝尔曼方程是价值函数必须满足的一组自洽性方程，它们将一个状态（或状态-动作对）的价值与其后继状态的价值联系起来。</p>
+<p>描述了在给定策略 <span class="arithmatex">\(\pi\)</span> 下，价值函数与其后继价值函数之间的关系。</p>
+<ul>
+<li>
+<p><strong>状态价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>：</strong></p>
+<div class="arithmatex">\[V_\pi(s) = E_\pi[R_{t+1} + \gamma V_\pi(S_{t+1}) | S_t=s]\]</div>
+<div class="arithmatex">\[V_\pi(s) = \sum_{a \in A} \pi(a|s) \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\]</div>
+<p>(PPT中: <span class="arithmatex">\(V_\pi(s) = \sum_{a \in A} \pi(a|s) (\mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s'))\)</span>)</p>
+</li>
+<li>
+<p><strong>动作价值函数 <span class="arithmatex">\(Q_\pi(s,a)\)</span>：</strong></p>
+<div class="arithmatex">\[Q_\pi(s,a) = E_\pi[R_{t+1} + \gamma Q_\pi(S_{t+1}, A_{t+1}) | S_t=s, A_t=a]\]</div>
+<div class="arithmatex">\[Q_\pi(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma \sum_{a' \in A} \pi(a'|s') Q_\pi(s',a')]\]</div>
+<p>PPT中: <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a \sum_{a' \in A} \pi(a'|s')Q_\pi(s',a')\)</span></p>
+<p>注意PPT中 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 的贝尔曼方程有一页是 <span class="arithmatex">\(Q_\pi(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V_\pi(s')\)</span>，另一页是展开形式</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">重点：贝尔曼最优方程 (Bellman Optimality Equations)</p>
+<p>描述了最优价值函数 <span class="arithmatex">\(V^*(s)\)</span> 或 <span class="arithmatex">\(Q^*(s,a)\)</span> 与其后继状态的最优价值之间的关系。</p>
+<ul>
+<li>
+<p><strong>最优状态价值函数 <span class="arithmatex">\(V^*(s)\)</span>：</strong></p>
+<div class="arithmatex">\[V^*(s) = \max_a E[R_{t+1} + \gamma V^*(S_{t+1}) | S_t=s, A_t=a]\]</div>
+<div class="arithmatex">\[V^*(s) = \max_a \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\]</div>
+<p>(PPT中: <span class="arithmatex">\(V^*(s) = \max_a (\mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a V^*(s'))\)</span>)</p>
+</li>
+<li>
+<p><strong>最优动作价值函数 <span class="arithmatex">\(Q^*(s,a)\)</span>：</strong></p>
+<div class="arithmatex">\[Q^*(s,a) = E[R_{t+1} + \gamma \max_{a'} Q^*(S_{t+1}, a') | S_t=s, A_t=a]\]</div>
+<div class="arithmatex">\[Q^*(s,a) = \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]\]</div>
+<p>(PPT中: <span class="arithmatex">\(Q^*(s,a) = \mathcal{R}_s^a + \gamma \sum_{s' \in S} P_{ss'}^a \max_{a'} Q^*(s',a')\)</span>)</p>
+</li>
+</ul>
+</div>
+<div class="admonition success">
+<p class="admonition-title">强化学习的应用进展</p>
+<p>强化学习已在多个领域取得突破性进展，例如：</p>
+<ul>
+<li><strong>机器人控制：</strong> Tokamak（核聚变反应堆）等离子体控制 (Nature 2022, 2024), 冠军级无人机竞速 (Nature 2023), 模拟果蝇运动 (Nature 2025)。</li>
+<li><strong>游戏AI：</strong> AlphaGo (围棋, Science 2018), DouZero (斗地主), 掌握多种控制任务的世界模型 (Nature 2025)。</li>
+<li><strong>科学发现：</strong> 蛋白质结构设计 (Science 2023), 发现更快的矩阵乘法算法 (Nature 2022)。</li>
+<li><strong>工程设计：</strong> 芯片设计中的图布局优化 (Nature 2021)。</li>
+<li><strong>自动驾驶：</strong> 自动驾驶汽车的安全性验证 (Nature 2023)。</li>
+</ul>
+</div>
+<details class="summary">
+<summary>本节小结：强化学习基本概念</summary>
+<ul>
+<li><strong>强化学习基本要素：</strong> 智能体 (Agent), 环境 (Environment), 状态 (State), 动作 (Action), 奖励 (Reward)。</li>
+<li><strong>马尔可夫决策过程 (MDP)：</strong><ul>
+<li>五元组: <span class="arithmatex">\(\langle S, A, P, R, \gamma \rangle\)</span>。</li>
+<li>策略函数: 确定性 <span class="arithmatex">\(\pi(s)\)</span> 或随机性 <span class="arithmatex">\(\pi(a|s)\)</span>。</li>
+<li>累计折扣回报: <span class="arithmatex">\(G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}\)</span>。</li>
+<li>状态值函数: <span class="arithmatex">\(V_\pi(s) = E_\pi[G_t | S_t=s]\)</span>。</li>
+<li>动作值函数: <span class="arithmatex">\(Q_\pi(s,a) = E_\pi[G_t | S_t=s, A_t=a]\)</span>。</li>
+</ul>
+</li>
+<li><strong>贝尔曼方程：</strong><ul>
+<li>状态值函数 (<span class="arithmatex">\(V_\pi\)</span>): <span class="arithmatex">\(V_\pi(s) = \sum_a \pi(a|s) \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span>。</li>
+<li>动作值函数 (<span class="arithmatex">\(Q_\pi\)</span>): <span class="arithmatex">\(Q_\pi(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma \sum_{a'} \pi(a'|s') Q_\pi(s',a')]\)</span>。</li>
+<li>最优状态值函数 (<span class="arithmatex">\(V^*\)</span>): <span class="arithmatex">\(V^*(s) = \max_a \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span>。</li>
+<li>最优动作值函数 (<span class="arithmatex">\(Q^*\)</span>): <span class="arithmatex">\(Q^*(s,a) = \sum_{s'} P(s'|s,a) [R(s,a,s') + \gamma \max_{a'} Q^*(s',a')]\)</span>。</li>
+</ul>
+</li>
+</ul>
+</details>
+<hr />
+<h2 id="_4">二、表格型强化学习</h2>
+<p>当状态空间 <span class="arithmatex">\(S\)</span> 和动作空间 <span class="arithmatex">\(A\)</span> 都是有限的时，我们可以用表格（如Q表）来存储价值函数或策略。这类方法适用于状态和动作数量较少的场景。</p>
+<div class="admonition example">
+<p class="admonition-title">表格型强化学习场景：冰湖 (Frozen Lake - Gym)</p>
+<ul>
+<li><strong>环境描述：</strong> 智能体在一个冰冻的湖面上行走，起点在左上角，目标（宝箱）在右下角，湖面上有若干冰洞。</li>
+<li><strong>状态：</strong> 智能体在网格地图上的位置。</li>
+<li><strong>动作：</strong> 上、下、左、右。由于冰面光滑，采取的动作不一定会导致预期的移动方向，存在一定的随机性。</li>
+<li><strong>奖励：</strong> 到达宝箱位置获得正奖励，其他情况（如移动一步）无奖励或小的负奖励。掉入冰洞或到达目标状态则回合结束。</li>
+<li><strong>Q表：</strong> 可以构建一个表格，行表示状态，列表示动作，单元格的值 <span class="arithmatex">\(Q(s,a)\)</span> 表示在状态 <span class="arithmatex">\(s\)</span> 执行动作 <span class="arithmatex">\(a\)</span> 的期望回报。根据Q表，每个状态的最优策略是选择具有最大Q值的动作。</li>
+</ul>
+</div>
+<p><strong>Q表更新方法分类：</strong></p>
+<p>Q表通常初始化为全零或随机值，然后通过智能体与环境的交互不断更新。当Q表中的值收敛时，对应的策略即为最优策略。</p>
+<ul>
+<li><strong>有环境模型的求解方法 (Model-based)：</strong> 需要知道环境的状态转移函数 <span class="arithmatex">\(P\)</span> 和奖励函数 <span class="arithmatex">\(R\)</span>。<ul>
+<li>常用算法：<strong>动态规划 (DP)</strong>，包括策略迭代和值迭代。</li>
+</ul>
+</li>
+<li><strong>无环境模型的求解方法 (Model-free)：</strong> 无需显式知道环境的 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>。通过智能体与环境交互产生的样本数据来更新Q值。<ul>
+<li>常用算法：<strong>蒙特卡洛方法 (MC)</strong>，<strong>时序差分方法 (TD)</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-dynamic-programming-dp">1. 动态规划 (Dynamic Programming, DP)</h3>
+<p>动态规划是一类在已知环境模型（MDP的 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>）的情况下，求解最优策略的方法。它利用价值函数的贝尔曼方程进行计算。</p>
+<div class="admonition note">
+<p class="admonition-title">动态规划的核心思想</p>
+<p>DP适用于具有以下两个性质的问题：</p>
+<ol>
+<li><strong>最优子结构 (Optimal Substructure)：</strong> 问题的最优解包含其子问题的最优解。贝尔曼方程正是这种性质的体现。</li>
+<li><strong>重叠子问题 (Overlapping Subproblems)：</strong> 在求解过程中，子问题会被多次重复计算。DP通过存储和复用子问题的解（如价值函数）来提高效率。</li>
+</ol>
+</div>
+<h4 id="11-policy-evaluation">1.1 策略评估 (Policy Evaluation)</h4>
+<div class="admonition note">
+<p class="admonition-title">重点：策略评估</p>
+<p><strong>目标：</strong> 对于给定的策略 <span class="arithmatex">\(\pi\)</span>，计算其状态价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>。</p>
+<p><strong>方法：</strong> 迭代应用贝尔曼期望方程进行更新（同步更新，即一次迭代中更新所有状态的价值）：</p>
+<p><span class="arithmatex">\(V_{k+1}(s) \leftarrow \sum_{a \in A} \pi(a|s) \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_k(s')]\)</span></p>
+<p>这个迭代过程保证收敛到 <span class="arithmatex">\(V_\pi(s)\)</span>。</p>
+<p><strong>收敛性：</strong> 贝尔曼期望算子 <span class="arithmatex">\(T^\pi\)</span> 是一个 <span class="arithmatex">\(\gamma\)</span>-压缩映射， <span class="arithmatex">\(\|T^\pi U - T^\pi W\|_\infty \le \gamma \|U - W\|_\infty\)</span>。根据压缩映射定理，迭代 <span class="arithmatex">\(V_{k+1} = T^\pi V_k\)</span> 会收敛到唯一的固定点 <span class="arithmatex">\(V_\pi\)</span>。</p>
+</div>
+<h4 id="12-policy-improvement">1.2 策略提升 (Policy Improvement)</h4>
+<div class="admonition note">
+<p class="admonition-title">重点：策略提升</p>
+<p><strong>目标：</strong> 基于当前策略 <span class="arithmatex">\(\pi\)</span> 的价值函数 <span class="arithmatex">\(V_\pi(s)\)</span>（或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>），找到一个更好的策略 <span class="arithmatex">\(\pi'\)</span>。</p>
+<p><strong>方法：</strong> 对于每个状态 <span class="arithmatex">\(s\)</span>，贪心地选择能够最大化 <span class="arithmatex">\(Q_\pi(s,a)\)</span> 的动作：</p>
+<p><span class="arithmatex">\(\pi'(s) = \arg\max_{a \in A} Q_\pi(s,a) = \arg\max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_\pi(s')]\)</span></p>
+<p>可以证明，这样得到的策略 <span class="arithmatex">\(\pi'\)</span> 满足 <span class="arithmatex">\(V_{\pi'}(s) \ge V_\pi(s)\)</span> 对所有 <span class="arithmatex">\(s \in S\)</span>。</p>
+</div>
+<h4 id="13-policy-iteration">1.3 策略迭代 (Policy Iteration)</h4>
+<div class="admonition note">
+<p class="admonition-title">重点：策略迭代</p>
+<p>策略迭代通过交替执行策略评估和策略提升来寻找最优策略。</p>
+<ol>
+<li><strong>初始化：</strong> 随机初始化策略 <span class="arithmatex">\(\pi\)</span> 和价值函数 <span class="arithmatex">\(V\)</span> (通常为0)。</li>
+<li><strong>策略评估 (E)：</strong> 根据当前策略 <span class="arithmatex">\(\pi\)</span>，使用迭代的贝尔曼期望方程计算 <span class="arithmatex">\(V_\pi(s)\)</span> 直到收敛。</li>
+<li><strong>策略提升 (I)：</strong> 根据 <span class="arithmatex">\(V_\pi(s)\)</span>，使用贪心方法更新策略 <span class="arithmatex">\(\pi'(s) = \arg\max_a Q_\pi(s,a)\)</span>。</li>
+<li>如果 <span class="arithmatex">\(\pi' = \pi\)</span>，则策略已收敛到最优策略 <span class="arithmatex">\(\pi^*\)</span>，算法结束。否则，令 <span class="arithmatex">\(\pi \leftarrow \pi'\)</span>，返回步骤2。</li>
+</ol>
+<p>这个过程最终会收敛到最优策略 <span class="arithmatex">\(\pi^*\)</span> 和最优价值函数 <span class="arithmatex">\(V^*\)</span>。</p>
+</div>
+<h4 id="14-value-iteration">1.4 值迭代 (Value Iteration)</h4>
+<div class="admonition note">
+<p class="admonition-title">重点：值迭代</p>
+<p>值迭代是另一种DP方法，它直接通过迭代贝尔曼最优方程来寻找最优价值函数 <span class="arithmatex">\(V^*(s)\)</span>，从而避免了策略评估中可能需要的多次完整迭代。</p>
+<p><strong>方法：</strong> 迭代更新价值函数（同步更新）：</p>
+<p><span class="arithmatex">\(V_{k+1}(s) \leftarrow \max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V_k(s')]\)</span>
+当 <span class="arithmatex">\(V_k(s)\)</span> 收敛到 <span class="arithmatex">\(V^*(s)\)</span> 后，最优策略 <span class="arithmatex">\(\pi^*(s)\)</span> 可以通过一步策略提升直接提取：
+<span class="arithmatex">\(\pi^*(s) = \arg\max_{a \in A} \sum_{s' \in S} P(s'|s,a) [R(s,a,s') + \gamma V^*(s')]\)</span></p>
+</div>
+<details class="summary">
+<summary>动态规划算法总结</summary>
+<table>
+<thead>
+<tr>
+<th>求解问题</th>
+<th>使用贝尔曼方程类型</th>
+<th>算法名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预测 (求解价值函数)</td>
+<td>贝尔曼期望方程</td>
+<td>策略评估</td>
+</tr>
+<tr>
+<td>控制 (求解最优策略)</td>
+<td>贝尔曼期望方程 + 贪心提升</td>
+<td>策略迭代</td>
+</tr>
+<tr>
+<td>控制 (求解最优策略)</td>
+<td>贝尔曼最优方程</td>
+<td>值迭代</td>
+</tr>
+<tr>
+<td><em>DP算法的迭代复杂度对于 <span class="arithmatex">\(N\)</span> 个状态和 <span class="arithmatex">\(M\)</span> 个动作的MDP，每次迭代通常是 <span class="arithmatex">\(O(MN^2)\)</span> 或 <span class="arithmatex">\(O(M^2N)\)</span> (取决于实现和 <span class="arithmatex">\(P\)</span> 的稀疏性)。</em></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</details>
+<h3 id="2-monte-carlo-mc">2. 蒙特卡洛方法 (Monte Carlo, MC)</h3>
+<p>蒙特卡洛方法是无模型的，它通过从环境中采样完整的经验轨迹 (episodes) 来学习价值函数和策略，不需要知道环境的动态特性 <span class="arithmatex">\(P\)</span> 和 <span class="arithmatex">\(R\)</span>。</p>
+<h4 id="21">2.1 蒙特卡洛策略评估</h4>
+<div class="admonition note">
+<p class="admonition-title">重点：蒙特卡洛策略评估</p>
+<p><strong>目标：</strong> 在给定策略 <span class="arithmatex">\(\pi\)</span> 的情况下，估计其价值函数 <span class="arithmatex">\(V_\pi(s)\)</span> 或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>。</p>
+<p><strong>方法：</strong></p>
+<ol>
+<li>智能体遵循策略 <span class="arithmatex">\(\pi\)</span> 与环境交互，生成多条完整的经验轨迹。</li>
+<li>对于每个状态 <span class="arithmatex">\(s\)</span>（或状态-动作对 <span class="arithmatex">\((s,a)\)</span>）：<ul>
+<li><strong>首次访问MC (First-Visit MC)：</strong> 在每条轨迹中，只考虑状态 <span class="arithmatex">\(s\)</span> (或 <span class="arithmatex">\((s,a)\)</span>) 第一次出现后的回报 <span class="arithmatex">\(G_t\)</span>。</li>
+<li><strong>每次访问MC (Every-Visit MC)：</strong> 在每条轨迹中，考虑状态 <span class="arithmatex">\(s\)</span> (或 <span class="arithmatex">\((s,a)\)</span>) 每次出现后的回报 <span class="arithmatex">\(G_t\)</span>。</li>
+</ul>
+</li>
+<li>
+<p>将所有这些回报取平均值作为 <span class="arithmatex">\(V_\pi(s)\)</span> (或 <span class="arithmatex">\(Q_\pi(s,a)\)</span>) 的估计。</p>
+<p><span class="arithmatex">\(V_\pi(s) \approx \text{Average}(G_t \text{ for first/every visit to } s)\)</span></p>
+<p><span class="arithmatex">\(Q_\pi(s,a) \approx \text{Average}(G_t \text{ for first/every visit to } (s,a))\)</span></p>
+</li>
+</ol>
+<p>首次访问MC是 <span class="arithmatex">\(V_\pi(s)\)</span> 的无偏估计。每次访问MC虽然有偏，但通常方差更小，且在访问次数趋于无穷时也会收敛。</p>
+</div>
+<h4 id="22-mc-control">2.2 蒙特卡洛控制 (MC Control)</h4>
+<p>为了找到最优策略，MC方法同样采用广义策略迭代 (GPI) 的思想：交替进行策略评估和策略提升。</p>
+<ul>
+<li><strong>策略评估：</strong> 使用MC方法估计当前策略 <span class="arithmatex">\(\pi\)</span> 的 <span class="arithmatex">\(Q_\pi(s,a)\)</span>。</li>
+<li><strong>策略提升：</strong> 基于估计的 <span class="arithmatex">\(Q_\pi(s,a)\)</span>，使用 <span class="arithmatex">\(\epsilon\)</span>-贪心策略来改进 <span class="arithmatex">\(\pi\)</span>。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">重点：<span class="arithmatex">\(\epsilon\)</span>-贪心策略 (Epsilon-Greedy Policy)</p>
+<p>为了确保在学习过程中进行充分的探索（即尝试所有可能的动作，而不仅仅是当前认为最优的动作），通常采用 <span class="arithmatex">\(\epsilon\)</span>-贪心策略：</p>
+<ul>
+<li>以 <span class="arithmatex">\(1-\epsilon\)</span> 的概率选择当前估计的具有最大 <span class="arithmatex">\(Q(s,a)\)</span> 值的动作 (exploitation)。</li>
+<li>以 <span class="arithmatex">\(\epsilon\)</span> 的概率从所有可用动作中随机选择一个动作 (exploration)。</li>
+</ul>
+<p><span class="arithmatex">\(\pi(a|s) = \begin{cases} 1-\epsilon + \epsilon/|A(s)| &amp; \text{if } a = \arg\max_{a' \in A(s)} Q(s,a') \\ \epsilon/|A(s)| &amp; \text{otherwise} \end{cases}\)</span></p>
+<p>其中 <span class="arithmatex">\(|A(s)|\)</span> 是状态 <span class="arithmatex">\(s\)</span> 下可用动作的数量。</p>
+</div>
+<p><strong>MC控制算法（首次访问，<span class="arithmatex">\(\epsilon\)</span>-贪心）：</strong></p>
+<ol>
+<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 和 <span class="arithmatex">\(\pi(s)\)</span> (例如，<span class="arithmatex">\(\epsilon\)</span>-贪心于 <span class="arithmatex">\(Q\)</span>)。</li>
+<li>对每个回合 (episode)：
+    a.  使用当前策略 <span class="arithmatex">\(\pi\)</span> 生成一个完整的轨迹：<span class="arithmatex">\(S_0, A_0, R_1, S_1, A_1, R_2, \dots, S_T\)</span>.
+    b.  对于轨迹中的每个时间步 <span class="arithmatex">\(t=0, 1, \dots, T-1\)</span>:
+        i.  计算从该步开始的回报 <span class="arithmatex">\(G_t = \sum_{k=0}^{T-1-t} \gamma^k R_{t+k+1}\)</span>。
+        ii. 如果 <span class="arithmatex">\((S_t, A_t)\)</span> 是首次出现在从时间0到 <span class="arithmatex">\(t\)</span> 的序列中：
+            1.  将 <span class="arithmatex">\(G_t\)</span> 添加到 <span class="arithmatex">\(Returns(S_t, A_t)\)</span> 列表中。
+            2.  更新 <span class="arithmatex">\(Q(S_t, A_t) = \text{Average}(Returns(S_t, A_t))\)</span>。
+            3.  更新策略 <span class="arithmatex">\(\pi(S_t)\)</span> 使其对 <span class="arithmatex">\(Q(S_t, \cdot)\)</span> 是 <span class="arithmatex">\(\epsilon\)</span>-贪心的。</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">增量式更新 (Incremental Update)</p>
+<p>为了避免存储所有回报然后计算平均值，可以使用增量式均值更新：</p>
+<p><span class="arithmatex">\(Q_{k+1}(s,a) = Q_k(s,a) + \frac{1}{N_k(s,a)+1} (G_{k+1} - Q_k(s,a))\)</span></p>
+<p>或者使用固定学习率 <span class="arithmatex">\(\alpha\)</span>:</p>
+<p><span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha (G_t - Q(S_t, A_t))\)</span></p>
+</div>
+<p><strong>MC方法的优缺点：</strong></p>
+<ul>
+<li><strong>优点：</strong><ul>
+<li>无模型，不需环境动态。</li>
+<li>可从实际或模拟经验中学习。</li>
+<li>适用于非马尔可夫环境（因为它不依赖于单步转移）。</li>
+<li>评估某个状态的价值与其他状态无关。</li>
+</ul>
+</li>
+<li><strong>缺点：</strong><ul>
+<li>只能用于有明确结束的回合制任务 (episodic tasks)。</li>
+<li>策略评估需要等到整个回合结束后才能进行，学习效率可能较低。</li>
+<li>如果采样回合数不足，容易收敛到次优策略。</li>
+<li>回报的方差可能较大。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-temporal-difference-td">3. 时序差分学习 (Temporal Difference, TD)</h3>
+<p>TD学习是强化学习中一种核心且新颖的思想，它结合了DP和MC方法的优点。TD方法像MC一样从经验中学习，无需环境模型；像DP一样，它也使用自举 (bootstrapping)，即用当前估计的价值函数来更新自身。</p>
+<div class="admonition note">
+<p class="admonition-title">TD学习的核心思想</p>
+<p>TD学习在每一步之后（或几步之后）就更新价值估计，而不是等到整个回合结束。它使用当前获得的即时奖励和下一状态的估计价值来更新当前状态的价值。
+基本TD(0)更新规则 (用于策略评估 <span class="arithmatex">\(V_\pi\)</span>):</p>
+<p><span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]\)</span></p>
+<ul>
+<li>
+<p><strong>TD目标 (TD Target)：</strong> <span class="arithmatex">\(R_{t+1} + \gamma V(S_{t+1})\)</span></p>
+</li>
+<li>
+<p><strong>TD误差 (TD Error) <span class="arithmatex">\(\delta_t\)</span>：</strong> <span class="arithmatex">\(\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\alpha\)</span> 是学习率。</p>
+</li>
+</ul>
+</div>
+<p><strong>TD vs. MC vs. DP:</strong></p>
+<ul>
+<li><strong>DP：</strong> 需要完整模型，进行期望更新。</li>
+<li><strong>MC：</strong> 无需模型，使用完整样本回报进行更新，方差大，偏差小（对于<span class="arithmatex">\(V_\pi\)</span>的估计）。</li>
+<li><strong>TD：</strong> 无需模型，使用单步实际奖励和估计的下一状态价值进行更新，方差小，有偏（因为依赖于<span class="arithmatex">\(V(S_{t+1})\)</span>的估计）。</li>
+</ul>
+<p><strong>偏差 (Bias) 与方差 (Variance) 权衡：</strong></p>
+<ul>
+<li><strong>MC：</strong> <span class="arithmatex">\(G_t\)</span> 是 <span class="arithmatex">\(V_\pi(S_t)\)</span> 的无偏估计，但由于依赖于一个完整轨迹中的所有随机奖励和动作，其方差较大。</li>
+<li><strong>TD(0)：</strong> TD目标 <span class="arithmatex">\(R_{t+1} + \gamma V(S_{t+1})\)</span> 是 <span class="arithmatex">\(V_\pi(S_t)\)</span> 的有偏估计（因为 <span class="arithmatex">\(V(S_{t+1})\)</span> 本身是估计值），但由于只依赖于一个实际奖励 <span class="arithmatex">\(R_{t+1}\)</span> 和一个估计值 <span class="arithmatex">\(V(S_{t+1})\)</span>，其方差通常比MC小。</li>
+</ul>
+<h4 id="31-n-td-n-step-td-learning">3.1 n-步TD学习 (n-step TD Learning)</h4>
+<p>n-步TD是MC和TD(0)之间的一个折中。它向前看 <span class="arithmatex">\(n\)</span> 步的实际奖励，然后使用第 <span class="arithmatex">\(n\)</span> 步之后状态的估计价值。</p>
+<ul>
+<li><strong>n-步回报 <span class="arithmatex">\(G_t^{(n)}\)</span>：</strong>
+    <span class="arithmatex">\(G_t^{(n)} = R_{t+1} + \gamma R_{t+2} + \dots + \gamma^{n-1} R_{t+n} + \gamma^n V(S_{t+n})\)</span></li>
+<li><strong>n-步TD更新：</strong>
+    <span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [G_t^{(n)} - V(S_t)]\)</span>
+    当 <span class="arithmatex">\(n=1\)</span> 时，是TD(0)。当 <span class="arithmatex">\(n \rightarrow \infty\)</span> (或 <span class="arithmatex">\(n\)</span> 达到回合结束)，则近似于MC。</li>
+</ul>
+<h4 id="32-tdlambda">3.2 TD(<span class="arithmatex">\(\lambda\)</span>)</h4>
+<p>TD(<span class="arithmatex">\(\lambda\)</span>) 结合了所有不同 <span class="arithmatex">\(n\)</span> 步回报的优点，通过对它们进行加权平均。</p>
+<ul>
+<li><strong><span class="arithmatex">\(\lambda\)</span>-回报 <span class="arithmatex">\(G_t^\lambda\)</span>：</strong>
+    <span class="arithmatex">\(G_t^\lambda = (1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} G_t^{(n)}\)</span>
+    其中 <span class="arithmatex">\(\lambda \in [0,1]\)</span>。当 <span class="arithmatex">\(\lambda=0\)</span> 时，是TD(0)回报。当 <span class="arithmatex">\(\lambda=1\)</span> 时，是MC回报。</li>
+<li><strong>前向视角TD(<span class="arithmatex">\(\lambda\)</span>)更新：</strong>
+    <span class="arithmatex">\(V(S_t) \leftarrow V(S_t) + \alpha [G_t^\lambda - V(S_t)]\)</span>
+    前向视角在概念上简单，但计算上需要在回合结束后才能进行。实际中常用资格迹 (eligibility traces) 实现后向视角TD(<span class="arithmatex">\(\lambda\)</span>)，可以在线更新。</li>
+</ul>
+<h4 id="33-sarsa-state-action-reward-state-action">3.3 SARSA (State-Action-Reward-State-Action)</h4>
+<p>SARSA是一种<strong>同策略 (on-policy)</strong> TD控制算法。它学习动作价值函数 <span class="arithmatex">\(Q(s,a)\)</span>。</p>
+<p>"同策略"意味着用于生成行为的策略与正在评估和改进的策略是同一个。</p>
+<p><strong>SARSA更新规则：</strong></p>
+<p>基于转移 <span class="arithmatex">\((S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1})\)</span>:
+<span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]\)</span></p>
+<p>智能体在状态 <span class="arithmatex">\(S_t\)</span> 选择动作 <span class="arithmatex">\(A_t\)</span>，观察到奖励 <span class="arithmatex">\(R_{t+1}\)</span> 和下一状态 <span class="arithmatex">\(S_{t+1}\)</span>，然后在 <span class="arithmatex">\(S_{t+1}\)</span> 根据当前策略选择动作 <span class="arithmatex">\(A_{t+1}\)</span>，之后用 <span class="arithmatex">\(Q(S_{t+1}, A_{t+1})\)</span> 来更新 <span class="arithmatex">\(Q(S_t, A_t)\)</span>。</p>
+<p><strong>SARSA算法流程 (<span class="arithmatex">\(\epsilon\)</span>-贪心策略)：</strong></p>
+<ol>
+<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 对所有 <span class="arithmatex">\(s,a\)</span> (例如，为0)，<span class="arithmatex">\(\epsilon &gt; 0\)</span>。</li>
+<li>对每个回合：
+    a.  初始化 <span class="arithmatex">\(S\)</span>。
+    b.  使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S\)</span> 选择动作 <span class="arithmatex">\(A\)</span>。
+    c.  只要 <span class="arithmatex">\(S\)</span> 不是终止状态：
+        i.   执行动作 <span class="arithmatex">\(A\)</span>，观察 <span class="arithmatex">\(R, S'\)</span>。
+        ii.  使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S'\)</span> 选择动作 <span class="arithmatex">\(A'\)</span>。
+        iii. 更新 <span class="arithmatex">\(Q(S,A) \leftarrow Q(S,A) + \alpha [R + \gamma Q(S',A') - Q(S,A)]\)</span>。
+        iv.  <span class="arithmatex">\(S \leftarrow S'\)</span>, <span class="arithmatex">\(A \leftarrow A'\)</span>。</li>
+</ol>
+<h4 id="34-q-learning">3.4 Q-Learning</h4>
+<p>Q-Learning是一种<strong>异策略 (off-policy)</strong> TD控制算法。它也学习动作价值函数 <span class="arithmatex">\(Q(s,a)\)</span>。</p>
+<p>"异策略"意味着用于生成行为的策略（行为策略）可以不同于正在评估和改进的策略（目标策略）。Q-Learning的目标策略是贪心策略，而其行为策略通常是 <span class="arithmatex">\(\epsilon\)</span>-贪心策略以保证探索。</p>
+<p><strong>Q-Learning更新规则：</strong></p>
+<p>基于转移 <span class="arithmatex">\((S_t, A_t, R_{t+1}, S_{t+1})\)</span>:
+<span class="arithmatex">\(Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_{a'} Q(S_{t+1}, a') - Q(S_t, A_t)]\)</span></p>
+<p>注意，更新中使用的 <span class="arithmatex">\(\max_{a'} Q(S_{t+1}, a')\)</span> 是基于目标策略（贪心策略）在下一状态 <span class="arithmatex">\(S_{t+1}\)</span> 所能获得的最好价值，而实际在 <span class="arithmatex">\(S_{t+1}\)</span> 采取的动作（由行为策略决定）并不直接用于这个更新目标。</p>
+<p><strong>Q-Learning算法流程 (<span class="arithmatex">\(\epsilon\)</span>-贪心行为策略)：</strong></p>
+<ol>
+<li>初始化 <span class="arithmatex">\(Q(s,a)\)</span> 对所有 <span class="arithmatex">\(s,a\)</span> (例如，为0)，<span class="arithmatex">\(\epsilon &gt; 0\)</span>。</li>
+<li>对每个回合：
+    a.  初始化 <span class="arithmatex">\(S\)</span>。
+    b.  只要 <span class="arithmatex">\(S\)</span> 不是终止状态：
+        i.   使用 <span class="arithmatex">\(Q\)</span> 和 <span class="arithmatex">\(\epsilon\)</span>-贪心策略从 <span class="arithmatex">\(S\)</span> 选择动作 <span class="arithmatex">\(A\)</span> (行为策略)。
+        ii.  执行动作 <span class="arithmatex">\(A\)</span>，观察 <span class="arithmatex">\(R, S'\)</span>。
+        iii. 更新 <span class="arithmatex">\(Q(S,A) \leftarrow Q(S,A) + \alpha [R + \gamma \max_{a'} Q(S',a') - Q(S,A)]\)</span> (目标策略是贪心)。
+        iv.  <span class="arithmatex">\(S \leftarrow S'\)</span>。</li>
+</ol>
+<div class="admonition contrast">
+<p class="admonition-title">同策略 (On-Policy) vs. 异策略 (Off-Policy)</p>
+<ul>
+<li><strong>同策略 (On-Policy)：</strong> 学习的策略和用于收集数据的行为策略是同一个。例如SARSA。<ul>
+<li>优点：通常更稳定，直接优化当前行为策略的性能。</li>
+<li>缺点：探索和利用的平衡直接影响学习效果。如果行为策略为了探索而不选择最优动作，那么学习到的价值也是基于这种次优探索行为的。</li>
+</ul>
+</li>
+<li><strong>异策略 (Off-Policy)：</strong> 学习的策略（目标策略）和用于收集数据的行为策略可以不同。例如Q-Learning。<ul>
+<li>优点：可以从历史数据或其他策略（甚至是人类演示）中学习。行为策略可以大胆探索，而目标策略仍然学习最优行为。</li>
+<li>缺点：更新可能方差更大，收敛性有时更难保证（需要重要性采样等技术，但Q-Learning的特定形式避免了显式重要性采样）。</li>
+</ul>
+</li>
+</ul>
+</div>
+<details class="summary">
+<summary>表格型强化学习算法小结</summary>
+<ul>
+<li><strong>动态规划 (DP)：</strong><ul>
+<li>基于模型，使用期望更新。</li>
+<li>策略评估：计算给定策略的价值函数。</li>
+<li>策略提升：根据价值函数改进策略。</li>
+<li>策略迭代/值迭代：找到最优策略和价值函数。</li>
+</ul>
+</li>
+<li><strong>蒙特卡洛方法 (MC)：</strong><ul>
+<li>无模型，使用完整回合的样本回报更新。</li>
+<li>首次访问/每次访问MC。</li>
+<li>高方差，零偏差（对于<span class="arithmatex">\(V_\pi\)</span>）。</li>
+</ul>
+</li>
+<li><strong>时序差分学习 (TD)：</strong><ul>
+<li>无模型，使用单步或多步的实际奖励和后续状态的估计价值（自举）更新。</li>
+<li>TD(0), n-step TD, TD(<span class="arithmatex">\(\lambda\)</span>)。</li>
+<li>SARSA (同策略)，Q-Learning (异策略)。</li>
+<li>通常比MC方差小，但有偏。</li>
+</ul>
+</li>
+</ul>
+</details>
+<hr />
+<h2 id="deep-reinforcement-learning-drl">三、深度强化学习 (Deep Reinforcement Learning, DRL)</h2>
+<p>表格型强化学习方法在状态和动作空间较小的问题上表现良好。然而，当状态或动作空间非常大，甚至是连续的时候（例如，从图像输入学习，或控制机器人手臂），表格方法面临“维度灾难”，无法存储和有效学习Q表或策略表。</p>
+<p><strong>深度强化学习 (DRL) 的出现：</strong>
+DRL将深度学习（特别是深度神经网络DNN）与强化学习相结合。DNN作为函数逼近器，可以用来表示：
+*   价值函数 (例如, <span class="arithmatex">\(Q(s,a;\theta)\)</span>)
+*   策略函数 (例如, <span class="arithmatex">\(\pi(a|s;\theta)\)</span>)
+*   甚至环境模型</p>
+<p>这使得RL能够处理高维输入（如图像、文本）和复杂的、大规模的状态/动作空间。</p>
+<h3 id="1-drl-value-based-drl">1. 基于值函数的DRL (Value-Based DRL)</h3>
+<p>这类算法的核心是学习一个动作价值函数 <span class="arithmatex">\(Q(s,a;\theta)\)</span>（Q网络），然后通过最大化Q值来得到策略。</p>
+<h4 id="11-naive-dqn-deep-q-network">1.1 Naïve DQN (Deep Q-Network)</h4>
+<p>最直接的想法是将Q-Learning中的Q表替换为一个神经网络 <span class="arithmatex">\(Q(s,a;\theta)\)</span>。</p>
+<p><strong>损失函数：</strong> 最小化均方贝尔曼误差 (MSBE):</p>
+<p><span class="arithmatex">\(L(\theta) = E_{(s,a,r,s') \sim \mathcal{D}} \left[ (y - Q(s,a;\theta))^2 \right]\)</span>
+其中，TD目标 <span class="arithmatex">\(y = r + \gamma \max_{a'} Q(s',a';\theta)\)</span>。
+梯度更新：<span class="arithmatex">\(\theta \leftarrow \theta - \alpha \nabla_\theta L(\theta)\)</span>。</p>
+<p><strong>在线Naïve DQN存在的问题：</strong></p>
+<ol>
+<li><strong>样本相关性：</strong> 连续的样本 <span class="arithmatex">\((s_t, a_t, r_{t+1}, s_{t+1})\)</span> 和 <span class="arithmatex">\((s_{t+1}, a_{t+1}, r_{t+2}, s_{t+2})\)</span> 高度相关，违反了许多监督学习算法的独立同分布 (i.i.d) 假设，导致训练不稳定。</li>
+<li><strong>目标非平稳性：</strong> 在计算TD目标 <span class="arithmatex">\(y\)</span> 时， <span class="arithmatex">\(Q(s',a';\theta)\)</span> 自身也在随着 <span class="arithmatex">\(\theta\)</span> 的更新而改变。这意味着我们追逐一个移动的目标，可能导致训练震荡或发散。这被称为半梯度 (semi-gradient) 问题，因为目标 <span class="arithmatex">\(y\)</span> 依赖于参数 <span class="arithmatex">\(\theta\)</span>，但在计算梯度时我们通常忽略这一点。</li>
+</ol>
+<h4 id="12-dqn-mnih-et-al-2013-2015">1.2 经典DQN (Mnih et al., 2013, 2015)</h4>
+<p>为了解决Naïve DQN的问题，经典DQN引入了两个关键技术：</p>
+<div class="admonition note">
+<p class="admonition-title">重点：经验回放 (Experience Replay)</p>
+<ul>
+<li><strong>机制：</strong> 将智能体与环境交互产生的转移 <span class="arithmatex">\((s_t, a_t, r_{t+1}, s_{t+1})\)</span> 存储在一个固定大小的回放缓冲区 (replay buffer) <span class="arithmatex">\(\mathcal{B}\)</span> 中。</li>
+<li><strong>训练：</strong> 在训练Q网络时，从缓冲区中随机采样一个小批量 (mini-batch) 的转移数据进行学习。</li>
+<li><strong>优点：</strong><ul>
+<li><strong>打破样本相关性：</strong> 随机采样使得训练样本近似i.i.d。</li>
+<li><strong>数据重用：</strong> 一条经验可以被多次用于训练，提高数据利用率。</li>
+<li><strong>平滑学习：</strong> 平均了许多先前状态的行为，避免了策略的剧烈摆动。</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">重点：目标网络 (Target Network)</p>
+<ul>
+<li><strong>机制：</strong> 使用两个独立的Q网络：<ul>
+<li><strong>在线网络 (Online Network) <span class="arithmatex">\(Q(s,a;\theta)\)</span>：</strong> 用于选择当前动作和进行参数更新。</li>
+<li><strong>目标网络 (Target Network) <span class="arithmatex">\(Q(s,a;\theta^-)\)</span>：</strong> 用于计算TD目标 <span class="arithmatex">\(y = r + \gamma \max_{a'} Q(s',a';\theta^-)\)</span>。</li>
+</ul>
+</li>
+<li><strong>更新：</strong> 在线网络的参数 <span class="arithmatex">\(\theta\)</span> 正常通过梯度下降更新。目标网络的参数 <span class="arithmatex">\(\theta^-\)</span> 则定期（例如每 <span class="arithmatex">\(C\)</span> 步）从在线网络复制过来：<span class="arithmatex">\(\theta^- \leftarrow \theta\)</span>。或者使用软更新：<span class="arithmatex">\(\theta^- \leftarrow \tau\theta + (1-\tau)\theta^-\)</span>。</li>
+<li><strong>优点：</strong><ul>
+<li><strong>稳定目标：</strong> 目标网络参数在一段时间内保持固定，使得TD目标 <span class="arithmatex">\(y\)</span> 更加稳定，减少了训练的震荡。</li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>经典DQN的损失函数：</strong></p>
+<p><span class="arithmatex">\(L(\theta) = E_{(s,a,r,s') \sim U(\mathcal{B})} \left[ (r + \gamma \max_{a'} Q(s',a';\theta^-) - Q(s,a;\theta))^2 \right]\)</span></p>
+<h4 id="13-dqn">1.3 DQN的改进</h4>
+<div class="admonition note">
+<p class="admonition-title">Double DQN (DDQN)</p>
+<ul>
+<li><strong>问题：</strong> 标准DQN中的 <span class="arithmatex">\(\max\)</span> 操作符会导致对Q值的系统性高估 (maximization bias)。这是因为 <span class="arithmatex">\(E[\max_a X_a] \ge \max_a E[X_a]\)</span>。</li>
+<li><strong>解决方案：</strong> 解耦目标Q值计算中的动作选择和动作评估。使用在线网络选择最优动作，使用目标网络评估该动作的Q值。
+    <span class="arithmatex">\(y^{DDQN} = r + \gamma Q(s', \arg\max_{a'} Q(s',a';\theta);\theta^-)\)</span></li>
+<li><strong>优点：</strong> 显著减少了Q值的高估，通常能学习到更好的策略。</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Dueling DQN</p>
+<ul>
+<li><strong>思想：</strong> 将Q网络分解为两个独立的流：<ul>
+<li><strong>状态价值函数 <span class="arithmatex">\(V(s;\theta_V, \beta)\)</span>：</strong> 估计状态 <span class="arithmatex">\(s\)</span> 的价值。</li>
+<li><strong>优势函数 <span class="arithmatex">\(A(s,a;\theta_A, \alpha)\)</span>：</strong> 估计在状态 <span class="arithmatex">\(s\)</span> 下采取动作 <span class="arithmatex">\(a\)</span> 相对于平均动作的优势。<span class="arithmatex">\(A(s,a) = Q(s,a) - V(s)\)</span>。</li>
+</ul>
+</li>
+<li><strong>合并：</strong> <span class="arithmatex">\(Q(s,a) = V(s) + (A(s,a) - \text{mean}_{a'} A(s,a'))\)</span> 或 <span class="arithmatex">\(Q(s,a) = V(s) + (A(s,a) - \max_{a'} A(s,a'))\)</span> (后者需要 <span class="arithmatex">\(A(s, \arg\max_a A(s,a)) = 0\)</span> 的约束)。
+    PPT中给出的是 <span class="arithmatex">\(Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta) + (A(s,a;\theta,\alpha) - \frac{1}{|\mathcal{A}|}\sum_{a'}A(s,a';\theta,\alpha))\)</span></li>
+<li><strong>优点：</strong><ul>
+<li>能够更有效地学习状态价值，即使某些动作不重要。</li>
+<li>当动作对状态价值影响不大时，网络主要学习 <span class="arithmatex">\(V(s)\)</span>。</li>
+<li>通常能更快收敛并达到更好的性能。</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">优先经验回放 (Prioritized Experience Replay - PER)</p>
+<ul>
+<li><strong>思想：</strong> 并非所有经验都是同等重要的。TD误差大的转移（即智能体感到“惊讶”的转移）包含更多学习信息。</li>
+<li><strong>机制：</strong><ul>
+<li>赋予每个转移 <span class="arithmatex">\((s,a,r,s')\)</span> 一个优先级 <span class="arithmatex">\(p_i \propto |\delta_i|^\omega + \epsilon_{per}\)</span>，其中 <span class="arithmatex">\(\delta_i\)</span> 是TD误差，<span class="arithmatex">\(\omega\)</span> 控制优先化程度。</li>
+<li>从回放缓冲区中根据优先级进行采样，高优先级的样本更容易被选中。</li>
+<li>为了修正这种有偏采样引入的偏差，使用重要性采样 (Importance Sampling, IS) 权重 <span class="arithmatex">\(w_i = (N \cdot P(i))^{-\beta_{is}}\)</span> 来调整梯度更新，其中 <span class="arithmatex">\(N\)</span> 是缓冲区大小，<span class="arithmatex">\(P(i)\)</span> 是采样概率，<span class="arithmatex">\(\beta_{is}\)</span> 随训练从0退火到1。</li>
+</ul>
+</li>
+<li><strong>优点：</strong> 显著提高学习效率和最终性能。</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Rainbow DQN</p>
+<p>Rainbow DQN 整合了DQN的多种重要改进技术，包括：</p>
+<ul>
+<li>Double DQN</li>
+<li>Dueling DQN</li>
+<li>Prioritized Experience Replay (PER)</li>
+<li>Multi-step Learning (使用n-步回报作为TD目标)</li>
+<li>Distributional RL (学习Q值的完整分布，而不仅仅是期望)</li>
+<li>Noisy Nets (在网络权重中加入参数化噪声以进行探索，替代<span class="arithmatex">\(\epsilon\)</span>-greedy)</li>
+</ul>
+<p>Rainbow DQN在许多Atari游戏上取得了当时SOTA的性能。</p>
+</div>
+<h3 id="2-drl-policy-based-drl">2. 基于策略的DRL (Policy-Based DRL)</h3>
+<p>这类算法直接参数化策略 <span class="arithmatex">\(\pi(a|s;\theta)\)</span>，并通过优化某个性能指标 <span class="arithmatex">\(J(\theta)\)</span> (通常是期望累积回报) 来学习策略参数 <span class="arithmatex">\(\theta\)</span>。</p>
+<div class="admonition note">
+<p class="admonition-title">策略梯度定理 (Policy Gradient Theorem)</p>
+<p>该定理提供了一种计算性能指标 <span class="arithmatex">\(J(\theta)\)</span> 关于策略参数 <span class="arithmatex">\(\theta\)</span> 的梯度的方法，而不需要对状态分布或环境动态求导。</p>
+<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(A_t|S_t) G_t \right]\)</span></p>
+<p>或者，更常用的形式是：</p>
+<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t) \right]\)</span></p>
+<p>其中 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span> 是在策略 <span class="arithmatex">\(\pi_\theta\)</span> 下，状态 <span class="arithmatex">\(S_t\)</span> 执行动作 <span class="arithmatex">\(A_t\)</span> 的动作价值。</p>
+<p><span class="arithmatex">\(\nabla_\theta \log \pi_\theta(A_t|S_t)\)</span> 称为得分函数 (score function)。</p>
+</div>
+<h4 id="21-reinforce-monte-carlo-policy-gradient">2.1 REINFORCE (Monte Carlo Policy Gradient)</h4>
+<p>REINFORCE是最早也是最简单的策略梯度算法之一。它使用蒙特卡洛方法估计 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span>，即使用整个回合的实际回报 <span class="arithmatex">\(G_t\)</span>。</p>
+<p><strong>更新规则：</strong></p>
+<p><span class="arithmatex">\(\theta \leftarrow \theta + \alpha \nabla_\theta \log \pi_\theta(A_t|S_t) G_t\)</span>
+(通常在一个回合结束后，对该回合内所有步的梯度进行累加或平均)</p>
+<p><strong>REINFORCE算法流程：</strong></p>
+<ol>
+<li>初始化策略参数 <span class="arithmatex">\(\theta\)</span>。</li>
+<li>重复：
+    a.  使用当前策略 <span class="arithmatex">\(\pi_\theta\)</span> 生成一个完整的经验轨迹：<span class="arithmatex">\(S_0, A_0, R_1, \dots, S_{T-1}, A_{T-1}, R_T\)</span>。
+    b.  对于轨迹中的每个时间步 <span class="arithmatex">\(t=0, \dots, T-1\)</span>：
+        i.   计算从该步开始的回报 <span class="arithmatex">\(G_t = \sum_{k=t}^{T-1} \gamma^{k-t} R_{k+1}\)</span>。
+        ii.  更新参数：<span class="arithmatex">\(\theta \leftarrow \theta + \alpha \gamma^t \nabla_\theta \log \pi_\theta(A_t|S_t) G_t\)</span> (有时 <span class="arithmatex">\(\gamma^t\)</span> 因子被省略或学习率吸收)。</li>
+</ol>
+<p><strong>REINFORCE的缺点：</strong></p>
+<ul>
+<li><strong>高方差：</strong> <span class="arithmatex">\(G_t\)</span> 作为 <span class="arithmatex">\(Q^{\pi_\theta}(S_t,A_t)\)</span> 的估计，其方差非常大，导致学习过程缓慢且不稳定。</li>
+<li><strong>同策略：</strong> 必须使用当前策略采样，数据利用率低。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">基线 (Baseline) 技巧</p>
+<p>为了减小策略梯度的方差，可以从回报 <span class="arithmatex">\(G_t\)</span> 中减去一个不依赖于动作 <span class="arithmatex">\(A_t\)</span> 的基线 <span class="arithmatex">\(b(S_t)\)</span>。</p>
+<p><span class="arithmatex">\(\nabla_\theta J(\theta) = E_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(A_t|S_t) (G_t - b(S_t)) \right]\)</span></p>
+<p>一个常用的基线是状态价值函数 <span class="arithmatex">\(V^{\pi_\theta}(S_t)\)</span>。此时 <span class="arithmatex">\((G_t - V^{\pi_\theta}(S_t))\)</span> 是优势函数 <span class="arithmatex">\(A^{\pi_\theta}(S_t,A_t)\)</span> 的一个（有偏）估计。</p>
+<p>减去基线不改变梯度的期望，但可以显著降低其方差。</p>
+</div>
+<h3 id="3-actor-critic-ac-drl">3. 基于演员-评论家 (Actor-Critic, AC) 的DRL</h3>
+<p>Actor-Critic方法结合了基于值函数和基于策略方法的优点。它维护两个网络：</p>
+<ul>
+<li><strong>演员 (Actor)：</strong> 策略网络 <span class="arithmatex">\(\pi(a|s;\theta_\pi)\)</span>，负责选择动作。</li>
+<li><strong>评论家 (Critic)：</strong> 价值网络 <span class="arithmatex">\(V(s;\theta_v)\)</span> 或 <span class="arithmatex">\(Q(s,a;\theta_q)\)</span>，负责评估演员选择的动作的好坏。</li>
+</ul>
+<p><strong>基本思想：</strong></p>
+<ol>
+<li><strong>演员</strong> 根据当前策略 <span class="arithmatex">\(\pi_\theta\)</span> 选择动作 <span class="arithmatex">\(A_t\)</span>。</li>
+<li><strong>评论家</strong> 评估这个动作，例如计算TD误差：<span class="arithmatex">\(\delta_t = R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v)\)</span> (如果评论家是 <span class="arithmatex">\(V\)</span> 网络)。</li>
+<li>
+<p><strong>演员</strong> 根据评论家的评估（如TD误差）更新其策略参数 <span class="arithmatex">\(\theta_\pi\)</span>：</p>
+<p><span class="arithmatex">\(\theta_\pi \leftarrow \theta_\pi + \alpha_\pi \nabla_{\theta_\pi} \log \pi(A_t|S_t;\theta_\pi) \delta_t\)</span></p>
+</li>
+<li>
+<p><strong>评论家</strong> 也根据TD学习规则更新其价值参数 <span class="arithmatex">\(\theta_v\)</span>：
+    <span class="arithmatex">\(\theta_v \leftarrow \theta_v + \alpha_v \delta_t \nabla_{\theta_v} V(S_t;\theta_v)\)</span></p>
+</li>
+</ol>
+<h4 id="31-advantage-actor-critic-a2c">3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)</h4>
+<p>A2C是一种常用的AC变体，其中评论家学习状态价值函数 <span class="arithmatex">\(V(s)\)</span>，并使用优势函数 <span class="arithmatex">\(A(s,a) = Q(s,a) - V(s)\)</span> 来指导演员的学习。</p>
+<p>优势函数可以用TD误差来估计： <span class="arithmatex">\(A(S_t, A_t) \approx R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\)</span>。</p>
+<ul>
+<li><strong>演员更新 (策略梯度)：</strong>
+    <span class="arithmatex">\(\nabla_{\theta_\pi} J(\theta_\pi) \approx \nabla_{\theta_\pi} \log \pi(A_t|S_t;\theta_\pi) [R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v)]\)</span></li>
+<li><strong>评论家更新 (最小化 <span class="arithmatex">\(V\)</span> 的预测误差)：</strong>
+    <span class="arithmatex">\(L(\theta_v) = (R_{t+1} + \gamma V(S_{t+1};\theta_v) - V(S_t;\theta_v))^2\)</span></li>
+</ul>
+<p><strong>A3C (Asynchronous Advantage Actor-Critic):</strong></p>
+<p>A3C是A2C的一个重要变种，它使用多个并行的actor-learner在环境的不同副本中异步地收集经验和更新全局参数。这有助于打破样本相关性并加速学习。</p>
+<p><strong>AC算法的神经网络架构：</strong></p>
+<ul>
+<li><strong>方案一：</strong> 两个独立的神经网络分别拟合Actor (策略) 和 Critic (价值)。<ul>
+<li>优点：简单，训练可能更稳定。</li>
+<li>缺点：训练效率可能较低。</li>
+</ul>
+</li>
+<li><strong>方案二：</strong> Actor和Critic共享前面几层的特征提取网络，最后有各自的输出层。<ul>
+<li>优点：参数量少，训练效率可能更高。</li>
+<li>缺点：策略和价值可能需要不同的特征，共享可能导致冲突，训练稳定性可能稍差。</li>
+</ul>
+</li>
+</ul>
+<details class="summary">
+<summary>深度强化学习小结</summary>
+<ul>
+<li><strong>基于值的DRL：</strong><ul>
+<li><strong>DQN：</strong> 核心思想是使用神经网络逼近Q函数。</li>
+<li><strong>关键技术：</strong> 经验回放、目标网络。</li>
+<li><strong>改进：</strong> Double DQN (减少过高估计), Dueling DQN (分解V和A), Prioritized Experience Replay (优先处理重要样本), Rainbow DQN (集大成者)。</li>
+</ul>
+</li>
+<li><strong>基于策略的DRL：</strong><ul>
+<li><strong>REINFORCE：</strong> 蒙特卡洛策略梯度，方差大。</li>
+<li><strong>基线：</strong> 引入基线 (如状态价值函数) 减小方差。</li>
+</ul>
+</li>
+<li><strong>基于Actor-Critic的DRL：</strong><ul>
+<li><strong>Actor (策略网络) + Critic (价值网络)。</strong></li>
+<li><strong>A2C/A3C：</strong> 使用优势函数指导策略学习。</li>
+<li>结合了值方法和策略方法的优点，通常具有较好的稳定性和样本效率。</li>
+</ul>
+</li>
+</ul>
+</details>
+<hr />
+<h2 id="multi-agent-reinforcement-learning-marl">四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)</h2>
+<p>当环境中存在多个智能体同时学习和交互时，问题就从单智能体强化学习 (SARL) 扩展到了多智能体强化学习 (MARL)。</p>
+<p><strong>SARL vs. MARL:</strong></p>
+<ul>
+<li><strong>SARL：</strong><ul>
+<li>单个智能体与环境交互。</li>
+<li>环境状态转移和奖励主要由环境本身决定。</li>
+<li>智能体决策相对独立。</li>
+<li>环境通常被视为“静态”的（从智能体学习的角度）。</li>
+</ul>
+</li>
+<li><strong>MARL：</strong><ul>
+<li>多个智能体同时与环境（以及彼此）交互。</li>
+<li>一个智能体的动作不仅影响环境，也可能影响其他智能体的状态、观察和奖励。</li>
+<li>智能体的决策是相互依赖的。</li>
+<li>环境是“非平稳”的：当一个智能体改变其策略时，对于其他智能体来说，环境的动态特性也随之改变。</li>
+<li>每个智能体可能有自己的奖励函数，或者共享团队奖励。</li>
+</ul>
+</li>
+</ul>
+<p><strong>MARL面临的困境：</strong></p>
+<ul>
+<li><strong>环境的非平稳性 (Non-stationarity)：</strong> 其他智能体的策略变化使得当前智能体感知的环境动态不稳定。</li>
+<li><strong>部分可观测性 (Partial Observability)：</strong> 智能体通常只能观察到环境的局部信息。</li>
+<li><strong>维度灾难 (Curse of Dimensionality)：</strong> 联合状态空间和联合动作空间随智能体数量指数增长。</li>
+<li><strong>策略协同与通信 (Strategy Coordination and Communication)：</strong> 在合作任务中，智能体需要协同策略，有时需要显式通信。</li>
+<li><strong>博弈与对抗 (Game Theory and Adversarial Behavior)：</strong> 在竞争性环境中，智能体行为可能是对抗性的。</li>
+<li><strong>信任分配 (Credit Assignment)：</strong> 在团队奖励下，难以判断个体智能体的贡献。</li>
+</ul>
+<p><strong>MARL算法分类思路：</strong></p>
+<ul>
+<li><strong>独立学习 (Independent Learners, IL)：</strong> 每个智能体独立使用SARL算法学习，将其他智能体视为环境的一部分。例如，IQL (Independent Q-Learning)。</li>
+<li><strong>通信机制 (Communication)：</strong> 允许智能体之间传递信息以辅助决策。</li>
+<li><strong>协同学习 (Coordination)：</strong> 设计机制使智能体能够协同行动，即使只有局部观察。</li>
+<li><strong>智能体建模 (Agent Modeling)：</strong> 智能体尝试推理或学习其他智能体的策略或目标。</li>
+</ul>
+<p><strong>MARL场景分类：</strong></p>
+<ul>
+<li><strong>合作型场景 (Cooperative)：</strong> 所有智能体共享一个团队目标，最大化共同奖励。</li>
+<li><strong>竞争性场景 (Competitive)：</strong> 智能体目标冲突，通常是零和博弈（一个赢则另一个输）。</li>
+<li><strong>混合场景 (Mixed/General-sum)：</strong> 智能体之间既有合作也有竞争。</li>
+</ul>
+<h3 id="1-marl-maddpg">1. 基于策略的MARL —— MADDPG</h3>
+<p><strong>MADDPG (Multi-Agent Deep Deterministic Policy Gradient)</strong> 是一种适用于混合合作竞争场景的算法，它采用了<strong>中心化训练，分布式执行 (Centralized Training with Decentralized Execution, CTDE)</strong> 的框架。</p>
+<ul>
+<li><strong>中心化训练：</strong> 在训练阶段，每个智能体的评论家 (Critic) 可以访问所有智能体的全局状态和动作信息，从而更好地评估当前联合动作的价值，缓解非平稳性问题。</li>
+<li><strong>分布式执行：</strong> 在执行阶段，每个智能体的演员 (Actor) 仅根据自己的局部观察来选择动作。
+每个智能体 <span class="arithmatex">\(i\)</span> 学习一个确定性策略 <span class="arithmatex">\(\mu_i(o_i;\theta_i)\)</span> 和一个中心化的Q函数 <span class="arithmatex">\(Q_i(x, a_1, \dots, a_N;\phi_i)\)</span>，其中 <span class="arithmatex">\(x\)</span> 是全局状态，<span class="arithmatex">\(a_j\)</span> 是智能体 <span class="arithmatex">\(j\)</span> 的动作。</li>
+</ul>
+<h3 id="2-marl-vdn">2. 基于值函数的MARL —— VDN</h3>
+<p><strong>VDN (Value Decomposition Networks)</strong> 是一种适用于合作型MARL的算法，旨在解决信任分配问题。</p>
+<ul>
+<li><strong>核心思想：</strong> 将团队的联合Q值函数 <span class="arithmatex">\(Q_{tot}\)</span> 分解为每个智能体局部Q值函数 <span class="arithmatex">\(Q_i\)</span> 的和：
+    <span class="arithmatex">\(Q_{tot}(\mathbf{\tau}, \mathbf{u}) = \sum_{i=1}^N Q_i(\tau_i, u_i)\)</span>
+    其中 <span class="arithmatex">\(\mathbf{\tau}\)</span> 是联合观察，<span class="arithmatex">\(\mathbf{u}\)</span> 是联合动作，<span class="arithmatex">\(\tau_i, u_i\)</span> 是智能体 <span class="arithmatex">\(i\)</span> 的局部观察和动作。</li>
+<li><strong>优点：</strong><ul>
+<li>简化了联合Q函数的学习。</li>
+<li>通过加性分解，隐式地将团队奖励分配给各个智能体。</li>
+<li>也遵循CTDE框架：训练时使用 <span class="arithmatex">\(Q_{tot}\)</span>，执行时每个智能体根据自己的 <span class="arithmatex">\(Q_i\)</span> 贪心选择动作。</li>
+</ul>
+</li>
+<li><strong>Mixing Network：</strong> VDN使用一个简单的求和作为混合网络。后续的QMIX等算法使用了更复杂的非线性混合网络，同时保证了IGM (Individual-Global-Max) 原则，即全局最优动作可以通过每个智能体的局部最优动作得到。</li>
+</ul>
+<details class="summary">
+<summary>多智能体强化学习小结</summary>
+<ul>
+<li><strong>MARL定义：</strong> 多个智能体在共享环境中交互学习。</li>
+<li><strong>MARL困境：</strong> 非平稳性、部分可观测性、维度灾难、协同/通信、信任分配等。</li>
+<li><strong>MARL算法分类：</strong> 独立学习、通信、协同、智能体建模。</li>
+<li><strong>MARL场景：</strong> 合作、竞争、混合。</li>
+<li><strong>代表性算法：</strong><ul>
+<li>MADDPG (基于策略，CTDE，适用于混合场景)。</li>
+<li>VDN (基于值函数，值分解，CTDE，适用于合作场景)。</li>
+</ul>
+</li>
+</ul>
+</details>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="2025年6月19日 11:37:48 CST">2025年6月19日</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        这个页面对您有帮助吗?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="有帮助" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="仍需改进" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢您的反馈!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              感谢您的反馈! 可以联系作者以提供更多改进建议。
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+<script src="https://giscus.app/client.js"
+        data-repo="allenge008/Discussions"
+        data-repo-id="R_kgDOOsnx4A"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOOsnx4M4CqVVF"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../chapter8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Transformer">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Transformer
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../project/" class="md-footer__link md-footer__link--next" aria-label="下一页: 一些小项目">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                一些小项目
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Allenge007
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/allenge007" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="../../../javascripts/font-adjuster.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
