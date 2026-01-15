@@ -1,3 +1,4 @@
 nav:
   - index.md
   - 信号与系统: signals_and_systems
+  - 最优化理论: optimization_theory

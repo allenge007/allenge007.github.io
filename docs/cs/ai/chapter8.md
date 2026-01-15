@@ -47,6 +47,7 @@
 Word2Vec (Mikolov et al. 2013) 是一个学习词向量的框架。
 
 **核心思想**：
+
 1.  拥有一个大型文本语料库。
 2.  固定词汇表中的每个单词都由一个向量表示。
 3.  遍历文本中的每个位置 `t`，包含一个中心词 `c` 和上下文（“外部”）词 `o`。
@@ -54,19 +55,27 @@ Word2Vec (Mikolov et al. 2013) 是一个学习词向量的框架。
 5.  不断调整单词向量来最大化此概率。
 
 **目标函数**：
+
 最小化负对数似然的均值。对于中心词 $w_t$ 和窗口大小为 $m$ 的上下文词 $w_{t+j}$（$j \ne 0, -m \le j \le m$）：
+
 $$ J(\theta) = -\frac{1}{T} \sum_{t=1}^{T} \sum_{-m \le j \le m, j \ne 0} \log P(w_{t+j} | w_t; \theta) $$
 
 **计算概率 $P(o|c; \theta)$**：
+
 对每个单词 `w`，使用两个向量：
+
 *   $v_w$：当 `w` 是中心词时。
 *   $u_w$：当 `w` 是上下文词时。
+
 这两个向量都是模型参数 $\theta$ 的一部分。
 对于中心词 `c` 和上下文词 `o`：
+
 $$ P(o|c) = \frac{\exp(u_o^T v_c)}{\sum_{w' \in V} \exp(u_{w'}^T v_c)} $$
+
 其中 $V$ 是词汇表。
 
 **Word2Vec的两种模型架构**：
+
 1.  **Continuous Bag of Words (CBOW)**：使用窗口中的上下文单词来预测中心词。
     *   输入：上下文词向量的平均 (或拼接)。
     *   输出：中心词的概率分布。
@@ -74,10 +83,10 @@ $$ P(o|c) = \frac{\exp(u_o^T v_c)}{\sum_{w' \in V} \exp(u_{w'}^T v_c)} $$
     *   输入：中心词向量。
     *   输出：各个上下文词的概率分布。
 
-    ![Word2Vec CBOW and Skip-gram](https://i.imgur.com/Q0bZg2j.png)
     *(示意图，实际PPT中为更详细的结构图)*
 
 **Word2Vec 训练参数 (以Skip-gram为例，预测一个上下文词)**:
+
 *   输入层: 中心词 $x$ (one-hot vector, $R^{|V|}$)
 *   隐藏层: $h = W^T x = v_c$ (中心词的词向量, $R^N$)
     *   $W$ 是输入到隐藏层的权重矩阵 ($R^{|V| \times N}$)，其行是中心词向量 $v_w$。
@@ -139,7 +148,9 @@ Seq2Seq模型的一个瓶颈是编码器需要将源句子的所有信息压缩�
     *   **提供可解释性**：通过注意力分布，可以看到解码器在生成某个词时关注了源句子的哪些部分，相当于获得了“软对齐”。
 
 **更一般的注意力定义**：
+
 给定一个查询向量 (query) 和一组键值对 (key-value pairs)，注意力机制计算一个输出，该输出是值的加权和，其中每个值的权重由查询和对应键的相似度计算得出。
+
 *   在Seq2Seq+Attention中：解码器隐藏状态是query，编码器隐藏状态是keys和values。
 
 !!! quote "核心结论"
@@ -154,12 +165,15 @@ Seq2Seq模型的一个瓶颈是编码器需要将源句子的所有信息压缩�
 自注意力允许输入序列中的每个位置关注输入序列中的所有其他位置（包括自身），以计算该位置的新表示。
 
 **将自注意力类比为“模糊的”哈希表**：
+
 *   **Query (Q)**: 当前词，用于查询信息。
 *   **Key (K)**: 序列中的其他词，用于与Query匹配。
 *   **Value (V)**: 序列中其他词的实际内容。
+
 Query和Key计算相似度（注意力分数），该分数作为权重，对Values进行加权求和。
 
 **自注意力计算步骤** (对于输入词嵌入 $x_i$):
+
 1.  **生成Q, K, V向量**：
     $$ q_i = W^Q x_i $$
     $$ k_i = W^K x_i $$
@@ -167,18 +181,25 @@ Query和Key计算相似度（注意力分数），该分数作为权重，对Val
     其中 $W^Q, W^K, W^V$ 是可学习的权重矩阵。
 
 2.  **计算注意力分数 (Attention Scores)**：Query与所有Keys的点积。为了梯度稳定，通常会进行缩放。
+
     $$ e_{ij} = \frac{q_i^T k_j}{\sqrt{d_k}} $$
+
     其中 $d_k$ 是key向量的维度。
 
 3.  **归一化分数 (Softmax)**：对分数进行softmax，得到注意力权重 $\alpha_{ij}$。
+
     $$ \alpha_{ij} = \text{softmax}_j(e_{ij}) = \frac{\exp(e_{ij})}{\sum_{l=1}^{T_x} \exp(e_{il})} $$
 
 4.  **计算输出 (Weighted Sum of Values)**：用注意力权重对Value向量进行加权求和。
+
     $$ o_i = \sum_{j=1}^{T_x} \alpha_{ij} v_j $$
+
     $o_i$ 即为词 $x_i$ 经过自注意力层后的新表示。
 
 **向量化表示**：
+
 输入词嵌入矩阵 $X \in \mathbb{R}^{T_x \times d_{model}}$
+
 1.  $Q = X W^Q$
 2.  $K = X W^K$
 3.  $V = X W^V$
@@ -200,6 +221,7 @@ Query和Key计算相似度（注意力分数），该分数作为权重，对Val
 ### 5.3 多头注意力 (Multi-Head Attention)
 
 与其只用一组 $W^Q, W^K, W^V$ 计算一次注意力，多头注意力机制允许模型并行地多次执行注意力计算。
+
 1.  将Q, K, V分别线性投影 $h$ 次（$h$ 是头的数量），得到 $h$ 组不同的 $Q_head, K_head, V_head$。
 2.  对每一组 $Q_{head_i}, K_{head_i}, V_{head_i}$ 并行计算自注意力，得到 $h$ 个输出向量 $o_i$。
 3.  将这 $h$ 个输出向量拼接 (concatenate) 起来，再通过一个线性变换得到最终输出。
@@ -217,8 +239,10 @@ Transformer模型主要由编码器 (Encoder) 和解码器 (Decoder) 堆栈组�
 
 !!! note "Encoder 结构"
     每个编码器层包含两个主要的子层：
+
     1.  **多头自注意力机制 (Multi-Head Self-Attention)**
     2.  **位置全连接前馈网络 (Position-wise Feed-Forward Network)**
+    
     每个子层都采用了残差连接 (Residual Connection) 和层归一化 (Layer Normalization)。
     $$ \text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x)) $$
 
@@ -226,6 +250,7 @@ Transformer模型主要由编码器 (Encoder) 和解码器 (Decoder) 堆栈组�
 
 !!! note "Decoder 结构"
     每个解码器层包含三个主要的子层：
+
     1.  **掩码多头自注意力机制 (Masked Multi-Head Self-Attention)**：
         *   在自注意力计算中，为了防止解码器在预测当前词时“看到”未来的词（作弊），需要对未来的位置进行掩码 (masking)，即将其注意力分数设为 $-\infty$。
     2.  **多头编码器-解码器注意力机制 (Multi-Head Encoder-Decoder Attention)**：
@@ -233,11 +258,13 @@ Transformer模型主要由编码器 (Encoder) 和解码器 (Decoder) 堆栈组�
         *   Key ($K$) 和 Value ($V$) 来自编码器的最终输出。
         *   这允许解码器的每个位置关注输入序列的所有位置。
     3.  **位置全连接前馈网络 (Position-wise Feed-Forward Network)**
+
     同样，每个子层都采用了残差连接和层归一化。
 
     *(示意图，源自 "Attention Is All You Need" 论文，右半部分)*
 
 **最终输出**：
+
 解码器堆栈的输出会经过一个线性层，将向量投影到词汇表大小的维度，然后通过一个Softmax层生成下一个词的概率分布。
 
 *(示意图，源自 "Attention Is All You Need" 论文)*
