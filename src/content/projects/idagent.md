@@ -1,8 +1,8 @@
 ---
 slug: idagent
 title:
-  zh: IDAgent：连接研究构想与数据集的双向 Agent
-  en: "IDAgent: Linking research ideas and datasets in both directions"
+  zh: IDAgent：构想—数据集双向发现
+  en: "IDAgent: Bidirectional Idea–Dataset Discovery"
 summary:
   zh: 支持 idea-to-dataset 检索，也从 dataset-to-idea 展开研究构思的 Research Agent。
   en: A research-agent prototype for idea-to-dataset retrieval and dataset-grounded ideation.

@@ -14,8 +14,8 @@ const { locale, items = selectPhotos('band') } = Astro.props;
 <section class="photo-section section shell" data-reveal aria-labelledby="photo-heading">
   <div class="section-heading compact-heading">
     <div>
-      <p class="section-kicker">{locale === 'zh' ? '生活切片' : 'Life, in passing'}</p>
-      <h2 id="photo-heading">{locale === 'zh' ? '镜头只是注脚。' : 'The camera is a footnote.'}</h2>
+      <p class="section-kicker">Field Notes</p>
+      <h2 id="photo-heading">{locale === 'zh' ? '校园与城市记录' : 'Campus & City Observations'}</h2>
     </div>
     <p>{locale === 'zh' ? '不做摄影作品集，只留下一些天气、街道与校园里的偶遇。' : 'Not a photo portfolio—just weather, streets, and things noticed around campus.'}</p>
   </div>

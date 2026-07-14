@@ -5,8 +5,8 @@ const { locale } = Astro.props;
 ---
 <section class="search-page shell reading-shell">
   <header class="page-intro search-intro" data-reveal>
-    <p class="section-kicker">Search / 搜索</p>
-    <h1>{locale === 'zh' ? '一次搜索，穿过文章、项目与 Notes。' : 'One search across writing, projects, and Notes.'}</h1>
+    <p class="section-kicker">Search</p>
+    <h1>{locale === 'zh' ? '文章、项目与 Notes 检索' : 'Search Writing, Projects & Notes'}</h1>
     <p>{locale === 'zh' ? 'Notes 仍有自己的原生搜索；这里的 Pagefind 则把文章、项目与 Notes 放进同一份索引。' : 'Pagefind searches writing, projects, and Notes together; Notes also keeps its own built-in search.'}</p>
   </header>
   <div id="pagefind-search" class="pagefind-host" aria-live="polite">

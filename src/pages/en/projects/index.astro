@@ -7,7 +7,7 @@ import ProjectCard from '../../../components/ProjectCard.astro';
 const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.localeCompare(a.data.date));
 ---
 <BaseLayout locale="en" title="Projects" description="Research prototypes, course projects, and personal tools—each described through its problem, approach, tech stack, and outcome." alternatePath="/projects/" alternateLocale="zh">
-  <PageIntro locale="en" kicker="Projects" title="Start with a clear problem. Choose the tools second." description="A collection of research prototypes, course projects, and personal tools, with the focus kept on the problem, approach, and outcome rather than the imagery." />
+  <PageIntro locale="en" kicker="Projects" title="Research Prototypes & Systems" description="A collection of research prototypes, course projects, and personal tools, with the focus kept on the problem, approach, and outcome rather than the imagery." />
   <section class="listing-section shell project-listing" aria-label="Project list">
     {projects.map((project) => <ProjectCard project={project} locale="en" />)}
   </section>

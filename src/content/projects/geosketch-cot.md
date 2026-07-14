@@ -1,8 +1,8 @@
 ---
 slug: geosketch-cot
 title:
-  zh: GeoSketch-CoT：可执行的几何视觉草稿
-  en: "GeoSketch-CoT: Executable scratchpads for geometry"
+  zh: GeoSketch-CoT：可执行几何草稿
+  en: "GeoSketch-CoT: Executable Geometry Scratchpads"
 summary:
   zh: 把结构化几何与绘图动作转为可验证、可编辑的 SVG 草稿。
   en: A prototype that turns structured geometry and drawing actions into verifiable, editable SVG scratchpads.

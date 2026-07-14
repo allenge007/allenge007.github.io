@@ -1,8 +1,8 @@
 ---
 slug: foodflow
 title:
-  zh: FoodFlow：三方外卖推荐与动态履约仿真
-  en: "FoodFlow: Multi-stakeholder food-delivery simulation"
+  zh: FoodFlow：多方推荐与履约仿真
+  en: "FoodFlow: Recommendation & Fulfillment Simulation"
 summary:
   zh: 把用户偏好、商家曝光、骑手负载与平台约束放进同一套推荐与履约仿真。
   en: A recommendation and fulfillment simulator that jointly models users, merchants, couriers, and platform constraints.

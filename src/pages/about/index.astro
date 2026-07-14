@@ -2,11 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { profileContent, siteConfig } from '../../../site.config';
 ---
-<BaseLayout locale="zh" title="关于" description="关于陈正宇（Allenge）：正在进行的本科阶段、Research、项目与竞赛经历。" alternatePath="/en/about/" alternateLocale="en">
+<BaseLayout locale="zh" title="研究与经历" description="计算机科学本科阶段的研究方向、项目、课程与竞赛经历。" alternatePath="/en/about/" alternateLocale="en">
   <article class="about-page shell">
     <header class="about-hero" data-reveal>
-      <p class="section-kicker">About / 关于</p>
-      <h1>我是陈正宇，<br />也叫 Allenge。</h1>
+      <p class="section-kicker">About</p>
+      <h1>研究方向与学习经历</h1>
       <p>中山大学计算机科学与技术本科生，退役 OIer。我关心高效、可信、真正可用的 AI：Research Agent、可执行的多模态推理，以及学习驱动的决策系统。</p>
       <div class="hero-actions">
         <a class="button button-primary" href={`mailto:${siteConfig.social.email}`}>写邮件</a>
@@ -16,29 +16,29 @@ import { profileContent, siteConfig } from '../../../site.config';
 
     <div class="about-grid">
       <section data-reveal>
-        <p class="section-kicker">现在</p>
-        <h2>本科这一章，还在边学边做。</h2>
+        <p class="section-kicker">Background</p>
+        <h2>计算机科学本科阶段</h2>
         <p>2023—2027 年就读于中山大学计算机学院，GPA 86/100。课程从算法、操作系统、网络与数据库，延伸到机器学习和最优化；IELTS Academic 7.0。</p>
       </section>
       <section data-reveal>
-        <p class="section-kicker">研究</p>
-        <h2>让推理的中间过程，能够被检索、执行与验证。</h2>
+        <p class="section-kicker">Research</p>
+        <h2>Research Agent 与可执行推理</h2>
         <p>IDAgent 仍处于稿件准备阶段：它连接研究构想与数据集，以检索、适配和反思组成工作流。GeoSketch-CoT 则把几何推理变成可编辑的 SVG 草稿。目前只把它们作为进行中的工作展示，不作已发表成果表述。</p>
       </section>
       <section data-reveal>
-        <p class="section-kicker">竞赛</p>
-        <h2>算法竞赛让我更在意边界、复杂度，以及答案能否站住。</h2>
+        <p class="section-kicker">Contests</p>
+        <h2>算法竞赛与程序设计</h2>
         <p>曾获 ICPC 亚洲区域赛上海站银牌、CCPC 全国邀请赛广东站金牌、CCF CAT 总决赛银牌，以及两届中山大学程序设计竞赛一等奖。</p>
       </section>
       <section data-reveal>
-        <p class="section-kicker">这个网站</p>
-        <h2>CV 是索引，文章和 Notes 才是过程。</h2>
+        <p class="section-kicker">Site</p>
+        <h2>项目、Writing 与 Notes</h2>
         <p>主页收着项目、文章与个人信息；长期积累的数学、计算机系统和 AI 课程 Notes 仍留在 MkDocs。文章保留最初的语言，照片只作生活的注脚。</p>
       </section>
     </div>
 
     <section class="about-honors" data-reveal aria-labelledby="about-honors-heading">
-      <p class="section-kicker">Education & honors</p>
+      <p class="section-kicker">Background</p>
       <h2 id="about-honors-heading">教育与荣誉</h2>
       <div class="education-card">
         <span class="education-period">{profileContent.education.period}</span>

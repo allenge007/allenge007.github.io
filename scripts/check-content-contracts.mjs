@@ -66,6 +66,9 @@ await mustContain('dist/notes/cs/ai/chapter5/index.html', /javascripts\/generate
 await mustContain('dist/index.html', /property="og:image" content="https:\/\/www\.allenge\.me\/og\.png"/, 'Open Graph image');
 
 const homeHtml = await readFile(join(dist, 'index.html'), 'utf8');
+if (/<title>[^<]*(?:陈正宇|Zhengyu Chen)/i.test(homeHtml)) {
+  failures.push('The public home-page title should use the Allenge brand instead of repeating the full name.');
+}
 const themeBootstrap = homeHtml.indexOf('allenge-theme');
 const firstStylesheet = homeHtml.indexOf('rel="stylesheet"');
 if (themeBootstrap < 0 || firstStylesheet < 0 || themeBootstrap > firstStylesheet) {

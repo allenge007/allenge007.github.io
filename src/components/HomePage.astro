@@ -41,8 +41,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
   <section class="section shell" aria-labelledby="research-heading">
     <div class="section-heading" data-reveal>
       <div>
-        <p class="section-kicker">{locale === 'zh' ? 'Research / 研究兴趣' : 'Research interests'}</p>
-        <h2 id="research-heading">{locale === 'zh' ? '从检索到推理，让每一步都可以被验证。' : 'From retrieval to reasoning—keeping every step verifiable.'}</h2>
+        <p class="section-kicker">Research</p>
+        <h2 id="research-heading">{locale === 'zh' ? '检索、推理与决策' : 'Retrieval, Reasoning & Decision-Making'}</h2>
       </div>
       <p>{locale === 'zh' ? '比起一张漂亮的最终分数表，我更想知道系统如何工作、为何有效，结果能否复现。' : 'I care about how a system works, why it works, and whether its results can be reproduced—not just the final score.'}</p>
     </div>
@@ -62,8 +62,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
   <section class="section shell skills-section" aria-labelledby="skills-heading">
     <div class="section-heading slim-heading" data-reveal>
       <div>
-        <p class="section-kicker">{locale === 'zh' ? 'Stack / 技能' : 'Skills'}</p>
-        <h2 id="skills-heading">{locale === 'zh' ? '研究原型可以轻，工程骨架不能松。' : 'Research prototypes still need solid engineering.'}</h2>
+        <p class="section-kicker">Methods</p>
+        <h2 id="skills-heading">{locale === 'zh' ? '方法、系统与工程' : 'Methods, Systems & Engineering'}</h2>
       </div>
     </div>
     <div class="skills-grid">
@@ -80,8 +80,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
 {flags.education && (
   <section class="section shell cv-section" aria-labelledby="education-heading">
     <div class="cv-title" data-reveal>
-      <p class="section-kicker">{locale === 'zh' ? 'Education / 教育与荣誉' : 'Education & honors'}</p>
-      <h2 id="education-heading">{locale === 'zh' ? '本科这一章，还在继续。' : 'Still learning. Still building.'}</h2>
+      <p class="section-kicker">Background</p>
+      <h2 id="education-heading">{locale === 'zh' ? '本科教育与竞赛经历' : 'Undergraduate Study & Honors'}</h2>
     </div>
     <div class="education-card" data-reveal>
       <span class="education-period">{profileContent.education.period}</span>
@@ -105,8 +105,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
   <section class="section shell" aria-labelledby="projects-heading">
     <div class="section-heading" data-reveal>
       <div>
-        <p class="section-kicker">{locale === 'zh' ? 'Projects / 精选项目' : 'Selected projects'}</p>
-        <h2 id="projects-heading">{locale === 'zh' ? '先把问题说清楚，再把答案做成系统。' : 'Start with the problem. Build toward a working system.'}</h2>
+        <p class="section-kicker">Projects</p>
+        <h2 id="projects-heading">{locale === 'zh' ? '研究原型与系统实现' : 'Research Prototypes & Systems'}</h2>
       </div>
       <a class="text-link heading-link" href={locale === 'zh' ? '/projects/' : '/en/projects/'}>{locale === 'zh' ? '全部项目' : 'All projects'} <span aria-hidden="true">→</span></a>
     </div>
@@ -120,8 +120,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
   <section class="section shell" aria-labelledby="posts-heading">
     <div class="section-heading" data-reveal>
       <div>
-        <p class="section-kicker">{locale === 'zh' ? 'Writing / 近期文章' : 'Recent writing'}</p>
-        <h2 id="posts-heading">{locale === 'zh' ? '写课程，也写广州的天气。' : 'Coursework, weather, and everything in between.'}</h2>
+        <p class="section-kicker">Writing</p>
+        <h2 id="posts-heading">{locale === 'zh' ? '技术笔记与日常记录' : 'Technical Notes & Everyday Writing'}</h2>
       </div>
       <a class="text-link heading-link" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>{locale === 'zh' ? '查看归档' : 'Browse archive'} <span aria-hidden="true">→</span></a>
     </div>
@@ -136,8 +136,8 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
 {flags.notes && (
   <section class="notes-cta shell section" data-reveal aria-labelledby="notes-heading">
     <div>
-      <p class="section-kicker">Notes / 笔记</p>
-      <h2 id="notes-heading">{locale === 'zh' ? '数学、计算机系统与 AI，慢慢写进 Notes。' : 'Notes on math, systems, and AI, built over time.'}</h2>
+      <p class="section-kicker">Notes</p>
+      <h2 id="notes-heading">{locale === 'zh' ? '数学、系统与 AI Notes' : 'Math, Systems & AI Notes'}</h2>
       <p>{locale === 'zh' ? '课程 Notes 仍完整留在 MkDocs：公式、图表、代码和当时的思路，都维持原来的阅读方式。' : 'My long-running MkDocs notes remain intact, including admonitions, collapsible sections, Mermaid diagrams, KaTeX formulas, and code blocks. Each note stays in its original language.'}</p>
     </div>
     <div class="notes-actions">

@@ -11,12 +11,12 @@ export interface SiteNavigationItem {
 export const siteConfig = {
   url: 'https://www.allenge.me',
   title: {
-    zh: '陈正宇 · Allenge',
-    en: 'Zhengyu Chen · Allenge',
+    zh: 'Allenge · AI 系统与研究笔记',
+    en: 'Allenge · AI Systems & Research Notes',
   },
   description: {
-    zh: '中山大学计算机科学本科生，探索高效、可信、真正可用的 AI 系统，也在这里记录项目、文章与 Notes。',
-    en: 'Computer science undergraduate at Sun Yat-sen University, interested in AI systems that are efficient, trustworthy, and useful in practice.',
+    zh: '中山大学计算机科学本科生，关注可信 AI、Research Agent 与多模态推理。',
+    en: 'Computer science undergraduate at Sun Yat-sen University, interested in trustworthy AI, research agents, and multimodal reasoning.',
   },
   identity: {
     name: {
@@ -29,8 +29,8 @@ export const siteConfig = {
       en: 'Sun Yat-sen University · Computer Science and Technology',
     },
     direction: {
-      zh: '高效、可信、真正可用的 AI 系统',
-      en: 'Efficient, trustworthy AI systems that work in practice',
+      zh: '可信 AI 系统与可验证推理',
+      en: 'Trustworthy AI systems and verifiable reasoning',
     },
     location: {
       zh: '中国广州',
@@ -84,12 +84,12 @@ export const siteConfig = {
 export const profileContent = {
   hero: {
     eyebrow: {
-      zh: '中山大学 CS 本科生 · 退役 OIer',
-      en: 'CS undergraduate · Former competitive programmer (OI)',
+      zh: 'SYSU · Computer Science · 2027',
+      en: 'SYSU · Computer Science · 2027',
     },
     title: {
-      zh: '把 AI 系统做得\n可靠、清楚，\n也真正可用。',
-      en: 'Building intelligent systems\nthat hold up in practice.',
+      zh: '可信 AI 系统：\n从检索到推理',
+      en: 'Trustworthy AI systems,\nfrom retrieval to reasoning',
     },
     intro: {
       zh: '我关心 Research Agent 如何找到可靠证据，也关心多模态推理如何被执行、验证，以及学习系统如何作出更好的决策。目前在中山大学读计算机，也把算法、系统与 AI 的学习过程持续写进 Notes。',
