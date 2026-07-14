@@ -151,8 +151,8 @@ export const profileContent = {
       en: 'School of Computer Science and Engineering, Sun Yat-sen University',
     },
     detail: {
-      zh: 'GPA 86/100；课程覆盖数据结构与算法、操作系统、计算机网络、数据库、机器学习与最优化。',
-      en: 'GPA 86/100; coursework includes algorithms, operating systems, networks, databases, machine learning, and optimization.',
+      zh: '课程覆盖数据结构与算法、操作系统、计算机网络、数据库、机器学习与最优化。',
+      en: 'Coursework includes algorithms, operating systems, networks, databases, machine learning, and optimization.',
     },
   },
   honors: [
@@ -171,10 +171,6 @@ export const profileContent = {
     {
       date: '2024 / 2025',
       title: { zh: '中山大学程序设计竞赛一等奖', en: 'SYSU Programming Contest · First Prize' },
-    },
-    {
-      date: '2024 / 2025',
-      title: { zh: '中山大学优秀学生奖学金三等奖', en: 'SYSU Outstanding Student Scholarship · Third Prize' },
     },
   ],
 } as const;
