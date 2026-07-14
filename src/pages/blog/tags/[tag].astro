@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageIntro from '../../../components/PageIntro.astro';
+import PostCard from '../../../components/PostCard.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+  return tags.map((tag) => ({ params: { tag }, props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) } }));
+}
+const { tag, posts } = Astro.props;
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout locale="zh" title={`#${tag}`} description={`标签“${tag}”下的文章。`}>
+  <PageIntro locale="zh" kicker="Tag / 标签" title={`#${tag}`} description={`共 ${posts.length} 篇文章，保留原始写作语言。`} />
+  <section class="listing-section shell post-listing" aria-label={`标签 ${tag} 的文章`}>
+    {posts.map((post) => <PostCard post={post} locale="zh" />)}
+  </section>
+</BaseLayout>

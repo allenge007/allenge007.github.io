@@ -1,51 +1,68 @@
-name: Deploy MkDocs Site
+name: Build and deploy the combined site
+
 on:
   push:
-    branches:
-      - master
-      - main
-  workflow_dispatch: # 允许手动触发
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
 
 permissions:
-  contents: write # mkdocs gh-deploy 需要写权限来推送 gh-pages 分支
+  contents: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Build and Deploy Site
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 获取所有历史记录，供 mkdocs-git-revision-date-localized-plugin 使用
+          fetch-depth: 0
 
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.x # 您可以指定更精确的版本，如 '3.11'
+          python-version: "3.12"
+          cache: pip
 
-      - name: Cache MkDocs Material specific cache
-        uses: actions/cache@v4
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Install MkDocs dependencies
+        run: pip install -r requirements.txt
+
+      - name: Type-check Astro
+        run: npm run check
+
+      - name: Build Astro, Notes, CNAME, and Pagefind
+        run: npm run build
+
+      - name: Verify links and content contracts
+        run: npm run test:links && npm run test:content
+
+      - name: Upload combined build
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
         with:
-          key: ${{ runner.os }}-mkdocs-material-cache-${{ hashFiles('**/mkdocs.yml') }}
-          path: .cache # 这是 mkdocs-material 主题内部缓存的路径 (如果启用了 theme.features.caching)
-          restore-keys: |
-            ${{ runner.os }}-mkdocs-material-cache-
+          name: combined-site
+          path: dist
+          if-no-files-found: error
 
-      - name: Install dependencies
-        run: |
-          pip install mkdocs-material
-          pip install mkdocs-mermaid2-plugin
-          pip install mkdocs-macros-plugin
-          pip install mkdocs-awesome-nav
-          pip install mkdocs-git-revision-date-localized-plugin
-          # 如果您有其他插件在 mkdocs.yml 中定义，也请在此处添加安装命令
-          # 或者考虑使用 requirements.txt 文件来管理依赖
-
-      - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force --verbose # 添加 --verbose 以获取更详细的部署日志
+      - name: Deploy dist to gh-pages root
+        if: github.event_name != 'pull_request'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          cname: www.allenge.me
+          force_orphan: true

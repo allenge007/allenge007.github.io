@@ -1,0 +1,25 @@
+---
+slug: 2025/06/11/weather
+title: 六月十一日，晴转大雨转晴
+description: 操作系统实验下课后，撞见一场来得快、去得也快的广州暴雨。
+date: 2025-06-11
+lang: zh
+tags: [随笔, 生活]
+draft: false
+cover: cloud-break
+coverAlt: 厚重云层间露出的蓝天
+coverCaption: 暴雨前后的天空。
+---
+
+import { Picture } from 'astro:assets';
+import cloudBreak from '../../assets/photos/cloud-break.jpg';
+import juneRain from '../../assets/photos/june-rain.jpg';
+import juneClearing from '../../assets/photos/june-clearing.jpg';
+
+操作系统实验下课后，突然来了一场大暴雨，😓
+
+<Picture src={cloudBreak} alt="云层间露出的蓝天" widths={[720, 1080, 1560]} sizes="(max-width: 860px) 92vw, 780px" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-fallback-image />
+
+<Picture src={juneRain} alt="大雨中的街景" widths={[720, 1080, 1560]} sizes="(max-width: 860px) 92vw, 780px" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-fallback-image />
+
+<Picture src={juneClearing} alt="雨后逐渐放晴" widths={[720, 1080, 1560]} sizes="(max-width: 860px) 92vw, 780px" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-fallback-image />

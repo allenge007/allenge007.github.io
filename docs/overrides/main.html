@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if page and page.content and 'class="mermaid"' in page.content %}
+    <script src="{{ 'javascripts/generated/diagram-runtime.js' | url }}"></script>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div data-pagefind-body data-pagefind-filter="lang:zh">
+    {{ super() }}
+  </div>
+{% endblock %}

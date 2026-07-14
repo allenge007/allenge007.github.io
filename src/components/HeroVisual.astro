@@ -1,0 +1,61 @@
+---
+import { Picture } from 'astro:assets';
+import { selectPhotos } from '../data/photos';
+import doraemon from '../assets/brand/doraemon.png';
+import type { Locale } from '../../site.config';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const heroPhotos = selectPhotos('hero');
+const primary = heroPhotos[0];
+const secondary = heroPhotos[1];
+const primaryRatio = primary ? `--photo-ratio: ${primary.src.width} / ${primary.src.height}` : undefined;
+const secondaryRatio = secondary ? `--photo-ratio: ${secondary.src.width} / ${secondary.src.height}` : undefined;
+---
+
+<div class="hero-visual" data-parallax aria-label={locale === 'zh' ? '生活照片与哆啦 A 梦插画' : 'Snapshots from everyday life and a Doraemon illustration'}>
+  <div class="hero-orbit" aria-hidden="true"></div>
+  <figure class="hero-photo hero-photo-primary" style={primaryRatio} data-image-shell>
+    {primary ? (
+      <Picture
+        src={primary.src}
+        alt={primary.alt[locale]}
+        widths={[320, 480, 720]}
+        sizes="(max-width: 760px) 72vw, 360px"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="eager"
+        fetchpriority="high"
+        data-fallback-image
+      />
+    ) : <span class="image-fallback" aria-label={locale === 'zh' ? '渐变图片占位' : 'Gradient image placeholder'}></span>}
+    {primary && <figcaption>{primary.caption[locale]}</figcaption>}
+  </figure>
+  <figure class="hero-photo hero-photo-secondary" style={secondaryRatio} data-image-shell>
+    {secondary ? (
+      <Picture
+        src={secondary.src}
+        alt={secondary.alt[locale]}
+        widths={[220, 360, 520]}
+        sizes="(max-width: 760px) 46vw, 220px"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="eager"
+        data-fallback-image
+      />
+    ) : <span class="image-fallback" aria-label={locale === 'zh' ? '渐变图片占位' : 'Gradient image placeholder'}></span>}
+  </figure>
+  <div class="doraemon-card" data-image-shell>
+    <Picture
+      src={doraemon}
+      alt={locale === 'zh' ? '站立的哆啦 A 梦' : 'Doraemon standing'}
+      widths={[128, 192, 256]}
+      sizes="180px"
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      loading="eager"
+      data-fallback-image
+    />
+    <span class="doraemon-label">{locale === 'zh' ? '保持好奇' : 'Stay curious'}</span>
+  </div>
+</div>

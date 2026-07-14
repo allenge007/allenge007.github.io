@@ -1,0 +1,130 @@
+import { access, readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+const root = process.cwd();
+const dist = join(root, 'dist');
+const failures = [];
+
+function luminance(hex) {
+  const channels = [1, 3, 5]
+    .map((index) => Number.parseInt(hex.slice(index, index + 2), 16) / 255)
+    .map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrast(foreground, background) {
+  const [lighter, darker] = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+async function mustExist(relativePath, label = relativePath) {
+  try { await access(join(root, relativePath)); } catch { failures.push(`Missing ${label}: ${relativePath}`); }
+}
+
+async function mustContain(relativePath, expression, label) {
+  try {
+    const content = await readFile(join(root, relativePath), 'utf8');
+    if (!expression.test(content)) failures.push(`${label} not found in ${relativePath}`);
+  } catch {
+    failures.push(`Could not read ${relativePath} for ${label}`);
+  }
+}
+
+for (const path of [
+  'dist/index.html',
+  'dist/en/index.html',
+  'dist/projects/index.html',
+  'dist/blog/index.html',
+  'dist/about/index.html',
+  'dist/notes/index.html',
+  'dist/rss.xml',
+  'dist/sitemap-index.xml',
+  'dist/pagefind/pagefind-ui.js',
+  'dist/pagefind/pagefind-ui.css',
+  'dist/notes/search/search_index.json',
+  'dist/notes/javascripts/generated/diagram-runtime.js',
+  'dist/og.png',
+]) await mustExist(path);
+
+await mustContain('docs/CNAME', /^www\.allenge\.me\s*$/, 'preserved custom domain');
+await mustContain('dist/CNAME', /^www\.allenge\.me\s*$/, 'deployed custom domain');
+await mustContain('dist/index.html', /href="\/en\/"/, 'Chinese-to-English navigation');
+await mustContain('dist/en/index.html', /href="\/"/, 'English-to-Chinese navigation');
+await mustContain('dist/blog/index.html', /post-card-no-cover/, 'coverless post fallback');
+await mustContain('src/components/PhotosBand.astro', /items\.length > 0[\s\S]*photo-empty/, 'empty photo manifest fallback');
+await mustContain('src/styles/global.css', /\.is-image-error img\s*\{\s*visibility:\s*hidden/, 'failed image fallback');
+await mustContain('src/styles/global.css', /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.js \[data-reveal\]\s*\{\s*opacity:\s*1;\s*transform:\s*none/, 'reduced-motion fallback');
+await mustContain('src/components/HeroVisual.astro', /--photo-ratio:[^`]+src\.width[^`]+src\.height/, 'source-proportional hero photo frame');
+await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
+await mustContain('dist/cs/os/chapter1/index.html', /\/notes\/cs\/os\/chapter1\//, 'legacy computer science redirect');
+await mustContain('dist/blog/posts/myfirst/index.html', /\/blog\/2025\/05\/23\/myfirst\//, 'legacy blog redirect');
+await mustContain('dist/notes/admonitions/index.html', /class="admonition/, 'MkDocs admonition');
+await mustContain('dist/notes/admonitions/index.html', /<details/, 'MkDocs collapsible block');
+await mustContain('dist/notes/content-tabs/index.html', /class="tabbed-/, 'MkDocs tabs');
+await mustContain('dist/notes/code-examples/index.html', /<code/, 'MkDocs code block');
+await mustContain('dist/notes/cs/ai/chapter5/index.html', /javascripts\/generated\/diagram-runtime\.js/, 'self-hosted Mermaid runtime');
+await mustContain('dist/index.html', /property="og:image" content="https:\/\/www\.allenge\.me\/og\.png"/, 'Open Graph image');
+
+const homeHtml = await readFile(join(dist, 'index.html'), 'utf8');
+const themeBootstrap = homeHtml.indexOf('allenge-theme');
+const firstStylesheet = homeHtml.indexOf('rel="stylesheet"');
+if (themeBootstrap < 0 || firstStylesheet < 0 || themeBootstrap > firstStylesheet) {
+  failures.push('Theme bootstrap must run before stylesheets to prevent a theme flash.');
+}
+
+const ogImage = await readFile(join(dist, 'og.png'));
+if (ogImage.readUInt32BE(16) !== 1200 || ogImage.readUInt32BE(20) !== 630) {
+  failures.push('Open Graph image must be exactly 1200×630.');
+}
+
+const css = await readFile(join(root, 'src', 'styles', 'global.css'), 'utf8');
+const lightTokens = css.match(/:root\s*\{([\s\S]*?)\}/)?.[1] ?? '';
+const darkTokens = css.match(/:root\[data-theme="dark"\]\s*\{([\s\S]*?)\}/)?.[1] ?? '';
+const token = (block, name) => block.match(new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, 'i'))?.[1];
+for (const [theme, block] of [['light', lightTokens], ['dark', darkTokens]]) {
+  const background = token(block, 'page');
+  for (const name of ['ink', 'ink-soft', 'muted', 'faint', 'blue']) {
+    const foreground = token(block, name);
+    if (!foreground || !background || contrast(foreground, background) < 4.5) {
+      failures.push(`${theme} ${name} text color does not meet WCAG AA contrast against the page background.`);
+    }
+  }
+}
+
+const noteHtml = await readFile(join(dist, 'notes', 'math', 'optimization_theory', 'chapter1', 'index.html'), 'utf8');
+if (!/arithmatex|katex/i.test(noteHtml)) failures.push('KaTeX/arithmatex markup missing from Notes.');
+const aiHtml = await readFile(join(dist, 'notes', 'cs', 'ai', 'index.html'), 'utf8');
+if (!/mermaid/i.test(aiHtml)) {
+  const noteFiles = await readdir(join(dist, 'notes', 'cs', 'ai'), { recursive: true });
+  const hasMermaid = await Promise.all(noteFiles.filter((name) => String(name).endsWith('.html')).map(async (name) => /mermaid/i.test(await readFile(join(dist, 'notes', 'cs', 'ai', String(name)), 'utf8'))));
+  if (!hasMermaid.some(Boolean)) failures.push('Mermaid markup missing from Notes.');
+}
+
+const assets = await readdir(join(dist, '_assets'));
+if (assets.some((name) => /\.(?:jpe?g|png)$/i.test(name))) {
+  failures.push('Astro image output contains original JPEG/PNG assets instead of transformed AVIF/WebP.');
+}
+if (!assets.some((name) => name.endsWith('.avif')) || !assets.some((name) => name.endsWith('.webp'))) {
+  failures.push('Responsive AVIF/WebP output was not generated.');
+}
+
+const publicAstroHtml = (await readdir(dist, { recursive: true }))
+  .filter((name) => String(name).endsWith('.html') && !String(name).startsWith('notes/'));
+for (const name of publicAstroHtml) {
+  const html = await readFile(join(dist, String(name)), 'utf8');
+  for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
+    if (!/\balt(?:\s|=|>)/i.test(match[0])) failures.push(`Image without alt attribute in dist/${name}`);
+  }
+}
+
+try {
+  await access(join(dist, 'blog', 'drafts', 'content-features', 'index.html'));
+  failures.push('Draft post was emitted into the public build.');
+} catch {}
+
+if (failures.length) {
+  console.error(`Content contract verification failed:\n- ${failures.join('\n- ')}`);
+  process.exit(1);
+}
+
+console.log('Verified bilingual navigation, fallbacks, legacy redirects, feeds, responsive images, and preserved Notes features.');

@@ -1,8 +1,9 @@
 ignore: "*.hidden.md"
 nav:
-  - 主页: index.md
+  - 笔记首页: index.md
   - 数学: math
   - 计算机科学: cs
-  - 项目: project
-  - 博客: blog
-  - 关于: about
+  - 组件示例:
+      - Admonition 与折叠块: admonitions.md
+      - Tabs: content-tabs.md
+      - 代码块: code-examples.md

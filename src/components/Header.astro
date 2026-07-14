@@ -1,0 +1,68 @@
+---
+import { Picture } from 'astro:assets';
+import { siteConfig, type Locale } from '../../site.config';
+import ohBoy from '../assets/brand/oh-boy.png';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const pathname = Astro.url.pathname;
+const isOriginalLanguagePost = pathname.startsWith('/blog/') && pathname !== '/blog/';
+const isNotFound = pathname === '/404/' || pathname === '/404.html';
+const languageHref = locale === 'zh'
+  ? (isNotFound ? '/en/' : (isOriginalLanguagePost ? '/en/blog/' : (pathname === '/' ? '/en/' : `/en${pathname}`)))
+  : (pathname === '/en/' ? '/' : pathname.replace(/^\/en/, '') || '/');
+const languageLabel = locale === 'zh' ? 'EN' : '中文';
+const languageAria = locale === 'zh' ? 'Switch to English' : '切换到中文';
+
+const isActive = (href: string) => {
+  if (href === '/' || href === '/en/') return pathname === href;
+  return pathname.startsWith(href);
+};
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="wordmark" href={locale === 'zh' ? '/' : '/en/'} aria-label={locale === 'zh' ? 'Allenge 首页' : 'Allenge home'}>
+      <span class="wordmark-mark" data-image-shell>
+        <Picture src={ohBoy} alt="" widths={[40, 80]} sizes="40px" formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" />
+      </span>
+      <span>allenge<span class="wordmark-dot">.</span></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
+      {siteConfig.navigation.map((item) => (
+        <a href={item.href[locale]} aria-current={isActive(item.href[locale]) ? 'page' : undefined}>
+          {item.label[locale]}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <a class="language-link" href={languageHref} aria-label={languageAria}>{languageLabel}</a>
+      <a class="search-link" href={locale === 'zh' ? '/search/' : '/en/search/'} aria-label={locale === 'zh' ? '搜索' : 'Search'}>
+        <span aria-hidden="true">⌕</span>
+      </a>
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        data-label-dark={locale === 'zh' ? '切换到深色模式' : 'Switch to dark theme'}
+        data-label-light={locale === 'zh' ? '切换到浅色模式' : 'Switch to light theme'}
+        aria-label={locale === 'zh' ? '切换到深色模式' : 'Switch to dark theme'}
+        aria-pressed="false"
+      >
+        <span data-theme-icon aria-hidden="true">◐</span>
+      </button>
+      <details class="mobile-menu">
+        <summary aria-label={locale === 'zh' ? '打开导航' : 'Open navigation'}><span></span><span></span></summary>
+        <nav aria-label={locale === 'zh' ? '移动端导航' : 'Mobile navigation'}>
+          {siteConfig.navigation.map((item) => (
+            <a href={item.href[locale]} aria-current={isActive(item.href[locale]) ? 'page' : undefined}>
+              {item.label[locale]}
+            </a>
+          ))}
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

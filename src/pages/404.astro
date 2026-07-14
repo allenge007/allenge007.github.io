@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout locale="zh" title="页面未找到" description="这个页面不存在。" canonicalPath="/404.html" pagefind={false} noindex>
+  <section class="not-found shell reading-shell">
+    <p class="section-kicker">404 / Not found</p>
+    <h1>这扇任意门暂时没有通向页面。</h1>
+    <p>你可以回到首页，或在全站搜索文章、项目和 Notes。</p>
+    <div class="hero-actions"><a class="button button-primary" href="/">返回首页</a><a class="button button-quiet" href="/search/">全站搜索</a></div>
+  </section>
+</BaseLayout>

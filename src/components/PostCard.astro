@@ -1,0 +1,44 @@
+---
+import { Picture } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../site.config';
+import { resolvePostCover } from '../data/content-images';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  locale: Locale;
+  featured?: boolean;
+}
+
+const { post, locale, featured = false } = Astro.props;
+const href = `/blog/${post.data.slug}/`;
+const cover = resolvePostCover(post.data.cover);
+const date = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+  year: 'numeric', month: 'short', day: '2-digit', timeZone: 'Asia/Shanghai',
+}).format(post.data.date);
+---
+
+<article class:list={['post-card', featured && 'post-card-featured', !post.data.cover && 'post-card-no-cover']} data-reveal>
+  {cover && (
+    <a class="post-card-image" href={href} tabindex="-1" aria-hidden="true" data-image-shell>
+      <Picture
+        src={cover}
+        alt=""
+        widths={[420, 720, 960]}
+        sizes={featured ? '(max-width: 760px) 100vw, 54vw' : '(max-width: 760px) 100vw, 31vw'}
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="lazy"
+        data-fallback-image
+      />
+    </a>
+  )}
+  <div class="post-card-body">
+    <div class="post-meta"><time datetime={post.data.date.toISOString()}>{date}</time><span>{post.data.lang.toUpperCase()}</span></div>
+    <h3><a href={href}>{post.data.title}</a></h3>
+    <p>{post.data.description}</p>
+    <ul class="tag-list">
+      {post.data.tags.slice(0, 3).map((tag) => <li><a href={`/blog/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>)}
+    </ul>
+  </div>
+</article>

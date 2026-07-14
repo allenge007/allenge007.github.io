@@ -1,0 +1,46 @@
+---
+import { Picture } from 'astro:assets';
+import { selectPhotos, type PhotoManifestItem } from '../data/photos';
+import type { Locale } from '../../site.config';
+
+interface Props {
+  locale: Locale;
+  items?: PhotoManifestItem[];
+}
+
+const { locale, items = selectPhotos('band') } = Astro.props;
+---
+
+<section class="photo-section section shell" data-reveal aria-labelledby="photo-heading">
+  <div class="section-heading compact-heading">
+    <div>
+      <p class="section-kicker">{locale === 'zh' ? '生活切片' : 'Life, in passing'}</p>
+      <h2 id="photo-heading">{locale === 'zh' ? '镜头只是注脚。' : 'The camera is a footnote.'}</h2>
+    </div>
+    <p>{locale === 'zh' ? '不做摄影作品集，只留下一些天气、街道与校园里的偶遇。' : 'Not a photo portfolio—just weather, streets, and things noticed around campus.'}</p>
+  </div>
+
+  {items.length > 0 ? (
+    <div class="photo-band">
+      {items.map((photo, index) => (
+        <figure class:list={['photo-tile', index === 0 && 'photo-tile-wide']} data-image-shell>
+          <Picture
+            src={photo.src}
+            alt={photo.alt[locale]}
+            widths={[420, 720, 1080]}
+            sizes={index === 0 ? '(max-width: 760px) 92vw, 48vw' : '(max-width: 760px) 72vw, 25vw'}
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            loading="lazy"
+            data-fallback-image
+          />
+          <figcaption><span>{String(index + 1).padStart(2, '0')}</span>{photo.caption[locale]}</figcaption>
+        </figure>
+      ))}
+    </div>
+  ) : (
+    <div class="photo-empty" role="img" aria-label={locale === 'zh' ? '冷色渐变照片占位' : 'Cool gradient photo fallback'}>
+      <span>{locale === 'zh' ? '照片整理中，先留一片蓝。' : 'Photos are being sorted. A little blue for now.'}</span>
+    </div>
+  )}
+</section>

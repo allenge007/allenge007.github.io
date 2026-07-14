@@ -1,0 +1,169 @@
+---
+import '@fontsource-variable/inter/index.css';
+import '@fontsource/solway/400.css';
+import '@fontsource/solway/500.css';
+import '@fontsource/solway/700.css';
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+import { siteConfig, type Locale } from '../../site.config';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  locale?: Locale;
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  alternatePath?: string;
+  alternateLocale?: Locale;
+  article?: boolean;
+  pagefind?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  locale = 'zh',
+  title = siteConfig.title[locale],
+  description = siteConfig.description[locale],
+  canonicalPath = Astro.url.pathname,
+  alternatePath,
+  alternateLocale,
+  article = false,
+  pagefind = true,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title === siteConfig.title[locale] ? title : `${title} · ${siteConfig.identity.nickname}`;
+const canonical = new URL(canonicalPath, siteConfig.url);
+const socialImage = new URL('/og.png', siteConfig.url);
+const measurementId = siteConfig.analytics.googleMeasurementId;
+---
+
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'} data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical} />
+    {alternatePath && alternateLocale && (
+      <link rel="alternate" hreflang={alternateLocale === 'zh' ? 'zh-CN' : 'en'} href={new URL(alternatePath, siteConfig.url)} />
+    )}
+    <link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <title>{fullTitle}</title>
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Allenge" />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Zhengyu Chen — Allenge, AI Systems, Research and Notes" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Zhengyu Chen — Allenge, AI Systems, Research and Notes" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
+    {measurementId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
+        <script is:inline define:vars={{ measurementId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{locale === 'zh' ? '跳到主要内容' : 'Skip to content'}</a>
+    <Header locale={locale} />
+    <main id="main-content" data-pagefind-body={pagefind ? true : undefined} data-pagefind-filter={pagefind ? `lang:${locale}` : undefined}>
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <script>
+      const root = document.documentElement;
+      const themeButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+      const updateThemeButton = () => {
+        if (!themeButton) return;
+        const isDark = root.dataset.theme === 'dark';
+        themeButton.setAttribute('aria-pressed', String(isDark));
+        themeButton.setAttribute('aria-label', isDark ? themeButton.dataset.labelLight! : themeButton.dataset.labelDark!);
+        const icon = themeButton.querySelector('[data-theme-icon]');
+        if (icon) icon.textContent = isDark ? '☀' : '◐';
+      };
+
+      themeButton?.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        root.style.colorScheme = next;
+        try { localStorage.setItem('allenge-theme', next); } catch {}
+        updateThemeButton();
+      });
+      updateThemeButton();
+
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealItems.forEach((item) => item.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        revealItems.forEach((item) => observer.observe(item));
+      }
+
+      const parallax = document.querySelector<HTMLElement>('[data-parallax]');
+      if (parallax && !reduceMotion) {
+        let ticking = false;
+        const update = () => {
+          const distance = Math.min(scrollY * 0.055, 34);
+          parallax.style.setProperty('--parallax-y', `${distance}px`);
+          ticking = false;
+        };
+        addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        }, { passive: true });
+      }
+
+      document.querySelectorAll<HTMLImageElement>('[data-fallback-image]').forEach((image) => {
+        image.addEventListener('error', () => image.closest<HTMLElement>('[data-image-shell]')?.classList.add('is-image-error'));
+      });
+    </script>
+  </body>
+</html>

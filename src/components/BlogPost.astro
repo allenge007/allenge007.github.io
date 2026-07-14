@@ -1,0 +1,63 @@
+---
+import { Picture } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../site.config';
+import { resolvePostCover } from '../data/content-images';
+
+interface Props { post: CollectionEntry<'posts'>; Content: any }
+const { post, Content } = Astro.props;
+const locale: Locale = post.data.lang;
+const cover = resolvePostCover(post.data.cover);
+const date = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Shanghai',
+}).format(post.data.date);
+---
+
+<article class="blog-post shell reading-shell">
+  <header class="post-header" data-reveal>
+    <a class="back-link" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>← {locale === 'zh' ? '返回文章' : 'Back to writing'}</a>
+    <div class="post-header-meta"><time datetime={post.data.date.toISOString()}>{date}</time><span>{post.data.lang.toUpperCase()}</span></div>
+    <h1>{post.data.title}</h1>
+    <p>{post.data.description}</p>
+    <ul class="tag-list post-tags">{post.data.tags.map((tag) => <li><a href={`/blog/tags/${encodeURIComponent(tag)}/`}>#{tag}</a></li>)}</ul>
+  </header>
+  {cover && (
+    <figure class="post-cover" data-reveal data-image-shell>
+      <Picture
+        src={cover}
+        alt={post.data.coverAlt ?? ''}
+        widths={[720, 1080, 1560]}
+        sizes="(max-width: 860px) 92vw, 780px"
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        loading="eager"
+        fetchpriority="high"
+        data-fallback-image
+      />
+      {post.data.coverCaption && <figcaption>{post.data.coverCaption}</figcaption>}
+    </figure>
+  )}
+  <div class="prose">
+    <Content />
+  </div>
+</article>
+
+<script>
+  const renderMermaid = async () => {
+    const blocks = document.querySelectorAll<HTMLElement>('pre[data-language="mermaid"]');
+    if (!blocks.length) return;
+    const { default: mermaid } = await import('mermaid');
+    const dark = document.documentElement.dataset.theme === 'dark';
+    mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'neutral', securityLevel: 'strict' });
+    blocks.forEach((block, index) => {
+      const code = block.querySelector('code')?.textContent ?? '';
+      const diagram = document.createElement('div');
+      diagram.className = 'mermaid';
+      diagram.id = `mermaid-${index}`;
+      diagram.textContent = code;
+      block.replaceWith(diagram);
+    });
+    await mermaid.run({ querySelector: '.mermaid' });
+  };
+  renderMermaid().catch(() => {});
+</script>

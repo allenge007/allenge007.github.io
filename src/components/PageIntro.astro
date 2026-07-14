@@ -1,0 +1,15 @@
+---
+import type { Locale } from '../../site.config';
+interface Props {
+  locale: Locale;
+  kicker: string;
+  title: string;
+  description: string;
+}
+const { kicker, title, description } = Astro.props;
+---
+<header class="page-intro shell" data-reveal>
+  <p class="section-kicker">{kicker}</p>
+  <h1>{title}</h1>
+  <p>{description}</p>
+</header>

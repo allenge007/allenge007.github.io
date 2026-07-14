@@ -1,0 +1,7 @@
+---
+import LegacyRedirect from '../../components/LegacyRedirect.astro';
+import { legacyNotePaths } from '../../lib/legacy-paths';
+export function getStaticPaths() { return legacyNotePaths('cs'); }
+const { target } = Astro.props;
+---
+<LegacyRedirect target={target} label="笔记已迁移至 /notes/，正在跳转…" />

@@ -1,0 +1,18 @@
+---
+interface Props { target: string; label?: string }
+const { target, label = 'Redirecting…' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>{label}</title>
+    <script is:inline define:vars={{ target }}>
+      location.replace(target + location.search + location.hash);
+    </script>
+  </head>
+  <body><p><a href={target}>{label}</a></p></body>
+</html>

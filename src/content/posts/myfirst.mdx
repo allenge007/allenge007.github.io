@@ -1,0 +1,20 @@
+---
+slug: 2025/05/23/myfirst
+title: 五月二十三日，大雨转晴
+description: 大雨过后的五月二十三日，用两张照片留住一点天气与日常。
+date: 2025-05-23
+lang: zh
+tags: [随笔, 生活]
+draft: false
+cover: after-rain
+coverAlt: 雨后街道与放晴的天空
+coverCaption: 广州，大雨转晴。
+---
+
+import { Picture } from 'astro:assets';
+import afterRain from '../../assets/photos/after-rain.jpg';
+import mayRain from '../../assets/photos/may-rain.jpg';
+
+<Picture src={afterRain} alt="雨后放晴的街道" widths={[720, 1080, 1560]} sizes="(max-width: 860px) 92vw, 780px" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-fallback-image />
+
+<Picture src={mayRain} alt="雨天的另一处街景" widths={[720, 1080, 1560]} sizes="(max-width: 860px) 92vw, 780px" formats={['avif', 'webp']} fallbackFormat="webp" loading="lazy" data-fallback-image />

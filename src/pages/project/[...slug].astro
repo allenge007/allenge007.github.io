@@ -1,0 +1,12 @@
+---
+import LegacyRedirect from '../../components/LegacyRedirect.astro';
+export function getStaticPaths() {
+  return [
+    { params: { slug: undefined }, props: { target: '/projects/' } },
+    { params: { slug: 'DeepseekCLI' }, props: { target: '/projects/deepseek-cli/' } },
+    { params: { slug: 'deepseekcli' }, props: { target: '/projects/deepseek-cli/' } },
+  ];
+}
+const { target } = Astro.props;
+---
+<LegacyRedirect target={target} label="项目页面已迁移，正在跳转…" />

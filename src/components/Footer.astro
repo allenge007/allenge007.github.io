@@ -1,0 +1,22 @@
+---
+import { siteConfig, type Locale } from '../../site.config';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" data-pagefind-ignore>
+  <div class="shell footer-inner">
+    <div>
+      <p class="footer-name">{siteConfig.identity.name[locale]} <span>· {siteConfig.identity.nickname}</span></p>
+      <p>{locale === 'zh' ? '在广州读书，做系统，也记录生活。' : 'Studying, building, and writing in Guangzhou.'}</p>
+    </div>
+    <div class="footer-links">
+      <a href={siteConfig.social.github}>GitHub</a>
+      <a href={`mailto:${siteConfig.social.email}`}>{locale === 'zh' ? '邮件' : 'Email'}</a>
+      <a href="/rss.xml">RSS</a>
+      <a href="/notes/">Notes</a>
+    </div>
+    <p class="footer-meta">© {year} Allenge · {locale === 'zh' ? '文字与生活切片' : 'Writing and fragments of everyday life'}</p>
+  </div>
+</footer>

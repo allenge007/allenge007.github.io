@@ -1,0 +1,11 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HomePage from '../../components/HomePage.astro';
+
+const projects = await getCollection('projects');
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout locale="en" alternatePath="/" alternateLocale="zh">
+  <HomePage locale="en" projects={projects} posts={posts} />
+</BaseLayout>

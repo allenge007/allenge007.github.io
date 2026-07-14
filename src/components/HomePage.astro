@@ -1,0 +1,148 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { profileContent, siteConfig, type Locale } from '../../site.config';
+import HeroVisual from './HeroVisual.astro';
+import ProjectCard from './ProjectCard.astro';
+import PostCard from './PostCard.astro';
+import PhotosBand from './PhotosBand.astro';
+
+interface Props {
+  locale: Locale;
+  projects: CollectionEntry<'projects'>[];
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { locale, projects, posts } = Astro.props;
+const flags = siteConfig.sectionFlags;
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 3);
+const recentPosts = posts.slice(0, 3);
+const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
+---
+
+<section class="hero shell">
+  <div class="hero-copy" data-reveal>
+    <p class="hero-eyebrow">{profileContent.hero.eyebrow[locale]}</p>
+    <h1>{profileContent.hero.title[locale]}</h1>
+    <p class="hero-school">{siteConfig.identity.school[locale]}</p>
+    <p class="hero-intro">{profileContent.hero.intro[locale]}</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href={siteConfig.social.github}>GitHub <span aria-hidden="true">↗</span></a>
+      <a class="button button-quiet" href={`mailto:${siteConfig.social.email}`}>{contactLabel}</a>
+    </div>
+    <dl class="hero-facts">
+      <div><dt>{locale === 'zh' ? '关注方向' : 'Focus'}</dt><dd>{siteConfig.identity.direction[locale]}</dd></div>
+      <div><dt>{locale === 'zh' ? '坐标' : 'Based in'}</dt><dd>{siteConfig.identity.location[locale]}</dd></div>
+    </dl>
+  </div>
+  <HeroVisual locale={locale} />
+</section>
+
+{flags.research && profileContent.research.length > 0 && (
+  <section class="section shell" aria-labelledby="research-heading">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="section-kicker">{locale === 'zh' ? 'Research / 研究兴趣' : 'Research interests'}</p>
+        <h2 id="research-heading">{locale === 'zh' ? '从检索到推理，让每一步都可以被验证。' : 'From retrieval to reasoning—keeping every step verifiable.'}</h2>
+      </div>
+      <p>{locale === 'zh' ? '比起一张漂亮的最终分数表，我更想知道系统如何工作、为何有效，结果能否复现。' : 'I care about how a system works, why it works, and whether its results can be reproduced—not just the final score.'}</p>
+    </div>
+    <div class="interest-grid">
+      {profileContent.research.map((interest) => (
+        <article class="interest-card" data-reveal>
+          <span class="interest-index">{interest.index}</span>
+          <h3>{interest.title[locale]}</h3>
+          <p>{interest.description[locale]}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+{flags.skills && profileContent.skills.length > 0 && (
+  <section class="section shell skills-section" aria-labelledby="skills-heading">
+    <div class="section-heading slim-heading" data-reveal>
+      <div>
+        <p class="section-kicker">{locale === 'zh' ? 'Stack / 技能' : 'Skills'}</p>
+        <h2 id="skills-heading">{locale === 'zh' ? '研究原型可以轻，工程骨架不能松。' : 'Research prototypes still need solid engineering.'}</h2>
+      </div>
+    </div>
+    <div class="skills-grid">
+      {profileContent.skills.map((group) => (
+        <div class="skill-group" data-reveal>
+          <h3>{group.title[locale]}</h3>
+          <p>{group.items.join(' · ')}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+{flags.education && (
+  <section class="section shell cv-section" aria-labelledby="education-heading">
+    <div class="cv-title" data-reveal>
+      <p class="section-kicker">{locale === 'zh' ? 'Education / 教育与荣誉' : 'Education & honors'}</p>
+      <h2 id="education-heading">{locale === 'zh' ? '本科这一章，还在继续。' : 'Still learning. Still building.'}</h2>
+    </div>
+    <div class="education-card" data-reveal>
+      <span class="education-period">{profileContent.education.period}</span>
+      <div>
+        <h3>{profileContent.education.degree[locale]}</h3>
+        <p class="education-school">{profileContent.education.school[locale]}</p>
+        <p>{profileContent.education.detail[locale]}</p>
+      </div>
+    </div>
+    {flags.honors && profileContent.honors.length > 0 && (
+      <ol class="honors-list">
+        {profileContent.honors.map((honor) => (
+          <li data-reveal><time>{honor.date}</time><span>{honor.title[locale]}</span></li>
+        ))}
+      </ol>
+    )}
+  </section>
+)}
+
+{flags.projects && featuredProjects.length > 0 && (
+  <section class="section shell" aria-labelledby="projects-heading">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="section-kicker">{locale === 'zh' ? 'Projects / 精选项目' : 'Selected projects'}</p>
+        <h2 id="projects-heading">{locale === 'zh' ? '先把问题说清楚，再把答案做成系统。' : 'Start with the problem. Build toward a working system.'}</h2>
+      </div>
+      <a class="text-link heading-link" href={locale === 'zh' ? '/projects/' : '/en/projects/'}>{locale === 'zh' ? '全部项目' : 'All projects'} <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="project-grid">
+      {featuredProjects.map((project) => <ProjectCard project={project} locale={locale} compact />)}
+    </div>
+  </section>
+)}
+
+{flags.posts && recentPosts.length > 0 && (
+  <section class="section shell" aria-labelledby="posts-heading">
+    <div class="section-heading" data-reveal>
+      <div>
+        <p class="section-kicker">{locale === 'zh' ? 'Writing / 近期文章' : 'Recent writing'}</p>
+        <h2 id="posts-heading">{locale === 'zh' ? '写课程，也写广州的天气。' : 'Coursework, weather, and everything in between.'}</h2>
+      </div>
+      <a class="text-link heading-link" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>{locale === 'zh' ? '查看归档' : 'Browse archive'} <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="post-grid">
+      {recentPosts.map((post, index) => <PostCard post={post} locale={locale} featured={index === 0} />)}
+    </div>
+  </section>
+)}
+
+{flags.photos && <PhotosBand locale={locale} />}
+
+{flags.notes && (
+  <section class="notes-cta shell section" data-reveal aria-labelledby="notes-heading">
+    <div>
+      <p class="section-kicker">Notes / 笔记</p>
+      <h2 id="notes-heading">{locale === 'zh' ? '数学、计算机系统与 AI，慢慢写进 Notes。' : 'Notes on math, systems, and AI, built over time.'}</h2>
+      <p>{locale === 'zh' ? '课程 Notes 仍完整留在 MkDocs：公式、图表、代码和当时的思路，都维持原来的阅读方式。' : 'My long-running MkDocs notes remain intact, including admonitions, collapsible sections, Mermaid diagrams, KaTeX formulas, and code blocks. Each note stays in its original language.'}</p>
+    </div>
+    <div class="notes-actions">
+      <a class="button button-light" href="/notes/">{locale === 'zh' ? '打开 Notes' : 'Open Notes'} <span aria-hidden="true">↗</span></a>
+      <a class="button button-ghost-light" href={locale === 'zh' ? '/search/' : '/en/search/'}>{locale === 'zh' ? '搜索全站' : 'Search the site'}</a>
+    </div>
+  </section>
+)}

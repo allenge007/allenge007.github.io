@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageIntro from '../../../components/PageIntro.astro';
+import PostCard from '../../../components/PostCard.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+---
+<BaseLayout locale="en" title="Writing" description="Technical writing, coursework, and everyday notes, kept in their original language." alternatePath="/blog/" alternateLocale="zh">
+  <PageIntro locale="en" kicker="Writing" title="Technical work, with room for weather." description="I leave each post in the language it was written in rather than forcing a translation for the bilingual interface." />
+  <nav class="tag-cloud shell" aria-label="Post tags">
+    {tags.map((tag) => <a href={`/blog/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>)}
+  </nav>
+  <section class="listing-section shell post-listing" aria-label="Post list">
+    {posts.map((post, index) => <PostCard post={post} locale="en" featured={index === 0} />)}
+  </section>
+</BaseLayout>

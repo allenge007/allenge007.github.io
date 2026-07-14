@@ -1,5 +1,18 @@
-site_name: allenge 的小站
-site_url: https://allenge007.github.io/
+site_name: Allenge Notes
+site_description: 数学、计算机系统与人工智能学习笔记
+site_url: https://www.allenge.me/notes/
+exclude_docs: |
+  about/
+  blog/
+  project/
+  overrides/
+  BingSiteAuth.xml
+  googlebd120c166a4a96fe.html
+  assets/hero/
+  assets/cat.jpg
+  assets/cat.png
+  assets/allenge-logo.png
+  assets/logo.png
 theme:
   name: material
   custom_dir: docs/overrides
@@ -50,8 +63,8 @@ theme:
   favicon: assets/smile.ico
 
 edit_uri: edit/main/docs
-repo_url: https://github.com/allenge007
-repo_name: allenge
+repo_url: https://github.com/allenge007/allenge007.github.io
+repo_name: Allenge / Notes
 
 markdown_extensions:
   - abbr
@@ -95,11 +108,6 @@ extra_css:
 
 plugins:
   - search
-  - tags: 
-      tags_file: blog/tags.md
-  - blog:
-      blog_toc: true
-      archive_date_format: MMMM yyyy
   - meta
   - awesome-nav
   - macros
@@ -107,6 +115,7 @@ plugins:
       timezone: Asia/Shanghai
 
 extra:
+  homepage: /notes/
   social:
     - icon: simple/github
       link: https://github.com/allenge007

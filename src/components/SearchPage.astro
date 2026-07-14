@@ -1,0 +1,46 @@
+---
+import type { Locale } from '../../site.config';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+---
+<section class="search-page shell reading-shell">
+  <header class="page-intro search-intro" data-reveal>
+    <p class="section-kicker">Search / 搜索</p>
+    <h1>{locale === 'zh' ? '一次搜索，穿过文章、项目与 Notes。' : 'One search across writing, projects, and Notes.'}</h1>
+    <p>{locale === 'zh' ? 'Notes 仍有自己的原生搜索；这里的 Pagefind 则把文章、项目与 Notes 放进同一份索引。' : 'Pagefind searches writing, projects, and Notes together; Notes also keeps its own built-in search.'}</p>
+  </header>
+  <div id="pagefind-search" class="pagefind-host" aria-live="polite">
+    <p data-search-status>{locale === 'zh' ? '正在加载搜索索引…' : 'Loading the search index…'}</p>
+  </div>
+</section>
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline define:vars={{ locale }}>
+  window.addEventListener('DOMContentLoaded', async () => {
+    const host = document.querySelector('#pagefind-search');
+    const status = host?.querySelector('[data-search-status]');
+    try {
+      if (typeof window.PagefindUI !== 'function') throw new Error('Pagefind UI is unavailable.');
+      status?.remove();
+      new window.PagefindUI({
+        element: '#pagefind-search',
+        showSubResults: true,
+        showImages: false,
+        resetStyles: false,
+        translations: locale === 'zh' ? {
+          placeholder: '搜索文章、项目与 Notes',
+          zero_results: '没有找到“[SEARCH_TERM]”',
+          many_results: '找到 [COUNT] 条结果',
+          one_result: '找到 1 条结果',
+          clear_search: '清除',
+          load_more: '加载更多',
+        } : undefined,
+      });
+    } catch (error) {
+      if (host) host.innerHTML = `<p>${locale === 'zh'
+        ? '搜索索引仅在完整生产构建后可用。你仍可进入 Notes 使用其原生搜索。'
+        : 'The index is available after a full production build. Notes still has its native search.'}</p>`;
+    }
+  });
+</script>
