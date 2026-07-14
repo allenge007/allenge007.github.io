@@ -34,12 +34,6 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      # npm 11.16.0 (bundled with the current Node 24 runner image) rejects
-      # this otherwise valid lockfile with a bare `Invalid Version:` error.
-      # Keep CI on the npm release used to generate and verify the lockfile.
-      - name: Use the verified npm release
-        run: npm install --global npm@11.6.2
-
       - name: Install JavaScript dependencies
         run: npm ci
 
