@@ -13,6 +13,7 @@ interface Props {
 const { post, locale, featured = false } = Astro.props;
 const href = `/blog/${post.data.slug}/`;
 const cover = resolvePostCover(post.data.cover);
+const coverRatio = cover ? `${cover.width} / ${cover.height}` : undefined;
 const date = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
   year: 'numeric', month: 'short', day: '2-digit', timeZone: 'Asia/Shanghai',
 }).format(post.data.date);
@@ -20,7 +21,14 @@ const date = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
 
 <article class:list={['post-card', featured && 'post-card-featured', !post.data.cover && 'post-card-no-cover']} data-reveal>
   {cover && (
-    <a class="post-card-image" href={href} tabindex="-1" aria-hidden="true" data-image-shell>
+    <a
+      class="post-card-image"
+      href={href}
+      tabindex="-1"
+      aria-hidden="true"
+      data-image-shell
+      style={`--post-cover-ratio: ${coverRatio}`}
+    >
       <Picture
         src={cover}
         alt=""

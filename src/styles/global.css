@@ -403,6 +403,8 @@ main { min-height: calc(100svh - var(--header-height)); }
 
 .hero-photo:hover img,
 .photo-tile:hover img,
+.post-card:hover .post-card-image img,
+.post-card:focus-within .post-card-image img,
 .post-card-image:hover img,
 .post-cover:hover img,
 .project-card-image:hover img { filter: saturate(1) contrast(1); transform: scale(1.025); }
@@ -586,6 +588,7 @@ main { min-height: calc(100svh - var(--header-height)); }
 .post-card + .post-card:not(.post-card-featured) { grid-column: 2; }
 .post-card-featured { grid-row: span 2; }
 .post-card-image { display: block; height: 310px; overflow: hidden; background: var(--page-deep); }
+.post-card-image picture { display: block; width: 100%; height: 100%; }
 .post-card:not(.post-card-featured) { display: grid; grid-template-columns: 38% 1fr; min-height: 230px; }
 .post-card:not(.post-card-featured) .post-card-image { height: 100%; }
 .post-card-body { padding: 28px; }
@@ -638,9 +641,13 @@ main { min-height: calc(100svh - var(--header-height)); }
 .page-intro > p:last-child { max-width: 690px; margin: 30px 0 0 auto; color: var(--muted); font-size: 1.05rem; }
 .listing-section { padding-block: 72px 140px; }
 .project-listing { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-.post-listing { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.post-listing { display: grid; grid-template-columns: repeat(2, 1fr); align-items: start; gap: 18px; }
 .post-listing .post-card, .post-listing .post-card:not(.post-card-featured) { grid-column: auto; grid-row: auto; display: block; }
-.post-listing .post-card-image { height: 280px; }
+.post-listing .post-card-image,
+.post-listing .post-card:not(.post-card-featured) .post-card-image {
+  height: auto;
+  aspect-ratio: var(--post-cover-ratio, 4 / 3);
+}
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 42px; }
 .tag-cloud a { padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .78rem; text-decoration: none; }
 .tag-cloud a:hover { color: var(--blue); border-color: var(--line-strong); }
