@@ -481,7 +481,7 @@ main { min-height: calc(100svh - var(--header-height)); }
 
 .hero-carousel-footer {
   position: absolute;
-  right: 116px;
+  right: 168px;
   bottom: 0;
   left: 0;
   z-index: 6;
@@ -535,27 +535,38 @@ main { min-height: calc(100svh - var(--header-height)); }
 .hero-carousel-controls button[hidden] { display: none; }
 .hero-carousel-empty { position: absolute; inset: 8% 4% 14%; overflow: hidden; border: 1px solid var(--line); border-radius: 28px; }
 
-.doraemon-card {
+.mascot-card {
   position: absolute;
   z-index: 7;
-  right: -2%;
-  bottom: -1%;
+  right: -3%;
+  bottom: -2%;
   display: grid;
-  place-items: center;
-  width: 112px;
-  min-height: 142px;
-  padding: 12px 10px 10px;
+  justify-items: center;
+  width: clamp(136px, 12.6vw, 168px);
+  padding: 8px 10px 10px;
   border: 1px solid rgba(255,255,255,0.48);
-  border-radius: 58px 58px 22px 22px;
+  border-radius: 32px 32px 22px 22px;
   background: color-mix(in srgb, var(--surface-raised) 88%, transparent);
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
-  transform: rotate(3deg);
+  transform: rotate(2.4deg);
   transition: transform 260ms ease;
 }
-.doraemon-card:hover { transform: rotate(0) translateY(-4px); }
-.doraemon-card img { width: 88px; image-rendering: auto; }
-.doraemon-label { color: var(--muted); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.mascot-card:hover { transform: rotate(0) translateY(-5px); }
+.mascot-card picture { display: block; width: 100%; line-height: 0; }
+.mascot-card img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  image-rendering: auto;
+  filter: drop-shadow(0 10px 18px rgba(25, 45, 78, .14));
+}
+.mascot-label { display: grid; justify-items: center; gap: 2px; margin-top: -2px; line-height: 1.15; text-align: center; }
+.mascot-label strong { color: var(--ink-soft); font-size: .58rem; letter-spacing: .035em; }
+.mascot-label small { color: var(--muted); font-size: .54rem; }
 
 .image-fallback,
 .is-image-error::before {
@@ -884,8 +895,8 @@ main { min-height: calc(100svh - var(--header-height)); }
   .hero { grid-template-columns: 1fr minmax(340px, .72fr); gap: 36px; }
   .hero h1 { font-size: clamp(3.4rem, 7.7vw, 6.6rem); }
   .hero-visual { min-height: 540px; }
-  .doraemon-card { width: 104px; min-height: 132px; right: 0; }
-  .doraemon-card img { width: 82px; }
+  .hero-carousel-footer { right: 148px; }
+  .mascot-card { right: -6px; width: 148px; }
   .interest-card { min-height: 300px; }
   .project-grid { grid-template-columns: repeat(2, 1fr); }
   .project-grid .project-card:last-child { grid-column: 1 / -1; min-height: 360px; }
@@ -945,8 +956,7 @@ main { min-height: calc(100svh - var(--header-height)); }
   .hero-facts { grid-template-columns: 1fr; }
   .hero-visual { min-height: 520px; }
   .hero-carousel-footer { right: 0; }
-  .doraemon-card { right: -4px; bottom: 58px; width: 88px; min-height: 112px; padding: 9px 8px 8px; }
-  .doraemon-card img { width: 68px; }
+  .mascot-card { right: -4px; bottom: 56px; width: 126px; padding: 7px 8px 8px; }
   .section { padding-block: 82px; }
   .section-heading { margin-bottom: 38px; }
   .section-heading h2, .cv-title h2, .notes-cta h2, .page-intro h1, .about-hero h1 { font-size: clamp(2.25rem, 11vw, 4rem); }
@@ -996,9 +1006,9 @@ main { min-height: calc(100svh - var(--header-height)); }
   .hero-carousel-dots { gap: 4px; }
   .hero-carousel-dots button.is-active { width: 16px; }
   .hero-carousel-controls button { width: 31px; height: 31px; }
-  .doraemon-card { width: 78px; min-height: 100px; }
-  .doraemon-card img { width: 60px; }
-  .doraemon-label { font-size: .58rem; }
+  .mascot-card { width: 108px; }
+  .mascot-label strong { font-size: .52rem; }
+  .mascot-label small { display: none; }
   .button { width: 100%; }
   .hero-actions { align-items: stretch; }
 }

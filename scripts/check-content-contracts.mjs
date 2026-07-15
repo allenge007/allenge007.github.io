@@ -62,6 +62,8 @@ await mustContain('src/styles/global.css', /@media \(prefers-reduced-motion: red
 await mustContain('src/components/HeroVisual.astro', /class="hero-slide-frame"[\s\S]*<Picture[\s\S]*src=\{photo\.src\}/, 'photo-driven hero slide frame');
 await mustContain('src/styles/global.css', /\.hero-slide-frame\s*\{[\s\S]*?width:\s*fit-content;[\s\S]*?height:\s*fit-content;/, 'content-sized hero photo frame');
 await mustContain('src/styles/global.css', /\.hero-slide img\s*\{[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional hero image sizing');
+await mustContain('src/components/HeroVisual.astro', /monthly-salary-cat-sway\.gif\?url[\s\S]*prefers-reduced-motion: reduce[\s\S]*monthlySalaryCatStatic/, 'Monthly Salary Cat animated mascot with reduced-motion still');
+await mustContain('src/styles/global.css', /\.mascot-card img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional mascot sizing');
 await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
 await mustContain('dist/cs/os/chapter1/index.html', /\/notes\/cs\/os\/chapter1\//, 'legacy computer science redirect');
 await mustContain('dist/blog/posts/myfirst/index.html', /\/blog\/2025\/05\/23\/myfirst\//, 'legacy blog redirect');
