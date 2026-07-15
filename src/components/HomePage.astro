@@ -16,88 +16,99 @@ const { locale, projects, posts } = Astro.props;
 const flags = siteConfig.sectionFlags;
 const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 3);
 const recentPosts = posts.slice(0, 3);
-const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
+const projectCount = String(projects.length).padStart(2, '0');
+const postCount = String(posts.length).padStart(2, '0');
+const sitePaths = [
+  {
+    id: 'writing',
+    enabled: flags.posts,
+    index: '01',
+    meta: locale === 'zh' ? `${postCount} 篇文章` : `${postCount} pieces`,
+    title: locale === 'zh' ? 'Writing' : 'Writing',
+    description: locale === 'zh'
+      ? '从技术复盘到天气与校园，把值得完整说清的事情写成长文。文章保留最初的语言。'
+      : 'Long-form pieces that move between technical retrospectives, weather, and life around campus. Each stays in its original language.',
+    href: locale === 'zh' ? '/blog/' : '/en/blog/',
+    action: locale === 'zh' ? '翻开文章' : 'Read the writing',
+  },
+  {
+    id: 'projects',
+    enabled: flags.projects,
+    index: '02',
+    meta: locale === 'zh' ? `${projectCount} 个系统` : `${projectCount} systems`,
+    title: locale === 'zh' ? 'Projects' : 'Projects',
+    description: locale === 'zh'
+      ? '把抽象问题做成可运行、可测量的原型，连同方法、边界与结果一起留下。'
+      : 'Abstract questions made runnable and measurable, with the approach, boundaries, and outcomes kept in view.',
+    href: locale === 'zh' ? '/projects/' : '/en/projects/',
+    action: locale === 'zh' ? '查看项目' : 'Explore projects',
+  },
+  {
+    id: 'notes',
+    enabled: flags.notes,
+    index: '03',
+    meta: locale === 'zh' ? '长期更新' : 'Living archive',
+    title: 'Notes',
+    description: locale === 'zh'
+      ? '数学、系统与 AI 的长期学习档案。公式、图表、代码，以及当时没有跳过的推导，都保留在原来的上下文里。'
+      : 'A long-running archive of mathematics, systems, and AI—formulas, diagrams, code, and the derivations that were worth keeping.',
+    href: '/notes/',
+    action: locale === 'zh' ? '进入 Notes' : 'Open Notes',
+  },
+].filter((path) => path.enabled);
 ---
 
 <section class="hero shell">
   <div class="hero-copy" data-reveal>
     <p class="hero-eyebrow">{profileContent.hero.eyebrow[locale]}</p>
     <h1>{profileContent.hero.title[locale]}</h1>
-    <p class="hero-school">{siteConfig.identity.school[locale]}</p>
     <p class="hero-intro">{profileContent.hero.intro[locale]}</p>
     <div class="hero-actions">
-      <a class="button button-primary" href={siteConfig.social.github}>GitHub <span aria-hidden="true">↗</span></a>
-      <a class="button button-quiet" href={`mailto:${siteConfig.social.email}`}>{contactLabel}</a>
+      <a class="button button-primary" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>{locale === 'zh' ? '开始阅读' : 'Browse writing'} <span aria-hidden="true">→</span></a>
+      <a class="button button-quiet" href="/notes/">{locale === 'zh' ? '进入 Notes' : 'Open Notes'}</a>
     </div>
     <dl class="hero-facts">
-      <div><dt>{locale === 'zh' ? '关注方向' : 'Focus'}</dt><dd>{siteConfig.identity.direction[locale]}</dd></div>
-      <div><dt>{locale === 'zh' ? '坐标' : 'Based in'}</dt><dd>{siteConfig.identity.location[locale]}</dd></div>
+      <div><dt>{locale === 'zh' ? '收录' : 'Archive'}</dt><dd>Writing · Projects · Notes</dd></div>
+      <div><dt>{locale === 'zh' ? '语言' : 'Languages'}</dt><dd>中文 · English · Code</dd></div>
     </dl>
   </div>
   <HeroVisual locale={locale} />
 </section>
 
-{flags.research && profileContent.research.length > 0 && (
-  <section class="section shell" aria-labelledby="research-heading">
+<section class="section shell site-map-section" aria-labelledby="site-map-heading">
+  <div class="section-heading" data-reveal>
+    <div>
+      <p class="section-kicker">Explore</p>
+      <h2 id="site-map-heading">{locale === 'zh' ? '从任意一处开始' : 'Three ways into the archive'}</h2>
+    </div>
+    <p>{locale === 'zh' ? '这不是一份线性履历。文章、系统与 Notes 彼此连接，也各自保留进入问题的方式。' : 'This is not a linear résumé. Essays, systems, and Notes connect to one another while keeping their own ways into a question.'}</p>
+  </div>
+  <div class="site-path-grid">
+    {sitePaths.map((path) => (
+      <a class:list={['site-path-card', `site-path-card-${path.id}`]} href={path.href} data-reveal>
+        <div class="site-path-topline"><span>{path.index}</span><span>{path.meta}</span></div>
+        <div class="site-path-copy">
+          <h3>{path.title}</h3>
+          <p>{path.description}</p>
+        </div>
+        <span class="site-path-action">{path.action} <span aria-hidden="true">↗</span></span>
+      </a>
+    ))}
+  </div>
+</section>
+
+{flags.posts && recentPosts.length > 0 && (
+  <section class="section shell" aria-labelledby="posts-heading">
     <div class="section-heading" data-reveal>
       <div>
-        <p class="section-kicker">Research</p>
-        <h2 id="research-heading">{locale === 'zh' ? '检索、推理与决策' : 'Retrieval, Reasoning & Decision-Making'}</h2>
+        <p class="section-kicker">Writing</p>
+        <h2 id="posts-heading">{locale === 'zh' ? '新近写下' : 'Recently written'}</h2>
       </div>
-      <p>{locale === 'zh' ? '结果之外，我更关心方法为何成立，以及它能否被验证、复现。' : 'Beyond the headline result, I care about why a method works—and whether others can verify and reproduce it.'}</p>
+      <a class="text-link heading-link" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>{locale === 'zh' ? '查看归档' : 'Browse archive'} <span aria-hidden="true">→</span></a>
     </div>
-    <div class="interest-grid">
-      {profileContent.research.map((interest) => (
-        <article class="interest-card" data-reveal>
-          <span class="interest-index">{interest.index}</span>
-          <h3>{interest.title[locale]}</h3>
-          <p>{interest.description[locale]}</p>
-        </article>
-      ))}
+    <div class="post-grid">
+      {recentPosts.map((post, index) => <PostCard post={post} locale={locale} featured={index === 0} />)}
     </div>
-  </section>
-)}
-
-{flags.skills && profileContent.skills.length > 0 && (
-  <section class="section shell skills-section" aria-labelledby="skills-heading">
-    <div class="section-heading slim-heading" data-reveal>
-      <div>
-        <p class="section-kicker">Methods</p>
-        <h2 id="skills-heading">{locale === 'zh' ? '方法、系统与工程' : 'Methods, Systems & Engineering'}</h2>
-      </div>
-    </div>
-    <div class="skills-grid">
-      {profileContent.skills.map((group) => (
-        <div class="skill-group" data-reveal>
-          <h3>{group.title[locale]}</h3>
-          <p>{group.items.join(' · ')}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-)}
-
-{flags.education && (
-  <section class="section shell cv-section" aria-labelledby="education-heading">
-    <div class="cv-title" data-reveal>
-      <p class="section-kicker">Background</p>
-      <h2 id="education-heading">{locale === 'zh' ? '本科教育与竞赛经历' : 'Undergraduate Study & Honors'}</h2>
-    </div>
-    <div class="education-card" data-reveal>
-      <span class="education-period">{profileContent.education.period}</span>
-      <div>
-        <h3>{profileContent.education.degree[locale]}</h3>
-        <p class="education-school">{profileContent.education.school[locale]}</p>
-        <p>{profileContent.education.detail[locale]}</p>
-      </div>
-    </div>
-    {flags.honors && profileContent.honors.length > 0 && (
-      <ol class="honors-list">
-        {profileContent.honors.map((honor) => (
-          <li data-reveal><time>{honor.date}</time><span>{honor.title[locale]}</span></li>
-        ))}
-      </ol>
-    )}
   </section>
 )}
 
@@ -106,27 +117,12 @@ const contactLabel = locale === 'zh' ? '写邮件' : 'Email me';
     <div class="section-heading" data-reveal>
       <div>
         <p class="section-kicker">Projects</p>
-        <h2 id="projects-heading">{locale === 'zh' ? '研究原型与系统实现' : 'Research Prototypes & Systems'}</h2>
+        <h2 id="projects-heading">{locale === 'zh' ? '可运行的想法' : 'Ideas that became systems'}</h2>
       </div>
       <a class="text-link heading-link" href={locale === 'zh' ? '/projects/' : '/en/projects/'}>{locale === 'zh' ? '全部项目' : 'All projects'} <span aria-hidden="true">→</span></a>
     </div>
     <div class="project-grid">
       {featuredProjects.map((project) => <ProjectCard project={project} locale={locale} compact />)}
-    </div>
-  </section>
-)}
-
-{flags.posts && recentPosts.length > 0 && (
-  <section class="section shell" aria-labelledby="posts-heading">
-    <div class="section-heading" data-reveal>
-      <div>
-        <p class="section-kicker">Writing</p>
-        <h2 id="posts-heading">{locale === 'zh' ? '技术笔记与日常记录' : 'Technical Notes & Everyday Writing'}</h2>
-      </div>
-      <a class="text-link heading-link" href={locale === 'zh' ? '/blog/' : '/en/blog/'}>{locale === 'zh' ? '查看归档' : 'Browse archive'} <span aria-hidden="true">→</span></a>
-    </div>
-    <div class="post-grid">
-      {recentPosts.map((post, index) => <PostCard post={post} locale={locale} featured={index === 0} />)}
     </div>
   </section>
 )}

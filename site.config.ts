@@ -11,12 +11,12 @@ export interface SiteNavigationItem {
 export const siteConfig = {
   url: 'https://www.allenge.me',
   title: {
-    zh: 'Allenge · AI 系统与研究笔记',
-    en: 'Allenge · AI Systems & Research Notes',
+    zh: 'Allenge · 项目、写作与 Notes',
+    en: 'Allenge · Projects, Writing & Notes',
   },
   description: {
-    zh: '中山大学计算机科学本科生，关注可信 AI、Research Agent 与多模态推理。',
-    en: 'Computer science undergraduate at Sun Yat-sen University, interested in trustworthy AI, research agents, and multimodal reasoning.',
+    zh: '收集可复现的实验、计算机科学 Notes，以及校园与城市之间的日常观察。',
+    en: 'Reproducible experiments, computer science notes, and observations from campus and the city.',
   },
   identity: {
     name: {
@@ -84,16 +84,16 @@ export const siteConfig = {
 export const profileContent = {
   hero: {
     eyebrow: {
-      zh: 'SYSU · Computer Science · 2027',
-      en: 'SYSU · Computer Science · 2027',
+      zh: 'Writing · Projects · Notes',
+      en: 'Writing · Projects · Notes',
     },
     title: {
-      zh: '可信 AI 系统：\n从检索到推理',
-      en: 'Trustworthy AI systems,\nfrom retrieval to reasoning',
+      zh: '一座持续生长的\n数字书房',
+      en: 'A living notebook\nfor ideas in motion',
     },
     intro: {
-      zh: '我关心 Research Agent 如何找到可靠证据，也关心多模态推理如何被执行、验证，以及学习系统如何作出更好的决策。目前在中山大学读计算机，也把算法、系统与 AI 的学习过程持续写进 Notes。',
-      en: 'I’m interested in retrieval-augmented research agents, executable multimodal reasoning, and learning-based decision systems. At Sun Yat-sen University, I study computer science and keep notes on algorithms, systems, and AI.',
+      zh: '这里收集可复现的实验、仍在推敲的想法、课程 Notes，以及校园与城市之间偶然遇见的片刻。可以从一篇文章、一项系统，或一条尚未写完的笔记开始。',
+      en: 'A place for reproducible experiments, ideas still under revision, course notes, and small observations from campus and the city. Start with an essay, a working system, or an unfinished trail through the Notes.',
     },
   },
   research: [

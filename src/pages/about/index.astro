@@ -1,50 +1,55 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AboutMascot from '../../components/AboutMascot.astro';
 import { profileContent, siteConfig } from '../../../site.config';
+const flags = siteConfig.sectionFlags;
 ---
-<BaseLayout locale="zh" title="研究与经历" description="计算机科学本科阶段的研究方向、项目、课程与竞赛经历。" alternatePath="/en/about/" alternateLocale="en">
+<BaseLayout locale="zh" title="研究与学习" description="计算机科学本科阶段的研究方向、方法、课程与竞赛经历。" alternatePath="/en/about/" alternateLocale="en">
   <article class="about-page shell">
     <header class="about-hero" data-reveal>
-      <p class="section-kicker">About</p>
-      <h1>研究方向与学习经历</h1>
-      <p>中山大学计算机科学与技术本科生，退役 OIer。我关心高效、可信、真正可用的 AI：Research Agent、可执行的多模态推理，以及学习驱动的决策系统。</p>
-      <div class="hero-actions">
-        <a class="button button-primary" href={`mailto:${siteConfig.social.email}`}>写邮件</a>
-        <a class="button button-quiet" href={siteConfig.social.github}>GitHub ↗</a>
+      <div class="about-hero-copy">
+        <p class="section-kicker">About</p>
+        <h1>研究与学习</h1>
+        <p>中山大学计算机科学与技术本科生，退役 OIer。我关心高效、可信、真正可用的 AI：Research Agent、可执行的多模态推理，以及学习驱动的决策系统。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href={`mailto:${siteConfig.social.email}`}>写邮件</a>
+          <a class="button button-quiet" href={siteConfig.social.github}>GitHub ↗</a>
+        </div>
       </div>
+      <AboutMascot locale="zh" />
     </header>
 
     <div class="about-grid">
-      <section data-reveal>
+      {flags.education && <section data-reveal>
         <p class="section-kicker">Background</p>
         <h2>计算机科学本科阶段</h2>
         <p>2023—2027 年就读于中山大学计算机学院，课程包括算法、操作系统、计算机网络、数据库、机器学习与最优化；IELTS Academic 7.0。</p>
-      </section>
-      <section data-reveal>
+      </section>}
+      {flags.research && <section data-reveal>
         <p class="section-kicker">Research</p>
         <h2>Research Agent 与可执行推理</h2>
         <p>IDAgent 仍处于稿件准备阶段：它连接研究构想与数据集，以检索、适配和反思组成工作流。GeoSketch-CoT 则把几何推理变成可编辑的 SVG 草稿。目前只把它们作为进行中的工作展示，不作已发表成果表述。</p>
-      </section>
-      <section data-reveal>
+      </section>}
+      {flags.honors && <section data-reveal>
         <p class="section-kicker">Contests</p>
         <h2>算法竞赛与程序设计</h2>
         <p>曾获 ICPC 亚洲区域赛上海站银牌、CCPC 全国邀请赛广东站金牌、CCF CAT 总决赛银牌，以及两届中山大学程序设计竞赛一等奖。</p>
-      </section>
-      <section data-reveal>
-        <p class="section-kicker">Site</p>
-        <h2>项目、Writing 与 Notes</h2>
-        <p>主页收着项目、文章与个人信息；长期积累的数学、计算机系统和 AI 课程 Notes 仍留在 MkDocs。文章保留最初的语言，照片只作生活的注脚。</p>
-      </section>
+      </section>}
+      {flags.skills && <section data-reveal>
+        <p class="section-kicker">Methods</p>
+        <h2>方法与工具</h2>
+        <p>日常使用 Python、C++ 与 PyTorch，也接触 RAG、Faiss、CUDA、MPI 和 Docker。工程之外，重视实验设计、可复现评估，以及把复杂过程写清楚。</p>
+      </section>}
     </div>
 
-    <section class="about-honors" data-reveal aria-labelledby="about-honors-heading">
+    {(flags.education || (flags.honors && profileContent.honors.length > 0)) && <section class="about-honors" data-reveal aria-labelledby="about-honors-heading">
       <p class="section-kicker">Background</p>
       <h2 id="about-honors-heading">教育与荣誉</h2>
-      <div class="education-card">
+      {flags.education && <div class="education-card">
         <span class="education-period">{profileContent.education.period}</span>
         <div><h3>{profileContent.education.degree.zh}</h3><p class="education-school">{profileContent.education.school.zh}</p><p>{profileContent.education.detail.zh}</p></div>
-      </div>
-      <ol class="honors-list">{profileContent.honors.map((honor) => <li><time>{honor.date}</time><span>{honor.title.zh}</span></li>)}</ol>
-    </section>
+      </div>}
+      {flags.honors && profileContent.honors.length > 0 && <ol class="honors-list">{profileContent.honors.map((honor) => <li><time>{honor.date}</time><span>{honor.title.zh}</span></li>)}</ol>}
+    </section>}
   </article>
 </BaseLayout>

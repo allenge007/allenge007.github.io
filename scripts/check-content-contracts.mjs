@@ -75,6 +75,12 @@ await mustContain('src/components/HeroVisual.astro', /monthly-salary-cat-sway\.g
 await mustContain('src/components/HeroVisual.astro', /data-mascot-mode="slack"[\s\S]*pointerenter[\s\S]*setMode\('work'\)[\s\S]*pointerleave[\s\S]*returnToSlack/, 'work-on-hover and slack-at-rest mascot behavior');
 await mustNotContain('src/components/HeroVisual.astro', /mascot-label|mascotNote/, 'visible mascot explanatory label');
 await mustContain('src/styles/global.css', /\.mascot-card img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional mascot sizing');
+await mustContain('src/components/HomePage.astro', /site-path-card[\s\S]*Writing[\s\S]*Projects[\s\S]*Notes/, 'content-led homepage routes');
+await mustNotContain('src/components/HomePage.astro', /profileContent\.(?:research|skills|education|honors)/, 'About-only profile sections on the homepage');
+await mustContain('src/components/AboutMascot.astro', /monthly-salary-cat-running-right\.gif\?url[\s\S]*monthly-salary-cat-running-left\.gif\?url[\s\S]*monthly-salary-cat-failed\.gif\?url[\s\S]*monthly-salary-cat-waiting\.gif\?url/, 'About mascot unused action set');
+await mustContain('src/components/AboutMascot.astro', /pointerenter[\s\S]*startRunning\(\)[\s\S]*pointerleave[\s\S]*returnToWaiting[\s\S]*addEventListener\('click', stumble\)/, 'About mascot run, wait, and fail choreography');
+await mustContain('src/components/AboutMascot.astro', /prefers-reduced-motion: reduce[\s\S]*monthlySalaryCatStatic/, 'About mascot reduced-motion still');
+await mustContain('src/styles/global.css', /\.about-mascot img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional About mascot sizing');
 await mustContain('src/components/Header.astro', /monthly-salary-cat-static\.webp[\s\S]*src=\{monthlySalaryCat\}/, 'Monthly Salary Cat wordmark');
 await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
 await mustContain('dist/cs/os/chapter1/index.html', /\/notes\/cs\/os\/chapter1\//, 'legacy computer science redirect');

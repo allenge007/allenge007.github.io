@@ -1,0 +1,173 @@
+---
+import type { Locale } from '../../site.config';
+import monthlySalaryCatRunningRight from '../assets/brand/monthly-salary-cat-running-right.gif?url';
+import monthlySalaryCatRunningLeft from '../assets/brand/monthly-salary-cat-running-left.gif?url';
+import monthlySalaryCatFailed from '../assets/brand/monthly-salary-cat-failed.gif?url';
+import monthlySalaryCatWaiting from '../assets/brand/monthly-salary-cat-waiting.gif?url';
+import monthlySalaryCatStatic from '../assets/brand/monthly-salary-cat-about-static.webp?url';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const label = locale === 'zh'
+  ? '月薪猫：等待时偶尔摸鱼，悬停或键盘聚焦时来回奔跑，点击时短暂失意'
+  : 'Monthly Salary Cat: waiting at rest, running back and forth on hover or focus, and briefly failing when clicked';
+---
+
+<div class="about-mascot-stage" data-reveal>
+  <span class="about-mascot-orbit" aria-hidden="true"></span>
+  <button
+    type="button"
+    class="about-mascot"
+    data-about-mascot
+    data-about-state="waiting"
+    data-running-right={monthlySalaryCatRunningRight}
+    data-running-left={monthlySalaryCatRunningLeft}
+    data-failed={monthlySalaryCatFailed}
+    data-waiting={monthlySalaryCatWaiting}
+    aria-label={label}
+  >
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset={monthlySalaryCatStatic} type="image/webp" />
+      <img
+        src={monthlySalaryCatWaiting}
+        alt=""
+        width="192"
+        height="208"
+        loading="eager"
+        decoding="async"
+        data-about-mascot-image
+        data-fallback-image
+      />
+    </picture>
+  </button>
+</div>
+
+<script>
+  const aboutReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('[data-about-mascot]').forEach((mascot) => {
+    const image = mascot.querySelector<HTMLImageElement>('[data-about-mascot-image]');
+    if (!image) return;
+
+    const sources = {
+      'running-right': mascot.dataset.runningRight,
+      'running-left': mascot.dataset.runningLeft,
+      failed: mascot.dataset.failed,
+      waiting: mascot.dataset.waiting,
+    } as const;
+    let idleTimer: number | undefined;
+    let runTimer: number | undefined;
+    let reactionTimer: number | undefined;
+    let swapTimer: number | undefined;
+    let pointerInside = false;
+    let keyboardFocused = false;
+    let runningRight = true;
+    let ignoreNextFocus = false;
+
+    Object.values(sources).forEach((source) => {
+      if (!source) return;
+      const preload = new Image();
+      preload.src = source;
+    });
+
+    const clearTimer = (timer: number | undefined) => {
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+
+    const show = (state: keyof typeof sources) => {
+      const source = sources[state];
+      if (!source || aboutReduceMotion.matches || mascot.dataset.aboutState === state) return;
+      clearTimer(swapTimer);
+      mascot.classList.add('is-switching');
+      swapTimer = window.setTimeout(() => {
+        image.src = source;
+        mascot.dataset.aboutState = state;
+        window.requestAnimationFrame(() => mascot.classList.remove('is-switching'));
+      }, 90);
+    };
+
+    const engaged = () => pointerInside || keyboardFocused;
+
+    const scheduleIdleStory = () => {
+      clearTimer(idleTimer);
+      if (aboutReduceMotion.matches || document.hidden || engaged()) return;
+      idleTimer = window.setTimeout(() => {
+        show('failed');
+        reactionTimer = window.setTimeout(() => {
+          show('waiting');
+          scheduleIdleStory();
+        }, 3200);
+      }, 9000 + Math.random() * 5000);
+    };
+
+    const startRunning = () => {
+      clearTimer(idleTimer);
+      clearTimer(reactionTimer);
+      clearTimer(runTimer);
+      const nextState = runningRight ? 'running-right' : 'running-left';
+      runningRight = !runningRight;
+      show(nextState);
+      if (!aboutReduceMotion.matches) runTimer = window.setTimeout(startRunning, 2600);
+    };
+
+    const returnToWaiting = () => {
+      clearTimer(runTimer);
+      clearTimer(reactionTimer);
+      if (engaged()) startRunning();
+      else {
+        show('waiting');
+        scheduleIdleStory();
+      }
+    };
+
+    const stumble = () => {
+      clearTimer(idleTimer);
+      clearTimer(runTimer);
+      clearTimer(reactionTimer);
+      show('failed');
+      reactionTimer = window.setTimeout(returnToWaiting, 3200);
+    };
+
+    mascot.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch') return;
+      pointerInside = true;
+      startRunning();
+    });
+    mascot.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'touch') return;
+      pointerInside = false;
+      returnToWaiting();
+    });
+    mascot.addEventListener('pointerdown', () => {
+      ignoreNextFocus = true;
+      window.setTimeout(() => { ignoreNextFocus = false; }, 0);
+    });
+    mascot.addEventListener('focus', () => {
+      if (ignoreNextFocus) {
+        ignoreNextFocus = false;
+        return;
+      }
+      keyboardFocused = true;
+      startRunning();
+    });
+    mascot.addEventListener('blur', () => {
+      keyboardFocused = false;
+      returnToWaiting();
+    });
+    mascot.addEventListener('click', stumble);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearTimer(idleTimer);
+        clearTimer(runTimer);
+        clearTimer(reactionTimer);
+      } else returnToWaiting();
+    });
+    aboutReduceMotion.addEventListener('change', () => {
+      clearTimer(idleTimer);
+      clearTimer(runTimer);
+      clearTimer(reactionTimer);
+      if (!aboutReduceMotion.matches) returnToWaiting();
+    });
+    scheduleIdleStory();
+  });
+</script>
