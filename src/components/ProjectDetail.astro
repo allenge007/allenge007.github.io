@@ -1,12 +1,14 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import { render, type CollectionEntry } from 'astro:content';
 import type { Locale } from '../../site.config';
 
 interface Props { project: CollectionEntry<'projects'>; locale: Locale }
 const { project, locale } = Astro.props;
+const { Content } = await render(project);
+const hasThemePair = Boolean(project.data.image && project.data.imageDark);
 const labels = locale === 'zh'
-  ? { problem: '问题', work: '做了什么', outcome: '结果', stack: 'Tech Stack', role: '角色' }
-  : { problem: 'Problem', work: 'Approach', outcome: 'Outcome', stack: 'Tech stack', role: 'Role' };
+  ? { problem: '问题', work: '做了什么', outcome: '结果', stack: 'Tech Stack', role: '我的角色', status: '当前状态' }
+  : { problem: 'Problem', work: 'Approach', outcome: 'Outcome', stack: 'Tech stack', role: 'My role', status: 'Status' };
 ---
 
 <article class="project-detail shell reading-shell">
@@ -15,14 +17,30 @@ const labels = locale === 'zh'
     <p class="section-kicker">{project.data.date} · {project.data.role[locale]}</p>
     <h1>{project.data.title[locale]}</h1>
     <p class="detail-lede">{project.data.summary[locale]}</p>
+    {project.data.metrics.length > 0 && (
+      <dl class="project-detail-metrics">
+        {project.data.metrics.map((metric) => <div><dt>{metric.value}</dt><dd>{metric.label[locale]}</dd></div>)}
+      </dl>
+    )}
   </header>
+  {project.data.image && (
+    <figure class="project-detail-visual" data-image-shell data-reveal>
+      <img src={project.data.image} alt={project.data.imageAlt?.[locale] ?? ''} data-theme-image={hasThemePair ? 'light' : 'all'} data-fallback-image />
+      {project.data.imageDark && <img src={project.data.imageDark} alt={project.data.imageAlt?.[locale] ?? ''} data-theme-image="dark" data-fallback-image />}
+    </figure>
+  )}
   <div class="project-detail-grid">
-    <div class="project-narrative">
-      <section data-reveal><span>01</span><div><h2>{labels.problem}</h2><p>{project.data.problem[locale]}</p></div></section>
-      <section data-reveal><span>02</span><div><h2>{labels.work}</h2><p>{project.data.work[locale]}</p></div></section>
-      <section data-reveal><span>03</span><div><h2>{labels.outcome}</h2><p>{project.data.outcome[locale]}</p></div></section>
-    </div>
+    {locale === 'zh' ? (
+      <div class="project-report prose" data-reveal><Content /></div>
+    ) : (
+      <div class="project-narrative">
+        <section data-reveal><span>01</span><div><h2>{labels.problem}</h2><p>{project.data.problem[locale]}</p></div></section>
+        <section data-reveal><span>02</span><div><h2>{labels.work}</h2><p>{project.data.work[locale]}</p></div></section>
+        <section data-reveal><span>03</span><div><h2>{labels.outcome}</h2><p>{project.data.outcome[locale]}</p></div></section>
+      </div>
+    )}
     <aside class="project-aside" data-reveal>
+      <div><h2>{labels.status}</h2><p>{project.data.status[locale]}</p></div>
       <div><h2>{labels.role}</h2><p>{project.data.role[locale]}</p></div>
       <div><h2>{labels.stack}</h2><ul>{project.data.stack.map((item) => <li>{item}</li>)}</ul></div>
       {project.data.links.length > 0 && <div class="project-links">{project.data.links.map((link) => <a href={link.url}>{link.label[locale]} ↗</a>)}</div>}

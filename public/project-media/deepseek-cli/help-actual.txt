@@ -1,0 +1,19 @@
+Use DeepSeek API for multi-turn conversations with history management
+
+Usage: deepseek_cli [OPTIONS] [query] [COMMAND]
+
+Commands:
+  new         New conversation
+  continue    Resume last conversation
+  nomemory    Memoryless mode
+  set_api     Set API Key
+  set_prompt  Set System Prompt
+  help        Print this message or the help of the given subcommand(s)
+
+Arguments:
+  [query]  Query content
+
+Options:
+  -v, --version <version>          Model version (r1 for deepseek-reasoner) [default: v3]
+  -t, --temperature <temperature>  Temperature (default 1.0, range 0.0-2.0, higher = more random) [default: 1.0]
+  -h, --help                       Print help

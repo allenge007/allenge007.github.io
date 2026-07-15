@@ -7,7 +7,7 @@ import ProjectCard from '../../components/ProjectCard.astro';
 const projects = (await getCollection('projects')).sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.date.localeCompare(a.data.date));
 ---
 <BaseLayout locale="zh" title="研究与项目" description="研究原型、课程项目与个人工具：从问题出发，写清方法、Tech Stack 与结果。" alternatePath="/en/projects/" alternateLocale="en">
-  <PageIntro locale="zh" kicker="Projects" title="研究原型与系统项目" description="这里收着研究原型、课程项目与个人工具。图片不是必需品，问题、方法和结果才是每张卡片的主角。" />
+  <PageIntro locale="zh" kicker="Projects" title="研究原型与系统项目" description="这里记录我们真正实现、复现和测量过的项目：不仅写问题与方法，也保留 Demo、实验结果、负结果、工程边界和下一步。" />
   <section class="listing-section shell project-listing" aria-label="项目列表">
     {projects.map((project) => <ProjectCard project={project} locale="zh" />)}
   </section>

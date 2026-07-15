@@ -44,6 +44,11 @@ for (const path of [
   'dist/notes/search/search_index.json',
   'dist/notes/javascripts/generated/diagram-runtime.js',
   'dist/og.png',
+  'dist/projects/geosketch-cot/index.html',
+  'dist/projects/idagent/index.html',
+  'dist/projects/foodflow/index.html',
+  'dist/projects/yatcc-se/index.html',
+  'dist/projects/deepseek-cli/index.html',
 ]) await mustExist(path);
 
 await mustContain('docs/CNAME', /^www\.allenge\.me\s*$/, 'preserved custom domain');
@@ -64,6 +69,9 @@ await mustContain('dist/notes/content-tabs/index.html', /class="tabbed-/, 'MkDoc
 await mustContain('dist/notes/code-examples/index.html', /<code/, 'MkDocs code block');
 await mustContain('dist/notes/cs/ai/chapter5/index.html', /javascripts\/generated\/diagram-runtime\.js/, 'self-hosted Mermaid runtime');
 await mustContain('dist/index.html', /property="og:image" content="https:\/\/www\.allenge\.me\/og\.png"/, 'Open Graph image');
+await mustContain('dist/projects/foodflow/index.html', /foodflow-dispatch-light\.jpg[\s\S]*foodflow-dispatch-dark\.jpg/, 'FoodFlow theme-aware demo pair');
+await mustContain('dist/projects/yatcc-se/index.html', /yatcc-student-dashboard-light\.jpg[\s\S]*yatcc-student-dashboard-dark\.jpg/, 'YatCC-SE theme-aware demo pair');
+await mustContain('src/styles/global.css', /:root\[data-theme="dark"\]\s+\[data-theme-image="light"\][\s\S]*\[data-theme-image="dark"\]/, 'manual-theme project image switching');
 
 const homeHtml = await readFile(join(dist, 'index.html'), 'utf8');
 if (/<title>[^<]*(?:陈正宇|Zhengyu Chen)/i.test(homeHtml)) {

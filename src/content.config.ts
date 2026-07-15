@@ -14,6 +14,13 @@ const links = z.array(
   }),
 ).default([]);
 
+const projectMetrics = z.array(
+  z.object({
+    value: z.string(),
+    label: localized,
+  }),
+).default([]);
+
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
@@ -25,9 +32,12 @@ const projects = defineCollection({
       outcome: localized,
       date: z.string(),
       role: localized,
+      status: localized,
       stack: z.array(z.string()),
+      metrics: projectMetrics,
       featured: z.boolean().default(false),
       image: z.string().optional(),
+      imageDark: z.string().optional(),
       imageAlt: localized.optional(),
       links,
     }),

@@ -1,8 +1,6 @@
 ---
-import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../../site.config';
-import { resolveProjectImage } from '../data/content-images';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -12,31 +10,44 @@ interface Props {
 
 const { project, locale, compact = false } = Astro.props;
 const href = `${locale === 'en' ? '/en' : ''}/projects/${project.data.slug}/`;
-const projectImage = resolveProjectImage(project.data.image);
+const hasThemePair = Boolean(project.data.image && project.data.imageDark);
 ---
 
 <article class:list={['project-card', compact && 'project-card-compact']} data-reveal>
-  {projectImage && (
+  {project.data.image && (
     <div class="project-card-image" data-image-shell>
-      <Picture
-        src={projectImage}
+      <img
+        src={project.data.image}
         alt={project.data.imageAlt?.[locale] ?? ''}
-        widths={[480, 720, 960]}
-        sizes="(max-width: 760px) 100vw, 42vw"
-        formats={['avif', 'webp']}
-        fallbackFormat="webp"
         loading="lazy"
+        decoding="async"
+        data-theme-image={hasThemePair ? 'light' : 'all'}
         data-fallback-image
       />
+      {project.data.imageDark && (
+        <img
+          src={project.data.imageDark}
+          alt={project.data.imageAlt?.[locale] ?? ''}
+          loading="lazy"
+          decoding="async"
+          data-theme-image="dark"
+          data-fallback-image
+        />
+      )}
     </div>
   )}
   <div class="project-card-topline">
     <span>{project.data.date}</span>
-    <span>{project.data.role[locale]}</span>
+    <span>{project.data.status[locale]}</span>
   </div>
   <h3><a href={href}>{project.data.title[locale]}</a></h3>
   <p class="project-problem">{project.data.problem[locale]}</p>
   {!compact && <p>{project.data.summary[locale]}</p>}
+  {!compact && project.data.metrics.length > 0 && (
+    <dl class="project-card-metrics">
+      {project.data.metrics.slice(0, 3).map((metric) => <div><dt>{metric.value}</dt><dd>{metric.label[locale]}</dd></div>)}
+    </dl>
+  )}
   <ul class="tag-list" aria-label="Tech stack">
     {project.data.stack.slice(0, compact ? 4 : 7).map((item) => <li>{item}</li>)}
   </ul>
