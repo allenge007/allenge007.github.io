@@ -1,7 +1,10 @@
 ---
 import { Picture } from 'astro:assets';
 import { selectPhotos } from '../data/photos';
-import monthlySalaryCatSway from '../assets/brand/monthly-salary-cat-sway.gif?url';
+import monthlySalaryCatRunning from '../assets/brand/monthly-salary-cat-sway.gif?url';
+import monthlySalaryCatReview from '../assets/brand/monthly-salary-cat-review.gif?url';
+import monthlySalaryCatWaving from '../assets/brand/monthly-salary-cat-waving.gif?url';
+import monthlySalaryCatJumping from '../assets/brand/monthly-salary-cat-jumping.gif?url';
 import monthlySalaryCatStatic from '../assets/brand/monthly-salary-cat-static.webp?url';
 import type { Locale } from '../../site.config';
 
@@ -20,8 +23,7 @@ const labels = locale === 'zh'
       fallback: '渐变图片占位',
       dot: '查看第',
       dotSuffix: '张照片',
-      mascotAlt: 'Monthly Salary Cat 趴在键盘后左右摇摆',
-      mascotNote: '月薪猫 · 工作中',
+      mascot: '月薪猫：移开时摸鱼，悬停或键盘聚焦时工作',
     }
   : {
       region: 'Rotating everyday photographs and a Monthly Salary Cat animation',
@@ -33,8 +35,7 @@ const labels = locale === 'zh'
       fallback: 'Gradient image placeholder',
       dot: 'Show photograph ',
       dotSuffix: '',
-      mascotAlt: 'Monthly Salary Cat swaying behind a keyboard',
-      mascotNote: 'swaying through the workday',
+      mascot: 'Monthly Salary Cat: slacking off at rest, working while hovered or keyboard-focused',
     };
 ---
 
@@ -115,24 +116,34 @@ const labels = locale === 'zh'
   ) : (
     <div class="hero-carousel-empty" aria-label={labels.fallback}><span class="image-fallback"></span></div>
   )}
-  <div class="mascot-card" data-image-shell>
+  <button
+    type="button"
+    class="mascot-card"
+    data-image-shell
+    data-mascot
+    data-mascot-mode="slack"
+    data-mascot-state="waving"
+    data-mascot-running={monthlySalaryCatRunning}
+    data-mascot-review={monthlySalaryCatReview}
+    data-mascot-waving={monthlySalaryCatWaving}
+    data-mascot-jumping={monthlySalaryCatJumping}
+    aria-label={labels.mascot}
+    aria-pressed="false"
+  >
     <picture>
       <source media="(prefers-reduced-motion: reduce)" srcset={monthlySalaryCatStatic} type="image/webp" />
       <img
-        src={monthlySalaryCatSway}
-        alt={labels.mascotAlt}
+        src={monthlySalaryCatWaving}
+        alt=""
         width="192"
         height="208"
         loading="eager"
         decoding="async"
+        data-mascot-image
         data-fallback-image
       />
     </picture>
-    <span class="mascot-label">
-      <strong>Monthly Salary Cat</strong>
-      <small>{labels.mascotNote}</small>
-    </span>
-  </div>
+  </button>
 </div>
 
 <script>
@@ -254,5 +265,122 @@ const labels = locale === 'zh'
     setPauseButton();
     render();
     syncPlayback();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-mascot]').forEach((mascot) => {
+    const image = mascot.querySelector<HTMLImageElement>('[data-mascot-image]');
+    if (!image) return;
+
+    const actions = {
+      work: [
+        ['running', mascot.dataset.mascotRunning],
+        ['review', mascot.dataset.mascotReview],
+      ],
+      slack: [
+        ['waving', mascot.dataset.mascotWaving],
+        ['jumping', mascot.dataset.mascotJumping],
+      ],
+    } as const;
+    const indices = { work: 0, slack: 0 };
+    let mode: keyof typeof actions = 'slack';
+    let timer: number | undefined;
+    let swapTimer: number | undefined;
+    let touchReturnTimer: number | undefined;
+    let pointerInside = false;
+    let keyboardFocused = false;
+    let ignoreNextFocus = false;
+
+    Object.values(actions).flat().forEach(([, source]) => {
+      if (!source) return;
+      const preload = new Image();
+      preload.src = source;
+    });
+
+    const stopTimer = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      timer = undefined;
+    };
+
+    const showAction = (action: string, source: string | undefined) => {
+      if (!source || reduceMotion.matches || mascot.dataset.mascotState === action) return;
+      if (swapTimer !== undefined) window.clearTimeout(swapTimer);
+      mascot.classList.add('is-switching');
+      swapTimer = window.setTimeout(() => {
+        image.src = source;
+        mascot.dataset.mascotState = action;
+        window.requestAnimationFrame(() => mascot.classList.remove('is-switching'));
+      }, 90);
+    };
+
+    const schedule = () => {
+      stopTimer();
+      if (reduceMotion.matches || document.hidden) return;
+      const delay = mode === 'work'
+        ? 4200 + Math.random() * 2200
+        : 5600 + Math.random() * 2800;
+      timer = window.setTimeout(() => {
+        indices[mode] = (indices[mode] + 1) % actions[mode].length;
+        const [action, source] = actions[mode][indices[mode]];
+        showAction(action, source);
+        schedule();
+      }, delay);
+    };
+
+    const setMode = (nextMode: keyof typeof actions) => {
+      mode = nextMode;
+      mascot.dataset.mascotMode = nextMode;
+      mascot.setAttribute('aria-pressed', String(nextMode === 'work'));
+      const [action, source] = actions[nextMode][indices[nextMode]];
+      showAction(action, source);
+      schedule();
+    };
+
+    const returnToSlack = () => {
+      if (!pointerInside && !keyboardFocused) setMode('slack');
+    };
+
+    mascot.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'touch') return;
+      pointerInside = true;
+      setMode('work');
+    });
+    mascot.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'touch') return;
+      pointerInside = false;
+      returnToSlack();
+    });
+    mascot.addEventListener('pointerdown', (event) => {
+      ignoreNextFocus = true;
+      window.setTimeout(() => { ignoreNextFocus = false; }, 0);
+      if (event.pointerType !== 'touch') return;
+      if (touchReturnTimer !== undefined) window.clearTimeout(touchReturnTimer);
+      setMode('work');
+      touchReturnTimer = window.setTimeout(returnToSlack, 6500);
+    });
+    mascot.addEventListener('focus', () => {
+      if (ignoreNextFocus) {
+        ignoreNextFocus = false;
+        return;
+      }
+      keyboardFocused = true;
+      setMode('work');
+    });
+    mascot.addEventListener('blur', () => {
+      keyboardFocused = false;
+      returnToSlack();
+    });
+    mascot.addEventListener('click', (event) => {
+      if (event.detail !== 0) return;
+      if (touchReturnTimer !== undefined) window.clearTimeout(touchReturnTimer);
+      setMode('work');
+      touchReturnTimer = window.setTimeout(returnToSlack, 6500);
+    });
+
+    document.addEventListener('visibilitychange', schedule);
+    reduceMotion.addEventListener('change', () => {
+      if (reduceMotion.matches) stopTimer();
+      else setMode(mode);
+    });
+    schedule();
   });
 </script>

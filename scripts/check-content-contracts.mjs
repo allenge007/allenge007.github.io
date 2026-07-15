@@ -30,6 +30,15 @@ async function mustContain(relativePath, expression, label) {
   }
 }
 
+async function mustNotContain(relativePath, expression, label) {
+  try {
+    const content = await readFile(join(root, relativePath), 'utf8');
+    if (expression.test(content)) failures.push(`${label} found in ${relativePath}`);
+  } catch {
+    failures.push(`Could not read ${relativePath} for ${label}`);
+  }
+}
+
 for (const path of [
   'dist/index.html',
   'dist/en/index.html',
@@ -62,7 +71,9 @@ await mustContain('src/styles/global.css', /@media \(prefers-reduced-motion: red
 await mustContain('src/components/HeroVisual.astro', /class="hero-slide-frame"[\s\S]*<Picture[\s\S]*src=\{photo\.src\}/, 'photo-driven hero slide frame');
 await mustContain('src/styles/global.css', /\.hero-slide-frame\s*\{[\s\S]*?width:\s*fit-content;[\s\S]*?height:\s*fit-content;/, 'content-sized hero photo frame');
 await mustContain('src/styles/global.css', /\.hero-slide img\s*\{[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional hero image sizing');
-await mustContain('src/components/HeroVisual.astro', /monthly-salary-cat-sway\.gif\?url[\s\S]*prefers-reduced-motion: reduce[\s\S]*monthlySalaryCatStatic/, 'Monthly Salary Cat animated mascot with reduced-motion still');
+await mustContain('src/components/HeroVisual.astro', /monthly-salary-cat-sway\.gif\?url[\s\S]*monthly-salary-cat-review\.gif\?url[\s\S]*monthly-salary-cat-waving\.gif\?url[\s\S]*monthly-salary-cat-jumping\.gif\?url[\s\S]*prefers-reduced-motion: reduce[\s\S]*monthlySalaryCatStatic/, 'Monthly Salary Cat action set with reduced-motion still');
+await mustContain('src/components/HeroVisual.astro', /data-mascot-mode="slack"[\s\S]*pointerenter[\s\S]*setMode\('work'\)[\s\S]*pointerleave[\s\S]*returnToSlack/, 'work-on-hover and slack-at-rest mascot behavior');
+await mustNotContain('src/components/HeroVisual.astro', /mascot-label|mascotNote/, 'visible mascot explanatory label');
 await mustContain('src/styles/global.css', /\.mascot-card img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional mascot sizing');
 await mustContain('src/components/Header.astro', /monthly-salary-cat-static\.webp[\s\S]*src=\{monthlySalaryCat\}/, 'Monthly Salary Cat wordmark');
 await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
