@@ -187,7 +187,7 @@ h1, h2, h3, p { margin-top: 0; }
   background: var(--surface-raised);
 }
 
-.wordmark-mark img { width: 38px; height: 38px; object-fit: contain; }
+.wordmark-mark img { width: auto; max-width: 38px; height: 36px; object-fit: contain; }
 .wordmark-dot { color: var(--blue); }
 
 .desktop-nav {
@@ -947,7 +947,7 @@ main { min-height: calc(100svh - var(--header-height)); }
   .site-header { height: var(--header-height); }
   .header-inner { gap: 8px; }
   .wordmark-mark { width: 36px; height: 36px; }
-  .wordmark-mark img { width: 34px; height: 34px; }
+  .wordmark-mark img { width: auto; max-width: 34px; height: 32px; }
   .wordmark { font-size: 1rem; gap: 8px; }
   .language-link, .search-link, .theme-toggle { min-width: 36px; width: 36px; height: 36px; padding: 0; }
   .header-actions { gap: 1px; }

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { siteConfig, type Locale } from '../../site.config';
-import ohBoy from '../assets/brand/oh-boy.png';
+import monthlySalaryCat from '../assets/brand/monthly-salary-cat-static.webp';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -24,7 +24,7 @@ const isActive = (href: string) => {
   <div class="shell header-inner">
     <a class="wordmark" href={locale === 'zh' ? '/' : '/en/'} aria-label={locale === 'zh' ? 'Allenge 首页' : 'Allenge home'}>
       <span class="wordmark-mark" data-image-shell>
-        <Picture src={ohBoy} alt="" widths={[40, 80]} sizes="40px" formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" />
+        <Picture src={monthlySalaryCat} alt="" widths={[40, 80]} sizes="40px" formats={['avif', 'webp']} fallbackFormat="webp" loading="eager" />
       </span>
       <span>allenge<span class="wordmark-dot">.</span></span>
     </a>

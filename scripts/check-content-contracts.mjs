@@ -64,6 +64,7 @@ await mustContain('src/styles/global.css', /\.hero-slide-frame\s*\{[\s\S]*?width
 await mustContain('src/styles/global.css', /\.hero-slide img\s*\{[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional hero image sizing');
 await mustContain('src/components/HeroVisual.astro', /monthly-salary-cat-sway\.gif\?url[\s\S]*prefers-reduced-motion: reduce[\s\S]*monthlySalaryCatStatic/, 'Monthly Salary Cat animated mascot with reduced-motion still');
 await mustContain('src/styles/global.css', /\.mascot-card img\s*\{[\s\S]*?width:\s*100%;[\s\S]*?height:\s*auto;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain;/, 'source-proportional mascot sizing');
+await mustContain('src/components/Header.astro', /monthly-salary-cat-static\.webp[\s\S]*src=\{monthlySalaryCat\}/, 'Monthly Salary Cat wordmark');
 await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
 await mustContain('dist/cs/os/chapter1/index.html', /\/notes\/cs\/os\/chapter1\//, 'legacy computer science redirect');
 await mustContain('dist/blog/posts/myfirst/index.html', /\/blog\/2025\/05\/23\/myfirst\//, 'legacy blog redirect');
