@@ -3,7 +3,10 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeKatex from 'rehype-katex';
+import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import remarkNotesCompat from './src/lib/remark-notes-compat';
+import { notesCodeMetaTransformer } from './src/lib/shiki-notes-meta';
 
 export default defineConfig({
   site: 'https://www.allenge.me',
@@ -17,7 +20,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkMath],
+      remarkPlugins: [remarkGfm, remarkMath, remarkNotesCompat],
       rehypePlugins: [rehypeKatex],
     }),
     shikiConfig: {
@@ -26,7 +29,12 @@ export default defineConfig({
         dark: 'github-dark',
       },
       wrap: true,
+      transformers: [notesCodeMetaTransformer],
     },
+  },
+  image: {
+    layout: 'constrained',
+    responsiveStyles: true,
   },
   build: {
     assets: '_assets',

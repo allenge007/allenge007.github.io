@@ -1,4 +1,4 @@
-import { copyFile, mkdir, readFile, readdir, stat, unlink, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, stat, unlink } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const root = process.cwd();
@@ -14,26 +14,27 @@ if (cname !== expectedDomain) {
 await mkdir(join(root, 'dist'), { recursive: true });
 await copyFile(sourceCname, outputCname);
 
-async function normalizeNotesLanguage(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
-  await Promise.all(entries.map(async (entry) => {
-    const absolute = join(directory, entry.name);
-    if (entry.isDirectory()) return normalizeNotesLanguage(absolute);
-    if (!entry.isFile() || !entry.name.endsWith('.html')) return;
-    const html = await readFile(absolute, 'utf8');
-    const normalized = html.replace(/<html lang="zh"(?=[\s>])/i, '<html lang="zh-CN"');
-    if (normalized !== html) await writeFile(absolute, normalized);
-  }));
+const attachments = [
+  ['src/content/notes/cs/ai/code_minmaxtree.py', 'dist/notes/cs/ai/code_minmaxtree.py'],
+  ['src/content/notes/math/optimization_theory/test.tex', 'dist/notes/math/optimization_theory/test.tex'],
+];
+for (const [source, destination] of attachments) {
+  await mkdir(join(root, destination, '..'), { recursive: true });
+  await copyFile(join(root, source), join(root, destination));
 }
-
-await normalizeNotesLanguage(join(root, 'dist', 'notes'));
 
 const astroAssets = join(root, 'dist', '_assets');
 for (const name of await readdir(astroAssets)) {
   if (/\.(?:jpe?g|png)$/i.test(name)) await unlink(join(astroAssets, name));
 }
 
-for (const required of ['dist/index.html', 'dist/en/index.html', 'dist/notes/index.html']) {
+for (const required of [
+  'dist/index.html',
+  'dist/en/index.html',
+  'dist/notes/index.html',
+  'dist/notes/search/index.html',
+  ...attachments.map(([, destination]) => destination),
+]) {
   await stat(join(root, required));
 }
 

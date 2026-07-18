@@ -1,0 +1,343 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import NotesNavTree from '../components/notes/NotesNavTree.astro';
+import Giscus from '../components/notes/Giscus.astro';
+import {
+  findNotesTrail,
+  flattenNotesNavigation,
+  notesConfig,
+} from '../../notes.config';
+import baseline from '../../tests/fixtures/notes-baseline.json';
+import '../styles/notes.css';
+
+interface Props {
+  entry: CollectionEntry<'notes'>;
+  headings: MarkdownHeading[];
+  entries: CollectionEntry<'notes'>[];
+}
+
+const { entry, headings, entries } = Astro.props;
+const pathname = entry.data.route;
+const visibleHeadings = entry.data.toc ? headings.filter((heading) => heading.depth >= 2 && heading.depth <= 4) : [];
+const trail = findNotesTrail(pathname);
+const flatNavigation = flattenNotesNavigation();
+const navIndex = flatNavigation.findIndex((item) => item.href === pathname);
+const previous = navIndex > 0 ? flatNavigation[navIndex - 1] : undefined;
+const next = navIndex >= 0 && navIndex < flatNavigation.length - 1 ? flatNavigation[navIndex + 1] : undefined;
+const legacyHeadings = baseline.pages.find((page) => page.route === pathname)?.headings ?? [];
+const hasH1 = headings.some((heading) => heading.depth === 1);
+const sourceUrl = `https://github.com/${notesConfig.repository}/blob/${notesConfig.branch}/${entry.data.sourcePath}`;
+const editUrl = `https://github.com/${notesConfig.repository}/edit/${notesConfig.branch}/${entry.data.sourcePath}`;
+const updated = entry.data.updated?.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+const isHome = pathname === '/notes/';
+const recent = entries
+  .filter((item) => !item.data.noindex && item.data.updated && item.data.route !== pathname)
+  .sort((a, b) => Number(b.data.updated) - Number(a.data.updated))
+  .slice(0, 5);
+const breadcrumb = trail.length ? trail : (isHome ? [] : [{ title: entry.data.title, href: pathname }]);
+---
+
+<BaseLayout
+  locale="zh"
+  title={entry.data.title}
+  description={entry.data.description}
+  canonicalPath={pathname}
+  article={!isHome}
+  pagefind={false}
+  noindex={entry.data.noindex}
+>
+  <div class="notes-frame" data-notes-frame>
+    <div class="notes-mobile-bar" data-pagefind-ignore>
+      <button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false">
+        <span aria-hidden="true">☰</span> {notesConfig.labels.contents}
+      </button>
+      <a href="/notes/search/"><span aria-hidden="true">⌕</span> {notesConfig.labels.search}</a>
+      <details class="notes-mobile-toc">
+        <summary>{visibleHeadings.length > 0 ? notesConfig.labels.onThisPage : notesConfig.labels.fontSize}</summary>
+        <div class="notes-mobile-popover">
+          {visibleHeadings.length > 0 && (
+            <ol>
+              {visibleHeadings.map((heading) => <li class={`toc-depth-${heading.depth}`}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+            </ol>
+          )}
+          <div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label={notesConfig.labels.fontSize}>
+            <span>{notesConfig.labels.fontSize}</span>
+            <button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button>
+            <button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button>
+            <button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录">
+      <div class="notes-sidebar-head">
+        <a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a>
+        <button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button>
+      </div>
+      <a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>{notesConfig.labels.search}</a>
+      <nav>
+        <NotesNavTree items={notesConfig.navigation} pathname={pathname} />
+      </nav>
+    </aside>
+    <button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button>
+
+    <div class="notes-main">
+      <nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore>
+        <a href="/notes/">Notes</a>
+        {breadcrumb.map((item) => <><span aria-hidden="true">/</span><a href={item.href} aria-current={item.href === pathname ? 'page' : undefined}>{item.title}</a></>)}
+      </nav>
+
+      <article
+        class="notes-article"
+        data-pagefind-body={entry.data.noindex ? undefined : true}
+        data-pagefind-ignore={entry.data.noindex ? 'all' : undefined}
+        data-note-route={pathname}
+      >
+        <span hidden data-pagefind-filter="kind:notes">notes</span>
+        <span hidden data-pagefind-filter={`subject:${entry.data.subject}`}>{entry.data.subject}</span>
+        <span hidden data-pagefind-filter="lang:zh">zh</span>
+        <span hidden data-pagefind-meta="title">{entry.data.title}</span>
+        {!hasH1 && <h1>{entry.data.title}</h1>}
+        <div class="notes-prose" data-notes-prose>
+          <slot />
+        </div>
+
+        {isHome && (
+          <section class="notes-home-panels" aria-label="Notes 学科入口" data-pagefind-ignore>
+            {notesConfig.navigation.map((group) => (
+              <a href={group.href} class="notes-subject-card">
+                <span>{group.title === '数学' ? '∑' : '⌘'}</span>
+                <strong>{group.title}</strong>
+                <small>{group.children?.map((child) => child.title).join(' · ')}</small>
+              </a>
+            ))}
+            <a href="/notes/search/" class="notes-subject-card notes-search-card">
+              <span>⌕</span>
+              <strong>检索全部 Notes</strong>
+              <small>按关键词、学科与正文片段查找</small>
+            </a>
+          </section>
+        )}
+
+        {isHome && recent.length > 0 && (
+          <section class="notes-recent" data-pagefind-ignore>
+            <h2>最近更新</h2>
+            <ol>
+              {recent.map((item) => (
+                <li>
+                  <a href={item.data.route}>{item.data.title}</a>
+                  <time datetime={item.data.updated!.toISOString()}>{item.data.updated!.toLocaleDateString('zh-CN')}</time>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        <footer class="notes-article-footer" data-pagefind-ignore>
+          {updated && <p><span>{notesConfig.labels.updated}</span> <time datetime={entry.data.updated!.toISOString()}>{updated}</time></p>}
+          <div>
+            <a href={editUrl}>{notesConfig.labels.edit} ↗</a>
+            <a href={sourceUrl}>{notesConfig.labels.source} ↗</a>
+          </div>
+        </footer>
+      </article>
+
+      {(previous || next) && (
+        <nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore>
+          {previous ? <a href={previous.href}><span>{notesConfig.labels.previous}</span><strong>{previous.title}</strong></a> : <span></span>}
+          {next ? <a href={next.href}><span>{notesConfig.labels.next}</span><strong>{next.title}</strong></a> : <span></span>}
+        </nav>
+      )}
+
+      {entry.data.comments && <Giscus pathname={pathname} />}
+    </div>
+
+    <aside class="notes-toc" data-pagefind-ignore aria-label="本页目录">
+      {visibleHeadings.length > 0 && (
+        <>
+          <p>{notesConfig.labels.onThisPage}</p>
+          <ol>
+            {visibleHeadings.map((heading) => <li class={`toc-depth-${heading.depth}`}><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+          </ol>
+        </>
+      )}
+      <div class="notes-font-controls" role="group" aria-label={notesConfig.labels.fontSize}>
+        <span>{notesConfig.labels.fontSize}</span>
+        <button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button>
+        <button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button>
+        <button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button>
+      </div>
+    </aside>
+  </div>
+
+  <button class="notes-back-top" type="button" data-notes-back-top aria-label={notesConfig.labels.backToTop}>↑</button>
+
+  <script is:inline define:vars={{ legacyHeadings }}>
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  </script>
+
+  <script>
+    const frame = document.querySelector<HTMLElement>('[data-notes-frame]');
+    const sidebar = document.querySelector<HTMLElement>('[data-notes-sidebar]');
+    const openButton = document.querySelector<HTMLButtonElement>('[data-notes-nav-open]');
+    const closeButtons = document.querySelectorAll<HTMLButtonElement>('[data-notes-nav-close]');
+    const setDrawer = (open: boolean) => {
+      frame?.classList.toggle('is-nav-open', open);
+      openButton?.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('notes-drawer-open', open);
+      if (open) sidebar?.querySelector<HTMLElement>('a, button, summary')?.focus();
+      else openButton?.focus();
+    };
+    openButton?.addEventListener('click', () => setDrawer(true));
+    closeButtons.forEach((button) => button.addEventListener('click', () => setDrawer(false)));
+    addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && frame?.classList.contains('is-nav-open')) setDrawer(false);
+    });
+    matchMedia('(min-width: 1181px)').addEventListener('change', (event) => { if (event.matches) setDrawer(false); });
+
+    document.querySelectorAll<HTMLElement>('[data-note-tabs]').forEach((tabs, groupIndex) => {
+      const panels = [...tabs.querySelectorAll<HTMLElement>(':scope > .note-tab-panel')];
+      if (!panels.length) return;
+      const tablist = document.createElement('div');
+      tablist.className = 'note-tab-list';
+      tablist.setAttribute('role', 'tablist');
+      const activate = (activeIndex: number, focus = false) => {
+        panels.forEach((panel, index) => {
+          panel.hidden = index !== activeIndex;
+          panel.setAttribute('role', 'tabpanel');
+          const button = tablist.children[index] as HTMLButtonElement;
+          button.setAttribute('aria-selected', String(index === activeIndex));
+          button.tabIndex = index === activeIndex ? 0 : -1;
+          if (index === activeIndex && focus) button.focus();
+        });
+      };
+      panels.forEach((panel, index) => {
+        const panelId = `note-tab-panel-${groupIndex}-${index}`;
+        const buttonId = `note-tab-${groupIndex}-${index}`;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.id = buttonId;
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-controls', panelId);
+        button.textContent = panel.dataset.tabLabel || `Tab ${index + 1}`;
+        panel.id = panelId;
+        panel.setAttribute('aria-labelledby', buttonId);
+        button.addEventListener('click', () => activate(index));
+        button.addEventListener('keydown', (event) => {
+          const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+          if (!direction) return;
+          event.preventDefault();
+          activate((index + direction + panels.length) % panels.length, true);
+        });
+        tablist.append(button);
+      });
+      tabs.prepend(tablist);
+      activate(0);
+    });
+
+    document.querySelectorAll<HTMLElement>('.notes-prose pre:not(.mermaid)').forEach((pre) => {
+      const code = pre.querySelector<HTMLElement>('code');
+      if (!code) return;
+      const metadata = pre.dataset;
+      const shell = document.createElement('div');
+      shell.className = 'note-code-shell';
+      pre.before(shell);
+      shell.append(pre);
+      if (metadata.codeTitle) {
+        const title = document.createElement('div');
+        title.className = 'note-code-title';
+        title.textContent = metadata.codeTitle;
+        shell.prepend(title);
+      }
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'note-code-copy';
+      copy.textContent = '复制';
+      copy.setAttribute('aria-label', '复制代码');
+      copy.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(code.textContent || '');
+        copy.textContent = '已复制';
+        setTimeout(() => { copy.textContent = '复制'; }, 1600);
+      });
+      shell.append(copy);
+      if (metadata.lineStart) {
+        pre.classList.add('has-line-numbers');
+        pre.style.setProperty('--line-start', String(Number(metadata.lineStart) - 1));
+      }
+      const ranges = metadata.highlightLines?.split(/\s+/).flatMap((part) => {
+        const [start, end = start] = part.split('-').map(Number);
+        return Number.isFinite(start) ? Array.from({ length: end - start + 1 }, (_, offset) => start + offset) : [];
+      }) ?? [];
+      code.querySelectorAll<HTMLElement>('.line').forEach((line, index) => line.classList.toggle('is-highlighted', ranges.includes(index + 1)));
+    });
+
+    const mermaidNodes = [...document.querySelectorAll<HTMLElement>('.notes-prose .mermaid')];
+    mermaidNodes.forEach((node) => { node.dataset.source = node.textContent || ''; });
+    const mermaidModule = mermaidNodes.length ? import('mermaid') : undefined;
+    const renderMermaid = async () => {
+      if (!mermaidModule) return;
+      const { default: mermaid } = await mermaidModule;
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'neutral',
+      });
+      mermaidNodes.forEach((node) => {
+        node.removeAttribute('data-processed');
+        node.textContent = node.dataset.source || '';
+      });
+      try { await mermaid.run({ nodes: mermaidNodes }); } catch (error) { console.warn('Mermaid render failed', error); }
+    };
+    void renderMermaid();
+    addEventListener('allenge:themechange', () => { void renderMermaid(); });
+
+    const prose = document.querySelector<HTMLElement>('[data-notes-prose]');
+    const fontKey = 'allenge-notes-font-scale';
+    const setFontScale = (value: number) => {
+      const scale = Math.min(1.18, Math.max(0.88, value));
+      prose?.style.setProperty('--notes-font-scale', String(scale));
+      try { localStorage.setItem(fontKey, String(scale)); } catch {}
+    };
+    let fontScale = 1;
+    try { fontScale = Number(localStorage.getItem(fontKey)) || 1; } catch {}
+    setFontScale(fontScale);
+    document.querySelectorAll<HTMLButtonElement>('[data-notes-font]').forEach((button) => {
+      button.addEventListener('click', () => {
+        fontScale = button.dataset.notesFont === 'increase' ? fontScale + 0.06 : button.dataset.notesFont === 'decrease' ? fontScale - 0.06 : 1;
+        setFontScale(fontScale);
+      });
+    });
+
+    const backTop = document.querySelector<HTMLButtonElement>('[data-notes-back-top]');
+    const updateBackTop = () => backTop?.classList.toggle('is-visible', scrollY > 720);
+    addEventListener('scroll', updateBackTop, { passive: true });
+    backTop?.addEventListener('click', () => scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+    updateBackTop();
+  </script>
+</BaseLayout>

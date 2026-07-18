@@ -64,4 +64,22 @@ const posts = defineCollection({
     }),
 });
 
-export const collections = { projects, posts };
+const notes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './.notes-generated' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    route: z.string(),
+    sourcePath: z.string(),
+    subject: z.enum(['math', 'computer-science', 'notes']),
+    lang: z.literal('zh'),
+    order: z.number().optional(),
+    draft: z.boolean().default(false),
+    comments: z.boolean().default(true),
+    toc: z.boolean().default(true),
+    noindex: z.boolean().default(false),
+    updated: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { projects, posts, notes };

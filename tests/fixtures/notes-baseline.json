@@ -1,0 +1,3645 @@
+{
+  "capturedFrom": "mkdocs",
+  "pageCount": 40,
+  "pages": [
+    {
+      "route": "/notes/",
+      "source": "docs/index.md",
+      "title": "Allenge Notes",
+      "headings": [
+        {
+          "level": 1,
+          "id": "allenge-notes",
+          "text": "Allenge Notes"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "内容索引"
+        }
+      ],
+      "links": [
+        "cs/",
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/index.md",
+        "https://www.allenge.me/",
+        "https://www.allenge.me/search/",
+        "math/"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/",
+      "updated": "2026-07-15T04:33:23+08:00",
+      "normalizedTextLength": 400,
+      "normalizedTextStart": "Allenge Notes 这里保留我在数学、计算机系统与人工智能课程中的长期学习记录。根站已经迁移到 Astro；这些笔记仍然由 MkDocs Material 构建，以便完整保留原有的 admonition、折叠块、tabs、KaTeX、Mermaid 和代码块体验。 ← 返回个人主页 内容索引 数学 ：最优化理论、信号与系统。 计算机科学 ：操作系统、人工智能。 右上角搜索框继续提供 Notes 内原生搜索；根站的 统一搜索 同时覆盖文章、项目与 Notes。 第一阶段"
+    },
+    {
+      "route": "/notes/admonitions/",
+      "source": "docs/admonitions.md",
+      "title": "",
+      "headings": [],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/admonitions.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/admonitions.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/admonitions/",
+      "updated": "2025-05-19T15:58:21+08:00",
+      "normalizedTextLength": 115,
+      "normalizedTextStart": "Admonition 与折叠块 Title what can i say ? ??? what can i say ? 2025年5月19日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/code-examples/",
+      "source": "docs/code-examples.md",
+      "title": "",
+      "headings": [],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/code-examples.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/code-examples.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/code-examples/",
+      "updated": "2025-05-19T15:58:21+08:00",
+      "normalizedTextLength": 291,
+      "normalizedTextStart": "代码块 add_numbers.py 1 2 3 4 def add_two_numbers ( num1 , num2 ) return num1 + num2 print ( add_two_numbers ( int ( input ()), int ( input ()))) #include using namespace std ; int main () { int a , b ; cin >> a >> b ; cout a + b endl ; } 2025"
+    },
+    {
+      "route": "/notes/content-tabs/",
+      "source": "docs/content-tabs.md",
+      "title": "",
+      "headings": [
+        {
+          "level": 2,
+          "id": "content-tabs",
+          "text": "Content Tabs"
+        },
+        {
+          "level": 3,
+          "id": "generic-content",
+          "text": "Generic Content"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/content-tabs.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/content-tabs.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/content-tabs/",
+      "updated": "2025-05-19T15:58:21+08:00",
+      "normalizedTextLength": 284,
+      "normalizedTextStart": "Tabs Content Tabs Generic Content Cpp Python #include using namespace std ; int main () { int a , b ; cin >> a >> b ; cout a + b endl ; } def add ( a , b ): reuturn a + b a , b = int ( input () . split ()) print ( add ( a , b )) 2025年5月19日 "
+    },
+    {
+      "route": "/notes/cs/",
+      "source": "docs/cs/index.md",
+      "title": "计算机课程相关内容",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "计算机课程相关内容"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/index.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/",
+      "updated": "2025-06-12T13:17:32+08:00",
+      "normalizedTextLength": 109,
+      "normalizedTextStart": "计算机课程相关内容 主要放置一些学校课程相关的内容/笔记/作业。具体之后慢慢补充。 希望对后来者有所帮助。 2025年6月12日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/cs/ai/",
+      "source": "docs/cs/ai/index.md",
+      "title": "人工智能理论",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "人工智能理论"
+        }
+      ],
+      "links": [
+        "chapter1/",
+        "chapter2/",
+        "chapter3/",
+        "chapter4/",
+        "chapter5/",
+        "chapter6/",
+        "chapter7/",
+        "chapter8/",
+        "chapter9/",
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/index.md",
+        "minmaxtree.hidden/"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/",
+      "updated": "2025-06-12T10:20:59+08:00",
+      "normalizedTextLength": 187,
+      "normalizedTextStart": "人工智能理论 注意 关于课件部份的内容由 ai 总结生成，请仔细甄别。 知识表示与推理 搜索技术总结 不确定性知识表示与推理 机器学习 - 聚类 机器学习 - 神经网络 机器学习 - 决策树 深度学习 Transformer 强化学习 alpha-beta 剪枝 2025年6月12日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/cs/ai/chapter1/",
+      "source": "docs/cs/ai/chapter1.md",
+      "title": "知识表示与推理",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "知识表示与推理"
+        },
+        {
+          "level": 2,
+          "id": "1",
+          "text": "1. 什么是知识与知识表示？"
+        },
+        {
+          "level": 2,
+          "id": "2",
+          "text": "2. 自然语言的层级与逻辑基础"
+        },
+        {
+          "level": 2,
+          "id": "3-propositional-logic",
+          "text": "3. 命题逻辑 (Propositional Logic)"
+        },
+        {
+          "level": 2,
+          "id": "4-predicate-logic-first-order-logic-fol",
+          "text": "4. 谓词逻辑 (Predicate Logic / First-Order Logic - FOL)"
+        },
+        {
+          "level": 2,
+          "id": "5",
+          "text": "5. 逻辑推理方法"
+        },
+        {
+          "level": 2,
+          "id": "6-resolution-principle",
+          "text": "6. 归结原理 (Resolution Principle)"
+        },
+        {
+          "level": 2,
+          "id": "7",
+          "text": "7. 历史贡献"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter1.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter1.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter1/",
+      "updated": "2025-06-16T08:14:05+08:00",
+      "normalizedTextLength": 22218,
+      "normalizedTextStart": "知识表示与推理 课程信息 课程名称： 人工智能 (专业必修) 授课对象： 计算机科学与技术专业 二年级 节选内容： 第三章 知识表示和推理 I, II, III 1. 什么是知识与知识表示？ 数据、信息与知识 数据 (Data): 单独的事实，信息的载体，由符号组成（如文字、数字）。 信息 (Information): 对符号赋予了意义，具有一定用途和价值。 知识 (Knowledge): 由经验总结升华得到，在信息基础上增加了上下文，提供了更多意义，更加有用和有价值。知识随"
+    },
+    {
+      "route": "/notes/cs/ai/chapter2/",
+      "source": "docs/cs/ai/chapter2.md",
+      "title": "搜索技术总结",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "搜索技术总结"
+        },
+        {
+          "level": 2,
+          "id": "search-technology-i",
+          "text": "一、搜索技术概览 (Search Technology I)"
+        },
+        {
+          "level": 3,
+          "id": "11",
+          "text": "1.1 搜索可以解决的问题"
+        },
+        {
+          "level": 3,
+          "id": "12",
+          "text": "1.2 搜索问题的形式化定义"
+        },
+        {
+          "level": 4,
+          "id": "1",
+          "text": "示例1：罗马尼亚路径规划"
+        },
+        {
+          "level": 4,
+          "id": "2-water-jug-problem",
+          "text": "示例2：倒水问题 (Water Jug Problem)"
+        },
+        {
+          "level": 4,
+          "id": "3-8-puzzle-problem",
+          "text": "示例3：八数码难题 (8-Puzzle Problem)"
+        },
+        {
+          "level": 4,
+          "id": "4-vacuum-cleaner-world",
+          "text": "示例4：吸尘器世界 (Vacuum Cleaner World)"
+        },
+        {
+          "level": 3,
+          "id": "13",
+          "text": "1.3 搜索过程：树搜索与图搜索"
+        },
+        {
+          "level": 3,
+          "id": "14",
+          "text": "1.4 搜索算法的评价标准"
+        },
+        {
+          "level": 2,
+          "id": "uninformed-search",
+          "text": "二、无信息搜索 (Uninformed Search)"
+        },
+        {
+          "level": 3,
+          "id": "21-breadth-first-search-bfs",
+          "text": "2.1 宽度优先搜索 (Breadth-First Search, BFS)"
+        },
+        {
+          "level": 4,
+          "id": "bfs",
+          "text": "示例：倒水问题 (BFS)"
+        },
+        {
+          "level": 3,
+          "id": "22-uniform-cost-search-ucs",
+          "text": "2.2 一致代价搜索 (Uniform-Cost Search, UCS)"
+        },
+        {
+          "level": 3,
+          "id": "23-depth-first-search-dfs",
+          "text": "2.3 深度优先搜索 (Depth-First Search, DFS)"
+        },
+        {
+          "level": 4,
+          "id": "dfs",
+          "text": "示例：倒水问题 (DFS)"
+        },
+        {
+          "level": 3,
+          "id": "24-depth-limited-search-dls",
+          "text": "2.4 深度受限搜索 (Depth-Limited Search, DLS)"
+        },
+        {
+          "level": 3,
+          "id": "25-iterative-deepening-search-ids",
+          "text": "2.5 迭代加深搜索 (Iterative Deepening Search, IDS)"
+        },
+        {
+          "level": 3,
+          "id": "26-bidirectional-search",
+          "text": "2.6 双向搜索 (Bidirectional Search)"
+        },
+        {
+          "level": 3,
+          "id": "27",
+          "text": "2.7 处理重复状态 (环路检测)"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "无信息搜索策略总结"
+        },
+        {
+          "level": 2,
+          "id": "heuristic-search-search-technology-i-ii",
+          "text": "三、启发式搜索 (Heuristic Search) (Search Technology I & II)"
+        },
+        {
+          "level": 3,
+          "id": "31-hn",
+          "text": "3.1 启发式函数 \\(h(n)\\)"
+        },
+        {
+          "level": 4,
+          "id": "_3",
+          "text": "示例：八数码难题的启发式函数"
+        },
+        {
+          "level": 3,
+          "id": "32-greedy-best-first-search",
+          "text": "3.2 贪婪最佳优先搜索 (Greedy Best-First Search)"
+        },
+        {
+          "level": 3,
+          "id": "33-a-a-star-search",
+          "text": "3.3 A* 搜索 (A-Star Search)"
+        },
+        {
+          "level": 4,
+          "id": "a-h",
+          "text": "A* 搜索的性质 (若 \\(h\\) 一致)"
+        },
+        {
+          "level": 4,
+          "id": "a",
+          "text": "示例：八数码难题 (A*)"
+        },
+        {
+          "level": 3,
+          "id": "34-a-iterative-deepening-a-ida",
+          "text": "3.4 迭代加深 A* (Iterative Deepening A , IDA )"
+        },
+        {
+          "level": 3,
+          "id": "35",
+          "text": "3.5 构造启发式函数"
+        },
+        {
+          "level": 4,
+          "id": "351-relaxed-problems",
+          "text": "3.5.1 松弛问题 (Relaxed Problems)"
+        },
+        {
+          "level": 4,
+          "id": "352-pattern-databases-ppt",
+          "text": "3.5.2 模式数据库 (Pattern Databases) - 未在PPT详述，但相关"
+        },
+        {
+          "level": 4,
+          "id": "353-ppt",
+          "text": "3.5.3 学习启发式函数 - 未在PPT详述，但相关"
+        },
+        {
+          "level": 3,
+          "id": "36-dominance",
+          "text": "3.6 启发式函数的支配 (Dominance)"
+        },
+        {
+          "level": 3,
+          "id": "37",
+          "text": "3.7 启发式搜索应用示例"
+        },
+        {
+          "level": 4,
+          "id": "blocks-world",
+          "text": "积木世界 (Blocks World)"
+        },
+        {
+          "level": 4,
+          "id": "missionaries-and-cannibals",
+          "text": "传教士与野人问题 (Missionaries and Cannibals)"
+        },
+        {
+          "level": 4,
+          "id": "ai",
+          "text": "游戏AI中的路径规划"
+        },
+        {
+          "level": 2,
+          "id": "adversarial-search-search-technology-ii",
+          "text": "四、对抗搜索 (Adversarial Search) (Search Technology II)"
+        },
+        {
+          "level": 3,
+          "id": "41",
+          "text": "4.1 博弈论基础"
+        },
+        {
+          "level": 4,
+          "id": "_4",
+          "text": "示例：剪刀石头布"
+        },
+        {
+          "level": 3,
+          "id": "42-minimax",
+          "text": "4.2 Minimax 算法"
+        },
+        {
+          "level": 3,
+          "id": "43-alpha-beta-alpha-beta-pruning",
+          "text": "4.3 Alpha-Beta 剪枝 (Alpha-Beta Pruning)"
+        },
+        {
+          "level": 3,
+          "id": "44",
+          "text": "4.4 有限深度的博弈与评价函数"
+        },
+        {
+          "level": 4,
+          "id": "_5",
+          "text": "示例：井字棋的评价函数"
+        },
+        {
+          "level": 3,
+          "id": "45-monte-carlo-tree-search-mcts",
+          "text": "4.5 蒙特卡洛树搜索 (Monte Carlo Tree Search, MCTS)"
+        },
+        {
+          "level": 2,
+          "id": "local-search-search-technology-iii",
+          "text": "五、局部搜索 (Local Search) (Search Technology III)"
+        },
+        {
+          "level": 3,
+          "id": "51",
+          "text": "5.1 局部搜索算法特点"
+        },
+        {
+          "level": 3,
+          "id": "52-hill-climbing",
+          "text": "5.2 爬山搜索 (Hill Climbing)"
+        },
+        {
+          "level": 4,
+          "id": "_6",
+          "text": "爬山法的改进"
+        },
+        {
+          "level": 3,
+          "id": "53-simulated-annealing-sa",
+          "text": "5.3 模拟退火 (Simulated Annealing, SA)"
+        },
+        {
+          "level": 4,
+          "id": "sa-tsp",
+          "text": "SA 应用示例：背包问题、TSP"
+        },
+        {
+          "level": 3,
+          "id": "54-genetic-algorithms-ga",
+          "text": "5.4 遗传算法 (Genetic Algorithms, GA)"
+        },
+        {
+          "level": 4,
+          "id": "ga",
+          "text": "GA 的关键要素"
+        },
+        {
+          "level": 4,
+          "id": "ga-rastrigintsp",
+          "text": "GA 应用示例：函数优化 (Rastrigin)、TSP"
+        },
+        {
+          "level": 2,
+          "id": "_7",
+          "text": "六、总结"
+        },
+        {
+          "level": 2,
+          "id": "_8",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "../minmaxtree.hidden/",
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter2.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter2.md"
+      ],
+      "images": [
+        "../fig/8digit-2.png",
+        "../fig/8digit.png",
+        "../fig/minimax_tree_after_ab.png",
+        "../fig/minimax_tree_before.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter2/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 18620,
+      "normalizedTextStart": "搜索技术总结 课程信息 课程名称： 人工智能（专业必修） 授课对象： 计算机科学与技术专业 二年级 课程学分： 3学分 核心内容： 第四章 搜索技术 (I, II, III) 一、搜索技术概览 (Search Technology I) 搜索是人工智能中解决问题的一种基本方法。许多问题，尤其那些没有特定解决算法的问题，都可以通过将其转化为搜索问题来求解。 1.1 搜索可以解决的问题 问题求解 (Problem solving by search): 许多AI问题可以通过搜索找"
+    },
+    {
+      "route": "/notes/cs/ai/chapter3/",
+      "source": "docs/cs/ai/chapter3.md",
+      "title": "不确定性知识表示与推理",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "不确定性知识表示与推理"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "一、为什么需要不确定性推理？"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "二、概率论基础回顾"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "三、贝叶斯推断"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "四、多因子下的贝叶斯推断 (朴素贝叶斯分类器)"
+        },
+        {
+          "level": 2,
+          "id": "_6",
+          "text": "五、贝叶斯学派与频率学派"
+        },
+        {
+          "level": 2,
+          "id": "_7",
+          "text": "六、从完全独立到条件独立"
+        },
+        {
+          "level": 2,
+          "id": "bayesian-network-bn",
+          "text": "七、什么是贝叶斯网络 (Bayesian Network, BN)?"
+        },
+        {
+          "level": 2,
+          "id": "_8",
+          "text": "八、构建贝叶斯网络"
+        },
+        {
+          "level": 2,
+          "id": "_9",
+          "text": "九、使用贝叶斯网络进行推理"
+        },
+        {
+          "level": 2,
+          "id": "_10",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter3.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter3.md"
+      ],
+      "images": [
+        "../fig/bayesian.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter3/",
+      "updated": "2025-06-19T11:24:51+08:00",
+      "normalizedTextLength": 14347,
+      "normalizedTextStart": "不确定性知识表示与推理 课程信息 授课对象 ：计算机科学与技术专业 二年级 课程名称 ：人工智能（专业必修） 节选内容 ：第四章 不确定性知识表示与推理 课程学分 ：3学分 一、为什么需要不确定性推理？ 在传统的确定性知识表示与推理中（如谓词逻辑、归结推理），我们处理的是具有明确真值的事实和规则。例如，“姜维的主公是刘备”，“刘备的义弟是关羽”，“关羽的义弟是张飞”，可以推断出“姜维的主公的义弟是张飞”。 然而，现实世界充满了不确定性： 信息不完整 ：医疗诊断时，患者可能无法"
+    },
+    {
+      "route": "/notes/cs/ai/chapter4/",
+      "source": "docs/cs/ai/chapter4.md",
+      "title": "机器学习 - 聚类",
+      "headings": [
+        {
+          "level": 1,
+          "id": "-",
+          "text": "机器学习 - 聚类"
+        },
+        {
+          "level": 2,
+          "id": "1-clustering",
+          "text": "1. 什么是聚类 (Clustering)？"
+        },
+        {
+          "level": 3,
+          "id": "11",
+          "text": "1.1 聚类的应用"
+        },
+        {
+          "level": 3,
+          "id": "12",
+          "text": "1.2 聚类与监督分类/简单分割的区别"
+        },
+        {
+          "level": 3,
+          "id": "13",
+          "text": "1.3 关键问题：确定簇的数量"
+        },
+        {
+          "level": 2,
+          "id": "2",
+          "text": "2. 不同类型的聚类方法"
+        },
+        {
+          "level": 3,
+          "id": "21-vs",
+          "text": "2.1 分割式聚类 vs. 层次聚类"
+        },
+        {
+          "level": 3,
+          "id": "22",
+          "text": "2.2 其他聚类类型的区分"
+        },
+        {
+          "level": 2,
+          "id": "3-types-of-clusters",
+          "text": "3. 不同类型的簇 (Types of Clusters)"
+        },
+        {
+          "level": 2,
+          "id": "4-proximity-measures",
+          "text": "4. 相似性与不相似性度量 (Proximity Measures)"
+        },
+        {
+          "level": 2,
+          "id": "5",
+          "text": "5. 主要聚类算法"
+        },
+        {
+          "level": 3,
+          "id": "51-hierarchical-clustering",
+          "text": "5.1 层次聚类 (Hierarchical Clustering)"
+        },
+        {
+          "level": 3,
+          "id": "52-k-k-means-clustering",
+          "text": "5.2 K-均值聚类 (K-Means Clustering)"
+        },
+        {
+          "level": 3,
+          "id": "53-dbscan-density-based-spatial-clustering-of-applications-with-noise",
+          "text": "5.3 DBSCAN (Density-Based Spatial Clustering of Applications with Noise)"
+        },
+        {
+          "level": 2,
+          "id": "6-k-means-dbscan",
+          "text": "6. K-Means 与 DBSCAN 的比较"
+        },
+        {
+          "level": 2,
+          "id": "7-cluster-validity",
+          "text": "7. 聚类有效性评估 (Cluster Validity)"
+        },
+        {
+          "level": 3,
+          "id": "71",
+          "text": "7.1 为什么需要评估？"
+        },
+        {
+          "level": 3,
+          "id": "72",
+          "text": "7.2 评估指标的分类"
+        },
+        {
+          "level": 3,
+          "id": "73",
+          "text": "7.3 常用评估方法和指标"
+        },
+        {
+          "level": 2,
+          "id": "8",
+          "text": "8. 总结"
+        }
+      ],
+      "links": [
+        "https://bl.ocks.org/rpgove/0060ff3b656618e9136b",
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter4.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter4.md",
+        "https://www.naftaliharris.com/blog/visualizing-k-means-clustering/"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter4/",
+      "updated": "2025-06-11T19:23:55+08:00",
+      "normalizedTextLength": 10370,
+      "normalizedTextStart": "机器学习 - 聚类 1. 什么是聚类 (Clustering)？ 聚类是一种无监督学习技术，其目标是： Finding groups of objects such that the objects in a group will be similar (or related) to one another and different from (or unrelated to) the objects in other groups. (寻找一组对象，使得同一组内的对象彼此"
+    },
+    {
+      "route": "/notes/cs/ai/chapter5/",
+      "source": "docs/cs/ai/chapter5.md",
+      "title": "机器学习 - 神经网络",
+      "headings": [
+        {
+          "level": 1,
+          "id": "-",
+          "text": "机器学习 - 神经网络"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "一、机器学习与神经网络概述"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 机器学习核心目标"
+        },
+        {
+          "level": 3,
+          "id": "2-neural-networks",
+          "text": "2. 神经网络 (Neural Networks)"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "二、神经元模型"
+        },
+        {
+          "level": 3,
+          "id": "1_1",
+          "text": "1. 生物神经元结构"
+        },
+        {
+          "level": 3,
+          "id": "2-mp-mcculloch-pitts-neuron-model-1943",
+          "text": "2. MP神经元模型 (McCulloch-Pitts Neuron Model, 1943)"
+        },
+        {
+          "level": 3,
+          "id": "3-hebb-hebbs-rule-1949",
+          "text": "3. Hebb学习率 (Hebb's Rule, 1949)"
+        },
+        {
+          "level": 2,
+          "id": "perceptron",
+          "text": "三、感知机 (Perceptron)"
+        },
+        {
+          "level": 3,
+          "id": "1_2",
+          "text": "1. 结构"
+        },
+        {
+          "level": 3,
+          "id": "2",
+          "text": "2. 计算公式"
+        },
+        {
+          "level": 3,
+          "id": "3-perceptron-learning-rule",
+          "text": "3. 感知机训练法则 (Perceptron Learning Rule)"
+        },
+        {
+          "level": 3,
+          "id": "4",
+          "text": "4. 决策边界与局限性"
+        },
+        {
+          "level": 2,
+          "id": "multi-layer-perceptron-mlp",
+          "text": "四、多层感知机 (Multi-Layer Perceptron, MLP)"
+        },
+        {
+          "level": 3,
+          "id": "1_3",
+          "text": "1. 结构"
+        },
+        {
+          "level": 3,
+          "id": "2_1",
+          "text": "2. 数学表达式"
+        },
+        {
+          "level": 3,
+          "id": "3",
+          "text": "3. 激活函数"
+        },
+        {
+          "level": 3,
+          "id": "4-universal-approximation-theorem",
+          "text": "4. 通用近似定理 (Universal Approximation Theorem)"
+        },
+        {
+          "level": 3,
+          "id": "5-mlp-xor",
+          "text": "5. MLP如何解决非线性问题 (如XOR)？"
+        },
+        {
+          "level": 3,
+          "id": "6",
+          "text": "6. 隐藏层节点数的选择"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "五、神经网络的训练"
+        },
+        {
+          "level": 3,
+          "id": "1-loss-function",
+          "text": "1. 损失函数 (Loss Function)"
+        },
+        {
+          "level": 3,
+          "id": "2-forward-propagation",
+          "text": "2. 前向传播 (Forward Propagation)"
+        },
+        {
+          "level": 3,
+          "id": "3-backward-propagation-bp",
+          "text": "3. 反向传播 (Backward Propagation, BP)"
+        },
+        {
+          "level": 3,
+          "id": "4-vanishing-gradient-problem",
+          "text": "4. 梯度消失问题 (Vanishing Gradient Problem)"
+        },
+        {
+          "level": 3,
+          "id": "5-relu",
+          "text": "5. ReLU激活函数与梯度消失"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "六、总结"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter5.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter5.md"
+      ],
+      "images": [
+        "../fig/net.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter5/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 11534,
+      "normalizedTextStart": "机器学习 - 神经网络 一、机器学习与神经网络概述 1. 机器学习核心目标 机器学习的核心目标是通过数据学习一个函数 \\(f(x)\\) ，完成从输入到输出的映射。主要分为： 回归 (Regression)： 函数的输出是一个数值。 分类 (Classification)： 函数的输出是一个类别。 生成 (Generation)： 函数的输出是一个数据（如图像、文本）。 2. 神经网络 (Neural Networks) 起源： 尝试模拟生物大脑的算法。 历史： 80年代和90"
+    },
+    {
+      "route": "/notes/cs/ai/chapter6/",
+      "source": "docs/cs/ai/chapter6.md",
+      "title": "机器学习 - 决策树",
+      "headings": [
+        {
+          "level": 1,
+          "id": "-",
+          "text": "机器学习 - 决策树"
+        },
+        {
+          "level": 2,
+          "id": "1",
+          "text": "1. 什么是决策树？"
+        },
+        {
+          "level": 3,
+          "id": "_1",
+          "text": "决策树示例：判断是否购买电脑"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "决策树的工作流程"
+        },
+        {
+          "level": 2,
+          "id": "2",
+          "text": "2. 决策树算法核心"
+        },
+        {
+          "level": 3,
+          "id": "_3",
+          "text": "基础算法思想 (贪心算法)"
+        },
+        {
+          "level": 3,
+          "id": "_4",
+          "text": "停止划分的条件"
+        },
+        {
+          "level": 2,
+          "id": "3",
+          "text": "3. 决策树相关算法发展"
+        },
+        {
+          "level": 2,
+          "id": "4-cls-concept-learning-system",
+          "text": "4. CLS (Concept Learning System) 算法"
+        },
+        {
+          "level": 3,
+          "id": "cls",
+          "text": "CLS基本思想"
+        },
+        {
+          "level": 3,
+          "id": "cls_1",
+          "text": "CLS算法的问题"
+        },
+        {
+          "level": 2,
+          "id": "5-id3",
+          "text": "5. ID3 算法：基于信息增益"
+        },
+        {
+          "level": 3,
+          "id": "_5",
+          "text": "信息论基础"
+        },
+        {
+          "level": 2,
+          "id": "6-c45",
+          "text": "6. C4.5 算法：基于增益率"
+        },
+        {
+          "level": 2,
+          "id": "7-cart",
+          "text": "7. CART 算法：基于基尼指数"
+        },
+        {
+          "level": 3,
+          "id": "gini-index-",
+          "text": "基尼指数 (Gini Index) - 用于分类"
+        },
+        {
+          "level": 3,
+          "id": "id3-c45-cart",
+          "text": "处理连续值属性 (ID3, C4.5, CART)"
+        },
+        {
+          "level": 3,
+          "id": "cart",
+          "text": "CART 分类树生成算法"
+        },
+        {
+          "level": 2,
+          "id": "8",
+          "text": "8. 从决策树中提取规则"
+        },
+        {
+          "level": 2,
+          "id": "9-cart-for-regression",
+          "text": "9. 回归树 (CART for Regression)"
+        },
+        {
+          "level": 3,
+          "id": "_6",
+          "text": "回归树模型"
+        },
+        {
+          "level": 3,
+          "id": "_7",
+          "text": "划分准则：平方误差最小化"
+        },
+        {
+          "level": 3,
+          "id": "_8",
+          "text": "回归树生成算法 (最小二乘回归树)"
+        },
+        {
+          "level": 2,
+          "id": "10",
+          "text": "10. 模型评估"
+        },
+        {
+          "level": 2,
+          "id": "_9",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter6.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter6.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js",
+        "https://i.imgur.com/your-image-placeholder.png"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter6/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 13390,
+      "normalizedTextStart": "机器学习 - 决策树 1. 什么是决策树？ 决策树是一种基础的分类与回归方法。顾名思义，它是一种树状结构的分类模型。 内部结点 (Internal Node): 代表对某个属性的“测试”(test)或“判断”。 分支 (Branch): 代表该测试的一种可能结果，即属性的某个取值。 叶结点 (Leaf Node): 代表一个“预测结果”或“类别标签”。 决策树示例：判断是否购买电脑 下面是一个经典的“是否购买电脑”决策树的例子（具体树结构未在PPT中完整画出，但概念清晰）： "
+    },
+    {
+      "route": "/notes/cs/ai/chapter7/",
+      "source": "docs/cs/ai/chapter7.md",
+      "title": "深度学习",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "深度学习"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "一、神经网络基础"
+        },
+        {
+          "level": 3,
+          "id": "1-neuron",
+          "text": "1. “神经元” (Neuron)"
+        },
+        {
+          "level": 3,
+          "id": "2-activation-function",
+          "text": "2. 激活函数 (Activation Function)"
+        },
+        {
+          "level": 3,
+          "id": "3",
+          "text": "3. 神经网络的结构与前向传播"
+        },
+        {
+          "level": 2,
+          "id": "deep-learning",
+          "text": "二、深度学习 (Deep Learning)"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 深度学习的演进"
+        },
+        {
+          "level": 3,
+          "id": "2-vanishing-gradient",
+          "text": "2. 深度学习的挑战：梯度消失 (Vanishing Gradient)"
+        },
+        {
+          "level": 3,
+          "id": "3_1",
+          "text": "3. 深度学习的先驱"
+        },
+        {
+          "level": 2,
+          "id": "cnn-convnet",
+          "text": "三、卷积神经网络 (CNN / ConvNet)"
+        },
+        {
+          "level": 3,
+          "id": "1-mlp",
+          "text": "1. MLP处理图像的局限性"
+        },
+        {
+          "level": 3,
+          "id": "2-cnn",
+          "text": "2. CNN的设计灵感：人类视觉系统特点"
+        },
+        {
+          "level": 3,
+          "id": "3-cnn",
+          "text": "3. CNN核心组件"
+        },
+        {
+          "level": 4,
+          "id": "a-convolutional-layer",
+          "text": "a. 卷积层 (Convolutional Layer)"
+        },
+        {
+          "level": 4,
+          "id": "b-pooling-layer",
+          "text": "b. 池化层 (Pooling Layer)"
+        },
+        {
+          "level": 3,
+          "id": "4-cnn",
+          "text": "4. 典型CNN架构"
+        },
+        {
+          "level": 3,
+          "id": "5-cnn",
+          "text": "5. CNN的优势"
+        },
+        {
+          "level": 3,
+          "id": "6-cnn",
+          "text": "6. CNN应用"
+        },
+        {
+          "level": 2,
+          "id": "rnn-recurrent-neural-network",
+          "text": "四、循环神经网络 (RNN / Recurrent Neural Network)"
+        },
+        {
+          "level": 3,
+          "id": "1_1",
+          "text": "1. 动机：处理序列信息"
+        },
+        {
+          "level": 3,
+          "id": "2-one-hot-encoding",
+          "text": "2. 词表示：One-hot Encoding"
+        },
+        {
+          "level": 3,
+          "id": "3-rnn",
+          "text": "3. 基本RNN结构"
+        },
+        {
+          "level": 3,
+          "id": "4-rnnbptt-backpropagation-through-time",
+          "text": "4. 训练RNN：BPTT (Backpropagation Through Time)"
+        },
+        {
+          "level": 3,
+          "id": "5-rnn-vanishingexploding-gradient-problem",
+          "text": "5. RNN的挑战：梯度消失/爆炸 (Vanishing/Exploding Gradient Problem)"
+        },
+        {
+          "level": 2,
+          "id": "lstm-long-short-term-memory",
+          "text": "五、长短期记忆网络 (LSTM / Long Short-Term Memory)"
+        },
+        {
+          "level": 3,
+          "id": "1-gating-mechanism",
+          "text": "1. 核心思想：门控机制 (Gating Mechanism)"
+        },
+        {
+          "level": 3,
+          "id": "2-lstm",
+          "text": "2. LSTM单元的运作"
+        },
+        {
+          "level": 3,
+          "id": "3-lstm",
+          "text": "3. LSTM网络"
+        },
+        {
+          "level": 3,
+          "id": "4-lstm",
+          "text": "4. LSTM训练挑战"
+        },
+        {
+          "level": 2,
+          "id": "explainable-ai-xai",
+          "text": "六、可解释的机器学习 (Explainable AI - XAI)"
+        },
+        {
+          "level": 3,
+          "id": "1-xai",
+          "text": "1. 为什么需要XAI？"
+        },
+        {
+          "level": 3,
+          "id": "2-vs",
+          "text": "2. 可解释性 vs. 模型性能"
+        },
+        {
+          "level": 3,
+          "id": "3_2",
+          "text": "3. 可解释性方法"
+        },
+        {
+          "level": 4,
+          "id": "a-local-explanation",
+          "text": "a. 局部可解释性 (Local Explanation)"
+        },
+        {
+          "level": 4,
+          "id": "b-global-explanation",
+          "text": "b. 全局可解释性 (Global Explanation)"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter7.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter7.md"
+      ],
+      "images": [
+        "../fig/rnn.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter7/",
+      "updated": "2025-06-19T11:24:51+08:00",
+      "normalizedTextLength": 10718,
+      "normalizedTextStart": "深度学习 一、神经网络基础 神经网络是深度学习的基石，让我们从基础的感知机开始。 单层神经网络/感知机 (Perceptron) 感知机是最简单的神经网络，由输入层和输出层构成。 结构 ：输入特征 \\(x_1, x_2, ..., x_n\\) 经过加权求和，再通过一个激活函数（如阶跃函数）得到输出。 参数 ：权重 (weights) \\(w_i\\) 和偏置 (bias) \\(b\\) 。 局限性 ：单层感知机只能解决线性可分问题，例如无法解决XOR（异或）这样的简单非线性分类任"
+    },
+    {
+      "route": "/notes/cs/ai/chapter8/",
+      "source": "docs/cs/ai/chapter8.md",
+      "title": "Transformer",
+      "headings": [
+        {
+          "level": 1,
+          "id": "transformer",
+          "text": "Transformer"
+        },
+        {
+          "level": 2,
+          "id": "1-nlp",
+          "text": "1. 自然语言处理 (NLP) 概览"
+        },
+        {
+          "level": 2,
+          "id": "2-word-representations",
+          "text": "2. 词的表示 (Word Representations)"
+        },
+        {
+          "level": 3,
+          "id": "21-one-hot",
+          "text": "2.1 传统表示：One-hot 向量"
+        },
+        {
+          "level": 3,
+          "id": "22-word-embeddings",
+          "text": "2.2 分布式表示：词嵌入 (Word Embeddings)"
+        },
+        {
+          "level": 3,
+          "id": "23-word2vec",
+          "text": "2.3 Word2Vec"
+        },
+        {
+          "level": 2,
+          "id": "3-machine-translation-mt",
+          "text": "3. 机器翻译 (Machine Translation, MT)"
+        },
+        {
+          "level": 3,
+          "id": "31-smt-vs-nmt",
+          "text": "3.1 统计机器翻译 (SMT) vs. 神经机器翻译 (NMT)"
+        },
+        {
+          "level": 3,
+          "id": "32-seq2seq",
+          "text": "3.2 Seq2Seq 模型"
+        },
+        {
+          "level": 2,
+          "id": "4-attention-mechanism",
+          "text": "4. 注意力机制 (Attention Mechanism)"
+        },
+        {
+          "level": 2,
+          "id": "5-transformer-attention-is-all-you-need",
+          "text": "5. Transformer: Attention Is All You Need?"
+        },
+        {
+          "level": 3,
+          "id": "51-self-attention",
+          "text": "5.1 自注意力 (Self-Attention)"
+        },
+        {
+          "level": 3,
+          "id": "52",
+          "text": "5.2 解决自注意力的局限"
+        },
+        {
+          "level": 3,
+          "id": "53-multi-head-attention",
+          "text": "5.3 多头注意力 (Multi-Head Attention)"
+        },
+        {
+          "level": 3,
+          "id": "54-transformer",
+          "text": "5.4 Transformer 整体架构"
+        },
+        {
+          "level": 2,
+          "id": "6",
+          "text": "6. 总结与展望"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter8.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter8.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter8/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 6780,
+      "normalizedTextStart": "Transformer 课程信息 本笔记总结自《人工智能》课程第17讲：深度学习II - Transformer。 主要内容包括自然语言处理（NLP）基础、词向量表示（Word2Vec）、序列到序列模型（Seq2Seq）、注意力机制（Attention）以及Transformer模型的核心架构。 1. 自然语言处理 (NLP) 概览 自然语言处理 (NLP) 是探索计算机与人类语言之间交互的领域，旨在实现人与计算机之间使用自然语言进行有效通信。 NLP发展阶段 基于规则的经验"
+    },
+    {
+      "route": "/notes/cs/ai/chapter9/",
+      "source": "docs/cs/ai/chapter9.md",
+      "title": "强化学习",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "强化学习"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "什么是强化学习？"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "一、强化学习基本概念"
+        },
+        {
+          "level": 3,
+          "id": "1-markov-property",
+          "text": "1. 马尔可夫性质 (Markov Property)"
+        },
+        {
+          "level": 3,
+          "id": "2-markov-decision-process-mdp",
+          "text": "2. 马尔可夫决策过程 (Markov Decision Process, MDP)"
+        },
+        {
+          "level": 3,
+          "id": "3-policy",
+          "text": "3. 策略 (Policy)"
+        },
+        {
+          "level": 3,
+          "id": "4-return",
+          "text": "4. 回报 (Return)"
+        },
+        {
+          "level": 3,
+          "id": "5-value-function",
+          "text": "5. 价值函数 (Value Function)"
+        },
+        {
+          "level": 3,
+          "id": "6-optimal-value-function",
+          "text": "6. 最优价值函数 (Optimal Value Function)"
+        },
+        {
+          "level": 3,
+          "id": "7-bellman-equations",
+          "text": "7. 贝尔曼方程 (Bellman Equations)"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "二、表格型强化学习"
+        },
+        {
+          "level": 3,
+          "id": "1-dynamic-programming-dp",
+          "text": "1. 动态规划 (Dynamic Programming, DP)"
+        },
+        {
+          "level": 4,
+          "id": "11-policy-evaluation",
+          "text": "1.1 策略评估 (Policy Evaluation)"
+        },
+        {
+          "level": 4,
+          "id": "12-policy-improvement",
+          "text": "1.2 策略提升 (Policy Improvement)"
+        },
+        {
+          "level": 4,
+          "id": "13-policy-iteration",
+          "text": "1.3 策略迭代 (Policy Iteration)"
+        },
+        {
+          "level": 4,
+          "id": "14-value-iteration",
+          "text": "1.4 值迭代 (Value Iteration)"
+        },
+        {
+          "level": 3,
+          "id": "2-monte-carlo-mc",
+          "text": "2. 蒙特卡洛方法 (Monte Carlo, MC)"
+        },
+        {
+          "level": 4,
+          "id": "21",
+          "text": "2.1 蒙特卡洛策略评估"
+        },
+        {
+          "level": 4,
+          "id": "22-mc-control",
+          "text": "2.2 蒙特卡洛控制 (MC Control)"
+        },
+        {
+          "level": 3,
+          "id": "3-temporal-difference-td",
+          "text": "3. 时序差分学习 (Temporal Difference, TD)"
+        },
+        {
+          "level": 4,
+          "id": "31-n-td-n-step-td-learning",
+          "text": "3.1 n-步TD学习 (n-step TD Learning)"
+        },
+        {
+          "level": 4,
+          "id": "32-tdlambda",
+          "text": "3.2 TD( \\(\\lambda\\) )"
+        },
+        {
+          "level": 4,
+          "id": "33-sarsa-state-action-reward-state-action",
+          "text": "3.3 SARSA (State-Action-Reward-State-Action)"
+        },
+        {
+          "level": 4,
+          "id": "34-q-learning",
+          "text": "3.4 Q-Learning"
+        },
+        {
+          "level": 2,
+          "id": "deep-reinforcement-learning-drl",
+          "text": "三、深度强化学习 (Deep Reinforcement Learning, DRL)"
+        },
+        {
+          "level": 3,
+          "id": "1-drl-value-based-drl",
+          "text": "1. 基于值函数的DRL (Value-Based DRL)"
+        },
+        {
+          "level": 4,
+          "id": "11-naive-dqn-deep-q-network",
+          "text": "1.1 Naïve DQN (Deep Q-Network)"
+        },
+        {
+          "level": 4,
+          "id": "12-dqn-mnih-et-al-2013-2015",
+          "text": "1.2 经典DQN (Mnih et al., 2013, 2015)"
+        },
+        {
+          "level": 4,
+          "id": "13-dqn",
+          "text": "1.3 DQN的改进"
+        },
+        {
+          "level": 3,
+          "id": "2-drl-policy-based-drl",
+          "text": "2. 基于策略的DRL (Policy-Based DRL)"
+        },
+        {
+          "level": 4,
+          "id": "21-reinforce-monte-carlo-policy-gradient",
+          "text": "2.1 REINFORCE (Monte Carlo Policy Gradient)"
+        },
+        {
+          "level": 3,
+          "id": "3-actor-critic-ac-drl",
+          "text": "3. 基于演员-评论家 (Actor-Critic, AC) 的DRL"
+        },
+        {
+          "level": 4,
+          "id": "31-advantage-actor-critic-a2c",
+          "text": "3.1 优势演员-评论家 (Advantage Actor-Critic, A2C)"
+        },
+        {
+          "level": 2,
+          "id": "multi-agent-reinforcement-learning-marl",
+          "text": "四、多智能体强化学习 (Multi-Agent Reinforcement Learning, MARL)"
+        },
+        {
+          "level": 3,
+          "id": "1-marl-maddpg",
+          "text": "1. 基于策略的MARL —— MADDPG"
+        },
+        {
+          "level": 3,
+          "id": "2-marl-vdn",
+          "text": "2. 基于值函数的MARL —— VDN"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "课后作业"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/chapter9.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/chapter9.md"
+      ],
+      "images": [
+        "../fig/RL.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/chapter9/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 27068,
+      "normalizedTextStart": "强化学习 前情知识回顾：机器学习 机器学习需要提前给定大量静态数据，其学习目标是发现数据中的潜在结构或映射关系。 监督学习： 在拥有输入和对应输出（标签）的情况下训练模型，用于寻找输入与输出之间的映射关系。 无监督学习： 在训练数据没有标签或目标值的情况下训练模型，用于探索数据中隐含的模式和分布。 在许多如棋牌博弈、机器人控制等序列决策场景中，智能体（Agent）需要与环境（Environment）进行动态交互，并通过交互获得的数据来学习其决策策略。这些动态决策场景十分广泛，"
+    },
+    {
+      "route": "/notes/cs/ai/minmaxtree.hidden/",
+      "source": "docs/cs/ai/minmaxtree.hidden.md",
+      "title": "alpha-beta 剪枝",
+      "headings": [
+        {
+          "level": 1,
+          "id": "alpha-beta",
+          "text": "alpha-beta 剪枝"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/ai/minmaxtree.hidden.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/ai/minmaxtree.hidden.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/ai/minmaxtree.hidden/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 12007,
+      "normalizedTextStart": "alpha-beta 剪枝 import graphviz import math from copy import deepcopy # --- AlphaBetaVisualizer class (handles Alpha-Beta pruning logic) --- class AlphaBetaVisualizer : def __init__ ( self , tree_data ): self . original_tree_data = tree_data "
+    },
+    {
+      "route": "/notes/cs/os/",
+      "source": "docs/cs/os/index.md",
+      "title": "操作系统原理",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "操作系统原理"
+        }
+      ],
+      "links": [
+        "chapter1/",
+        "chapter2/",
+        "chapter3/",
+        "chapter4/",
+        "chapter5/",
+        "chapter6/",
+        "chapter7/",
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/index.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/",
+      "updated": "2025-06-14T20:15:26+08:00",
+      "normalizedTextLength": 153,
+      "normalizedTextStart": "操作系统原理 Note 目前主要放置一些学校课件的学习资料，作者写这个部份时正值期末周😣。 操作系统概述 进程、线程与 CPU 调度 进程同步与死锁 内存管理 大容量存储 文件系统 I/O管理 2025年6月14日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/cs/os/chapter1/",
+      "source": "docs/cs/os/chapter1.md",
+      "title": "操作系统概述",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "操作系统概述"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "操作系统为何如此重要？"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "操作系统的主要功能"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "操作系统的四大基本特征"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter1.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter1.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter1/",
+      "updated": "2025-06-16T08:14:05+08:00",
+      "normalizedTextLength": 2027,
+      "normalizedTextStart": "操作系统概述 操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。 什么是操作系统？ 操作系统是一组控制和管理计算机硬件和软件资源、合理地组织计算机工作流程以及方便用户使用的程序的集合。简单来说，它是硬件与用户（及应用程序）之间的桥梁。 操作系统为何如此重要？ 操作系统并非凭空出现，它的设计和存在是为了实现一系列关键目标"
+    },
+    {
+      "route": "/notes/cs/os/chapter2/",
+      "source": "docs/cs/os/chapter2.md",
+      "title": "进程、线程与 CPU 调度",
+      "headings": [
+        {
+          "level": 1,
+          "id": "cpu",
+          "text": "进程、线程与 CPU 调度"
+        },
+        {
+          "level": 2,
+          "id": "processes",
+          "text": "第四讲 — 进程 (Processes)"
+        },
+        {
+          "level": 3,
+          "id": "1-process-concept",
+          "text": "1. 进程概念 (Process Concept)"
+        },
+        {
+          "level": 4,
+          "id": "11-vs",
+          "text": "1.1 程序 vs. 进程"
+        },
+        {
+          "level": 4,
+          "id": "12",
+          "text": "1.2 进程的组成"
+        },
+        {
+          "level": 4,
+          "id": "13-linux-32-bit-example",
+          "text": "1.3 进程在内存中的布局 (Linux 32-bit Example)"
+        },
+        {
+          "level": 4,
+          "id": "14-process-state",
+          "text": "1.4 进程状态 (Process State)"
+        },
+        {
+          "level": 4,
+          "id": "15-suspended-process",
+          "text": "1.5 挂起进程 (Suspended Process)"
+        },
+        {
+          "level": 4,
+          "id": "16-process-control-block-pcb",
+          "text": "1.6 进程控制块 (Process Control Block - PCB)"
+        },
+        {
+          "level": 3,
+          "id": "2-process-scheduling",
+          "text": "2. 进程调度 (Process Scheduling)"
+        },
+        {
+          "level": 3,
+          "id": "3-operations-on-processes",
+          "text": "3. 进程操作 (Operations on Processes)"
+        },
+        {
+          "level": 4,
+          "id": "31-process-creation",
+          "text": "3.1 进程创建 (Process Creation)"
+        },
+        {
+          "level": 4,
+          "id": "32-process-termination",
+          "text": "3.2 进程终止 (Process Termination)"
+        },
+        {
+          "level": 3,
+          "id": "4-inter-process-communication-ipc",
+          "text": "4. 进程间通信 (Inter-Process Communication - IPC)"
+        },
+        {
+          "level": 4,
+          "id": "41",
+          "text": "4.1 共享内存系统"
+        },
+        {
+          "level": 4,
+          "id": "42",
+          "text": "4.2 消息传递系统"
+        },
+        {
+          "level": 4,
+          "id": "43-pipes",
+          "text": "4.3 管道 (Pipes)"
+        },
+        {
+          "level": 4,
+          "id": "44-sockets",
+          "text": "4.4 套接字 (Sockets)"
+        },
+        {
+          "level": 4,
+          "id": "45-remote-procedure-calls-rpc",
+          "text": "4.5 远程过程调用 (Remote Procedure Calls - RPC)"
+        },
+        {
+          "level": 2,
+          "id": "threads",
+          "text": "第五讲 — 线程 (Threads)"
+        },
+        {
+          "level": 3,
+          "id": "1-thread-concept",
+          "text": "1. 线程概念 (Thread Concept)"
+        },
+        {
+          "level": 3,
+          "id": "2-benefits-of-multithreading",
+          "text": "2. 多线程的优点 (Benefits of Multithreading)"
+        },
+        {
+          "level": 3,
+          "id": "3-multicore-programming",
+          "text": "3. 多核编程 (Multicore Programming)"
+        },
+        {
+          "level": 3,
+          "id": "4-user-threads-and-kernel-threads",
+          "text": "4. 用户线程与内核线程 (User Threads and Kernel Threads)"
+        },
+        {
+          "level": 4,
+          "id": "mapping-user-threads-to-kernel-threads",
+          "text": "线程模型 (Mapping User Threads to Kernel Threads)"
+        },
+        {
+          "level": 3,
+          "id": "5-thread-libraries",
+          "text": "5. 线程库 (Thread Libraries)"
+        },
+        {
+          "level": 3,
+          "id": "6-implicit-threading",
+          "text": "6. 隐式线程 (Implicit Threading)"
+        },
+        {
+          "level": 3,
+          "id": "7-threading-issues",
+          "text": "7. 多线程问题 (Threading Issues)"
+        },
+        {
+          "level": 3,
+          "id": "8",
+          "text": "8. 操作系统中的线程示例"
+        },
+        {
+          "level": 2,
+          "id": "cpu-cpu-scheduling",
+          "text": "第六讲 — CPU调度 (CPU Scheduling)"
+        },
+        {
+          "level": 3,
+          "id": "1-basic-concepts",
+          "text": "1. 基本概念 (Basic Concepts)"
+        },
+        {
+          "level": 4,
+          "id": "_1",
+          "text": "触发调度的事件"
+        },
+        {
+          "level": 3,
+          "id": "2-scheduling-criteria",
+          "text": "2. 调度准则 (Scheduling Criteria)"
+        },
+        {
+          "level": 3,
+          "id": "3-scheduling-algorithms",
+          "text": "3. 调度算法 (Scheduling Algorithms)"
+        },
+        {
+          "level": 4,
+          "id": "31-first-come-first-served-fcfs",
+          "text": "3.1 先到先服务 (First-Come, First-Served - FCFS)"
+        },
+        {
+          "level": 4,
+          "id": "32-shortest-job-first-sjf",
+          "text": "3.2 最短作业优先 (Shortest-Job-First - SJF)"
+        },
+        {
+          "level": 4,
+          "id": "33-priority-scheduling",
+          "text": "3.3 优先级调度 (Priority Scheduling)"
+        },
+        {
+          "level": 4,
+          "id": "34-round-robin-rr",
+          "text": "3.4 轮转调度 (Round Robin - RR)"
+        },
+        {
+          "level": 4,
+          "id": "35-multilevel-queue-scheduling",
+          "text": "3.5 多级队列调度 (Multilevel Queue Scheduling)"
+        },
+        {
+          "level": 4,
+          "id": "36-multilevel-feedback-queue-scheduling",
+          "text": "3.6 多级反馈队列调度 (Multilevel Feedback Queue Scheduling)"
+        },
+        {
+          "level": 3,
+          "id": "4-thread-scheduling",
+          "text": "4. 线程调度 (Thread Scheduling)"
+        },
+        {
+          "level": 3,
+          "id": "5-multiprocessor-scheduling",
+          "text": "5. 多处理器调度 (Multiprocessor Scheduling)"
+        },
+        {
+          "level": 3,
+          "id": "6-cpu-real-time-cpu-scheduling",
+          "text": "6. 实时CPU调度 (Real-Time CPU Scheduling)"
+        },
+        {
+          "level": 4,
+          "id": "_2",
+          "text": "实时调度算法"
+        },
+        {
+          "level": 3,
+          "id": "7-operating-system-examples",
+          "text": "7. 操作系统示例 (Operating System Examples)"
+        },
+        {
+          "level": 4,
+          "id": "71-linux",
+          "text": "7.1 Linux调度"
+        },
+        {
+          "level": 4,
+          "id": "72-windows",
+          "text": "7.2 Windows调度"
+        },
+        {
+          "level": 4,
+          "id": "73-solaris",
+          "text": "7.3 Solaris调度"
+        },
+        {
+          "level": 3,
+          "id": "8-algorithm-evaluation",
+          "text": "8. 算法评估 (Algorithm Evaluation)"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter2.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter2.md"
+      ],
+      "images": [
+        "../fig/process1.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter2/",
+      "updated": "2025-06-14T20:15:26+08:00",
+      "normalizedTextLength": 17736,
+      "normalizedTextStart": "进程、线程与 CPU 调度 课程概述 本系列笔记总结了操作系统中关于进程、线程和CPU调度的核心概念。内容涵盖： 进程管理 (Chapter 4): 进程概念、状态、控制块、创建与终止、进程间通信 (IPC) 机制如共享内存、消息传递、管道等。 线程管理 (Chapter 5): 线程概念、与进程的区别、用户级与内核级线程、多线程模型、线程库 (Pthreads, Windows, Java)、多线程编程问题与解决方案。 CPU调度 (Chapter 6): 调度基本概念、调"
+    },
+    {
+      "route": "/notes/cs/os/chapter3/",
+      "source": "docs/cs/os/chapter3.md",
+      "title": "进程同步与死锁",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "进程同步与死锁"
+        },
+        {
+          "level": 2,
+          "id": "synchronization",
+          "text": "第七讲 — 同步 (Synchronization)"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 背景与概述"
+        },
+        {
+          "level": 3,
+          "id": "2-critical-section-problem",
+          "text": "2. 临界区问题 (Critical Section Problem)"
+        },
+        {
+          "level": 3,
+          "id": "3",
+          "text": "3. 同步解决方案"
+        },
+        {
+          "level": 4,
+          "id": "31-peterson",
+          "text": "3.1 Peterson解决方案 (软件方案)"
+        },
+        {
+          "level": 4,
+          "id": "32",
+          "text": "3.2 硬件同步"
+        },
+        {
+          "level": 5,
+          "id": "a",
+          "text": "a. 中断禁用"
+        },
+        {
+          "level": 5,
+          "id": "b",
+          "text": "b. 特殊原子指令"
+        },
+        {
+          "level": 4,
+          "id": "33-mutex-locks",
+          "text": "3.3 互斥锁 (Mutex Locks)"
+        },
+        {
+          "level": 4,
+          "id": "34-semaphores",
+          "text": "3.4 信号量 (Semaphores)"
+        },
+        {
+          "level": 4,
+          "id": "35-monitors",
+          "text": "3.5 管程 (Monitors)"
+        },
+        {
+          "level": 3,
+          "id": "4",
+          "text": "4. 经典同步问题"
+        },
+        {
+          "level": 4,
+          "id": "a-",
+          "text": "a. 有界缓冲区 (生产者-消费者) 问题"
+        },
+        {
+          "level": 4,
+          "id": "b-",
+          "text": "b. 读者-写者问题"
+        },
+        {
+          "level": 4,
+          "id": "c",
+          "text": "c. 哲学家就餐问题"
+        },
+        {
+          "level": 2,
+          "id": "deadlock-starvation",
+          "text": "第八讲 — 并发: 死锁、饥饿 (Deadlock & Starvation)"
+        },
+        {
+          "level": 3,
+          "id": "1-deadlock",
+          "text": "1. 死锁 (Deadlock)"
+        },
+        {
+          "level": 3,
+          "id": "2",
+          "text": "2. 死锁的必要条件"
+        },
+        {
+          "level": 3,
+          "id": "3-resource-allocation-graph",
+          "text": "3. 资源分配图 (Resource-Allocation Graph)"
+        },
+        {
+          "level": 3,
+          "id": "4_1",
+          "text": "4. 处理死锁的方法"
+        },
+        {
+          "level": 3,
+          "id": "5",
+          "text": "5. 死锁预防策略"
+        },
+        {
+          "level": 3,
+          "id": "6",
+          "text": "6. 死锁避免策略"
+        },
+        {
+          "level": 4,
+          "id": "a_1",
+          "text": "a. 资源分配图算法 (单实例资源)"
+        },
+        {
+          "level": 4,
+          "id": "b_1",
+          "text": "b. 银行家算法 (多实例资源)"
+        },
+        {
+          "level": 3,
+          "id": "7",
+          "text": "7. 死锁检测"
+        },
+        {
+          "level": 4,
+          "id": "a-wait-for-graph",
+          "text": "a. 单实例资源类型的等待图 (Wait-for Graph)"
+        },
+        {
+          "level": 4,
+          "id": "b_2",
+          "text": "b. 多实例资源类型的检测算法"
+        },
+        {
+          "level": 3,
+          "id": "8",
+          "text": "8. 死锁恢复"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter3.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter3.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter3/",
+      "updated": "2025-06-14T20:15:26+08:00",
+      "normalizedTextLength": 10497,
+      "normalizedTextStart": "进程同步与死锁 本文档旨在总结操作系统中关于进程同步与死锁的核心概念，基于陈亮老师《操作系统》课程第七讲“同步”与第八讲“并发: 死锁、饥饿”的PPT内容。 学习目标 理解并发执行中数据不一致性与竞争条件。 掌握临界区问题的概念及其解决方案的要求。 学习并比较多种同步机制：Peterson算法、硬件同步（中断禁用、原子指令）、互斥锁、信号量、管程和条件变量。 分析经典的同步问题：生产者-消费者、读者-写者、哲学家就餐。 理解死锁的定义、产生的四个必要条件。 掌握死锁处理的三种"
+    },
+    {
+      "route": "/notes/cs/os/chapter4/",
+      "source": "docs/cs/os/chapter4.md",
+      "title": "内存管理",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "内存管理"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "第九讲：物理内存管理策略"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 内存管理基础"
+        },
+        {
+          "level": 3,
+          "id": "2",
+          "text": "2. 内存保护"
+        },
+        {
+          "level": 3,
+          "id": "3-address-binding",
+          "text": "3. 地址绑定 (Address Binding)"
+        },
+        {
+          "level": 3,
+          "id": "4-vs",
+          "text": "4. 逻辑地址空间 vs. 物理地址空间"
+        },
+        {
+          "level": 3,
+          "id": "5-mmu",
+          "text": "5. 内存管理单元 (MMU)"
+        },
+        {
+          "level": 3,
+          "id": "6-dynamic-loading",
+          "text": "6. 动态加载 (Dynamic Loading)"
+        },
+        {
+          "level": 3,
+          "id": "7-dynamic-linking-and-shared-libraries",
+          "text": "7. 动态链接与共享库 (Dynamic Linking and Shared Libraries)"
+        },
+        {
+          "level": 3,
+          "id": "8-swapping",
+          "text": "8. 交换 (Swapping)"
+        },
+        {
+          "level": 3,
+          "id": "9-contiguous-allocation",
+          "text": "9. 连续分配 (Contiguous Allocation)"
+        },
+        {
+          "level": 4,
+          "id": "91-fixed-partitions",
+          "text": "9.1 固定分区 (Fixed Partitions)"
+        },
+        {
+          "level": 4,
+          "id": "92-variable-partitions",
+          "text": "9.2 可变分区 (Variable Partitions) / 动态分区"
+        },
+        {
+          "level": 4,
+          "id": "93-fragmentation",
+          "text": "9.3 碎片 (Fragmentation)"
+        },
+        {
+          "level": 3,
+          "id": "10-segmentation",
+          "text": "10. 分段 (Segmentation)"
+        },
+        {
+          "level": 3,
+          "id": "11-paging",
+          "text": "11. 分页 (Paging)"
+        },
+        {
+          "level": 4,
+          "id": "111",
+          "text": "11.1 地址转换"
+        },
+        {
+          "level": 4,
+          "id": "112-page-table",
+          "text": "11.2 页表 (Page Table)"
+        },
+        {
+          "level": 4,
+          "id": "113-tlb-translation-lookaside-buffer",
+          "text": "11.3 转换检测缓冲区 (TLB, Translation Lookaside Buffer)"
+        },
+        {
+          "level": 4,
+          "id": "114",
+          "text": "11.4 内存保护"
+        },
+        {
+          "level": 4,
+          "id": "115-shared-pages",
+          "text": "11.5 共享页 (Shared Pages)"
+        },
+        {
+          "level": 4,
+          "id": "116",
+          "text": "11.6 页表结构"
+        },
+        {
+          "level": 3,
+          "id": "12",
+          "text": "12. 示例体系结构"
+        },
+        {
+          "level": 3,
+          "id": "13-buddy-system",
+          "text": "13. 伙伴系统 (Buddy System)"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "第十讲：虚拟内存管理"
+        },
+        {
+          "level": 3,
+          "id": "1_1",
+          "text": "1. 虚拟内存背景"
+        },
+        {
+          "level": 3,
+          "id": "2_1",
+          "text": "2. 虚拟地址空间"
+        },
+        {
+          "level": 3,
+          "id": "3-demand-paging",
+          "text": "3. 请求分页 (Demand Paging)"
+        },
+        {
+          "level": 4,
+          "id": "31",
+          "text": "3.1 处理缺页错误"
+        },
+        {
+          "level": 4,
+          "id": "32",
+          "text": "3.2 请求分页的性能"
+        },
+        {
+          "level": 4,
+          "id": "33-copy-on-write-cow",
+          "text": "3.3 写时复制 (Copy-on-Write, COW)"
+        },
+        {
+          "level": 3,
+          "id": "4-page-replacement",
+          "text": "4. 页面置换 (Page Replacement)"
+        },
+        {
+          "level": 4,
+          "id": "41",
+          "text": "4.1 基本页面置换流程"
+        },
+        {
+          "level": 4,
+          "id": "42",
+          "text": "4.2 页面置换算法"
+        },
+        {
+          "level": 3,
+          "id": "5-frame-allocation",
+          "text": "5. 帧分配 (Frame Allocation)"
+        },
+        {
+          "level": 3,
+          "id": "6-thrashing",
+          "text": "6. 系统抖动 (Thrashing)"
+        },
+        {
+          "level": 4,
+          "id": "61-working-set-model",
+          "text": "6.1 工作集模型 (Working-Set Model)"
+        },
+        {
+          "level": 4,
+          "id": "62-pff-page-fault-frequency",
+          "text": "6.2 缺页错误率 (PFF, Page-Fault Frequency)"
+        },
+        {
+          "level": 3,
+          "id": "7",
+          "text": "7. 内核内存分配"
+        },
+        {
+          "level": 3,
+          "id": "8",
+          "text": "8. 其他注意事项"
+        },
+        {
+          "level": 3,
+          "id": "9",
+          "text": "9. 操作系统示例"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter4.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter4.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter4/",
+      "updated": "2025-06-14T20:15:26+08:00",
+      "normalizedTextLength": 13834,
+      "normalizedTextStart": "内存管理 文档说明 本文档根据《2025-OS-CH-9-物理内存管理clean.pptx》和《2025-OS-CH-10-虚拟内存管理.pptx》总结而成，旨在帮助学习和复习操作系统中的内存管理相关知识。 第九讲：物理内存管理策略 学习目标 讨论内存管理的多种方法 理解内存分页和分段的概念 了解内存硬件的各种组织方法 掌握进程内存分配的各种技术 详细讨论现代计算机系统的分页机制 理解动态链接与共享 1. 内存管理基础 程序必须从磁盘加载到内存并放入进程中才能运行。 主存储器"
+    },
+    {
+      "route": "/notes/cs/os/chapter5/",
+      "source": "docs/cs/os/chapter5.md",
+      "title": "大容量存储",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "大容量存储"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "一、存储系统概述"
+        },
+        {
+          "level": 2,
+          "id": "hdd",
+          "text": "二、磁盘结构 (HDD)"
+        },
+        {
+          "level": 3,
+          "id": "21",
+          "text": "2.1 物理结构"
+        },
+        {
+          "level": 3,
+          "id": "22",
+          "text": "2.2 磁盘工作机制"
+        },
+        {
+          "level": 3,
+          "id": "23-hdd",
+          "text": "2.3 HDD 性能参数"
+        },
+        {
+          "level": 2,
+          "id": "nvm",
+          "text": "三、非易失性内存 (NVM)"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "四、磁盘与主机的连接"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "五、地址映射"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "六、磁盘调度"
+        },
+        {
+          "level": 3,
+          "id": "61",
+          "text": "6.1 磁盘调度算法"
+        },
+        {
+          "level": 3,
+          "id": "62",
+          "text": "6.2 选择磁盘调度算法"
+        },
+        {
+          "level": 3,
+          "id": "63-nvm",
+          "text": "6.3 NVM 调度"
+        },
+        {
+          "level": 2,
+          "id": "_6",
+          "text": "七、错误检测与纠正"
+        },
+        {
+          "level": 2,
+          "id": "_7",
+          "text": "八、存储设备管理"
+        },
+        {
+          "level": 3,
+          "id": "81",
+          "text": "8.1 格式化与分区"
+        },
+        {
+          "level": 3,
+          "id": "82",
+          "text": "8.2 引导与挂载"
+        },
+        {
+          "level": 3,
+          "id": "83",
+          "text": "8.3 坏块管理"
+        },
+        {
+          "level": 2,
+          "id": "swap-space",
+          "text": "九、交换空间管理 (Swap Space)"
+        },
+        {
+          "level": 2,
+          "id": "_8",
+          "text": "十、网络存储"
+        },
+        {
+          "level": 3,
+          "id": "101-nas-network-attached-storage",
+          "text": "10.1 网络附加存储 (NAS - Network Attached Storage)"
+        },
+        {
+          "level": 3,
+          "id": "102-san-storage-area-network",
+          "text": "10.2 存储区域网络 (SAN - Storage Area Network)"
+        },
+        {
+          "level": 2,
+          "id": "raid-redundant-array-of-independent-disks",
+          "text": "十一、RAID (Redundant Array of Independent Disks)"
+        },
+        {
+          "level": 3,
+          "id": "111-raid",
+          "text": "11.1 RAID 级别"
+        },
+        {
+          "level": 3,
+          "id": "112-raid-zfs",
+          "text": "11.2 RAID 扩展 (如 ZFS)"
+        },
+        {
+          "level": 2,
+          "id": "nvm-scm",
+          "text": "十二、新兴 NVM 技术与存储级内存 (SCM)"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter5.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter5.md"
+      ],
+      "images": [
+        "../fig/disk.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter5/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 10264,
+      "normalizedTextStart": "大容量存储 课程目标 描述外存设备的物理结构及其对设备使用的影响； 解释大容量存储设备的性能特点； 评估磁盘调度算法； 讨论大容量存储（RAID）提供的操作系统服务。 一、存储系统概述 计算机系统中的存储设备是分层次组织的，主要目的是在成本、速度和容量之间取得平衡。 存储分层 (Storage Hierarchy) 典型的存储层次从上到下，速度递减，容量递增，每比特成本递减： 寄存器 (Registers) 高速缓存 (Cache) 主存 (Main Memory - DRA"
+    },
+    {
+      "route": "/notes/cs/os/chapter6/",
+      "source": "docs/cs/os/chapter6.md",
+      "title": "文件系统",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "文件系统"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "学习目标"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "一、文件基本概念"
+        },
+        {
+          "level": 3,
+          "id": "11",
+          "text": "1.1 什么是文件？"
+        },
+        {
+          "level": 3,
+          "id": "12",
+          "text": "1.2 文件逻辑结构"
+        },
+        {
+          "level": 3,
+          "id": "13",
+          "text": "1.3 文件属性"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "二、文件操作"
+        },
+        {
+          "level": 3,
+          "id": "21-open",
+          "text": "2.1 文件打开（Open）的管理"
+        },
+        {
+          "level": 3,
+          "id": "22-file-locks",
+          "text": "2.2 文件锁 (File Locks)"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "三、文件类型与结构"
+        },
+        {
+          "level": 3,
+          "id": "31",
+          "text": "3.1 文件类型识别"
+        },
+        {
+          "level": 3,
+          "id": "32",
+          "text": "3.2 文件结构"
+        },
+        {
+          "level": 2,
+          "id": "_6",
+          "text": "四、文件访问方法"
+        },
+        {
+          "level": 3,
+          "id": "41-sequential-access",
+          "text": "4.1 顺序访问 (Sequential Access)"
+        },
+        {
+          "level": 3,
+          "id": "42-direct-access-relative-access",
+          "text": "4.2 直接访问 (Direct Access / Relative Access)"
+        },
+        {
+          "level": 3,
+          "id": "43-indexed-access",
+          "text": "4.3 其他访问方法 (Indexed Access)"
+        },
+        {
+          "level": 2,
+          "id": "_7",
+          "text": "五、磁盘与存储结构"
+        },
+        {
+          "level": 3,
+          "id": "51",
+          "text": "5.1 磁盘结构"
+        },
+        {
+          "level": 3,
+          "id": "52",
+          "text": "5.2 存储结构层次"
+        },
+        {
+          "level": 3,
+          "id": "53",
+          "text": "5.3 文件系统的类型"
+        },
+        {
+          "level": 2,
+          "id": "_8",
+          "text": "六、目录结构"
+        },
+        {
+          "level": 3,
+          "id": "61",
+          "text": "6.1 目录操作"
+        },
+        {
+          "level": 3,
+          "id": "62",
+          "text": "6.2 目录组织目标"
+        },
+        {
+          "level": 3,
+          "id": "63",
+          "text": "6.3 常见目录结构"
+        },
+        {
+          "level": 4,
+          "id": "1-single-level-directory",
+          "text": "1. 单级目录 (Single-Level Directory)"
+        },
+        {
+          "level": 4,
+          "id": "2-two-level-directory",
+          "text": "2. 两级目录 (Two-Level Directory)"
+        },
+        {
+          "level": 4,
+          "id": "3-tree-structured-directory",
+          "text": "3. 树形目录 (Tree-Structured Directory)"
+        },
+        {
+          "level": 4,
+          "id": "4-acyclic-graph-directories",
+          "text": "4. 无环图目录 (Acyclic-Graph Directories)"
+        },
+        {
+          "level": 4,
+          "id": "5-general-graph-directory",
+          "text": "5. 通用图目录 (General Graph Directory)"
+        },
+        {
+          "level": 2,
+          "id": "_9",
+          "text": "七、文件系统保护"
+        },
+        {
+          "level": 3,
+          "id": "71-types-of-access",
+          "text": "7.1 访问类型 (Types of Access)"
+        },
+        {
+          "level": 3,
+          "id": "72-linuxunix",
+          "text": "7.2 Linux/Unix 文件访问控制"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter6.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter6.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter6/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 8169,
+      "normalizedTextStart": "文件系统 课程信息 本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。 主讲人 : 陈亮 单位 : 计算机学院 日期 : 2025-5 学习目标 理解文件系统的基本功能。 掌握文件系统提供的接口。 探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。 了解文件系统的保护机制。 一、文件基本概念 1.1 什么是文件？ 操作系统对存储设备的物理属性进行抽象，定义出逻辑存储单位—— 文件 。文件由操"
+    },
+    {
+      "route": "/notes/cs/os/chapter7/",
+      "source": "docs/cs/os/chapter7.md",
+      "title": "I/O管理",
+      "headings": [
+        {
+          "level": 1,
+          "id": "io",
+          "text": "I/O管理"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "一、概述"
+        },
+        {
+          "level": 2,
+          "id": "io_1",
+          "text": "二、I/O 硬件"
+        },
+        {
+          "level": 3,
+          "id": "1-io-pentium-4",
+          "text": "1. I/O 结构示例 (以Pentium 4为例)"
+        },
+        {
+          "level": 3,
+          "id": "2-io",
+          "text": "2. I/O 设备分类"
+        },
+        {
+          "level": 3,
+          "id": "3-io",
+          "text": "3. I/O 设备之间的差别"
+        },
+        {
+          "level": 3,
+          "id": "4-io",
+          "text": "4. 典型I/O设备的速率"
+        },
+        {
+          "level": 3,
+          "id": "5-io-controller-host-adapter",
+          "text": "5. I/O 控制器 (Controller / Host Adapter)"
+        },
+        {
+          "level": 3,
+          "id": "6-io",
+          "text": "6. I/O 硬件交互"
+        },
+        {
+          "level": 2,
+          "id": "cpu",
+          "text": "三、CPU 与设备的通信方式"
+        },
+        {
+          "level": 3,
+          "id": "1-io-io",
+          "text": "1. I/O 指令和内存映射I/O"
+        },
+        {
+          "level": 3,
+          "id": "2-polling",
+          "text": "2. 轮询 (Polling)"
+        },
+        {
+          "level": 3,
+          "id": "3-interrupts",
+          "text": "3. 中断 (Interrupts)"
+        },
+        {
+          "level": 3,
+          "id": "4-dma",
+          "text": "4. 直接内存访问 (DMA)"
+        },
+        {
+          "level": 2,
+          "id": "io_2",
+          "text": "四、I/O 请求生命周期"
+        },
+        {
+          "level": 2,
+          "id": "io_3",
+          "text": "五、应用程序 I/O 接口"
+        },
+        {
+          "level": 3,
+          "id": "1-io",
+          "text": "1. I/O 设备的特点和分类"
+        },
+        {
+          "level": 3,
+          "id": "2-io_1",
+          "text": "2. 非阻塞和异步 I/O"
+        },
+        {
+          "level": 3,
+          "id": "3-io-vectored-io-scatter-gather-io",
+          "text": "3. 向量I/O (Vectored I/O / Scatter-Gather I/O)"
+        },
+        {
+          "level": 2,
+          "id": "io_4",
+          "text": "六、内核 I/O 子系统"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 主要功能"
+        },
+        {
+          "level": 3,
+          "id": "2",
+          "text": "2. 内核数据结构"
+        },
+        {
+          "level": 2,
+          "id": "power-management",
+          "text": "七、电源管理 (Power Management)"
+        },
+        {
+          "level": 2,
+          "id": "io-streams",
+          "text": "八、流式 I/O (STREAMS)"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "九、性能"
+        },
+        {
+          "level": 3,
+          "id": "_3",
+          "text": "改进性能的方法"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "十、总结"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/cs/os/chapter7.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/cs/os/chapter7.md"
+      ],
+      "images": [
+        "../fig/dma.png",
+        "../fig/io-bus.png",
+        "../fig/io-cmp.png",
+        "../fig/io-exec.png",
+        "../fig/io-interrupt.png",
+        "../fig/io-kernel.png",
+        "../fig/io-life.png",
+        "../fig/io-stream.png",
+        "../fig/io-structure.png",
+        "../fig/io-total.png",
+        "../fig/io-unix.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/cs/os/chapter7/",
+      "updated": "2025-06-18T15:22:10+08:00",
+      "normalizedTextLength": 8344,
+      "normalizedTextStart": "I/O管理 课程信息 主讲人：陈亮 单位：计算机学院 日期：2025-06 学习目标 剖析操作系统的I/O子系统； 讨论I/O硬件的原理和复杂性； 解释I/O硬件和软件的性能问题。 一、概述 I/O 管理是操作系统设计和运行中的一个主要组成部分，对计算机操作至关重要。I/O 设备种类繁多，控制方法各异，共同构成了I/O子系统。性能管理是I/O管理的一个重要方面，并且新型设备层出不穷。 I/O设备的关键要素包括： 端口 (Ports) ：设备的连接点。 总线 (Busses) "
+    },
+    {
+      "route": "/notes/math/",
+      "source": "docs/math/index.md",
+      "title": "数学基础",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "数学基础"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/index.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/",
+      "updated": "2025-06-12T23:30:15+08:00",
+      "normalizedTextLength": 169,
+      "normalizedTextStart": "数学基础 本部分内容涵盖了数值计算、信号与系统等数学内容。这些技术在工程与科学领域中发挥着重要作用，为数据分析、控制系统设计及通信技术等应用提供了坚实的数学支持。 计划施工中...如有需要请在评论区告诉我，我会立马开工的😭！ 2025年6月12日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/math/optimization_theory/",
+      "source": "docs/math/optimization_theory/index.md",
+      "title": "最优化理论",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "最优化理论"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/index.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 90,
+      "normalizedTextStart": "最优化理论 Tip 放置一些上课的笔记以及板书，有空再整理（咕咕咕～ 2026年1月15日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter1/",
+      "source": "docs/math/optimization_theory/chapter1.md",
+      "title": "lec1: 仿射与凸性",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec1",
+          "text": "lec1: 仿射与凸性"
+        },
+        {
+          "level": 2,
+          "id": "affine-transformation",
+          "text": "仿射 (Affine Transformation)"
+        },
+        {
+          "level": 3,
+          "id": "affine-space",
+          "text": "仿射集（空间） (Affine Space)"
+        },
+        {
+          "level": 3,
+          "id": "_1",
+          "text": "仿射组合"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "仿射包"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "凸集"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "凸组合"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "凸包"
+        },
+        {
+          "level": 2,
+          "id": "_6",
+          "text": "凸锥"
+        },
+        {
+          "level": 2,
+          "id": "_7",
+          "text": "凸锥组合"
+        },
+        {
+          "level": 2,
+          "id": "_8",
+          "text": "凸锥包"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter1.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter1.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter1/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 1447,
+      "normalizedTextStart": "lec1: 仿射与凸性 仿射 (Affine Transformation) 仿射集（空间） (Affine Space) Note \\[ \\forall x_1, x_2\\in C, \\{\\theta x_1 + (1 - \\theta)x_2, \\forall \\theta \\in R\\} \\subseteq C \\] 如何理解？ 设想一个没有原点的向量空间，其中向量只有方向和大小。假设有甲乙两人，其中甲知道一个空间中真正的原点，但是乙认为另一个点 \\(p\\) 才是真正的"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter2/",
+      "source": "docs/math/optimization_theory/chapter2.md",
+      "title": "lec2:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec2",
+          "text": "lec2:"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter2.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter2.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter2/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 61,
+      "normalizedTextStart": "lec2: 2026年1月15日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter3/",
+      "source": "docs/math/optimization_theory/chapter3.md",
+      "title": "lec3:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec3",
+          "text": "lec3:"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "二阶条件"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "证明步骤"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter3.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter3.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter3/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 4214,
+      "normalizedTextStart": "lec3: 二阶条件 Note \\[ 若\\ f:R^n\\to R \\ 可微, 则 f 为凸函数 \\Leftrightarrow {\\rm dom} f 为凸集\\\\ \\forall x \\in {\\rm dom} f,\\quad D^2f(x) \\succeq 0, \\quad f''(x) \\ge 0 \\] 范数 极大值函数（无法用二阶条件分析） \\[ f(x) = \\max \\{ x_1, \\dots, x_n \\} \\] \\[ \\forall x, y \\in R^n, "
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter4/",
+      "source": "docs/math/optimization_theory/chapter4.md",
+      "title": "lec4:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec4",
+          "text": "lec4:"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "保持函数凸性的操作"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "非负加权和"
+        },
+        {
+          "level": 3,
+          "id": "_3",
+          "text": "非负积分"
+        },
+        {
+          "level": 3,
+          "id": "_4",
+          "text": "仿射映射"
+        },
+        {
+          "level": 3,
+          "id": "_5",
+          "text": "两个函数的极大值函数"
+        },
+        {
+          "level": 3,
+          "id": "_6",
+          "text": "推广：任意多个函数的极大值函数"
+        },
+        {
+          "level": 3,
+          "id": "_7",
+          "text": "函数的组合"
+        },
+        {
+          "level": 3,
+          "id": "_8",
+          "text": "透视函数"
+        },
+        {
+          "level": 3,
+          "id": "conjugate",
+          "text": "函数的共轭(conjugate)"
+        },
+        {
+          "level": 2,
+          "id": "_9",
+          "text": "凸集与凸函数的关系"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter4.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter4.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter4/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 3598,
+      "normalizedTextStart": "lec4: 保持函数凸性的操作 非负加权和 Note 若 \\(f_1, \\dots, f_n\\) 为凸，定义域均为 \\(R^n\\) ，则 \\[ f = \\sum w_if_i, \\quad w_i \\ge 0 \\] 为凸。 非负积分 Note 若 \\(f(x, y)\\) 对任意 \\(y\\in A\\) 均为关于 x 的凸函数，设 \\(w(y) \\le 0, \\forall y \\in A\\) 有 \\[ g(x) = \\int w(y)f(x, y) dy \\] 为凸函数。 仿射"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter5/",
+      "source": "docs/math/optimization_theory/chapter5.md",
+      "title": "lec5:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec5",
+          "text": "lec5:"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "拟凸函数"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter5.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter5.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter5/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 279,
+      "normalizedTextStart": "lec5: 拟凸函数 Note 任意 \\(\\alpha\\) 次水平集为凸。 \\[ f: R^n \\to R\\ is\\ quasiconvex \\Longleftrightarrow {\\rm dom}\\ f \\ is\\ convex, \\forall x, y\\in {\\rm dom}\\ f, \\theta \\in [0, 1], \\\\ \\max\\{f(x), f(y)\\} \\ge (f\\theta x + (1 - \\theta)y) \\] 2026年1月15日 这个页面对"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter6/",
+      "source": "docs/math/optimization_theory/chapter6.md",
+      "title": "lec6:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec6",
+          "text": "lec6:"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter6.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter6.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter6/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 61,
+      "normalizedTextStart": "lec6: 2026年1月15日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter7/",
+      "source": "docs/math/optimization_theory/chapter7.md",
+      "title": "lec7:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec7",
+          "text": "lec7:"
+        },
+        {
+          "level": 2,
+          "id": "_1",
+          "text": "多目标优化问题"
+        },
+        {
+          "level": 3,
+          "id": "_2",
+          "text": "帕累托最优解"
+        },
+        {
+          "level": 3,
+          "id": "_3",
+          "text": "帕累托最优值"
+        },
+        {
+          "level": 3,
+          "id": "_4",
+          "text": "帕累托最优面"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "对偶理论"
+        },
+        {
+          "level": 3,
+          "id": "lagrange",
+          "text": "Lagrange 函数"
+        },
+        {
+          "level": 3,
+          "id": "_6",
+          "text": "对偶函数"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter7.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter7.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter7/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 456,
+      "normalizedTextStart": "lec7: 多目标优化问题 帕累托最优解 帕累托最优值 帕累托最优面 对偶理论 Note \\[ \\min\\{f_0(x)\\} \\\\ {\\rm subjected\\ to\\ } f_i(x) \\le 0, h_j(x) = 0 \\] Lagrange 函数 Note \\[ L(x, \\lambda, v) = f_0(x) + \\sum \\lambda_if_i(x) + \\sum v_jg_j(x) \\\\ {\\rm dom}\\ L = D \\times R^m\\times R"
+    },
+    {
+      "route": "/notes/math/optimization_theory/chapter8/",
+      "source": "docs/math/optimization_theory/chapter8.md",
+      "title": "lec8:",
+      "headings": [
+        {
+          "level": 1,
+          "id": "lec8",
+          "text": "lec8:"
+        },
+        {
+          "level": 2,
+          "id": "slater",
+          "text": "slater 条件"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/optimization_theory/chapter8.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/optimization_theory/chapter8.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/optimization_theory/chapter8/",
+      "updated": "2026-01-15T15:04:56+08:00",
+      "normalizedTextLength": 232,
+      "normalizedTextStart": "lec8: slater 条件 Note \\(relint\\) ：相对内部 \\(aff\\) ：仿射包 \\[ {\\rm relint\\ }D = \\{x\\in D | B(x, r)\\cap {\\rm aff\\ }D \\subseteq D, \\exist r > 0 \\} \\\\ \\exist x \\in {\\rm relint\\ }D, f_i(x) 2026年1月15日 这个页面对您有帮助吗? 感谢您的反馈! 感谢您的反馈! 可以联系作者以提供更多改进建议。"
+    },
+    {
+      "route": "/notes/math/signals_and_systems/",
+      "source": "docs/math/signals_and_systems/index.md",
+      "title": "信号与系统",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "信号与系统"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "引言：信号与系统是什么？"
+        },
+        {
+          "level": 2,
+          "id": "signals",
+          "text": "一、信号 (Signals)"
+        },
+        {
+          "level": 3,
+          "id": "1",
+          "text": "1. 信号的基本概念与性质"
+        },
+        {
+          "level": 4,
+          "id": "a",
+          "text": "a. 连续时间信号与离散时间信号"
+        },
+        {
+          "level": 4,
+          "id": "b",
+          "text": "b. 信号的基本性质"
+        },
+        {
+          "level": 3,
+          "id": "2",
+          "text": "2. 基本信号与奇异函数"
+        },
+        {
+          "level": 4,
+          "id": "a_1",
+          "text": "a. 基本周期与非周期信号"
+        },
+        {
+          "level": 4,
+          "id": "b-singularity-functions",
+          "text": "b. 奇异函数 (Singularity Functions)"
+        },
+        {
+          "level": 2,
+          "id": "systems",
+          "text": "二、系统 (Systems)"
+        },
+        {
+          "level": 3,
+          "id": "1_1",
+          "text": "1. 系统基本概念与性质"
+        },
+        {
+          "level": 3,
+          "id": "2-lti",
+          "text": "2. 线性时不变 (LTI) 系统"
+        },
+        {
+          "level": 3,
+          "id": "3-lti-convolution",
+          "text": "3. LTI 系统的时域分析：卷积 (Convolution)"
+        },
+        {
+          "level": 4,
+          "id": "a_2",
+          "text": "a. 连续时间卷积"
+        },
+        {
+          "level": 4,
+          "id": "b_1",
+          "text": "b. 离散时间卷积"
+        },
+        {
+          "level": 2,
+          "id": "fourier-series-for-periodic-signals",
+          "text": "三、周期信号的频域分析：傅里叶级数 (Fourier Series for Periodic Signals)"
+        },
+        {
+          "level": 3,
+          "id": "1-continuous-time-fourier-series-ctfs",
+          "text": "1. 连续时间周期信号的傅里叶级数 (Continuous-Time Fourier Series - CTFS)"
+        },
+        {
+          "level": 4,
+          "id": "a_3",
+          "text": "a. 核心思想"
+        },
+        {
+          "level": 4,
+          "id": "b_2",
+          "text": "b. 复指数形式的傅里叶级数"
+        },
+        {
+          "level": 4,
+          "id": "c",
+          "text": "c. 三角形式的傅里叶级数"
+        },
+        {
+          "level": 4,
+          "id": "d-dirichlet-conditions",
+          "text": "d. 傅里叶级数的存在条件 (狄利克雷条件 Dirichlet Conditions)"
+        },
+        {
+          "level": 3,
+          "id": "2-discrete-time-fourier-series-dtfs-or-dfs",
+          "text": "2. 离散时间周期信号的傅里叶级数 (Discrete-Time Fourier Series - DTFS or DFS)"
+        },
+        {
+          "level": 4,
+          "id": "a_4",
+          "text": "a. 综合式与分析式"
+        },
+        {
+          "level": 4,
+          "id": "b-a_k",
+          "text": "b. 系数 \\(a_k\\) 的性质"
+        },
+        {
+          "level": 4,
+          "id": "c-ctfs",
+          "text": "c. 与 CTFS 的类比"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/index.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/index.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/",
+      "updated": "2025-06-14T01:29:31+08:00",
+      "normalizedTextLength": 10711,
+      "normalizedTextStart": "信号与系统 引言：信号与系统是什么？ 一些直观的理解（不一定正确） 信号 (Signal) ：随时间（或其他自变量）变化的一系列数据或函数。它可以是声音、图像、电压、股价等等。 系统 (System) ：能够对信号进行处理或响应的数学模型或物理实体。系统接收输入信号，并产生输出信号，可以看作是一种对信号进行变换的函数或算子。 本文旨在梳理信号与系统的核心概念，从基本信号类型、系统特性到重要的分析工具如卷积和傅里叶级数。 一、信号 (Signals) 信号是信息的载体，理解其特"
+    },
+    {
+      "route": "/notes/math/signals_and_systems/chapter1/",
+      "source": "docs/math/signals_and_systems/chapter1.md",
+      "title": "连续时间傅里叶变换",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "连续时间傅里叶变换"
+        },
+        {
+          "level": 2,
+          "id": "1",
+          "text": "1. 非周期信号的傅里叶变换"
+        },
+        {
+          "level": 2,
+          "id": "2",
+          "text": "2. 周期信号的傅里叶变换"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "傅里叶变换的性质"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "傅里叶变换与微分方程的联系"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/chapter1.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/chapter1.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/chapter1/",
+      "updated": "2025-06-14T01:29:31+08:00",
+      "normalizedTextLength": 6702,
+      "normalizedTextStart": "连续时间傅里叶变换 傅里叶变换是一种将时域信号转换为频域表示的数学工具。对于连续时间信号，它揭示了信号包含哪些频率成分以及这些成分的幅度和相位。 1. 非周期信号的傅里叶变换 对于一个非周期信号 \\(x(t)\\) ，其傅里叶变换 \\(X(j\\omega)\\) 定义为： \\[ X(j\\omega) = \\mathcal{F}\\{x(t)\\} = \\int_{-\\infty}^{+\\infty} x(t)e^{-j\\omega t} dt \\quad \\quad (1) \\] 其"
+    },
+    {
+      "route": "/notes/math/signals_and_systems/chapter2/",
+      "source": "docs/math/signals_and_systems/chapter2.md",
+      "title": "离散时间傅里叶变换",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "离散时间傅里叶变换"
+        },
+        {
+          "level": 2,
+          "id": "1-dtft",
+          "text": "1. 非周期序列的 DTFT"
+        },
+        {
+          "level": 2,
+          "id": "2-dtft",
+          "text": "2. 周期序列的 DTFT"
+        },
+        {
+          "level": 2,
+          "id": "dtft",
+          "text": "DTFT 的性质"
+        },
+        {
+          "level": 2,
+          "id": "dtft_1",
+          "text": "DTFT 与差分方程的联系"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/chapter2.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/chapter2.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/chapter2/",
+      "updated": "2025-06-14T01:29:31+08:00",
+      "normalizedTextLength": 7105,
+      "normalizedTextStart": "离散时间傅里叶变换 离散时间傅里叶变换是将离散时间序列从时域转换到频域的数学工具。它揭示了离散时间信号中包含的频率成分。与连续时间傅里叶变换不同，DTFT 的结果 \\(X(e^{j\\omega})\\) 是一个关于连续频率变量 \\(\\omega\\) 的 周期函数 ，周期为 \\(2\\pi\\) 。 1. 非周期序列的 DTFT 对于一个非周期离散时间序列 \\(x[n]\\) ，其离散时间傅里叶变换 \\(X(e^{j\\omega})\\) 定义为： \\[ X(e^{j\\omega}) ="
+    },
+    {
+      "route": "/notes/math/signals_and_systems/chapter3/",
+      "source": "docs/math/signals_and_systems/chapter3.md",
+      "title": "拉普拉斯变换",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "拉普拉斯变换"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "与傅里叶变换的关系"
+        },
+        {
+          "level": 2,
+          "id": "region-of-convergence-roc",
+          "text": "收敛域 (Region of Convergence, ROC)"
+        },
+        {
+          "level": 2,
+          "id": "inverse-laplace-transform",
+          "text": "逆拉普拉斯变换 (Inverse Laplace Transform)"
+        },
+        {
+          "level": 2,
+          "id": "unilateral-laplace-transform",
+          "text": "单边拉普拉斯变换 (Unilateral Laplace Transform)"
+        },
+        {
+          "level": 3,
+          "id": "_3",
+          "text": "主要特点和应用"
+        },
+        {
+          "level": 3,
+          "id": "_4",
+          "text": "与双边拉普拉斯变换的区别"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/chapter3.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/chapter3.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/chapter3/",
+      "updated": "2025-06-12T23:30:15+08:00",
+      "normalizedTextLength": 5136,
+      "normalizedTextStart": "拉普拉斯变换 拉普拉斯变换是一种积分变换，它将一个实变量（通常是时间 \\(t\\) ）的函数转换为一个复变量（通常是复频率 \\(s\\) ）的函数。它被广泛应用于工程和物理学中，特别是在电路分析、控制系统、信号处理等领域，用于简化微分方程和积分方程的求解。 双边拉普拉斯变换定义 对于一个信号 \\(x(t)\\) ，其双边拉普拉斯变换 \\(X(s)\\) 定义为： $$ X(s) \\triangleq \\mathcal{L}{x(t)} = \\int_{-\\infty}^{+\\inft"
+    },
+    {
+      "route": "/notes/math/signals_and_systems/chapter4/",
+      "source": "docs/math/signals_and_systems/chapter4.md",
+      "title": "z 变换",
+      "headings": [
+        {
+          "level": 1,
+          "id": "z",
+          "text": "z 变换"
+        },
+        {
+          "level": 2,
+          "id": "dtft",
+          "text": "与离散时间傅里叶变换 (DTFT) 的关系"
+        },
+        {
+          "level": 2,
+          "id": "region-of-convergence-roc",
+          "text": "收敛域 (Region of Convergence, ROC)"
+        },
+        {
+          "level": 2,
+          "id": "z-inverse-z-transform",
+          "text": "逆 z 变换 (Inverse z-Transform)"
+        },
+        {
+          "level": 2,
+          "id": "z_1",
+          "text": "z 变换的性质"
+        },
+        {
+          "level": 2,
+          "id": "z_2",
+          "text": "使用 z 变换求解差分方程"
+        },
+        {
+          "level": 2,
+          "id": "z-unilateral-z-transform",
+          "text": "单边 z 变换 (Unilateral z-Transform)"
+        },
+        {
+          "level": 3,
+          "id": "_1",
+          "text": "主要特点和应用"
+        },
+        {
+          "level": 3,
+          "id": "z_3",
+          "text": "使用单边 z 变换求解差分方程（带初始条件）"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/chapter4.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/chapter4.md"
+      ],
+      "images": [
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/chapter4/",
+      "updated": "2025-06-14T01:29:31+08:00",
+      "normalizedTextLength": 7609,
+      "normalizedTextStart": "z 变换 z 变换是离散时间信号与系统分析中的一个重要数学工具，它将离散时间序列（通常是时间变量 \\(n\\) 的函数）转换为复频率变量 \\(z\\) 的函数。它在数字信号处理、数字控制系统等领域扮演着与拉普拉斯变换在连续时间系统中类似的角色。 双边 z 变换定义 对于一个离散时间序列 \\(x[n]\\) ，其双边 z 变换 \\(X(z)\\) 定义为： $$ X(z) \\triangleq \\mathcal{Z}{x[n]} = \\sum_{n = -\\infty}^{+\\inft"
+    },
+    {
+      "route": "/notes/math/signals_and_systems/FFT/",
+      "source": "docs/math/signals_and_systems/FFT.md",
+      "title": "快速傅立叶变换",
+      "headings": [
+        {
+          "level": 1,
+          "id": "_1",
+          "text": "快速傅立叶变换"
+        },
+        {
+          "level": 2,
+          "id": "_2",
+          "text": "（〇）前言"
+        },
+        {
+          "level": 2,
+          "id": "_3",
+          "text": "（一）从多项式到卷积"
+        },
+        {
+          "level": 3,
+          "id": "11",
+          "text": "1.1多项式的系数表示法与点值表示法"
+        },
+        {
+          "level": 3,
+          "id": "12",
+          "text": "1.2多项式乘法与卷积"
+        },
+        {
+          "level": 3,
+          "id": "13",
+          "text": "1.3求解多项式乘法"
+        },
+        {
+          "level": 2,
+          "id": "_4",
+          "text": "（二）复数的引入"
+        },
+        {
+          "level": 3,
+          "id": "21",
+          "text": "2.1奇妙的分治"
+        },
+        {
+          "level": 3,
+          "id": "22",
+          "text": "2.2为什么要引入复数"
+        },
+        {
+          "level": 3,
+          "id": "23",
+          "text": "2.3复数的基本认识"
+        },
+        {
+          "level": 4,
+          "id": "1",
+          "text": "（1）复数"
+        },
+        {
+          "level": 4,
+          "id": "2",
+          "text": "（2）单位根"
+        },
+        {
+          "level": 2,
+          "id": "fast-fourier-transform",
+          "text": "（三）快速傅里叶变换（Fast Fourier Transform）"
+        },
+        {
+          "level": 3,
+          "id": "31discrete-fourier-transform",
+          "text": "3.1离散傅里叶变换（Discrete Fourier Transform）"
+        },
+        {
+          "level": 4,
+          "id": "1_1",
+          "text": "（1）理论分析"
+        },
+        {
+          "level": 4,
+          "id": "2_1",
+          "text": "（2）程序实现"
+        },
+        {
+          "level": 3,
+          "id": "32inverse-discrete-fourier-transform",
+          "text": "3.2离散傅里叶反变换（Inverse Discrete Fourier Transform）"
+        },
+        {
+          "level": 4,
+          "id": "1_2",
+          "text": "（1）理论分析"
+        },
+        {
+          "level": 4,
+          "id": "2_2",
+          "text": "（2）代码实现"
+        },
+        {
+          "level": 3,
+          "id": "33fft",
+          "text": "3.3FFT加速多项式乘法"
+        },
+        {
+          "level": 3,
+          "id": "34fft",
+          "text": "3.4精细FFT"
+        },
+        {
+          "level": 4,
+          "id": "1_3",
+          "text": "（1）蝴蝶操作"
+        },
+        {
+          "level": 4,
+          "id": "2_3",
+          "text": "（2）三步变两步"
+        },
+        {
+          "level": 2,
+          "id": "_5",
+          "text": "（四）实战演练"
+        },
+        {
+          "level": 3,
+          "id": "11zjoi2014",
+          "text": "1.1 [ZJOI2014]力"
+        },
+        {
+          "level": 2,
+          "id": "_6",
+          "text": "（五）参考文献"
+        }
+      ],
+      "links": [
+        "https://github.com/allenge007/allenge007.github.io/edit/main/docs/math/signals_and_systems/FFT.md",
+        "https://github.com/allenge007/allenge007.github.io/raw/main/docs/math/signals_and_systems/FFT.md",
+        "https://www.luogu.com.cn/blog/chenzhengyv/xue-xi-zong-jie-mu-bi-wu-si-fan-yan",
+        "https://www.luogu.com.cn/blog/command-block/fft-xue-xi-bi-ji",
+        "https://www.luogu.com.cn/problem/P3338",
+        "https://www.luogu.com.cn/problem/P3803",
+        "https://zh.wikipedia.org/wiki/%E5%A4%8D%E6%95%B0_(%E6%95%B0%E5%AD%A6)#%E8%A4%87%E6%95%B8%E5%B9%B3%E9%9D%A2",
+        "https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2",
+        "https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E5%85%AC%E5%BC%8F",
+        "https://zhuanlan.zhihu.com/p/31584464"
+      ],
+      "images": [
+        "https://cdn.luogu.com.cn/upload/image_hosting/bnq82t01.png",
+        "https://cdn.luogu.com.cn/upload/image_hosting/x8nezcch.png",
+        "https://giscus.app/client.js"
+      ],
+      "giscusPathname": "/notes/math/signals_and_systems/FFT/",
+      "updated": "2025-05-21T14:09:36+08:00",
+      "normalizedTextLength": 23838,
+      "normalizedTextStart": "快速傅立叶变换 \\(update\\ on\\ 2020.9.11:\\) ​增加了“实战演练”（放题解的地方） \\(update\\ on\\ 2021.7.31:\\) 增加了分治法 （〇）前言 快速傅里叶变换（Fast Fourier Transform, FFT），是快速计算序列的离散傅里叶变换（DFT）或其逆变换的方法。FFT会通过把DFT矩阵分解为稀疏（大多为零）因子之积来快速计算此类变换。因此，它能够将计算DFT的复杂度从只用DFT定义计算需要的复杂度 \\(\\Theta(N"
+    }
+  ]
+}

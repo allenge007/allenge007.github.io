@@ -50,8 +50,9 @@ for (const path of [
   'dist/sitemap-index.xml',
   'dist/pagefind/pagefind-ui.js',
   'dist/pagefind/pagefind-ui.css',
-  'dist/notes/search/search_index.json',
-  'dist/notes/javascripts/generated/diagram-runtime.js',
+  'dist/notes/search/index.html',
+  'dist/notes/cs/ai/code_minmaxtree.py',
+  'dist/notes/math/optimization_theory/test.tex',
   'dist/og.png',
   'dist/projects/geosketch-cot/index.html',
   'dist/projects/idagent/index.html',
@@ -85,11 +86,16 @@ await mustContain('src/components/Header.astro', /monthly-salary-cat-static\.web
 await mustContain('dist/math/optimization_theory/chapter1/index.html', /\/notes\/math\/optimization_theory\/chapter1\//, 'legacy math redirect');
 await mustContain('dist/cs/os/chapter1/index.html', /\/notes\/cs\/os\/chapter1\//, 'legacy computer science redirect');
 await mustContain('dist/blog/posts/myfirst/index.html', /\/blog\/2025\/05\/23\/myfirst\//, 'legacy blog redirect');
-await mustContain('dist/notes/admonitions/index.html', /class="admonition/, 'MkDocs admonition');
-await mustContain('dist/notes/admonitions/index.html', /<details/, 'MkDocs collapsible block');
-await mustContain('dist/notes/content-tabs/index.html', /class="tabbed-/, 'MkDocs tabs');
-await mustContain('dist/notes/code-examples/index.html', /<code/, 'MkDocs code block');
-await mustContain('dist/notes/cs/ai/chapter5/index.html', /javascripts\/generated\/diagram-runtime\.js/, 'self-hosted Mermaid runtime');
+await mustContain('dist/notes/admonitions/index.html', /class="note-admonition/, 'Astro admonition');
+await mustContain('dist/notes/admonitions/index.html', /<details[^>]+note-admonition/, 'Astro collapsible block');
+await mustContain('dist/notes/content-tabs/index.html', /data-note-tabs/, 'Astro tabs');
+await mustContain('dist/notes/code-examples/index.html', /data-code-title="add_numbers\.py"[^>]+data-line-start="1"[^>]+data-highlight-lines="2-4"/, 'Astro titled and annotated code block');
+await mustContain('dist/notes/cs/ai/chapter5/index.html', /<pre class="mermaid" data-mermaid/, 'Astro Mermaid source block');
+await mustContain('dist/notes/search/index.html', /triggerFilters\(\{\s*kind:\s*['"]notes['"]\s*\}\)/, 'Notes-only Pagefind filter');
+await mustContain('dist/notes/cs/ai/chapter1/index.html', /data-pagefind-filter="kind:notes"/, 'Notes Pagefind kind filter');
+await mustContain('dist/notes/cs/ai/chapter1/index.html', /data-pagefind-filter="subject:computer-science"/, 'Notes Pagefind subject filter');
+await mustContain('dist/notes/admonitions/index.html', /<meta name="robots" content="noindex, follow">[\s\S]*data-pagefind-ignore="all"/, 'hidden Notes regression page exclusion');
+await mustNotContain('src/content/notes/cs/ai/chapter6.md', /your-image-placeholder|这是一个占位符图片/, 'invalid Imgur placeholder');
 await mustContain('dist/index.html', /property="og:image" content="https:\/\/www\.allenge\.me\/og\.png"/, 'Open Graph image');
 await mustContain('dist/projects/foodflow/index.html', /foodflow-dispatch-light\.jpg[\s\S]*foodflow-dispatch-dark\.jpg/, 'FoodFlow theme-aware demo pair');
 await mustContain('dist/projects/yatcc-se/index.html', /yatcc-student-dashboard-light\.jpg[\s\S]*yatcc-student-dashboard-dark\.jpg/, 'YatCC-SE theme-aware demo pair');
@@ -142,7 +148,7 @@ if (!assets.some((name) => name.endsWith('.avif')) || !assets.some((name) => nam
 }
 
 const publicAstroHtml = (await readdir(dist, { recursive: true }))
-  .filter((name) => String(name).endsWith('.html') && !String(name).startsWith('notes/'));
+  .filter((name) => String(name).endsWith('.html'));
 for (const name of publicAstroHtml) {
   const html = await readFile(join(dist, String(name)), 'utf8');
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
@@ -160,4 +166,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Verified bilingual navigation, fallbacks, legacy redirects, feeds, responsive images, and preserved Notes features.');
+console.log('Verified bilingual navigation, fallbacks, legacy redirects, feeds, responsive images, Astro Notes, and filtered search.');
