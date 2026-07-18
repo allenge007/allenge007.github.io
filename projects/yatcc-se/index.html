@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="我们把计算机实验课需要的浏览器 IDE、学生隔离、时间配额和集群调度组织成一套多用户云开发平台原型，并如实保留任务系统、存储配额与生产部署的阶段性边界。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/projects/yatcc-se/"><link rel="alternate" hreflang="en" href="https://www.allenge.me/en/projects/yatcc-se/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>YatCC-SE：课程云开发平台 · Allenge</title><meta property="og:type" content="website"><meta property="og:title" content="YatCC-SE：课程云开发平台 · Allenge"><meta property="og:description" content="我们把计算机实验课需要的浏览器 IDE、学生隔离、时间配额和集群调度组织成一套多用户云开发平台原型，并如实保留任务系统、存储配额与生产部署的阶段性边界。"><meta property="og:url" content="https://www.allenge.me/projects/yatcc-se/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="YatCC-SE：课程云开发平台 · Allenge"><meta name="twitter:description" content="我们把计算机实验课需要的浏览器 IDE、学生隔离、时间配额和集群调度组织成一套多用户云开发平台原型，并如实保留任务系统、存储配额与生产部署的阶段性边界。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/projects/yatcc-se/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content" data-pagefind-body="true" data-pagefind-filter="lang:zh"><article class="project-detail shell reading-shell"><header class="detail-header" data-reveal><a class="back-link" href="/projects/">← 返回项目</a><p class="section-kicker">2025 · 团队工程项目参与者</p><h1>YatCC-SE：课程云开发平台</h1><p class="detail-lede">我们把计算机实验课需要的浏览器 IDE、学生隔离、时间配额和集群调度组织成一套多用户云开发平台原型，并如实保留任务系统、存储配额与生产部署的阶段性边界。</p><dl class="project-detail-metrics"><div><dt>7/7</dt><dd>学生 API 聚焦测试</dd></div><div><dt>1486</dt><dd>学生端构建模块</dd></div><div><dt>1526</dt><dd>管理端构建模块</dd></div></dl></header><figure class="project-detail-visual" data-image-shell data-reveal><img src="/project-media/yatcc-se/yatcc-student-dashboard-light.jpg" alt="YatCC-SE 学生端代码空间与时间配额仪表盘" data-theme-image="light" data-fallback-image><img src="/project-media/yatcc-se/yatcc-student-dashboard-dark.jpg" alt="YatCC-SE 学生端代码空间与时间配额仪表盘" data-theme-image="dark" data-fallback-image></figure><div class="project-detail-grid"><div class="project-report prose" data-reveal><h2 id="从统一装环境到每个人都有独立代码空间">从“统一装环境”到“每个人都有独立代码空间”</h2>
+<p>计算机实验课经常把大量时间花在环境差异上：编译器版本不一致、依赖安装失败、共享服务器权限互相影响。教师端又需要知道每个学生的空间是否运行、还剩多少时间配额、作业是否提交，以及集群资源是否足够。</p>
+<p>我们把这些需求收敛为 YatCC-SE：学生通过浏览器登录自己的 code-server 环境，管理端统一创建账户、调整时间配额并批量控制代码空间；底层用 Redis 保存核心状态，用异步工作进程驱动容器生命周期，再把集群操作交给 Mock 或 Kubernetes 适配器。任务管理目前只有界面骨架，不能把规划能力写成已经交付的功能。</p>
+<h2 id="学生教师与集群是三个不同的操作面">学生、教师与集群是三个不同的操作面</h2>
+<figure>
+  <img src="/project-media/yatcc-se/architecture.png" alt="YatCC-SE 系统架构" loading="lazy">
+  <figcaption>学生网页、管理网页和管理员终端分别进入对应服务；Redis 连接账户、配额与空间状态，Kubernetes 为学生创建隔离的 code-server / sshd 工作环境。</figcaption>
+</figure>
+<p>学生端负责登录、个人资料、密码修改、代码空间启动/停止/进入和剩余时间展示。管理端已经实现学生单个/批量创建、删除、时间配额调整与代码空间批量启停；“任务管理”和“代码空间总览”页面仍显示待实现，因此它们只代表产品方向。管理员还可以通过 SSH 运维入口处理批量操作。</p>
+<p>两个 Python API 服务分别面向学生与管理员，使用 Flask-OpenAPI3 + Pydantic 描述接口并生成 Swagger 文档。拆开服务不仅是路由整理，也把权限边界明确下来：学生只能操作自己的空间，管理员接口才能查看与修改全体学生状态。</p>
+<h2 id="代码空间生命周期与时间配额">代码空间生命周期与时间配额</h2>
+<p>核心状态包含空间 URL、运行状态、总配额、已用时间、最近启动/停止/活跃/检查时间。启动前会检查时间配额，后台 watcher 根据启动和检查时间累计使用时长，达到配额后触发停止流程；管理员 keepalive 路由与核心 <code>keep_alive()</code> 目前还是空实现，不能作为已完成链路。</p>
+<p>Kubernetes 适配器负责 Deployment、Service、日志、端口转发、暂停恢复与资源清理。停止代码空间时，我们把 Deployment 副本数缩到 0，而不是立即删除资源；重新启动后恢复副本并更新 CPU、内存和环境变量。当前工作目录依赖 <code>hostPath</code>，并没有 PVC 或按学生执行的容量限制，所以“保留文件”成立于节点路径仍可用的前提下。Mock 适配器与 Kubernetes 共享接口，使本地前后端开发不必依赖真实集群。</p>
+<p><code>asyncio</code> 工作进程承担异步创建、启动、停止与监控，避免一次较慢的集群操作阻塞整个 Web 请求。Redis 则让学生服务、管理服务和后台脚本共享同一份账户、配额与生命周期状态。</p>
+<h2 id="真实复现的学生端-demo">真实复现的学生端 Demo</h2>
+<p>页面截图来自仓库当前学生端的 Vite + MSW 开发模式。我们实际完成模拟登录，读取个人资料和代码空间状态，并切换原生浅色/深色主题。Hero 图会跟随本站的手动主题按钮即时切换，而不是只读取操作系统偏好。</p>
+<p>仪表盘同时展示空间是否运行、访问链接、隐藏密码和剩余时长，并提供启动、刷新与停止动作。独立构建中，学生端 <code>vue-tsc -b &#x26;&#x26; vite build</code> 成功处理 <strong>1486 个模块</strong>，生成约 299 KB 的主 JavaScript bundle（gzip 约 107 KB）；管理端也通过类型检查与 Vite 构建，共处理 <strong>1526 个模块</strong>，主入口约 237 KB（gzip 约 87 KB）。</p>
+<p>浏览器核验也暴露了几个不会阻塞页面、但值得修复的 Vue warning：<code>hideAfter</code>、<code>strokeWidth</code> 与 <code>width</code> 以字符串传入，而 Element Plus 期望 Number。这类问题会被保留在工程清单里，而不是因为 Demo 能打开就忽略。</p>
+<h2 id="从构建到接口的独立复现">从构建到接口的独立复现</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>检查项</th><th align="right">结果</th><th>我们从中确认的事实</th></tr></thead><tbody><tr><td>Python <code>compileall</code></td><td align="right">通过</td><td>Python 源文件可完成字节码编译</td></tr><tr><td>学生端类型检查 + Vite</td><td align="right">通过</td><td>1486 modules，JS 299.49 kB / gzip 107.34 kB</td></tr><tr><td>管理端类型检查 + Vite</td><td align="right">通过</td><td>1526 modules，主入口 237.01 kB / gzip 86.96 kB</td></tr><tr><td>学生 API 聚焦测试</td><td align="right">7/7 通过</td><td>登录、资料与代码空间主路径可执行</td></tr><tr><td>核心学生测试</td><td align="right">8/9 通过</td><td>剩余失败涉及测试 stub 与 MockCluster 状态不一致</td></tr><tr><td>管理 API 聚焦测试</td><td align="right">6/11 通过</td><td>失败集中在 3ms 异步跃迁、共享状态和 Redis SCAN 顺序假设</td></tr></tbody></table>
+<p>完整测试并非全绿：依赖声明遗漏了 <code>redis</code>、<code>flask-openapi3</code> 等实际需要的包，测试 Redis 默认只开 TCP，而核心测试沿用生产 Unix socket；隔离修正测试配置后，我们还发现集群 <code>PENDING</code> 被写成枚举中不存在的 <code>pending</code>，下一次反序列化会退化为 <code>error</code>。这些结论比一个笼统的“后端可运行”更能说明当前工程处于什么阶段。</p>
+<h2 id="当前完成度">当前完成度</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层次</th><th>已有实现</th></tr></thead><tbody><tr><td>学生前端</td><td>Vue 3 + TypeScript + Vite + Element Plus + UnoCSS；登录、资料、配额和代码空间控制，支持 MSW 与深浅主题</td></tr><tr><td>管理前端</td><td>学生与账户管理、批量导入和空间批量启停已成形；任务与空间总览仍为占位页</td></tr><tr><td>服务接口</td><td>学生登录/资料/空间接口；管理员学生 CRUD、批量启停与配额调整；OpenAPI 文档</td></tr><tr><td>状态与执行</td><td>Redis 数据模型、asyncio 工作进程、运行时间与配额记录</td></tr><tr><td>集群适配</td><td>Mock / Kubernetes 两套实现，覆盖 Deployment、Service、日志、暂停恢复和清理</td></tr><tr><td>运行环境</td><td>code-server + sshd、CPU/内存限制与 hostPath 目录隔离；PVC、空间配额和跨节点恢复尚未实现</td></tr></tbody></table>
+<h2 id="为什么仍然叫工程原型">为什么仍然叫工程原型</h2>
+<p>代码中还有明确未完成部分：管理员 keepalive、任务管理交互、空间配额执行，以及 HTTPS/生产部署收尾。readiness/liveness probe 和 Redis 完整性检查已有代码但没有接入运行路径；每名学生一个 LoadBalancer 会增加地址与成本压力，<code>hostPath</code> 也限制跨节点恢复。开发配置中的默认 Key、固定 secret 和浮动私有镜像标签同样需要在真实部署前替换。</p>
+<div class="project-callout"><strong>阶段定位</strong>我们已经把学生代码空间、管理操作、状态层和集群适配连成可以演示的核心路径；在完成监控、配额一致性、权限审计、HTTPS 与真实课程压力测试之前，不把它描述为已经投入教学的生产平台。</div>
+<p>下一阶段会优先补齐 keepalive 与配额原子性、任务提交/评分闭环、真实 Redis/Kubernetes 集成测试和故障恢复演练，同时修复前端类型 warning，并记录从点击启动到空间可用的端到端延迟。</p></div><aside class="project-aside" data-reveal><div><h2>当前状态</h2><p>工程原型 · 核心流程可演示</p></div><div><h2>我的角色</h2><p>团队工程项目参与者</p></div><div><h2>Tech Stack</h2><ul><li>Vue 3</li><li>TypeScript</li><li>Python</li><li>Flask-OpenAPI3</li><li>Redis</li><li>asyncio</li><li>Kubernetes</li><li>code-server</li></ul></div><div class="project-links"><a href="https://github.com/Nickchen-PUSH/YatCC-SE">GitHub 仓库 ↗</a></div></aside></div></article></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

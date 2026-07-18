@@ -1,0 +1,1037 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="本系列笔记总结了操作系统中关于进程、线程和CPU调度的核心概念。内容涵盖： 进程管理 (Chapter 4): 进程概念、状态、控制块、创建与终止、进程间通信 (IPC) 机制如共享内存、消息传递、管道等。 线程管理 (Chapter 5): 线程概念、与进程的区别、用户级与内核级线程、多线程模型、线程库 (Pthreads, Windows, Java)、"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/notes/cs/os/chapter2/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>进程、线程与 CPU 调度 · Allenge</title><meta property="og:type" content="article"><meta property="og:title" content="进程、线程与 CPU 调度 · Allenge"><meta property="og:description" content="本系列笔记总结了操作系统中关于进程、线程和CPU调度的核心概念。内容涵盖： 进程管理 (Chapter 4): 进程概念、状态、控制块、创建与终止、进程间通信 (IPC) 机制如共享内存、消息传递、管道等。 线程管理 (Chapter 5): 线程概念、与进程的区别、用户级与内核级线程、多线程模型、线程库 (Pthreads, Windows, Java)、"><meta property="og:url" content="https://www.allenge.me/notes/cs/os/chapter2/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="进程、线程与 CPU 调度 · Allenge"><meta name="twitter:description" content="本系列笔记总结了操作系统中关于进程、线程和CPU调度的核心概念。内容涵盖： 进程管理 (Chapter 4): 进程概念、状态、控制块、创建与终止、进程间通信 (IPC) 机制如共享内存、消息传递、管道等。 线程管理 (Chapter 5): 线程概念、与进程的区别、用户级与内核级线程、多线程模型、线程库 (Pthreads, Windows, Java)、"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><link rel="stylesheet" href="/_assets/notes.dEZUHJcM.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content"><div class="notes-frame" data-notes-frame><div class="notes-mobile-bar" data-pagefind-ignore><button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span> 目录</button><a href="/notes/search/"><span aria-hidden="true">⌕</span> 搜索 Notes</a><details class="notes-mobile-toc"><summary>本页目录</summary><div class="notes-mobile-popover"><ol><li class="toc-depth-2"><a href="#第四讲--进程-processes">第四讲 — 进程 (Processes)</a></li><li class="toc-depth-3"><a href="#1-进程概念-process-concept">1. 进程概念 (Process Concept)</a></li><li class="toc-depth-4"><a href="#11-程序-vs-进程">1.1 程序 vs. 进程</a></li><li class="toc-depth-4"><a href="#12-进程的组成">1.2 进程的组成</a></li><li class="toc-depth-4"><a href="#13-进程在内存中的布局-linux-32-bit-example">1.3 进程在内存中的布局 (Linux 32-bit Example)</a></li><li class="toc-depth-4"><a href="#14-进程状态-process-state">1.4 进程状态 (Process State)</a></li><li class="toc-depth-4"><a href="#15-挂起进程-suspended-process">1.5 挂起进程 (Suspended Process)</a></li><li class="toc-depth-4"><a href="#16-进程控制块-process-control-block---pcb">1.6 进程控制块 (Process Control Block - PCB)</a></li><li class="toc-depth-3"><a href="#2-进程调度-process-scheduling">2. 进程调度 (Process Scheduling)</a></li><li class="toc-depth-3"><a href="#3-进程操作-operations-on-processes">3. 进程操作 (Operations on Processes)</a></li><li class="toc-depth-4"><a href="#31-进程创建-process-creation">3.1 进程创建 (Process Creation)</a></li><li class="toc-depth-4"><a href="#32-进程终止-process-termination">3.2 进程终止 (Process Termination)</a></li><li class="toc-depth-3"><a href="#4-进程间通信-inter-process-communication---ipc">4. 进程间通信 (Inter-Process Communication - IPC)</a></li><li class="toc-depth-4"><a href="#41-共享内存系统">4.1 共享内存系统</a></li><li class="toc-depth-4"><a href="#42-消息传递系统">4.2 消息传递系统</a></li><li class="toc-depth-4"><a href="#43-管道-pipes">4.3 管道 (Pipes)</a></li><li class="toc-depth-4"><a href="#44-套接字-sockets">4.4 套接字 (Sockets)</a></li><li class="toc-depth-4"><a href="#45-远程过程调用-remote-procedure-calls---rpc">4.5 远程过程调用 (Remote Procedure Calls - RPC)</a></li><li class="toc-depth-2"><a href="#第五讲--线程-threads">第五讲 — 线程 (Threads)</a></li><li class="toc-depth-3"><a href="#1-线程概念-thread-concept">1. 线程概念 (Thread Concept)</a></li><li class="toc-depth-3"><a href="#2-多线程的优点-benefits-of-multithreading">2. 多线程的优点 (Benefits of Multithreading)</a></li><li class="toc-depth-3"><a href="#3-多核编程-multicore-programming">3. 多核编程 (Multicore Programming)</a></li><li class="toc-depth-3"><a href="#4-用户线程与内核线程-user-threads-and-kernel-threads">4. 用户线程与内核线程 (User Threads and Kernel Threads)</a></li><li class="toc-depth-4"><a href="#线程模型-mapping-user-threads-to-kernel-threads">线程模型 (Mapping User Threads to Kernel Threads)</a></li><li class="toc-depth-3"><a href="#5-线程库-thread-libraries">5. 线程库 (Thread Libraries)</a></li><li class="toc-depth-3"><a href="#6-隐式线程-implicit-threading">6. 隐式线程 (Implicit Threading)</a></li><li class="toc-depth-3"><a href="#7-多线程问题-threading-issues">7. 多线程问题 (Threading Issues)</a></li><li class="toc-depth-3"><a href="#8-操作系统中的线程示例">8. 操作系统中的线程示例</a></li><li class="toc-depth-2"><a href="#第六讲--cpu调度-cpu-scheduling">第六讲 — CPU调度 (CPU Scheduling)</a></li><li class="toc-depth-3"><a href="#1-基本概念-basic-concepts">1. 基本概念 (Basic Concepts)</a></li><li class="toc-depth-4"><a href="#触发调度的事件">触发调度的事件</a></li><li class="toc-depth-3"><a href="#2-调度准则-scheduling-criteria">2. 调度准则 (Scheduling Criteria)</a></li><li class="toc-depth-3"><a href="#3-调度算法-scheduling-algorithms">3. 调度算法 (Scheduling Algorithms)</a></li><li class="toc-depth-4"><a href="#31-先到先服务-first-come-first-served---fcfs">3.1 先到先服务 (First-Come, First-Served - FCFS)</a></li><li class="toc-depth-4"><a href="#32-最短作业优先-shortest-job-first---sjf">3.2 最短作业优先 (Shortest-Job-First - SJF)</a></li><li class="toc-depth-4"><a href="#33-优先级调度-priority-scheduling">3.3 优先级调度 (Priority Scheduling)</a></li><li class="toc-depth-4"><a href="#34-轮转调度-round-robin---rr">3.4 轮转调度 (Round Robin - RR)</a></li><li class="toc-depth-4"><a href="#35-多级队列调度-multilevel-queue-scheduling">3.5 多级队列调度 (Multilevel Queue Scheduling)</a></li><li class="toc-depth-4"><a href="#36-多级反馈队列调度-multilevel-feedback-queue-scheduling">3.6 多级反馈队列调度 (Multilevel Feedback Queue Scheduling)</a></li><li class="toc-depth-3"><a href="#4-线程调度-thread-scheduling">4. 线程调度 (Thread Scheduling)</a></li><li class="toc-depth-3"><a href="#5-多处理器调度-multiprocessor-scheduling">5. 多处理器调度 (Multiprocessor Scheduling)</a></li><li class="toc-depth-3"><a href="#6-实时cpu调度-real-time-cpu-scheduling">6. 实时CPU调度 (Real-Time CPU Scheduling)</a></li><li class="toc-depth-4"><a href="#实时调度算法">实时调度算法</a></li><li class="toc-depth-3"><a href="#7-操作系统示例-operating-system-examples">7. 操作系统示例 (Operating System Examples)</a></li><li class="toc-depth-4"><a href="#71-linux调度">7.1 Linux调度</a></li><li class="toc-depth-4"><a href="#72-windows调度">7.2 Windows调度</a></li><li class="toc-depth-4"><a href="#73-solaris调度">7.3 Solaris调度</a></li><li class="toc-depth-3"><a href="#8-算法评估-algorithm-evaluation">8. 算法评估 (Algorithm Evaluation)</a></li></ol><div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></div></details></div><aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录"><div class="notes-sidebar-head"><a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a><button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button></div><a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>搜索 Notes</a><nav><ul class="notes-nav-list notes-nav-root"><li><details><summary><span>数学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/">概览</a><ul class="notes-nav-list"><li><details><summary><span>信号与系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/signals_and_systems/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/signals_and_systems/chapter1/">连续时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter2/">离散时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter3/">拉普拉斯变换</a></li><li><a href="/notes/math/signals_and_systems/chapter4/">z 变换</a></li><li><a href="/notes/math/signals_and_systems/FFT/">快速傅立叶变换</a></li></ul></details></li><li><details><summary><span>最优化理论</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/optimization_theory/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/optimization_theory/chapter1/">lec1 · 仿射与凸性</a></li><li><a href="/notes/math/optimization_theory/chapter2/">lec2</a></li><li><a href="/notes/math/optimization_theory/chapter3/">lec3</a></li><li><a href="/notes/math/optimization_theory/chapter4/">lec4</a></li><li><a href="/notes/math/optimization_theory/chapter5/">lec5</a></li><li><a href="/notes/math/optimization_theory/chapter6/">lec6</a></li><li><a href="/notes/math/optimization_theory/chapter7/">lec7</a></li><li><a href="/notes/math/optimization_theory/chapter8/">lec8</a></li></ul></details></li></ul></details></li><li><details open><summary><span>计算机科学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/">概览</a><ul class="notes-nav-list"><li><details open><summary><span>操作系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/os/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/os/chapter1/">操作系统概述</a></li><li><a href="/notes/cs/os/chapter2/" aria-current="page">进程、线程与 CPU 调度</a></li><li><a href="/notes/cs/os/chapter3/">进程同步与死锁</a></li><li><a href="/notes/cs/os/chapter4/">内存管理</a></li><li><a href="/notes/cs/os/chapter5/">大容量存储</a></li><li><a href="/notes/cs/os/chapter6/">文件系统</a></li><li><a href="/notes/cs/os/chapter7/">I/O 管理</a></li></ul></details></li><li><details><summary><span>人工智能</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/ai/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/ai/chapter1/">知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter2/">搜索技术</a></li><li><a href="/notes/cs/ai/chapter3/">不确定性知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter4/">机器学习 · 聚类</a></li><li><a href="/notes/cs/ai/chapter5/">机器学习 · 神经网络</a></li><li><a href="/notes/cs/ai/chapter6/">机器学习 · 决策树</a></li><li><a href="/notes/cs/ai/chapter7/">深度学习</a></li><li><a href="/notes/cs/ai/chapter8/">Transformer</a></li><li><a href="/notes/cs/ai/chapter9/">强化学习</a></li></ul></details></li></ul></details></li></ul></nav></aside><button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button><div class="notes-main"><nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/cs/">计算机科学</a><span aria-hidden="true">/</span><a href="/notes/cs/os/">操作系统</a><span aria-hidden="true">/</span><a href="/notes/cs/os/chapter2/" aria-current="page">进程、线程与 CPU 调度</a></nav><article class="notes-article" data-pagefind-body="true" data-note-route="/notes/cs/os/chapter2/"><span hidden data-pagefind-filter="kind:notes">notes</span><span hidden data-pagefind-filter="subject:computer-science">computer-science</span><span hidden data-pagefind-filter="lang:zh">zh</span><span hidden data-pagefind-meta="title">进程、线程与 CPU 调度</span><div class="notes-prose" data-notes-prose><h1 id="进程线程与-cpu-调度">进程、线程与 CPU 调度</h1>
+<aside class="note-admonition note-admonition-abstract" data-admonition="abstract">
+<div class="note-admonition-title">课程概述</div>
+<p>本系列笔记总结了操作系统中关于进程、线程和CPU调度的核心概念。内容涵盖：</p>
+<ul>
+<li><strong>进程管理 (Chapter 4):</strong> 进程概念、状态、控制块、创建与终止、进程间通信 (IPC) 机制如共享内存、消息传递、管道等。</li>
+<li><strong>线程管理 (Chapter 5):</strong> 线程概念、与进程的区别、用户级与内核级线程、多线程模型、线程库 (Pthreads, Windows, Java)、多线程编程问题与解决方案。</li>
+<li><strong>CPU调度 (Chapter 6):</strong> 调度基本概念、调度准则、各种调度算法 (FCFS, SJF, RR, 优先级, 多级队列)、多处理器调度、实时调度及主流操作系统的调度策略。</li>
+</ul>
+</aside>
+<hr>
+<h2 id="第四讲--进程-processes">第四讲 — 进程 (Processes)</h2>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">学习目标</div>
+<ul>
+<li>理解进程的组成部分及其在操作系统中的表示和调度。</li>
+<li>掌握进程的创建与终止，包括相关系统调用的使用。</li>
+<li>对比共享内存和消息传递这两种进程间通信方式。</li>
+<li>了解管道和POSIX共享内存进行进程间通信的编程。</li>
+<li>熟悉使用套接字和远程过程调用 (RPC) 的客户机-服务器通信。</li>
+</ul>
+</aside>
+<h3 id="1-进程概念-process-concept">1. 进程概念 (Process Concept)</h3>
+<h4 id="11-程序-vs-进程">1.1 程序 vs. 进程</h4>
+<ul>
+<li><strong>程序 (Program):</strong> 存储在磁盘上的被动实体，是一个可执行文件，包含一系列指令。</li>
+<li><strong>进程 (Process):</strong> 正在执行的程序实例，是一个活动实体。当可执行文件加载到内存中时，程序就成为进程。
+<ul>
+<li>一个程序可以对应多个进程（例如，多个用户同时运行同一个程序）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="12-进程的组成">1.2 进程的组成</h4>
+<p>一个进程通常包含多个部分：</p>
+<ol>
+<li><strong>文本段 (Text Segment):</strong> 程序代码。</li>
+<li><strong>程序计数器 (Program Counter):</strong> 指向下一条要执行的指令。</li>
+<li><strong>处理器寄存器 (Processor Registers):</strong> 当前活动的寄存器值。</li>
+<li><strong>堆栈 (Stack):</strong> 包含临时数据，如函数参数、返回地址、局部变量。</li>
+<li><strong>数据段 (Data Segment):</strong> 包含全局变量。</li>
+<li><strong>堆 (Heap):</strong> 包含运行时动态分配的内存。</li>
+</ol>
+<h4 id="13-进程在内存中的布局-linux-32-bit-example">1.3 进程在内存中的布局 (Linux 32-bit Example)</h4>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>      0xFFFFFFFF  +-------------------+</span></span>
+<span class="line"><span>                  |      Kernel       | Kernel Space (1G)</span></span>
+<span class="line"><span>      0xC0000000  +-------------------+</span></span>
+<span class="line"><span>                  |       Stack       | (向低地址增长) 函数信息, 局部动态变量, 局部常量</span></span>
+<span class="line"><span>                  |        ...        |</span></span>
+<span class="line"><span>                  |       mmap        | Memory mapping (文件映射, 共享库等)</span></span>
+<span class="line"><span>                  |        ...        |</span></span>
+<span class="line"><span>                  |       Heap        | (向高地址增长) 动态分配的变量</span></span>
+<span class="line"><span>                  |        .bss       | 未初始化的全局/静态变量</span></span>
+<span class="line"><span>                  |        .data      | 已初始化的全局/静态变量</span></span>
+<span class="line"><span>      0x08048000  |        .text      | 程序代码, 全局常量, 字符串字面量</span></span>
+<span class="line"><span>                  +-------------------+</span></span>
+<span class="line"><span>      0x00000000  | Reserved by OS    | User Space (3G)</span></span></code></pre>
+<ul>
+<li><code>.text</code>: 代码段</li>
+<li><code>.data</code>: 初始化数据段</li>
+<li><code>.bss</code>: 未初始化数据段 (Block Started by Symbol)</li>
+<li><code>heap</code>: 动态内存分配区域</li>
+<li><code>mmap</code>: 内存映射区 (Memory Mapped Region)</li>
+<li><code>stack</code>: 栈区</li>
+<li><code>Kernel space</code>: 内核空间，用户进程不可直接访问。</li>
+</ul>
+<h4 id="14-进程状态-process-state">1.4 进程状态 (Process State)</h4>
+<p>进程在执行时会改变状态：</p>
+<ol>
+<li><strong>新建 (New):</strong> 进程正在被创建。</li>
+<li><strong>运行 (Running):</strong> 指令正在被执行。</li>
+<li><strong>等待 (Waiting/Blocked):</strong> 进程正在等待某个事件发生（如I/O完成或收到信号）。</li>
+<li><strong>就绪 (Ready):</strong> 进程等待被分配给处理器执行。</li>
+<li><strong>终止 (Terminated):</strong> 进程已完成执行。</li>
+</ol>
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">5状态进程模型</div>
+<p><img alt="5 State Process Model" loading="lazy" decoding="async" sizes="(min-width: 616px) 616px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="616" height="240" src="/_assets/process1.DqPuDML4_Z19xCcD.webp" srcset="/_assets/process1.DqPuDML4_Z19xCcD.webp 616w"></p>
+<ul>
+<li>新建 -> 就绪</li>
+<li>就绪 -> 运行 (调度器分派)</li>
+<li>运行 -> 等待 (I/O或事件等待)</li>
+<li>运行 -> 就绪 (中断或时间片用完)</li>
+<li>等待 -> 就绪 (I/O或事件完成)</li>
+<li>运行 -> 终止</li>
+</ul>
+</aside>
+<h4 id="15-挂起进程-suspended-process">1.5 挂起进程 (Suspended Process)</h4>
+<ul>
+<li><strong>交换 (Swap):</strong> 将内存中的一个进程的一部分或全部移到磁盘上，以释放内存。</li>
+<li>当内存中没有就绪进程时，OS可能将阻塞进程交换到磁盘，进入挂起队列。</li>
+<li><strong>特征:</strong> 不能立即执行；可能等待事件，也可能没等；除非显式命令，否则无法从挂起状态转移。</li>
+<li><strong>原因:</strong> 系统需要、父进程请求、用户请求、定时等。</li>
+</ul>
+<h4 id="16-进程控制块-process-control-block---pcb">1.6 进程控制块 (Process Control Block - PCB)</h4>
+<p>PCB (也称任务控制块 Task Control Block, TCB) 是操作系统中用于管理进程的数据结构，包含了一个特定进程的所有信息。</p>
+<ul>
+<li><strong>进程状态:</strong> 运行、等待等。</li>
+<li><strong>程序计数器:</strong> 下一条要执行指令的地址。</li>
+<li><strong>CPU寄存器:</strong> 各种寄存器的内容。</li>
+<li><strong>CPU调度信息:</strong> 进程优先级、调度队列指针等。</li>
+<li><strong>内存管理信息:</strong> 基址寄存器、页表等。</li>
+<li><strong>记账信息:</strong> CPU使用时间、时间限制等。</li>
+<li><strong>I/O状态信息:</strong> 分配给进程的I/O设备、打开文件列表等。</li>
+</ul>
+<aside class="note-admonition note-admonition-warning" data-admonition="warning">
+<div class="note-admonition-title">PCB的重要性与保护</div>
+<p>PCB是操作系统最重要的的数据结构之一。它的损坏可能导致系统无法管理对应进程。对PCB的访问需要保护机制。</p>
+</aside>
+<ul>
+<li><strong>Linux中的PCB:</strong> <code>task_struct</code> (位于 <code>include/linux/sched.h</code>)
+<ul>
+<li><code>pid_t pid;</code> (进程标识符)</li>
+<li><code>struct task_struct *parent;</code> (父进程)</li>
+<li><code>struct list_head children;</code> (子进程列表)</li>
+<li><code>struct files_struct *files;</code> (打开文件列表)</li>
+<li><code>struct mm_struct *mm;</code> (进程地址空间)</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-进程调度-process-scheduling">2. 进程调度 (Process Scheduling)</h3>
+<ul>
+<li><strong>调度器 (Scheduler):</strong> 从就绪进程中选择一个在CPU上执行。</li>
+<li><strong>目标:</strong> 最大化CPU利用率，快速切换进程。</li>
+<li><strong>调度队列 (Scheduling Queues):</strong>
+<ul>
+<li><strong>就绪队列 (Ready Queue):</strong> 内存中所有就绪等待执行的进程。</li>
+<li><strong>等待队列 (Wait Queue):</strong> 等待某事件（如I/O）的进程集合。</li>
+</ul>
+</li>
+<li><strong>上下文切换 (Context Switch):</strong> 当CPU从一个进程切换到另一个进程时，系统需要保存当前进程的上下文（PCB中的信息）并加载下一个进程的上下文。这是一个纯开销操作。
+<ul>
+<li><strong>触发:</strong> 中断、陷阱 (系统调用或错误)。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-进程操作-operations-on-processes">3. 进程操作 (Operations on Processes)</h3>
+<h4 id="31-进程创建-process-creation">3.1 进程创建 (Process Creation)</h4>
+<ul>
+<li>
+<p>父进程创建子进程，形成进程树。</p>
+</li>
+<li>
+<p><strong>资源共享选项:</strong></p>
+<ol>
+<li>父子进程共享所有资源。</li>
+<li>子进程共享父进程资源的一个子集。</li>
+<li>父子进程不共享资源。</li>
+</ol>
+</li>
+<li>
+<p><strong>执行选项:</strong></p>
+<ol>
+<li>父子进程并发执行。</li>
+<li>父进程等待子进程终止。</li>
+</ol>
+</li>
+<li>
+<p><strong>地址空间选项:</strong></p>
+<ol>
+<li>子进程是父进程的副本（共享代码，数据写时复制）。</li>
+<li>子进程加载一个新程序。</li>
+</ol>
+</li>
+<li>
+<p><strong>UNIX/Linux中的进程创建:</strong></p>
+<ul>
+<li><code>fork()</code>: 创建一个新进程，子进程是父进程的副本。
+<ul>
+<li><code>fork()</code> 对父进程返回子进程的PID，对子进程返回0。失败返回-1。</li>
+</ul>
+</li>
+<li><code>exec()</code> 系列函数: (<code>execlp</code>, <code>execvp</code>等) 在一个进程的上下文中加载并运行一个新的程序。它会替换当前进程的内存空间（代码、数据、堆栈等）。</li>
+<li><code>wait()</code>: 父进程调用以等待子进程终止，并获取子进程的退出状态。</li>
+<li><code>vfork()</code>: 创建子进程并阻塞父进程，直到子进程调用 <code>exec()</code> 或 <code>exit()</code>。子进程在父进程的地址空间中运行（不推荐使用，易出错）。</li>
+</ul>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-example" data-admonition="example">
+<div class="note-admonition-title">fork() + exec() 模式</div>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="c"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">pid_t</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> pid </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> fork</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (pid </span><span style="color:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span><span style="color:#6A737D;--shiki-dark:#6A737D"> /* error */</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">else</span><span style="color:#D73A49;--shiki-dark:#F97583"> if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (pid </span><span style="color:#D73A49;--shiki-dark:#F97583">==</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span><span style="color:#6A737D;--shiki-dark:#6A737D"> /* child process */</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    execlp</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"/bin/ls"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"ls"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">NULL</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">} </span><span style="color:#D73A49;--shiki-dark:#F97583">else</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span><span style="color:#6A737D;--shiki-dark:#6A737D"> /* parent process */</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    wait</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">NULL</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">    printf</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Child Complete</span><span style="color:#005CC5;--shiki-dark:#79B8FF">\n</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+</aside>
+<h4 id="32-进程终止-process-termination">3.2 进程终止 (Process Termination)</h4>
+<ul>
+<li>进程执行完最后一条语句后，调用 <code>exit()</code> 系统调用请求操作系统删除它。
+<ul>
+<li><code>exit()</code> 会释放进程资源，并将退出状态返回给父进程（如果父进程调用了 <code>wait()</code>）。</li>
+</ul>
+</li>
+<li>父进程可以通过 <code>abort()</code> (或发送信号) 终止子进程。原因：
+<ul>
+<li>子进程超出资源分配。</li>
+<li>分配给子进程的任务不再需要。</li>
+<li>父进程正在退出，且OS不允许子进程继续 (级联终止)。</li>
+</ul>
+</li>
+<li><strong>僵尸进程 (Zombie Process):</strong> 子进程已终止，但其父进程尚未调用 <code>wait()</code> 来获取其状态。PCB仍然保留。</li>
+<li><strong>孤儿进程 (Orphan Process):</strong> 父进程在子进程之前终止。孤儿进程通常会被 <code>init</code> 进程 (PID 1) 收养，<code>init</code> 进程会定期调用 <code>wait()</code> 清理它们。</li>
+</ul>
+<h3 id="4-进程间通信-inter-process-communication---ipc">4. 进程间通信 (Inter-Process Communication - IPC)</h3>
+<p>协作进程需要IPC机制来交换数据和信息。
+两种基本模型：</p>
+<ol>
+<li><strong>共享内存 (Shared Memory):</strong>
+<ul>
+<li>进程间共享一块内存区域。</li>
+<li>通信由用户进程控制，OS只负责建立共享内存区域。</li>
+<li>优点：速度快（数据不需要在内核和用户空间之间复制）。</li>
+<li>缺点：需要同步机制来控制对共享内存的访问（如信号量、互斥锁）。</li>
+</ul>
+</li>
+<li><strong>消息传递 (Message Passing):</strong>
+<ul>
+<li>进程通过交换消息进行通信，无需共享变量。</li>
+<li>OS提供 <code>send(message)</code> 和 <code>receive(message)</code> 操作。</li>
+<li>优点：易于实现，无需担心同步问题（由OS处理）。</li>
+<li>缺点：速度通常比共享内存慢（涉及系统调用和数据复制）。</li>
+</ul>
+</li>
+</ol>
+<h4 id="41-共享内存系统">4.1 共享内存系统</h4>
+<ul>
+<li>
+<p><strong>生产者-消费者问题 (Producer-Consumer Problem):</strong></p>
+<ul>
+<li>生产者进程产生数据，消费者进程消费数据。</li>
+<li>需要一个共享缓冲区。</li>
+<li><strong>无界缓冲区 (Unbounded-buffer):</strong> 缓冲区大小无限制。</li>
+<li><strong>有界缓冲区 (Bounded-buffer):</strong> 缓冲区大小固定。
+<ul>
+<li>使用循环数组和 <code>in</code>, <code>out</code> 指针。</li>
+<li><code>in</code>: 指向下一个空位。</li>
+<li><code>out</code>: 指向第一个满位。</li>
+<li>缓冲区空: <code>in == out</code></li>
+<li>缓冲区满: <code>(in + 1) % BUFFER_SIZE == out</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Linux System V 共享内存:</strong></p>
+<ul>
+<li><code>key_t ftok(const char *pathname, int proj_id)</code>: 生成一个IPC key。</li>
+<li><code>int shmget(key_t key, size_t size, int shmflg)</code>: 创建或获取一个共享内存段，返回共享内存标识符 <code>shmid</code>。
+<ul>
+<li><code>shmflg</code>: <code>IPC_CREAT</code> (创建), <code>IPC_EXCL</code> (与<code>IPC_CREAT</code>合用，确保创建新的), 权限位。</li>
+</ul>
+</li>
+<li><code>void *shmat(int shmid, const void *shmaddr, int shmflg)</code>: 将共享内存段附加到当前进程的地址空间，返回指向共享内存的指针。
+<ul>
+<li><code>shmaddr = 0</code>: 由内核决定附加地址。</li>
+</ul>
+</li>
+<li><code>int shmdt(const void *shmaddr)</code>: 分离共享内存段。</li>
+<li><code>int shmctl(int shmid, int cmd, struct shmid_ds *buf)</code>: 控制共享内存。
+<ul>
+<li><code>cmd = IPC_RMID</code>: 删除共享内存段。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>POSIX 共享内存:</strong></p>
+<ul>
+<li>使用内存映射文件 (memory-mapped files)。</li>
+<li><code>int shm_open(const char *name, int oflag, mode_t mode)</code>: 创建或打开一个POSIX共享内存对象，返回文件描述符。<code>name</code> 通常是 <code>/somename</code> 形式。</li>
+<li><code>int ftruncate(int fd, off_t length)</code>: 设置共享内存对象的大小。</li>
+<li><code>void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)</code>: 将共享内存对象映射到进程的地址空间。</li>
+<li><code>int shm_unlink(const char *name)</code>: 删除POSIX共享内存对象。</li>
+<li>编译时链接 <code>rt</code> 库: <code>gcc -lrt your_program.c</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="42-消息传递系统">4.2 消息传递系统</h4>
+<ul>
+<li>
+<p><strong>通信链路 (Communication Link):</strong></p>
+<ul>
+<li><strong>直接通信 (Direct Communication):</strong> 进程必须显式命名对方。
+<ul>
+<li><code>send(P, message)</code></li>
+<li><code>receive(Q, message)</code></li>
+<li>链路自动建立，通常一对一，双向。</li>
+</ul>
+</li>
+<li><strong>间接通信 (Indirect Communication):</strong> 通过邮箱 (mailboxes) 或端口 (ports) 发送和接收消息。
+<ul>
+<li>每个邮箱有唯一ID。进程共享邮箱才能通信。</li>
+<li><code>send(A, message)</code> (发送到邮箱A)</li>
+<li><code>receive(A, message)</code> (从邮箱A接收)</li>
+<li>允许多对多通信。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>同步 (Synchronization):</strong></p>
+<ul>
+<li><strong>阻塞发送 (Blocking send):</strong> 发送方等待，直到消息被接收方或邮箱接收。</li>
+<li><strong>阻塞接收 (Blocking receive):</strong> 接收方等待，直到有消息可用。</li>
+<li><strong>非阻塞发送 (Non-blocking send):</strong> 发送方发送消息并继续执行。</li>
+<li><strong>非阻塞接收 (Non-blocking receive):</strong> 接收方接收有效消息或空消息（或状态）。</li>
+<li><strong>会合 (Rendezvous):</strong> 发送和接收都阻塞。</li>
+</ul>
+</li>
+<li>
+<p><strong>缓冲 (Buffering):</strong></p>
+<ul>
+<li><strong>零容量 (Zero capacity):</strong> 发送方必须等待接收方 (无缓冲，会合)。</li>
+<li><strong>有限容量 (Bounded capacity):</strong> 队列满时发送方必须等待。</li>
+<li><strong>无限容量 (Unbounded capacity):</strong> 发送方从不等待。</li>
+</ul>
+</li>
+<li>
+<p><strong>Linux System V 消息队列:</strong></p>
+<ul>
+<li><code>key_t ftok(...)</code></li>
+<li><code>int msgget(key_t key, int msgflg)</code>: 创建或获取消息队列，返回 <code>msqid</code>。</li>
+<li><code>int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg)</code>: 发送消息。
+<ul>
+<li><code>msgp</code>: 指向 <code>struct msgbuf { long mtype; char mtext[...]; }</code>。</li>
+<li><code>msgsz</code>: <code>mtext</code> 的大小。</li>
+<li><code>msgflg</code>: <code>IPC_NOWAIT</code> (非阻塞)。</li>
+</ul>
+</li>
+<li><code>ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg)</code>: 接收消息。
+<ul>
+<li><code>msgtyp</code>: <code>=0</code> (队列中第一个消息), <code>>0</code> (第一个类型为 <code>msgtyp</code> 的消息), <code>&#x3C;0</code> (类型小于等于 <code>|msgtyp|</code> 的最小类型消息)。</li>
+</ul>
+</li>
+<li><code>int msgctl(int msqid, int cmd, struct msqid_ds *buf)</code>: 控制消息队列。
+<ul>
+<li><code>cmd = IPC_RMID</code>: 删除。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>POSIX 消息队列:</strong></p>
+<ul>
+<li><code>mqd_t mq_open(const char *name, int oflag, mode_t mode, struct mq_attr *attr)</code>: 创建或打开消息队列。<code>name</code> 通常是 <code>/mqname</code>。</li>
+<li><code>int mq_close(mqd_t mqdes)</code>: 关闭。</li>
+<li><code>int mq_unlink(const char *name)</code>: 删除。</li>
+<li><code>int mq_send(mqd_t mqdes, const char *msg_ptr, size_t msg_len, unsigned int msg_prio)</code>: 发送。</li>
+<li><code>ssize_t mq_receive(mqd_t mqdes, char *msg_ptr, size_t msg_len, unsigned int *msg_prio)</code>: 接收。</li>
+<li>编译时链接 <code>rt</code> 库: <code>gcc -lrt your_program.c</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="43-管道-pipes">4.3 管道 (Pipes)</h4>
+<ul>
+<li>允许两个进程通信的通道。</li>
+<li><strong>普通管道 (Ordinary/Unnamed Pipes):</strong>
+<ul>
+<li>单向通信 (一端写，一端读)。</li>
+<li>通常要求父子关系 (父进程创建管道，然后 <code>fork</code>，子进程继承文件描述符)。</li>
+<li><code>int pipe(int pipefd[2])</code>: <code>pipefd[0]</code> 是读端, <code>pipefd[1]</code> 是写端。</li>
+<li>在Windows中称为匿名管道。</li>
+</ul>
+</li>
+<li><strong>命名管道 (Named Pipes / FIFOs):</strong>
+<ul>
+<li>比普通管道更强大。</li>
+<li>通信可以是双向的 (但通常一个方向一个FIFO)。</li>
+<li>不需要父子关系，任何知道FIFO名称的进程都可以使用。</li>
+<li>在文件系统中有一个路径名。</li>
+<li><code>mkfifo(const char *pathname, mode_t mode)</code>: 创建FIFO。</li>
+<li>使用 <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>close()</code> 进行操作。</li>
+</ul>
+</li>
+</ul>
+<h4 id="44-套接字-sockets">4.4 套接字 (Sockets)</h4>
+<ul>
+<li>通信的端点。</li>
+<li>通过 <code>(IP地址:端口号)</code> 标识。例如 <code>192.168.1.100:8080</code>。</li>
+<li>允许不同机器上的进程通信。</li>
+<li>类型：
+<ul>
+<li>**面向连接 (TCP - Transmission Control Protocol):**可靠的、基于字节流的通信。</li>
+<li><strong>无连接 (UDP - User Datagram Protocol):</strong> 不可靠的、基于数据报的通信。</li>
+</ul>
+</li>
+</ul>
+<h4 id="45-远程过程调用-remote-procedure-calls---rpc">4.5 远程过程调用 (Remote Procedure Calls - RPC)</h4>
+<ul>
+<li>允许进程调用另一台机器上（或同一机器上另一地址空间中）的过程（函数/方法），就像调用本地过程一样。</li>
+<li>客户端的 <strong>存根 (Stub)</strong> 负责打包参数 (编组/marshalling) 并发送给服务器。</li>
+<li>服务器端的存根负责解包参数 (解组/unmarshalling)，调用实际过程，并将结果返回。</li>
+<li><strong>接口定义语言 (IDL - Interface Definition Language):</strong> 用于定义RPC接口。</li>
+<li><strong>数据表示:</strong> 需要处理不同机器架构的数据格式问题 (如大端/小端)，例如使用外部数据表示 (XDR)。</li>
+<li>现代例子：gRPC (使用 Protocol Buffers 作为IDL和序列化格式)。</li>
+</ul>
+<hr>
+<h2 id="第五讲--线程-threads">第五讲 — 线程 (Threads)</h2>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">学习目标</div>
+<ul>
+<li>理解线程概念，以及进程与线程的区别。</li>
+<li>了解线程的基本设计与实现。</li>
+<li>掌握用户级和内核级线程的差异及线程模型。</li>
+<li>熟悉Pthreads、Windows和Java线程库API。</li>
+<li>了解隐式线程的概念。</li>
+<li>讨论多线程编程中遇到的问题。</li>
+<li>了解Windows、Linux等操作系统中的线程管理功能。</li>
+</ul>
+</aside>
+<h3 id="1-线程概念-thread-concept">1. 线程概念 (Thread Concept)</h3>
+<ul>
+<li><strong>线程 (Thread):</strong> CPU调度的基本单元。是进程内的一个执行路径/控制流。</li>
+<li>一个进程可以包含多个线程，它们共享进程的资源。</li>
+<li><strong>线程的组成 (线程私有):</strong>
+<ol>
+<li>线程ID</li>
+<li>程序计数器 (PC)</li>
+<li>寄存器集合</li>
+<li>堆栈 (Stack)</li>
+</ol>
+</li>
+<li><strong>线程共享的资源 (属于进程):</strong>
+<ol>
+<li>代码段 (Text Segment)</li>
+<li>数据段 (Data Segment)</li>
+<li>堆 (Heap)</li>
+<li>打开的文件</li>
+<li>信号</li>
+</ol>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-summary" data-admonition="summary">
+<div class="note-admonition-title">进程 vs. 线程</div>
+<ul>
+<li><strong>资源所有权:</strong> 进程是资源分配的基本单位。线程是CPU调度的基本单位，它共享其所属进程的资源。</li>
+<li><strong>开销:</strong> 创建/撤销线程比创建/撤销进程开销小得多。线程切换比进程上下文切换开销小。</li>
+<li><strong>并发性:</strong> 线程使得在单个进程内实现并发成为可能。</li>
+</ul>
+</aside>
+<h3 id="2-多线程的优点-benefits-of-multithreading">2. 多线程的优点 (Benefits of Multithreading)</h3>
+<ol>
+<li><strong>响应性 (Responsiveness):</strong> 即使进程的一部分被阻塞（如等待I/O），其他线程仍可继续执行，提高应用对用户的响应速度。</li>
+<li><strong>资源共享 (Resource Sharing):</strong> 线程默认共享内存和资源，方便数据交换。</li>
+<li><strong>经济性 (Economy):</strong> 创建和切换线程比进程开销小。</li>
+<li><strong>可伸缩性 (Scalability):</strong> 多线程程序可以更好地利用多核处理器架构，实现并行执行。</li>
+</ol>
+<h3 id="3-多核编程-multicore-programming">3. 多核编程 (Multicore Programming)</h3>
+<ul>
+<li>
+<p><strong>并发 (Concurrency):</strong> 系统支持多个任务同时进行（逻辑上）。在单核上通过快速切换实现。</p>
+</li>
+<li>
+<p><strong>并行 (Parallelism):</strong> 系统能够同时执行多个任务（物理上）。需要多核。</p>
+</li>
+<li>
+<p><strong>Amdahl定律:</strong> 描述了在具有串行和并行组件的程序中，通过增加处理器核心获得的加速比。</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>p</mi><mi>e</mi><mi>e</mi><mi>d</mi><mi>u</mi><mi>p</mi><mo>≤</mo><mfrac><mn>1</mn><mrow><mi>S</mi><mo>+</mo><mfrac><mrow><mn>1</mn><mo>−</mo><mi>S</mi></mrow><mi>N</mi></mfrac></mrow></mfrac></mrow><annotation encoding="application/x-tex">Speedup \le \frac{1}{S + \frac{1-S}{N}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mord mathnormal">p</span><span class="mord mathnormal">ee</span><span class="mord mathnormal">d</span><span class="mord mathnormal">u</span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.5064em;vertical-align:-0.6613em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.5795em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0576em;">S</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mopen nulldelimiter sizing reset-size3 size6"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8721em;"><span style="top:-2.656em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.109em;">N</span></span></span></span><span style="top:-3.2255em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line mtight" style="border-bottom-width:0.049em;"></span></span><span style="top:-3.384em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight" style="margin-right:0.0576em;">S</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.344em;"><span></span></span></span></span></span><span class="mclose nulldelimiter sizing reset-size3 size6"></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6613em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span></span></span></span> 是程序中串行部分的比例，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span></span> 是处理器核心数。</p>
+</li>
+<li>
+<p><strong>并行类型:</strong></p>
+<ul>
+<li><strong>数据并行 (Data Parallelism):</strong> 将相同数据的子集分配到多个核心上，每个核心执行相同的操作。</li>
+<li><strong>任务并行 (Task Parallelism):</strong> 将不同的任务（线程）分配到多个核心上，每个线程执行不同的操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-用户线程与内核线程-user-threads-and-kernel-threads">4. 用户线程与内核线程 (User Threads and Kernel Threads)</h3>
+<ul>
+<li><strong>用户线程 (User Threads):</strong>
+<ul>
+<li>由用户级线程库管理，内核对它们无感知。</li>
+<li>创建和管理快速，不需内核干预。</li>
+<li>如果一个用户线程阻塞（如进行系统调用），整个进程都会阻塞。</li>
+<li>不能真正利用多核处理器。</li>
+</ul>
+</li>
+<li><strong>内核线程 (Kernel Threads):</strong>
+<ul>
+<li>由操作系统内核直接支持和管理。</li>
+<li>创建和管理相对较慢，需要内核模式切换。</li>
+<li>一个内核线程阻塞，不影响同进程的其他内核线程。</li>
+<li>可以真正利用多核处理器。</li>
+</ul>
+</li>
+</ul>
+<h4 id="线程模型-mapping-user-threads-to-kernel-threads">线程模型 (Mapping User Threads to Kernel Threads)</h4>
+<ol>
+<li><strong>多对一模型 (Many-to-One):</strong>
+<ul>
+<li>多个用户线程映射到一个内核线程。</li>
+<li>线程管理在用户空间，高效。</li>
+<li>缺点：一个线程阻塞导致整个进程阻塞；无法利用多核。</li>
+<li>例子：早期的Green Threads (Solaris)。</li>
+</ul>
+</li>
+<li><strong>一对一模型 (One-to-One):</strong>
+<ul>
+<li>每个用户线程映射到一个内核线程。</li>
+<li>提供更多并发性，能利用多核。</li>
+<li>缺点：创建用户线程需要创建相应内核线程，开销较大。</li>
+<li>例子：Linux, Windows。</li>
+</ul>
+</li>
+<li><strong>多对多模型 (Many-to-Many):</strong>
+<ul>
+<li>m个用户线程映射到n个内核线程 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>≥</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m \ge n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>)。</li>
+<li>兼具前两者优点：允许开发者创建任意多用户线程，相应内核线程可在多处理器上并行执行；一个线程阻塞不会阻塞整个进程。</li>
+<li>实现复杂。</li>
+<li>有时也包含<strong>二级模型 (Two-level Model)</strong>，允许用户线程绑定到特定内核线程。</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-线程库-thread-libraries">5. 线程库 (Thread Libraries)</h3>
+<p>提供创建和管理线程的API。</p>
+<ol>
+<li><strong>Pthreads (POSIX Threads):</strong>
+<ul>
+<li>POSIX标准 (IEEE 1003.1c) 的API规范，非具体实现。</li>
+<li>可在用户级或内核级实现。</li>
+<li>常见于UNIX类系统 (Linux, macOS)。</li>
+<li>主要函数：
+<ul>
+<li><code>pthread_create()</code>: 创建线程。</li>
+<li><code>pthread_join()</code>: 等待一个线程终止。</li>
+<li><code>pthread_exit()</code>: 线程自我终止。</li>
+<li><code>pthread_attr_init()</code>, <code>pthread_attr_destroy()</code>: 线程属性。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Windows Threads:</strong>
+<ul>
+<li>内核级线程库，一对一模型。</li>
+<li>主要函数：
+<ul>
+<li><code>CreateThread()</code>: 创建线程。</li>
+<li><code>WaitForSingleObject()</code> / <code>WaitForMultipleObjects()</code>: 等待线程。</li>
+<li><code>ExitThread()</code>: 线程终止。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Java Threads:</strong>
+<ul>
+<li>Java线程API通常在JVM层面实现，JVM再利用底层OS的线程库 (Pthreads或Windows Threads)。</li>
+<li>创建方式：
+<ol>
+<li>继承 <code>Thread</code> 类并重写 <code>run()</code> 方法。</li>
+<li>实现 <code>Runnable</code> 接口 (更常用)，并将其对象传递给 <code>Thread</code> 构造函数。</li>
+</ol>
+</li>
+<li><code>Thread.start()</code>: 启动线程 (调用 <code>run()</code> 方法)。</li>
+<li><code>Thread.join()</code>: 等待线程结束。</li>
+<li>Java Executor框架 (e.g., <code>ThreadPoolExecutor</code>) 提供了更高级的线程管理。</li>
+</ul>
+</li>
+</ol>
+<h3 id="6-隐式线程-implicit-threading">6. 隐式线程 (Implicit Threading)</h3>
+<p>由编译器和运行时库而非程序员来创建和管理线程，以简化并行编程。</p>
+<ol>
+<li><strong>线程池 (Thread Pools):</strong>
+<ul>
+<li>预先创建一组线程，等待分配任务。</li>
+<li>优点：减少线程创建销毁开销；限制并发线程数。</li>
+</ul>
+</li>
+<li><strong>Fork-Join:</strong>
+<ul>
+<li>父线程创建一个或多个子任务（fork），然后等待它们完成（join）。</li>
+<li>适用于可递归分解的任务。</li>
+</ul>
+</li>
+<li><strong>OpenMP (Open Multi-Processing):</strong>
+<ul>
+<li>一套指导编译器在共享内存环境中进行并行编程的API和指令。</li>
+<li>通过 <code>#pragma omp parallel</code> 等指令标识并行区域。</li>
+</ul>
+</li>
+<li><strong>GCD (Grand Central Dispatch):</strong>
+<ul>
+<li>Apple为macOS和iOS提供的技术。</li>
+<li>将任务（blocks）提交到调度队列（串行或并发），由GCD管理线程池执行。</li>
+</ul>
+</li>
+<li><strong>Intel TBB (Threading Building Blocks):</strong>
+<ul>
+<li>C++模板库，用于编写并行程序。</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-多线程问题-threading-issues">7. 多线程问题 (Threading Issues)</h3>
+<ol>
+<li><strong><code>fork()</code> 和 <code>exec()</code> 系统调用的语义:</strong>
+<ul>
+<li>当多线程进程中的一个线程调用 <code>fork()</code> 时：
+<ul>
+<li>是只复制调用 <code>fork()</code> 的线程，还是复制所有线程？(UNIX通常只复制调用线程)</li>
+</ul>
+</li>
+<li><code>exec()</code> 通常会替换整个进程（包括所有线程）。</li>
+</ul>
+</li>
+<li><strong>信号处理 (Signal Handling):</strong>
+<ul>
+<li>当一个信号发送给多线程进程时，应由哪个线程处理？
+<ol>
+<li>传递给信号适用的线程。</li>
+<li>传递给进程中的每个线程。</li>
+<li>传递给进程中的某些特定线程。</li>
+<li>指定一个特定线程接收进程的所有信号。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>线程取消 (Thread Cancellation):</strong>
+<ul>
+<li>终止目标线程。</li>
+<li><strong>异步取消 (Asynchronous cancellation):</strong> 立即终止目标线程。可能导致资源未释放。</li>
+<li><strong>延迟取消 (Deferred cancellation):</strong> 目标线程周期性检查是否应被取消。允许线程在安全点退出，并执行清理操作。 (Pthreads默认)
+<ul>
+<li><code>pthread_cancel()</code>, <code>pthread_setcancelstate()</code>, <code>pthread_setcanceltype()</code>, <code>pthread_testcancel()</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>线程本地存储 (Thread-Local Storage - TLS):</strong>
+<ul>
+<li>允许每个线程拥有自己的数据副本。当使用线程池等无法控制线程创建过程时有用。</li>
+</ul>
+</li>
+<li><strong>调度程序激活 (Scheduler Activations):</strong>
+<ul>
+<li>用于多对多或二级模型，内核通过 “upcall” 机制通知用户级线程库内核线程数量的变化，以便库调整用户线程到内核线程的映射。涉及轻量级进程 (LWP)。</li>
+</ul>
+</li>
+</ol>
+<h3 id="8-操作系统中的线程示例">8. 操作系统中的线程示例</h3>
+<ul>
+<li><strong>Windows Threads:</strong>
+<ul>
+<li>一对一模型。</li>
+<li>主要数据结构：
+<ul>
+<li><code>ETHREAD</code> (Executive Thread Block): 内核空间，指向KTHREAD和所属进程。</li>
+<li><code>KTHREAD</code> (Kernel Thread Block): 内核空间，调度和同步信息，内核栈，指向TEB。</li>
+<li><code>TEB</code> (Thread Environment Block): 用户空间，线程ID，用户模式栈，TLS。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Linux Threads:</strong>
+<ul>
+<li>Linux不严格区分进程和线程，都称为任务 (task)。</li>
+<li>线程创建通过 <code>clone()</code> 系统调用，允许子任务共享父任务的地址空间。</li>
+<li><code>task_struct</code> 数据结构用于表示任务。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="第六讲--cpu调度-cpu-scheduling">第六讲 — CPU调度 (CPU Scheduling)</h2>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">学习目标</div>
+<ul>
+<li>理解长程、中程、短程调度的概念和区别。</li>
+<li>描述各种CPU调度算法。</li>
+<li>根据调度标准评估CPU调度算法。</li>
+<li>解释与多处理器和多核调度相关的问题。</li>
+<li>描述各种实时调度算法。</li>
+<li>了解Windows、Linux和Solaris操作系统中使用的调度算法。</li>
+<li>应用建模和仿真评估CPU调度算法。</li>
+</ul>
+</aside>
+<h3 id="1-基本概念-basic-concepts">1. 基本概念 (Basic Concepts)</h3>
+<ul>
+<li><strong>多道程序设计 (Multiprogramming):</strong> 通过在内存中同时保留多个进程，使CPU总有任务执行，从而提高CPU利用率。</li>
+<li><strong>CPU-I/O执行周期 (CPU–I/O Burst Cycle):</strong> 进程执行由CPU执行和I/O等待交替构成。</li>
+<li><strong>调度层次:</strong>
+<ol>
+<li><strong>长程调度 (Long-term scheduler / Job scheduler):</strong> 决定哪些程序从作业池调入内存成为进程，控制系统的并发度。执行频率低。</li>
+<li><strong>中程调度 (Medium-term scheduler):</strong> 涉及进程的换入换出 (swapping)，管理系统并发度。</li>
+<li><strong>短程调度 (Short-term scheduler / CPU scheduler):</strong> 从就绪队列中选择一个进程分配CPU。执行频率高。</li>
+</ol>
+</li>
+<li><strong>调度程序 (Dispatcher):</strong> 将CPU控制权交给短程调度程序选中的进程。涉及：
+<ul>
+<li>上下文切换。</li>
+<li>切换到用户模式。</li>
+<li>跳转到用户程序中适当位置以重新启动程序。</li>
+</ul>
+</li>
+<li><strong>分派延迟 (Dispatch latency):</strong> 调度程序停止一个进程并启动另一个进程运行所需的时间。</li>
+</ul>
+<h4 id="触发调度的事件">触发调度的事件</h4>
+<ol>
+<li>进程从运行态 -> 等待态 (如I/O请求)。</li>
+<li>进程从运行态 -> 就绪态 (如中断、时间片用完)。</li>
+<li>进程从等待态 -> 就绪态 (如I/O完成)。</li>
+<li>进程终止。</li>
+</ol>
+<ul>
+<li><strong>非抢占式调度 (Non-preemptive):</strong> 一旦CPU分配给进程，进程将一直持有CPU直到它自愿释放（终止或进入等待态）。情况1和4。</li>
+<li><strong>抢占式调度 (Preemptive):</strong> 当前运行的进程可能被更高优先级的进程或中断打断，并被剥夺CPU。情况2和3。</li>
+</ul>
+<h3 id="2-调度准则-scheduling-criteria">2. 调度准则 (Scheduling Criteria)</h3>
+<p>用于比较CPU调度算法的性能：</p>
+<ol>
+<li><strong>CPU利用率 (CPU utilization):</strong> 使CPU尽可能繁忙。</li>
+<li><strong>吞吐量 (Throughput):</strong> 单位时间内完成的进程数量。</li>
+<li><strong>周转时间 (Turnaround time):</strong> 进程从提交到完成的总时间 (等待进入内存时间 + 就绪队列等待时间 + CPU执行时间 + I/O时间)。</li>
+<li><strong>等待时间 (Waiting time):</strong> 进程在就绪队列中等待CPU的总时间。</li>
+<li><strong>响应时间 (Response time):</strong> 从提交请求到产生第一个响应的时间 (对于交互式系统)。</li>
+</ol>
+<p><strong>优化目标:</strong></p>
+<ul>
+<li>最大化 CPU利用率</li>
+<li>最大化 吞吐量</li>
+<li>最小化 周转时间</li>
+<li>最小化 等待时间</li>
+<li>最小化 响应时间</li>
+</ul>
+<h3 id="3-调度算法-scheduling-algorithms">3. 调度算法 (Scheduling Algorithms)</h3>
+<h4 id="31-先到先服务-first-come-first-served---fcfs">3.1 先到先服务 (First-Come, First-Served - FCFS)</h4>
+<ul>
+<li>按进程到达就绪队列的顺序分配CPU。</li>
+<li>实现简单 (FIFO队列)。</li>
+<li>非抢占式。</li>
+<li><strong>缺点:</strong> 平均等待时间可能很长，受进程到达顺序影响。可能出现 <strong>护航效应 (convoy effect)</strong>：短进程等待长进程释放CPU。</li>
+</ul>
+<h4 id="32-最短作业优先-shortest-job-first---sjf">3.2 最短作业优先 (Shortest-Job-First - SJF)</h4>
+<ul>
+<li>选择具有最短下一个CPU执行时间（CPU burst）的进程。</li>
+<li>可证明在平均等待时间上是最优的。</li>
+<li><strong>两种形式:</strong>
+<ol>
+<li><strong>非抢占式SJF:</strong> 当前进程运行完毕后，选择就绪队列中下一个CPU执行时间最短的进程。</li>
+<li><strong>抢占式SJF (Shortest-Remaining-Time-First - SRTF):</strong> 如果新到达就绪队列的进程的下一个CPU执行时间比当前运行进程的剩余执行时间还短，则抢占当前进程。</li>
+</ol>
+</li>
+<li><strong>缺点:</strong> 难以准确预测下一个CPU执行时间的长度。
+<ul>
+<li>常用 <strong>指数平均法 (Exponential Averaging)</strong> 预测：
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>α</mi><mo>⋅</mo><msub><mi>t</mi><mi>n</mi></msub><mo>+</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="false">)</mo><mo>⋅</mo><msub><mi>τ</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">\tau_{n+1} = \alpha \cdot t_n + (1-\alpha) \cdot \tau_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4445em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>
+其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">t_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是第n个CPU执行的实际长度，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">\tau_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1132em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 是第n个CPU执行的预测长度，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span> (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>α</mi><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 \le \alpha \le 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>) 控制历史权重。</li>
+</ul>
+</li>
+</ul>
+<h4 id="33-优先级调度-priority-scheduling">3.3 优先级调度 (Priority Scheduling)</h4>
+<ul>
+<li>每个进程关联一个优先级，CPU分配给具有最高优先级的进程。</li>
+<li>可以是抢占式或非抢占式。</li>
+<li>SJF可以看作一种优先级调度，优先级是预测的下一个CPU执行时间的倒数。</li>
+<li><strong>问题:</strong> <strong>饥饿 (Starvation)</strong> —— 低优先级进程可能永远无法执行。</li>
+<li><strong>解决方案:</strong> <strong>老化 (Aging)</strong> —— 随着时间的推移逐渐增加等待进程的优先级。</li>
+</ul>
+<h4 id="34-轮转调度-round-robin---rr">3.4 轮转调度 (Round Robin - RR)</h4>
+<ul>
+<li>专为分时系统设计，抢占式。</li>
+<li>每个进程分配一个固定的时间单位，称为 <strong>时间片 (time quantum / time slice)</strong>，通常10-100ms。</li>
+<li>进程用完时间片后，被抢占并放回就绪队列尾部。</li>
+<li><strong>性能:</strong>
+<ul>
+<li>时间片 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 很大 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span> 趋向于FCFS。</li>
+<li>时间片 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 很小 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo></mrow><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">⇒</span></span></span></span> 上下文切换频繁，开销大。<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0359em;">q</span></span></span></span> 必须远大于上下文切换时间。</li>
+<li>平均周转时间通常优于FCFS，但不如SJF。响应时间较好。</li>
+</ul>
+</li>
+</ul>
+<h4 id="35-多级队列调度-multilevel-queue-scheduling">3.5 多级队列调度 (Multilevel Queue Scheduling)</h4>
+<ul>
+<li>将就绪队列划分为多个独立的队列，例如：
+<ul>
+<li>前台队列 (交互式进程) - 可能使用RR算法。</li>
+<li>后台队列 (批处理进程) - 可能使用FCFS算法。</li>
+</ul>
+</li>
+<li>队列之间必须有调度：
+<ul>
+<li><strong>固定优先级抢占:</strong> 前台队列优先于后台队列。</li>
+<li><strong>时间片划分:</strong> 每个队列获得一定的CPU时间比例。</li>
+</ul>
+</li>
+</ul>
+<h4 id="36-多级反馈队列调度-multilevel-feedback-queue-scheduling">3.6 多级反馈队列调度 (Multilevel Feedback Queue Scheduling)</h4>
+<ul>
+<li>允许进程在不同队列之间移动。</li>
+<li>思想：根据进程的CPU执行特性来区分它们。
+<ul>
+<li>CPU密集型进程会降到较低优先级队列。</li>
+<li>I/O密集型和交互式进程会保持在较高优先级队列。</li>
+</ul>
+</li>
+<li><strong>定义参数:</strong>
+<ol>
+<li>队列数量。</li>
+<li>每个队列的调度算法。</li>
+<li>进程升级到更高优先级队列的方法。</li>
+<li>进程降级到更低优先级队列的方法。</li>
+<li>新进程进入哪个队列的方法。</li>
+</ol>
+</li>
+<li>是最通用但也最复杂的调度算法，可以通过配置适应特定系统。可以实现老化。</li>
+</ul>
+<h3 id="4-线程调度-thread-scheduling">4. 线程调度 (Thread Scheduling)</h3>
+<ul>
+<li>如果操作系统支持线程，调度的是内核级线程。</li>
+<li><strong>用户级线程</strong>由线程库在映射到的LWP (轻量级进程) 上调度。
+<ul>
+<li><strong>进程竞争范围 (Process Contention Scope - PCS):</strong> 调度竞争在同一进程内的线程之间。</li>
+</ul>
+</li>
+<li><strong>内核级线程</strong>由操作系统调度。
+<ul>
+<li><strong>系统竞争范围 (System Contention Scope - SCS):</strong> 调度竞争在系统中所有线程之间。</li>
+</ul>
+</li>
+<li>Pthreads API允许指定PCS或SCS：
+<ul>
+<li><code>PTHREAD_SCOPE_PROCESS</code> (PCS)</li>
+<li><code>PTHREAD_SCOPE_SYSTEM</code> (SCS) (Linux, macOS只支持这个)</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-多处理器调度-multiprocessor-scheduling">5. 多处理器调度 (Multiprocessor Scheduling)</h3>
+<ul>
+<li>涉及在多个CPU上分配工作。</li>
+<li><strong>非对称多处理 (Asymmetric Multiprocessing):</strong> 一个主处理器处理所有调度决策、I/O等，其他处理器执行用户代码。</li>
+<li><strong>对称多处理 (Symmetric Multiprocessing - SMP):</strong> 每个处理器都是自调度的。
+<ul>
+<li>所有进程可能在公共就绪队列中。</li>
+<li>每个处理器可能有自己的私有就绪队列。</li>
+</ul>
+</li>
+<li><strong>处理器亲和性 (Processor Affinity):</strong> 进程倾向于在同一个处理器上运行，以利用缓存。
+<ul>
+<li><strong>软亲和性 (Soft affinity):</strong> OS试图保持进程在同一处理器，但不保证。</li>
+<li><strong>硬亲和性 (Hard affinity):</strong> 进程可以指定它只能在某个处理器子集上运行。</li>
+</ul>
+</li>
+<li><strong>负载均衡 (Load Balancing):</strong> 保持所有处理器的工作负载均匀。
+<ul>
+<li><strong>推迁移 (Push migration):</strong> 周期性任务检查负载，并将任务从过载处理器推到空闲处理器。</li>
+<li><strong>拉迁移 (Pull migration):</strong> 空闲处理器从繁忙处理器拉取等待任务。</li>
+</ul>
+</li>
+<li><strong>多核处理器 (Multicore Processors):</strong> 同一物理芯片上的多个处理器核心。</li>
+<li><strong>芯片多线程 (Chip Multithreading - CMT) / 超线程 (Hyper-threading):</strong> 每个核心支持多个硬件线程。OS看到更多逻辑处理器。
+<ul>
+<li><strong>细粒度多线程:</strong> 在指令周期级切换线程。</li>
+<li><strong>粗粒度多线程:</strong> 仅在长延迟事件（如内存停顿）时切换线程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-实时cpu调度-real-time-cpu-scheduling">6. 实时CPU调度 (Real-Time CPU Scheduling)</h3>
+<ul>
+<li>系统的正确性不仅取决于计算的逻辑结果，还取决于结果产生的时间。</li>
+<li><strong>软实时系统 (Soft real-time systems):</strong> 关键实时任务获得优先权，但不保证按时完成。</li>
+<li><strong>硬实时系统 (Hard real-time systems):</strong> 任务必须在截止期限 (deadline) 前完成。</li>
+<li><strong>延迟最小化:</strong>
+<ul>
+<li><strong>事件延迟 (Event latency):</strong> 从事件发生到服务该事件的时间。</li>
+<li><strong>中断延迟 (Interrupt latency):</strong> 从CPU收到中断到中断处理例程开始的时间。</li>
+<li><strong>分派延迟 (Dispatch latency):</strong> 停止一个进程并启动另一个进程所需的时间。</li>
+</ul>
+</li>
+<li><strong>基于优先级的调度</strong>是基础。抢占式。</li>
+<li><strong>周期性进程</strong>特征：处理时间 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span></span></span></span>，截止日期 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">d</span></span></span></span>，周期 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>。 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>t</mi><mo>≤</mo><mi>d</mi><mo>≤</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">0 \le t \le d \le p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8304em;vertical-align:-0.136em;"></span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">p</span></span></span></span>)。</li>
+<li><strong>准入控制 (Admission control):</strong> 如果不能保证任务按时完成，则拒绝该任务。</li>
+</ul>
+<h4 id="实时调度算法">实时调度算法</h4>
+<ol>
+<li><strong>速率单调调度 (Rate-Monotonic Scheduling - RMS):</strong>
+<ul>
+<li>静态优先级策略。优先级根据周期的倒数分配（周期越短，优先级越高）。</li>
+<li>抢占式。</li>
+<li>最优的静态优先级算法。</li>
+<li>CPU利用率有上限：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mi>n</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">U = n(2^{1/n} - 1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">U</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.888em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1/</span><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span>，其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 是进程数。对于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>→</mo><mi mathvariant="normal">∞</mi></mrow><annotation encoding="application/x-tex">n \to \infty</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord">∞</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mo>≈</mo><mi>ln</mi><mo>⁡</mo><mn>2</mn><mo>≈</mo><mn>0.69</mn></mrow><annotation encoding="application/x-tex">U \approx \ln 2 \approx 0.69</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">U</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.69</span></span></span></span>。</li>
+</ul>
+</li>
+<li><strong>最早截止期限优先调度 (Earliest-Deadline-First - EDF):</strong>
+<ul>
+<li>动态优先级策略。截止期限越早，优先级越高。</li>
+<li>抢占式。</li>
+<li>理论上最优，可以达到100%的CPU利用率（如果总利用率 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\le 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>）。</li>
+</ul>
+</li>
+<li><strong>比例分享调度 (Proportional Share Scheduling):</strong>
+<ul>
+<li>在所有进程之间分配 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span></span></span></span> 份处理器时间份额。一个应用获得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span></span> 份，则它得到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mi mathvariant="normal">/</mi><mi>T</mi></mrow><annotation encoding="application/x-tex">N/T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span></span></span></span> 的处理器时间。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>优先级反转 (Priority Inversion):</strong> 低优先级进程持有高优先级进程所需资源，导致高优先级进程等待低优先级进程。
+<ul>
+<li><strong>优先级继承协议 (Priority Inheritance Protocol):</strong> 低优先级进程临时继承等待它的高优先级进程的优先级。</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-操作系统示例-operating-system-examples">7. 操作系统示例 (Operating System Examples)</h3>
+<h4 id="71-linux调度">7.1 Linux调度</h4>
+<ul>
+<li>早期版本使用类似UNIX的调度算法。</li>
+<li>内核2.5后引入 O(1) 调度器。</li>
+<li>内核2.6.23后引入 <strong>完全公平调度程序 (Completely Fair Scheduler - CFS)</strong> 作为默认调度器。
+<ul>
+<li>针对普通（非实时）进程。</li>
+<li>不直接分配时间片，而是分配CPU时间的比例。</li>
+<li>每个任务维护一个 <strong>虚拟运行时间 (vruntime)</strong>。调度器选择 <code>vruntime</code> 最小的任务运行。</li>
+<li><code>vruntime</code> 根据任务的nice值（优先级）进行调整。nice值越低（优先级越高），<code>vruntime</code> 增长越慢。</li>
+<li><strong>目标延迟 (Target latency):</strong> 保证每个任务在一段时间内至少运行一次。</li>
+</ul>
+</li>
+<li>实时任务使用SCHED_FIFO (FCFS) 和 SCHED_RR (轮转) 调度策略，优先级高于普通任务。</li>
+</ul>
+<h4 id="72-windows调度">7.2 Windows调度</h4>
+<ul>
+<li>基于优先级的抢占式调度。</li>
+<li>32级优先级方案。
+<ul>
+<li>可变优先级类 (1-15)。</li>
+<li>实时优先级类 (16-31)。</li>
+<li>优先级0用于内存管理线程。</li>
+</ul>
+</li>
+<li>调度器 (dispatcher) 选择最高优先级的可运行线程。</li>
+<li>线程用完时间片后，优先级可能会降低（但不会低于基准优先级）。</li>
+<li>等待I/O的线程完成后，其优先级可能会临时提升 (priority boost)。</li>
+<li>用户模式调度 (User-Mode Scheduling - UMS) 允许应用程序创建和管理自己的线程，独立于内核。</li>
+</ul>
+<h4 id="73-solaris调度">7.3 Solaris调度</h4>
+<ul>
+<li>基于优先级的调度。</li>
+<li>多个调度类：
+<ol>
+<li>分时 (TS - Timesharing): 默认，多级反馈队列。</li>
+<li>交互式 (IA - Interactive): 类似TS，但对窗口活动进程有优先级提升。</li>
+<li>实时 (RT - Real-Time): 固定优先级，抢占式。</li>
+<li>系统 (SYS): 内核线程。</li>
+<li>公平份额 (FSS - Fair Share): 按CPU份额分配。</li>
+<li>固定优先级 (FP - Fixed Priority): 类似RT。</li>
+</ol>
+</li>
+<li>调度器将类特定优先级转换为全局优先级，选择全局优先级最高的线程运行。</li>
+</ul>
+<h3 id="8-算法评估-algorithm-evaluation">8. 算法评估 (Algorithm Evaluation)</h3>
+<ol>
+<li><strong>确定性建模 (Deterministic Modeling):</strong>
+<ul>
+<li>给定特定的预定工作负载，计算每个算法的性能。</li>
+<li>简单快速，但结果只对该特定负载有效。</li>
+</ul>
+</li>
+<li><strong>排队模型 (Queueing Models):</strong>
+<ul>
+<li>使用概率分布描述进程到达和CPU/I/O执行。</li>
+<li>计算平均吞吐量、利用率、等待时间等。</li>
+<li><strong>Little’s Law:</strong> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mi>λ</mi><mo>×</mo><mi>W</mi></mrow><annotation encoding="application/x-tex">L = \lambda \times W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">λ</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">W</span></span></span></span>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi></mrow><annotation encoding="application/x-tex">L</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span></span></span></span>: 队列中的平均进程数。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span>: 平均到达率。</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">W</span></span></span></span>: 队列中的平均等待时间。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>仿真 (Simulations):</strong>
+<ul>
+<li>编写程序模拟操作系统行为。</li>
+<li>使用随机数生成器或跟踪磁带 (trace tapes) 生成事件。</li>
+<li>更灵活和准确，但设计和实现复杂。</li>
+</ul>
+</li>
+<li><strong>实现 (Implementation):</strong>
+<ul>
+<li>在真实系统中实现并测试调度算法。</li>
+<li>最准确，但成本高、风险大。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<aside class="note-admonition note-admonition-success" data-admonition="success">
+<div class="note-admonition-title">总结</div>
+<p>理解进程和线程是掌握操作系统的基石。CPU调度算法的选择直接影响系统性能和用户体验。不同的系统和应用场景需要不同的调度策略。</p>
+</aside></div><footer class="notes-article-footer" data-pagefind-ignore><p><span>更新于</span> <time datetime="2025-06-14T12:15:26.000Z">2025年6月14日</time></p><div><a href="https://github.com/allenge007/allenge007.github.io/edit/main/src/content/notes/cs/os/chapter2.md">编辑本页 ↗</a><a href="https://github.com/allenge007/allenge007.github.io/blob/main/src/content/notes/cs/os/chapter2.md">查看源文件 ↗</a></div></footer></article><nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore><a href="/notes/cs/os/chapter1/"><span>上一篇</span><strong>操作系统概述</strong></a><a href="/notes/cs/os/chapter3/"><span>下一篇</span><strong>进程同步与死锁</strong></a></nav><section class="notes-comments" aria-label="评论" data-pagefind-ignore><div class="giscus" data-giscus-host data-giscus-pathname="/notes/cs/os/chapter2/"></div></section><script type="module">var e=document.querySelector(`[data-giscus-host]`);if(e){let t=document.documentElement.dataset.theme===`dark`?`dark_dimmed`:`light`,n=document.createElement(`script`);n.src=`https://giscus.app/client.js`,n.async=!0,n.crossOrigin=`anonymous`,n.dataset.repo=`allenge008/Discussions`,n.dataset.repoId=`R_kgDOOsnx4A`,n.dataset.category=`Announcements`,n.dataset.categoryId=`DIC_kwDOOsnx4M4CqVVF`,n.dataset.mapping=`pathname`,n.dataset.strict=`0`,n.dataset.reactionsEnabled=`1`,n.dataset.emitMetadata=`0`,n.dataset.inputPosition=`bottom`,n.dataset.theme=t,n.dataset.lang=`zh-CN`,n.dataset.loading=`lazy`,e.append(n),addEventListener(`allenge:themechange`,(e=>{document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:{theme:e.detail.theme===`dark`?`dark_dimmed`:`light`}}},`https://giscus.app`)}))}</script></div><aside class="notes-toc" data-pagefind-ignore aria-label="本页目录"><p>本页目录</p><ol><li class="toc-depth-2"><a href="#第四讲--进程-processes">第四讲 — 进程 (Processes)</a></li><li class="toc-depth-3"><a href="#1-进程概念-process-concept">1. 进程概念 (Process Concept)</a></li><li class="toc-depth-4"><a href="#11-程序-vs-进程">1.1 程序 vs. 进程</a></li><li class="toc-depth-4"><a href="#12-进程的组成">1.2 进程的组成</a></li><li class="toc-depth-4"><a href="#13-进程在内存中的布局-linux-32-bit-example">1.3 进程在内存中的布局 (Linux 32-bit Example)</a></li><li class="toc-depth-4"><a href="#14-进程状态-process-state">1.4 进程状态 (Process State)</a></li><li class="toc-depth-4"><a href="#15-挂起进程-suspended-process">1.5 挂起进程 (Suspended Process)</a></li><li class="toc-depth-4"><a href="#16-进程控制块-process-control-block---pcb">1.6 进程控制块 (Process Control Block - PCB)</a></li><li class="toc-depth-3"><a href="#2-进程调度-process-scheduling">2. 进程调度 (Process Scheduling)</a></li><li class="toc-depth-3"><a href="#3-进程操作-operations-on-processes">3. 进程操作 (Operations on Processes)</a></li><li class="toc-depth-4"><a href="#31-进程创建-process-creation">3.1 进程创建 (Process Creation)</a></li><li class="toc-depth-4"><a href="#32-进程终止-process-termination">3.2 进程终止 (Process Termination)</a></li><li class="toc-depth-3"><a href="#4-进程间通信-inter-process-communication---ipc">4. 进程间通信 (Inter-Process Communication - IPC)</a></li><li class="toc-depth-4"><a href="#41-共享内存系统">4.1 共享内存系统</a></li><li class="toc-depth-4"><a href="#42-消息传递系统">4.2 消息传递系统</a></li><li class="toc-depth-4"><a href="#43-管道-pipes">4.3 管道 (Pipes)</a></li><li class="toc-depth-4"><a href="#44-套接字-sockets">4.4 套接字 (Sockets)</a></li><li class="toc-depth-4"><a href="#45-远程过程调用-remote-procedure-calls---rpc">4.5 远程过程调用 (Remote Procedure Calls - RPC)</a></li><li class="toc-depth-2"><a href="#第五讲--线程-threads">第五讲 — 线程 (Threads)</a></li><li class="toc-depth-3"><a href="#1-线程概念-thread-concept">1. 线程概念 (Thread Concept)</a></li><li class="toc-depth-3"><a href="#2-多线程的优点-benefits-of-multithreading">2. 多线程的优点 (Benefits of Multithreading)</a></li><li class="toc-depth-3"><a href="#3-多核编程-multicore-programming">3. 多核编程 (Multicore Programming)</a></li><li class="toc-depth-3"><a href="#4-用户线程与内核线程-user-threads-and-kernel-threads">4. 用户线程与内核线程 (User Threads and Kernel Threads)</a></li><li class="toc-depth-4"><a href="#线程模型-mapping-user-threads-to-kernel-threads">线程模型 (Mapping User Threads to Kernel Threads)</a></li><li class="toc-depth-3"><a href="#5-线程库-thread-libraries">5. 线程库 (Thread Libraries)</a></li><li class="toc-depth-3"><a href="#6-隐式线程-implicit-threading">6. 隐式线程 (Implicit Threading)</a></li><li class="toc-depth-3"><a href="#7-多线程问题-threading-issues">7. 多线程问题 (Threading Issues)</a></li><li class="toc-depth-3"><a href="#8-操作系统中的线程示例">8. 操作系统中的线程示例</a></li><li class="toc-depth-2"><a href="#第六讲--cpu调度-cpu-scheduling">第六讲 — CPU调度 (CPU Scheduling)</a></li><li class="toc-depth-3"><a href="#1-基本概念-basic-concepts">1. 基本概念 (Basic Concepts)</a></li><li class="toc-depth-4"><a href="#触发调度的事件">触发调度的事件</a></li><li class="toc-depth-3"><a href="#2-调度准则-scheduling-criteria">2. 调度准则 (Scheduling Criteria)</a></li><li class="toc-depth-3"><a href="#3-调度算法-scheduling-algorithms">3. 调度算法 (Scheduling Algorithms)</a></li><li class="toc-depth-4"><a href="#31-先到先服务-first-come-first-served---fcfs">3.1 先到先服务 (First-Come, First-Served - FCFS)</a></li><li class="toc-depth-4"><a href="#32-最短作业优先-shortest-job-first---sjf">3.2 最短作业优先 (Shortest-Job-First - SJF)</a></li><li class="toc-depth-4"><a href="#33-优先级调度-priority-scheduling">3.3 优先级调度 (Priority Scheduling)</a></li><li class="toc-depth-4"><a href="#34-轮转调度-round-robin---rr">3.4 轮转调度 (Round Robin - RR)</a></li><li class="toc-depth-4"><a href="#35-多级队列调度-multilevel-queue-scheduling">3.5 多级队列调度 (Multilevel Queue Scheduling)</a></li><li class="toc-depth-4"><a href="#36-多级反馈队列调度-multilevel-feedback-queue-scheduling">3.6 多级反馈队列调度 (Multilevel Feedback Queue Scheduling)</a></li><li class="toc-depth-3"><a href="#4-线程调度-thread-scheduling">4. 线程调度 (Thread Scheduling)</a></li><li class="toc-depth-3"><a href="#5-多处理器调度-multiprocessor-scheduling">5. 多处理器调度 (Multiprocessor Scheduling)</a></li><li class="toc-depth-3"><a href="#6-实时cpu调度-real-time-cpu-scheduling">6. 实时CPU调度 (Real-Time CPU Scheduling)</a></li><li class="toc-depth-4"><a href="#实时调度算法">实时调度算法</a></li><li class="toc-depth-3"><a href="#7-操作系统示例-operating-system-examples">7. 操作系统示例 (Operating System Examples)</a></li><li class="toc-depth-4"><a href="#71-linux调度">7.1 Linux调度</a></li><li class="toc-depth-4"><a href="#72-windows调度">7.2 Windows调度</a></li><li class="toc-depth-4"><a href="#73-solaris调度">7.3 Solaris调度</a></li><li class="toc-depth-3"><a href="#8-算法评估-algorithm-evaluation">8. 算法评估 (Algorithm Evaluation)</a></li></ol><div class="notes-font-controls" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></aside></div><button class="notes-back-top" type="button" data-notes-back-top aria-label="返回顶部">↑</button><script>(function(){const legacyHeadings = [{"level":1,"id":"cpu","text":"进程、线程与 CPU 调度"},{"level":2,"id":"processes","text":"第四讲 — 进程 (Processes)"},{"level":3,"id":"1-process-concept","text":"1. 进程概念 (Process Concept)"},{"level":4,"id":"11-vs","text":"1.1 程序 vs. 进程"},{"level":4,"id":"12","text":"1.2 进程的组成"},{"level":4,"id":"13-linux-32-bit-example","text":"1.3 进程在内存中的布局 (Linux 32-bit Example)"},{"level":4,"id":"14-process-state","text":"1.4 进程状态 (Process State)"},{"level":4,"id":"15-suspended-process","text":"1.5 挂起进程 (Suspended Process)"},{"level":4,"id":"16-process-control-block-pcb","text":"1.6 进程控制块 (Process Control Block - PCB)"},{"level":3,"id":"2-process-scheduling","text":"2. 进程调度 (Process Scheduling)"},{"level":3,"id":"3-operations-on-processes","text":"3. 进程操作 (Operations on Processes)"},{"level":4,"id":"31-process-creation","text":"3.1 进程创建 (Process Creation)"},{"level":4,"id":"32-process-termination","text":"3.2 进程终止 (Process Termination)"},{"level":3,"id":"4-inter-process-communication-ipc","text":"4. 进程间通信 (Inter-Process Communication - IPC)"},{"level":4,"id":"41","text":"4.1 共享内存系统"},{"level":4,"id":"42","text":"4.2 消息传递系统"},{"level":4,"id":"43-pipes","text":"4.3 管道 (Pipes)"},{"level":4,"id":"44-sockets","text":"4.4 套接字 (Sockets)"},{"level":4,"id":"45-remote-procedure-calls-rpc","text":"4.5 远程过程调用 (Remote Procedure Calls - RPC)"},{"level":2,"id":"threads","text":"第五讲 — 线程 (Threads)"},{"level":3,"id":"1-thread-concept","text":"1. 线程概念 (Thread Concept)"},{"level":3,"id":"2-benefits-of-multithreading","text":"2. 多线程的优点 (Benefits of Multithreading)"},{"level":3,"id":"3-multicore-programming","text":"3. 多核编程 (Multicore Programming)"},{"level":3,"id":"4-user-threads-and-kernel-threads","text":"4. 用户线程与内核线程 (User Threads and Kernel Threads)"},{"level":4,"id":"mapping-user-threads-to-kernel-threads","text":"线程模型 (Mapping User Threads to Kernel Threads)"},{"level":3,"id":"5-thread-libraries","text":"5. 线程库 (Thread Libraries)"},{"level":3,"id":"6-implicit-threading","text":"6. 隐式线程 (Implicit Threading)"},{"level":3,"id":"7-threading-issues","text":"7. 多线程问题 (Threading Issues)"},{"level":3,"id":"8","text":"8. 操作系统中的线程示例"},{"level":2,"id":"cpu-cpu-scheduling","text":"第六讲 — CPU调度 (CPU Scheduling)"},{"level":3,"id":"1-basic-concepts","text":"1. 基本概念 (Basic Concepts)"},{"level":4,"id":"_1","text":"触发调度的事件"},{"level":3,"id":"2-scheduling-criteria","text":"2. 调度准则 (Scheduling Criteria)"},{"level":3,"id":"3-scheduling-algorithms","text":"3. 调度算法 (Scheduling Algorithms)"},{"level":4,"id":"31-first-come-first-served-fcfs","text":"3.1 先到先服务 (First-Come, First-Served - FCFS)"},{"level":4,"id":"32-shortest-job-first-sjf","text":"3.2 最短作业优先 (Shortest-Job-First - SJF)"},{"level":4,"id":"33-priority-scheduling","text":"3.3 优先级调度 (Priority Scheduling)"},{"level":4,"id":"34-round-robin-rr","text":"3.4 轮转调度 (Round Robin - RR)"},{"level":4,"id":"35-multilevel-queue-scheduling","text":"3.5 多级队列调度 (Multilevel Queue Scheduling)"},{"level":4,"id":"36-multilevel-feedback-queue-scheduling","text":"3.6 多级反馈队列调度 (Multilevel Feedback Queue Scheduling)"},{"level":3,"id":"4-thread-scheduling","text":"4. 线程调度 (Thread Scheduling)"},{"level":3,"id":"5-multiprocessor-scheduling","text":"5. 多处理器调度 (Multiprocessor Scheduling)"},{"level":3,"id":"6-cpu-real-time-cpu-scheduling","text":"6. 实时CPU调度 (Real-Time CPU Scheduling)"},{"level":4,"id":"_2","text":"实时调度算法"},{"level":3,"id":"7-operating-system-examples","text":"7. 操作系统示例 (Operating System Examples)"},{"level":4,"id":"71-linux","text":"7.1 Linux调度"},{"level":4,"id":"72-windows","text":"7.2 Windows调度"},{"level":4,"id":"73-solaris","text":"7.3 Solaris调度"},{"level":3,"id":"8-algorithm-evaluation","text":"8. 算法评估 (Algorithm Evaluation)"}];
+
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  })();</script><script type="module" src="/_assets/NotesLayout.astro_astro_type_script_index_0_lang.CCNl8DEr.js"></script></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

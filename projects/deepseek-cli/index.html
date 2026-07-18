@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="我把 DeepSeek 的单次问答、多轮历史、System Prompt、R1 推理流和 stdin 管道整合成一个 Rust 命令行工具，并对当前实现做了独立边界审计。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/projects/deepseek-cli/"><link rel="alternate" hreflang="en" href="https://www.allenge.me/en/projects/deepseek-cli/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>DeepSeek CLI：终端里的流式会话 · Allenge</title><meta property="og:type" content="website"><meta property="og:title" content="DeepSeek CLI：终端里的流式会话 · Allenge"><meta property="og:description" content="我把 DeepSeek 的单次问答、多轮历史、System Prompt、R1 推理流和 stdin 管道整合成一个 Rust 命令行工具，并对当前实现做了独立边界审计。"><meta property="og:url" content="https://www.allenge.me/projects/deepseek-cli/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DeepSeek CLI：终端里的流式会话 · Allenge"><meta name="twitter:description" content="我把 DeepSeek 的单次问答、多轮历史、System Prompt、R1 推理流和 stdin 管道整合成一个 Rust 命令行工具，并对当前实现做了独立边界审计。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/projects/deepseek-cli/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content" data-pagefind-body="true" data-pagefind-filter="lang:zh"><article class="project-detail shell reading-shell"><header class="detail-header" data-reveal><a class="back-link" href="/projects/">← 返回项目</a><p class="section-kicker">2025–2026 · 个人项目 · Rust 实现与审计</p><h1>DeepSeek CLI：终端里的流式会话</h1><p class="detail-lede">我把 DeepSeek 的单次问答、多轮历史、System Prompt、R1 推理流和 stdin 管道整合成一个 Rust 命令行工具，并对当前实现做了独立边界审计。</p><dl class="project-detail-metrics"><div><dt>5.7 MiB</dt><dd>arm64 Release 二进制</dd></div><div><dt>3 modes</dt><dd>无记忆/新建/续接</dd></div><div><dt>0 tests</dt><dd>当前仓库自动化测试</dd></div></dl></header><figure class="project-detail-visual" data-image-shell data-reveal><img src="/project-media/deepseek-cli/deepseek-cli-terminal-light.png" alt="根据 DeepSeek CLI 真实帮助信息制作的浅色或深色终端视图" data-theme-image="light" data-fallback-image><img src="/project-media/deepseek-cli/deepseek-cli-terminal-dark.png" alt="根据 DeepSeek CLI 真实帮助信息制作的浅色或深色终端视图" data-theme-image="dark" data-fallback-image></figure><div class="project-detail-grid"><div class="project-report prose" data-reveal><h2 id="为什么不是另一个聊天页面">为什么不是另一个聊天页面</h2>
+<p>我做 DeepSeek CLI 的起点，是希望模型直接出现在代码、日志和命令输出产生的地方。Unix 管道已经提供了一套成熟的组合方式：前一个命令把文本送到 stdin，CLI 再附上一句任务说明，把回答以流的形式写回当前终端。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">git</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> diff</span><span style="color:#D73A49;--shiki-dark:#F97583"> |</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> ag</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> nomemory</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "Review this patch and list risks"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">ag</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> -v</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> r1</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> new</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "Explain the borrow checker step by step"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#B392F0">ag</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> continue</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> "Turn the previous explanation into a checklist"</span></span></code></pre>
+<p>当前工具形成三种清晰语义：直接输入或 <code>nomemory</code> 做一次性任务；<code>new</code> 从空上下文开始并保存新会话；<code>continue</code> 读取最近历史、追加一轮，再写回新的时间戳文件。</p>
+<p>Hero 图是依据真实 <code>--help</code> 与代码实际支持的 pipe/R1 命令绘制的终端视图，不是伪造的 API 回答。它会随本站主题在浅色和深色版本之间切换。</p>
+<h2 id="四个模块一条完整调用链">四个模块，一条完整调用链</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模块</th><th>当前职责</th></tr></thead><tbody><tr><td><code>main.rs</code></td><td>clap 参数、stdin 合并、请求构建、HTTP 调用、SSE 输出和会话模式编排</td></tr><tr><td><code>config.rs</code></td><td><code>config.toml</code>、API Key 与默认 System Prompt</td></tr><tr><td><code>history.rs</code></td><td>时间戳 JSON 历史、最近会话定位、加载/保存/删除</td></tr><tr><td><code>models.rs</code></td><td>Chat message、请求体、tool call 与流式 delta 数据结构</td></tr></tbody></table>
+<p>一次请求会先解析 query、模型别名、温度和子命令；非 TTY stdin 会被完整读入并与 query 拼接；接着根据模式加载历史、注入默认 System Prompt，最后 POST 到固定的 DeepSeek Chat Completions 地址并逐块输出响应。记忆模式成功后，用户消息与助手结果会写入 <code>~/.config/deepseek/histories/YYYYMMDDHHMMSS.json</code>。</p>
+<p>当前请求固定使用 <code>deepseek-chat</code> 或 <code>deepseek-reasoner</code>、<code>max_tokens=2048</code>、<code>stream=true</code> 和 <code>include_usage=true</code>。这也是兼容边界：项目还不是任意 OpenAI-compatible 网关客户端。</p>
+<h2 id="真实可执行文件而不是-readme-推测">真实可执行文件，而不是 README 推测</h2>
+<p>独立隔离构建得到约 <strong>5.7 MiB</strong> 的 arm64 Release 二进制。真实帮助信息为：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="text"><code><span class="line"><span>Usage: deepseek_cli [OPTIONS] [query] [COMMAND]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Commands:</span></span>
+<span class="line"><span>  new         New conversation</span></span>
+<span class="line"><span>  continue    Resume last conversation</span></span>
+<span class="line"><span>  nomemory    Memoryless mode</span></span>
+<span class="line"><span>  set_api     Set API Key</span></span>
+<span class="line"><span>  set_prompt  Set System Prompt</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Options:</span></span>
+<span class="line"><span>  -v, --version &#x3C;version>          Model version (r1 for deepseek-reasoner)</span></span>
+<span class="line"><span>  -t, --temperature &#x3C;temperature>  Temperature (default 1.0)</span></span>
+<span class="line"><span>  -h, --help                       Print help</span></span></code></pre>
+<p>这次审计也找出了文档与二进制的差异：README 写了 <code>-V</code> 程序版本参数，但实际不存在；裸 <code>--version</code> 是模型别名参数并要求一个值。温度文档声称范围是 0–2，但解析器没有范围校验；除了精确的 <code>r1</code>，其余别名都会回退为 <code>deepseek-chat</code>。</p>
+<p><code>new</code> 的含义是“不加载旧历史”，不是清空整个 histories 目录；管道输入仍必须同时提供 query。这些细节会在下一轮同步回用户文档。</p>
+<h2 id="流式输出与-r1-reasoning">流式输出与 R1 reasoning</h2>
+<p><code>process_stream()</code> 消费 Reqwest 的 <code>bytes_stream()</code>，解析 <code>data: </code> 开头的 SSE delta。reasoner 模式先输出 <code>reasoning_content</code>，第一次收到普通 <code>content</code> 时再显示 answer 分隔；普通模型只打印最终内容。终端为 TTY 时会显示 spinner，首个数据块到达后停止。</p>
+<p>独立审计在 <code>/tmp</code> 中增加了三个临时测试，复现出当前实现的关键边界：</p>
+<ol>
+<li><strong>缺少跨 chunk 的 SSE 缓冲。</strong> 一条 JSON event 如果正好被网络拆成两个 Bytes chunk，前半段反序列化失败，后半段又不再以 <code>data: </code> 开头，整条 delta 会静默丢失。</li>
+<li><strong>reasoning 与 answer 合并保存。</strong> R1 的推理文字和最终回答会被拼成同一 assistant content；下一次 <code>continue</code> 会把推理过程当普通助手消息再次发送。</li>
+<li><strong>历史目录没有过滤 JSON。</strong> 名称最大的无关文件也可能被选为最近会话，并在成功续接后进入删除路径。</li>
+</ol>
+<div class="project-callout"><strong>下一轮首要修复</strong>把字节流升级成带残留缓冲的 SSE framing，把 reasoning 与 final answer 分开保存，并让历史索引只接受通过 schema 验证的 JSON 会话。</div>
+<h2 id="配置与本地数据的安全边界">配置与本地数据的安全边界</h2>
+<p>配置目前只有明文 <code>api_key</code> 与可选 <code>default_prompt</code>。实际复现中新建文件权限为 <code>644</code>，没有主动收紧到 <code>600</code>；<code>ag set_api key</code> 还会让 Key 出现在 shell history 和进程参数中。历史 JSON 同样可能包含源码、日志、个人信息和 System Prompt。</p>
+<p>损坏 TOML 也需要更安全的失败行为：普通查询当前可能 panic；执行 <code>set_prompt</code> 时会退化到空 API Key 配置并覆盖原文件。配置写入应改成原子临时文件 + 权限收紧，并在解析失败时保留原件。</p>
+<h2 id="当前工程质量">当前工程质量</h2>
+<p><code>cargo build --release --locked</code> 与 <code>cargo test --locked</code> 都能完成，但后者运行的是 <strong>0 个仓库测试</strong>。<code>cargo fmt --check</code> 尚未通过；严格 Clippy 在原源码中报告约 15 条 lint，主要是冗余导入/匹配/借用和动态 <code>expect</code>。</p>
+<p>这些结果不是为了否定一个能用的小工具，而是把“个人可用”到“可放心复用”的距离写清楚。下一阶段会先把审计测试正式纳入仓库，再处理 SSE、历史与配置安全，最后实现已经写好设计的 endpoint/model 解耦。</p>
+<h2 id="已经设计但尚未实现">已经设计，但尚未实现</h2>
+<p>仓库中的可配置 endpoint 方案目前仍是设计稿。<code>base_url</code>、<code>default_model</code>、<code>-m/--model</code>、V4 模型别名、解析优先级和第三方网关验证都没有进入当前源码。</p>
+<p>这个项目已经证明 LLM 可以成为 Unix 管道的一段，也可以在终端里保留连续的研究与编码上下文。接下来我不会继续堆命令数量，而会先补齐 framing、错误模型、测试和凭据安全，再把固定 DeepSeek endpoint 抽象成真正可验证的 Chat Completions 客户端。</p></div><aside class="project-aside" data-reveal><div><h2>当前状态</h2><p>可用原型 · 工程边界已审计</p></div><div><h2>我的角色</h2><p>个人项目 · Rust 实现与审计</p></div><div><h2>Tech Stack</h2><ul><li>Rust</li><li>Tokio</li><li>Reqwest</li><li>clap</li><li>Serde</li><li>TOML</li><li>rust-i18n</li></ul></div><div class="project-links"><a href="https://github.com/allenge007/deepseek_commandline_tool">GitHub 仓库 ↗</a></div></aside></div></article></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="我们围绕共享的 Idea–Dataset 科研记忆，同时实现从研究想法检索数据集，以及从数据集检索先例并生成研究构思的两条路径。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/projects/idagent/"><link rel="alternate" hreflang="en" href="https://www.allenge.me/en/projects/idagent/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>IDAgent：构想—数据集双向发现 · Allenge</title><meta property="og:type" content="website"><meta property="og:title" content="IDAgent：构想—数据集双向发现 · Allenge"><meta property="og:description" content="我们围绕共享的 Idea–Dataset 科研记忆，同时实现从研究想法检索数据集，以及从数据集检索先例并生成研究构思的两条路径。"><meta property="og:url" content="https://www.allenge.me/projects/idagent/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="IDAgent：构想—数据集双向发现 · Allenge"><meta name="twitter:description" content="我们围绕共享的 Idea–Dataset 科研记忆，同时实现从研究想法检索数据集，以及从数据集检索先例并生成研究构思的两条路径。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/projects/idagent/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/" aria-current="page">项目</a><a href="/blog/">写作</a><a href="/notes/">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content" data-pagefind-body="true" data-pagefind-filter="lang:zh"><article class="project-detail shell reading-shell"><header class="detail-header" data-reveal><a class="back-link" href="/projects/">← 返回项目</a><p class="section-kicker">2026 · 研究设计、语料构建与系统实现</p><h1>IDAgent：构想—数据集双向发现</h1><p class="detail-lede">我们围绕共享的 Idea–Dataset 科研记忆，同时实现从研究想法检索数据集，以及从数据集检索先例并生成研究构思的两条路径。</p><dl class="project-detail-metrics"><div><dt>217,942</dt><dd>Idea–Dataset 对齐记录</dd></div><div><dt>64,252</dt><dd>来源论文</dd></div><div><dt>0.3334</dt><dd>最佳 Relaxed MRR</dd></div></dl></header><figure class="project-detail-visual" data-image-shell data-reveal><img src="/project-media/idagent/idagent-architecture.png" alt="IDAgent 的双向研究智能体与离线科研记忆架构" data-theme-image="all" data-fallback-image></figure><div class="project-detail-grid"><div class="project-report prose" data-reveal><h2 id="为什么要把-idea-与-dataset-放进同一份科研记忆">为什么要把 Idea 与 Dataset 放进同一份科研记忆</h2>
+<p>做科研选题时，我们经常遇到两个镜像问题：有了想法，却不知道哪些数据集真正能够支撑实验；拿到一个有价值的数据集，又很难快速判断它还能打开哪些研究方向。Idea 通常描述目标、假设、方法和贡献，Dataset 则描述变量、样本、模态与边界。它们并不天然共享关键词空间。</p>
+<p>IDAgent 因此不是只做一个数据集搜索框。我们围绕共享的 <code>⟨Idea, Dataset⟩</code> 记忆，设计 Idea-to-Dataset 检索和 Dataset-to-Idea 研究构思两条在线路径；离线管线负责采集论文、抽取与归一化、语义聚类、检索器重训和索引重建。</p>
+<figure>
+  <img src="/project-media/idagent/idagent-architecture.png" alt="IDAgent 总体架构" loading="lazy">
+  <figcaption>两个任务 Agent 共享同一套向量化科研记忆。Controller、多轮澄清与工具路由属于完整系统设计；当前实验主要验证下方两个核心任务模块。</figcaption>
+</figure>
+<h2 id="从-64252-篇论文构建对齐语料">从 64,252 篇论文构建对齐语料</h2>
+<p>我们选取近五年 CCF A/B 类人工智能与数据库/数据挖掘/信息检索论文，借助 Qwen3-Max 抽取论文中的研究想法与数据集使用关系，再进行数据集描述归一化、重复项合并、质量过滤和语义聚类。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>领域</th><th align="right">Idea–Dataset 对齐记录</th><th align="right">来源论文</th></tr></thead><tbody><tr><td>AI</td><td align="right">165,141</td><td align="right">45,586</td></tr><tr><td>Database</td><td align="right">52,801</td><td align="right">18,666</td></tr><tr><td><strong>合计</strong></td><td align="right"><strong>217,942</strong></td><td align="right"><strong>64,252</strong></td></tr></tbody></table>
+<p>同一份记忆被两个方向共用：检索任务把对齐记录作为跨类型监督，生成任务把历史研究想法作为可以追溯的先例库。在线检索结果还会经过语义簇去重，并附上来源论文，避免只返回一串名称相近但缺少证据的候选。</p>
+<h2 id="idea-to-dataset跨类型语义检索">Idea-to-Dataset：跨类型语义检索</h2>
+<p>ID-SBERT 使用共享参数的双编码器，把研究想法与复合数据集描述映射到同一向量空间。数据集向量提前写入 Faiss，在线只需编码查询并执行 Top-K 近邻检索。训练采用 MultipleNegativesRankingLoss：batch 对角线是已知配对，其余数据集构成批内负例。</p>
+<figure>
+  <img src="/project-media/idagent/idea-to-dataset-workflow.png" alt="Idea-to-Dataset 检索训练与在线查询流程" loading="lazy">
+  <figcaption>ID-SBERT 学习研究意图与数据集描述的跨类型对齐；Faiss 承担在线近邻检索，语义簇用于别名去重与宽松评估。</figcaption>
+</figure>
+<p>我们同时设计 random、dataset cold-start 与 idea cold-start 三种切分。Strict 只接受原标注数据集；Relaxed-ST 也接受同一语义簇中的近等价候选。核心结果如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>领域 / 切分</th><th align="right">Strict MRR</th><th align="right">Strict R@10</th><th align="right">Relaxed-ST MRR</th><th align="right">Relaxed-ST R@10</th></tr></thead><tbody><tr><td>AI / random</td><td align="right">0.1426</td><td align="right">0.2764</td><td align="right">0.2957</td><td align="right">0.5802</td></tr><tr><td>AI / dataset</td><td align="right">0.1326</td><td align="right">0.2446</td><td align="right">0.2798</td><td align="right">0.5482</td></tr><tr><td>AI / idea</td><td align="right">0.1273</td><td align="right">0.2257</td><td align="right">0.2722</td><td align="right">0.5097</td></tr><tr><td>Database / random</td><td align="right"><strong>0.1809</strong></td><td align="right">0.3511</td><td align="right"><strong>0.3334</strong></td><td align="right"><strong>0.6546</strong></td></tr><tr><td>Database / dataset</td><td align="right">0.1700</td><td align="right">0.3559</td><td align="right">0.2774</td><td align="right">0.6494</td></tr><tr><td>Database / idea</td><td align="right">0.1433</td><td align="right">0.2583</td><td align="right">0.3052</td><td align="right">0.5789</td></tr></tbody></table>
+<p>任务特定微调在所有 domain / split / evaluation 组合下都超过 BM25、TF-IDF、SVD、ItemCF、Popularity 与 zero-shot SBERT。相对 zero-shot SBERT，Strict MRR 在 AI 上达到约 4.23–5.46 倍，在 Database 上达到约 8.29–11.24 倍。idea split 在两个领域最难或接近最难，说明新研究意图比新数据集描述更开放、更抽象。</p>
+<figure>
+  <img src="/project-media/idagent/retrieval-mrr-by-split.png" alt="IDAgent 在不同冷启动切分上的严格 MRR" loading="lazy">
+  <figcaption>最佳微调模型的 Strict MRR。未见研究想法比未见数据集更具挑战，Database 在三种切分上均高于 AI。</figcaption>
+</figure>
+<h2 id="聚类更适合评价不适合无差别扩充正例">聚类更适合评价，不适合无差别扩充正例</h2>
+<p>我们比较固定阈值 single-threshold 与 LLM 仲裁模糊边的 two-stage clustering。Two-stage 并不是简单提高相似度阈值：AI 中它拒绝 42,269 条高相似但语义不同的边，同时接受 99,131 条低于 0.85 但被判断为语义等价的边。</p>
+<p>覆盖率更高却没有自动带来更好的检索训练。12 个最佳 domain/split/evaluation 配置全部使用 <code>train_scheme=none</code>：不扩充正例时平均 Strict MRR 为 <strong>0.1494</strong>，single-threshold 扩充后降到 <strong>0.0648</strong>，two-stage 扩充后为 <strong>0.0683</strong>。</p>
+<figure>
+  <img src="/project-media/idagent/cluster-coverage.png" alt="两种数据集语义聚类策略的覆盖率" loading="lazy">
+  <figcaption>更高的簇覆盖没有转化为更高的排序指标。当前证据支持“聚类用于去重和宽松评价”，不支持直接把整簇样本加入训练正例。</figcaption>
+</figure>
+<div class="project-callout"><strong>需要保留的负结果</strong>语义等价是有边界的。簇适合修正精确匹配中的假负例，但无差别扩大训练正例会显著模糊 Idea–Dataset 的对应关系。</div>
+<h2 id="dataset-to-idearetrieveadaptreflectoptimize">Dataset-to-Idea：Retrieve–Adapt–Reflect–Optimize</h2>
+<p>反向任务不是把检索器倒过来。系统先解析目标数据集，在约 46K 条 AI 或 19K 条 Database 历史想法中检索先例，再依次完成适配、反思和优化，输出标题、背景、目标、方法、预期结果与创新说明六个字段。测试某个数据集时，与它直接配对的历史想法会从检索池移除，降低泄漏。</p>
+<figure>
+  <img src="/project-media/idagent/dataset-to-idea-raro.png" alt="Dataset-to-Idea 的 RARO 生成流程" loading="lazy">
+  <figcaption>RARO 先检索研究先例，再面向目标数据集适配、反思和修订；LLM-as-a-Judge 只用于离线评分，不参与在线生成。</figcaption>
+</figure>
+<p>在 AI 上，ID-SBERT RAG + Reflection 的 Overall 为 8.26，较未反思版本提高 0.10；Database 上由 8.21 提高到 8.30。增益主要来自 Specificity 与 Relevance，而 Feasibility 并没有同步变高。这符合我们的观察：越具体、越有野心的方法，越容易暴露真实执行约束。</p>
+<p>这些数字仍需要谨慎解释。评分来自单次 LLM-as-a-Judge，不是多人盲评；不同方法保留的候选数不同，Database 的 ID-SBERT 方法只有 515 条，而 BM25 有 1000 条，跨方法均值可能混入覆盖率选择效应。</p>
+<h2 id="本次复现验证了什么也没有验证什么">本次复现验证了什么，也没有验证什么</h2>
+<p>独立复现把分析代码与论文构建放进隔离目录，得到 <strong>32 passed</strong>，并重新编译出 <strong>14 页论文</strong>。论文中的 12 组 Strict / Relaxed-ST 检索指标与生成 CSV 逐项一致。</p>
+<p>但仓库没有原始训练 CSV、逐条生成响应和 Judge 记录，因此目前不能从零重训检索器或重新计算生成均值。论文提到的“抽样 400 个簇、78.5% 为高置信等价簇”也无法由现有归档再次复核：提供的 400 行样本中 <code>manual_label</code> 和 <code>manual_notes</code> 为空。我们会把它保留为论文阶段的启发式审计结果，而不是本次复现重新确认的事实。</p>
+<p>当前项目没有 Web/Gradio/Streamlit Demo；已验证的是共享科研记忆上的检索与检索增强生成模块。下一阶段才会把 Controller、任务路由、多轮澄清、工具调用和用户反馈接成可交互原型，并用真实科研任务评价端到端效用。</p></div><aside class="project-aside" data-reveal><div><h2>当前状态</h2><p>论文准备中 · 核心模块评估完成</p></div><div><h2>我的角色</h2><p>研究设计、语料构建与系统实现</p></div><div><h2>Tech Stack</h2><ul><li>Python</li><li>Sentence-BERT</li><li>Faiss</li><li>RAG</li><li>LLM</li><li>LaTeX</li><li>pytest</li></ul></div></aside></div></article></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

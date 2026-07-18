@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/notes/cs/os/chapter1/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>操作系统概述 · Allenge</title><meta property="og:type" content="article"><meta property="og:title" content="操作系统概述 · Allenge"><meta property="og:description" content="操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。"><meta property="og:url" content="https://www.allenge.me/notes/cs/os/chapter1/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="操作系统概述 · Allenge"><meta name="twitter:description" content="操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><link rel="stylesheet" href="/_assets/notes.dEZUHJcM.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content"><div class="notes-frame" data-notes-frame><div class="notes-mobile-bar" data-pagefind-ignore><button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span> 目录</button><a href="/notes/search/"><span aria-hidden="true">⌕</span> 搜索 Notes</a><details class="notes-mobile-toc"><summary>本页目录</summary><div class="notes-mobile-popover"><ol><li class="toc-depth-2"><a href="#操作系统为何如此重要">操作系统为何如此重要？</a></li><li class="toc-depth-2"><a href="#操作系统的主要功能">操作系统的主要功能</a></li><li class="toc-depth-2"><a href="#操作系统的四大基本特征">操作系统的四大基本特征</a></li></ol><div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></div></details></div><aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录"><div class="notes-sidebar-head"><a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a><button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button></div><a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>搜索 Notes</a><nav><ul class="notes-nav-list notes-nav-root"><li><details><summary><span>数学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/">概览</a><ul class="notes-nav-list"><li><details><summary><span>信号与系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/signals_and_systems/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/signals_and_systems/chapter1/">连续时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter2/">离散时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter3/">拉普拉斯变换</a></li><li><a href="/notes/math/signals_and_systems/chapter4/">z 变换</a></li><li><a href="/notes/math/signals_and_systems/FFT/">快速傅立叶变换</a></li></ul></details></li><li><details><summary><span>最优化理论</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/optimization_theory/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/optimization_theory/chapter1/">lec1 · 仿射与凸性</a></li><li><a href="/notes/math/optimization_theory/chapter2/">lec2</a></li><li><a href="/notes/math/optimization_theory/chapter3/">lec3</a></li><li><a href="/notes/math/optimization_theory/chapter4/">lec4</a></li><li><a href="/notes/math/optimization_theory/chapter5/">lec5</a></li><li><a href="/notes/math/optimization_theory/chapter6/">lec6</a></li><li><a href="/notes/math/optimization_theory/chapter7/">lec7</a></li><li><a href="/notes/math/optimization_theory/chapter8/">lec8</a></li></ul></details></li></ul></details></li><li><details open><summary><span>计算机科学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/">概览</a><ul class="notes-nav-list"><li><details open><summary><span>操作系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/os/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/os/chapter1/" aria-current="page">操作系统概述</a></li><li><a href="/notes/cs/os/chapter2/">进程、线程与 CPU 调度</a></li><li><a href="/notes/cs/os/chapter3/">进程同步与死锁</a></li><li><a href="/notes/cs/os/chapter4/">内存管理</a></li><li><a href="/notes/cs/os/chapter5/">大容量存储</a></li><li><a href="/notes/cs/os/chapter6/">文件系统</a></li><li><a href="/notes/cs/os/chapter7/">I/O 管理</a></li></ul></details></li><li><details><summary><span>人工智能</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/ai/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/ai/chapter1/">知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter2/">搜索技术</a></li><li><a href="/notes/cs/ai/chapter3/">不确定性知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter4/">机器学习 · 聚类</a></li><li><a href="/notes/cs/ai/chapter5/">机器学习 · 神经网络</a></li><li><a href="/notes/cs/ai/chapter6/">机器学习 · 决策树</a></li><li><a href="/notes/cs/ai/chapter7/">深度学习</a></li><li><a href="/notes/cs/ai/chapter8/">Transformer</a></li><li><a href="/notes/cs/ai/chapter9/">强化学习</a></li></ul></details></li></ul></details></li></ul></nav></aside><button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button><div class="notes-main"><nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/cs/">计算机科学</a><span aria-hidden="true">/</span><a href="/notes/cs/os/">操作系统</a><span aria-hidden="true">/</span><a href="/notes/cs/os/chapter1/" aria-current="page">操作系统概述</a></nav><article class="notes-article" data-pagefind-body="true" data-note-route="/notes/cs/os/chapter1/"><span hidden data-pagefind-filter="kind:notes">notes</span><span hidden data-pagefind-filter="subject:computer-science">computer-science</span><span hidden data-pagefind-filter="lang:zh">zh</span><span hidden data-pagefind-meta="title">操作系统概述</span><div class="notes-prose" data-notes-prose><h1 id="操作系统概述">操作系统概述</h1>
+<p>操作系统（Operating System, OS）是我们日常接触计算机时，虽然不一定直接“看到”，但无时无刻不在依赖的核心软件。它就像一位神通广大的“大管家”，默默地管理着计算机的方方面面，确保一切井然有序。</p>
+<aside class="note-admonition note-admonition-quote" data-admonition="quote">
+<div class="note-admonition-title">什么是操作系统？</div>
+<p>操作系统是一组控制和管理计算机硬件和软件资源、合理地组织计算机工作流程以及方便用户使用的程序的集合。简单来说，它是硬件与用户（及应用程序）之间的桥梁。</p>
+</aside>
+<h2 id="操作系统为何如此重要">操作系统为何如此重要？</h2>
+<p>操作系统并非凭空出现，它的设计和存在是为了实现一系列关键目标：</p>
+<aside class="note-admonition note-admonition-success" data-admonition="success">
+<div class="note-admonition-title">操作系统的核心目标</div>
+<ul>
+<li><strong>方便性 (Convenience):</strong> 让用户更容易、更方便地使用计算机，无需关心底层硬件的复杂细节。</li>
+<li><strong>有效性 (Efficiency):</strong> 更高效地管理和利用计算机资源（CPU、内存、设备等），提高系统吞吐量和资源利用率。</li>
+<li><strong>可扩充性 (Extensibility):</strong> 允许在不修改现有核心代码的情况下，方便地增加新的功能和模块。</li>
+<li><strong>开放性 (Openness):</strong> 遵循标准规范，使得不同厂商的软硬件产品可以互操作。</li>
+</ul>
+</aside>
+<h2 id="操作系统的主要功能">操作系统的主要功能</h2>
+<p>为了达成上述目标，操作系统需要具备多种核心功能，就像一位多才多艺的管家，精通各项事务。</p>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">处理器管理 (CPU Management / Process Management)</div>
+<p>CPU 是计算机的大脑，处理器管理的核心任务是合理分配和调度 CPU 时间给各个运行中的程序（即进程）。</p>
+<ul>
+<li><strong>进程控制：</strong> 负责进程的创建、终止、挂起、激活等生命周期管理。</li>
+<li><strong>进程调度：</strong> 采用特定算法（如先来先服务、时间片轮转）决定哪个进程何时获得 CPU 使用权。</li>
+<li><strong>进程同步与通信：</strong> 解决多个进程并发执行时可能出现的资源竞争和协作问题。</li>
+</ul>
+</aside>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">存储器管理 (Memory Management)</div>
+<p>内存是程序运行的“舞台”，存储器管理负责高效、安全地分配和管理内存资源。</p>
+<ul>
+<li><strong>内存分配与回收：</strong> 为进程动态分配所需内存，并在进程结束后及时回收。</li>
+<li><strong>地址映射/重定位：</strong> 将程序使用的逻辑地址转换为物理内存地址。</li>
+<li><strong>内存保护：</strong> 防止进程越界访问，确保系统和其他进程的安全。</li>
+<li><strong>内存扩充：</strong> 利用虚拟内存技术（如分页、分段），让程序感觉拥有比实际物理内存更大的空间。</li>
+</ul>
+</aside>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">设备管理 (Device Management / I/O Management)</div>
+<p>计算机连接着各种输入输出设备（键盘、鼠标、磁盘、打印机等），设备管理负责协调它们的工作。</p>
+<ul>
+<li><strong>设备分配与回收：</strong> 管理和分配设备给请求使用的进程。</li>
+<li><strong>缓冲管理：</strong> 设置缓冲区以缓解 CPU 与 I/O 设备之间速度不匹配的问题。</li>
+<li><strong>设备驱动：</strong> 提供与具体硬件交互的驱动程序，屏蔽硬件差异。</li>
+<li><strong>中断处理：</strong> 响应和处理来自硬件设备的中断请求。</li>
+</ul>
+</aside>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">文件管理 (File Management)</div>
+<p>数据以文件的形式存储在外存（如硬盘）上，文件管理负责组织和存取这些文件。</p>
+<ul>
+<li><strong>文件存储空间的管理：</strong> 在外存上组织和分配空间给文件。</li>
+<li><strong>目录管理：</strong> 提供文件组织结构（如文件夹），方便用户查找和管理文件。</li>
+<li><strong>文件的读写管理和保护：</strong> 控制用户对文件的访问权限，确保数据安全。</li>
+<li><strong>文件操作：</strong> 提供创建、删除、打开、关闭、读写等基本文件操作接口。</li>
+</ul>
+</aside>
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">用户接口 (User Interface)</div>
+<p>操作系统还需要提供用户与计算机交互的途径。</p>
+<ul>
+<li><strong>命令接口 (CLI):</strong> 用户通过输入文本命令进行交互（如 Linux Shell, Windows CMD）。</li>
+<li><strong>图形用户接口 (GUI):</strong> 用户通过窗口、图标、菜单等图形元素进行交互（如 Windows 桌面, macOS 桌面）。</li>
+<li><strong>程序接口 (API) / 系统调用 (System Calls):</strong> 应用程序通过这些接口请求操作系统提供的服务。</li>
+</ul>
+</aside>
+<h2 id="操作系统的四大基本特征">操作系统的四大基本特征</h2>
+<p>操作系统的功能实现依赖于其几个基本特征：</p>
+<aside class="note-admonition note-admonition-abstract" data-admonition="abstract">
+<div class="note-admonition-title">操作系统的主要特征</div>
+<ul>
+<li><strong>并发 (Concurrency):</strong>
+允许多个程序在同一时间间隔内“同时”运行（宏观上并行，微观上可能是交替执行）。这是操作系统提高资源利用率和系统吞吐量的核心手段。</li>
+<li><strong>共享 (Sharing):</strong>
+系统中的资源（CPU、内存、设备、文件等）可以被多个并发的进程共同使用，而非被某个进程独占。共享分为互斥共享（如打印机一次只能一个进程用）和同时访问（如只读文件可以多个进程同时读）。</li>
+<li><strong>虚拟 (Virtuality):</strong>
+通过技术手段将一个物理实体转变为若干个逻辑上的对应物。例如，通过虚拟内存技术，让每个程序感觉拥有独立的、远大于实际物理内存的地址空间；通过虚拟处理器技术，让每个进程感觉自己独占一个CPU。</li>
+<li><strong>异步 (Asynchrony):</strong>
+由于并发和资源共享，进程的执行过程并非一气呵成，而是走走停停，其推进速度是不可预知的。操作系统需要处理这种不确定性，确保系统在各种事件发生时都能正确响应。</li>
+</ul>
+</aside></div><footer class="notes-article-footer" data-pagefind-ignore><p><span>更新于</span> <time datetime="2025-06-16T00:14:05.000Z">2025年6月16日</time></p><div><a href="https://github.com/allenge007/allenge007.github.io/edit/main/src/content/notes/cs/os/chapter1.md">编辑本页 ↗</a><a href="https://github.com/allenge007/allenge007.github.io/blob/main/src/content/notes/cs/os/chapter1.md">查看源文件 ↗</a></div></footer></article><nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore><a href="/notes/cs/os/"><span>上一篇</span><strong>操作系统</strong></a><a href="/notes/cs/os/chapter2/"><span>下一篇</span><strong>进程、线程与 CPU 调度</strong></a></nav><section class="notes-comments" aria-label="评论" data-pagefind-ignore><div class="giscus" data-giscus-host data-giscus-pathname="/notes/cs/os/chapter1/"></div></section><script type="module">var e=document.querySelector(`[data-giscus-host]`);if(e){let t=document.documentElement.dataset.theme===`dark`?`dark_dimmed`:`light`,n=document.createElement(`script`);n.src=`https://giscus.app/client.js`,n.async=!0,n.crossOrigin=`anonymous`,n.dataset.repo=`allenge008/Discussions`,n.dataset.repoId=`R_kgDOOsnx4A`,n.dataset.category=`Announcements`,n.dataset.categoryId=`DIC_kwDOOsnx4M4CqVVF`,n.dataset.mapping=`pathname`,n.dataset.strict=`0`,n.dataset.reactionsEnabled=`1`,n.dataset.emitMetadata=`0`,n.dataset.inputPosition=`bottom`,n.dataset.theme=t,n.dataset.lang=`zh-CN`,n.dataset.loading=`lazy`,e.append(n),addEventListener(`allenge:themechange`,(e=>{document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:{theme:e.detail.theme===`dark`?`dark_dimmed`:`light`}}},`https://giscus.app`)}))}</script></div><aside class="notes-toc" data-pagefind-ignore aria-label="本页目录"><p>本页目录</p><ol><li class="toc-depth-2"><a href="#操作系统为何如此重要">操作系统为何如此重要？</a></li><li class="toc-depth-2"><a href="#操作系统的主要功能">操作系统的主要功能</a></li><li class="toc-depth-2"><a href="#操作系统的四大基本特征">操作系统的四大基本特征</a></li></ol><div class="notes-font-controls" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></aside></div><button class="notes-back-top" type="button" data-notes-back-top aria-label="返回顶部">↑</button><script>(function(){const legacyHeadings = [{"level":1,"id":"_1","text":"操作系统概述"},{"level":2,"id":"_2","text":"操作系统为何如此重要？"},{"level":2,"id":"_3","text":"操作系统的主要功能"},{"level":2,"id":"_4","text":"操作系统的四大基本特征"}];
+
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  })();</script><script type="module" src="/_assets/NotesLayout.astro_astro_type_script_index_0_lang.CCNl8DEr.js"></script></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

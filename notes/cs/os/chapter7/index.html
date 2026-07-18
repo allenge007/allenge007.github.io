@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="日期：2025-06 剖析操作系统的I/O子系统； 讨论I/O硬件的原理和复杂性； 解释I/O硬件和软件的性能问题。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/notes/cs/os/chapter7/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>I/O管理 · Allenge</title><meta property="og:type" content="article"><meta property="og:title" content="I/O管理 · Allenge"><meta property="og:description" content="日期：2025-06 剖析操作系统的I/O子系统； 讨论I/O硬件的原理和复杂性； 解释I/O硬件和软件的性能问题。"><meta property="og:url" content="https://www.allenge.me/notes/cs/os/chapter7/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="I/O管理 · Allenge"><meta name="twitter:description" content="日期：2025-06 剖析操作系统的I/O子系统； 讨论I/O硬件的原理和复杂性； 解释I/O硬件和软件的性能问题。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><link rel="stylesheet" href="/_assets/notes.dEZUHJcM.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content"><div class="notes-frame" data-notes-frame><div class="notes-mobile-bar" data-pagefind-ignore><button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span> 目录</button><a href="/notes/search/"><span aria-hidden="true">⌕</span> 搜索 Notes</a><details class="notes-mobile-toc"><summary>本页目录</summary><div class="notes-mobile-popover"><ol><li class="toc-depth-2"><a href="#一概述">一、概述</a></li><li class="toc-depth-2"><a href="#二io-硬件">二、I/O 硬件</a></li><li class="toc-depth-3"><a href="#1-io-结构示例-以pentium-4为例">1. I/O 结构示例 (以Pentium 4为例)</a></li><li class="toc-depth-3"><a href="#2-io-设备分类">2. I/O 设备分类</a></li><li class="toc-depth-3"><a href="#3-io-设备之间的差别">3. I/O 设备之间的差别</a></li><li class="toc-depth-3"><a href="#4-典型io设备的速率">4. 典型I/O设备的速率</a></li><li class="toc-depth-3"><a href="#5-io-控制器-controller--host-adapter">5. I/O 控制器 (Controller / Host Adapter)</a></li><li class="toc-depth-3"><a href="#6-io-硬件交互">6. I/O 硬件交互</a></li><li class="toc-depth-2"><a href="#三cpu-与设备的通信方式">三、CPU 与设备的通信方式</a></li><li class="toc-depth-3"><a href="#1-io-指令和内存映射io">1. I/O 指令和内存映射I/O</a></li><li class="toc-depth-3"><a href="#2-轮询-polling">2. 轮询 (Polling)</a></li><li class="toc-depth-3"><a href="#3-中断-interrupts">3. 中断 (Interrupts)</a></li><li class="toc-depth-3"><a href="#4-直接内存访问-dma">4. 直接内存访问 (DMA)</a></li><li class="toc-depth-2"><a href="#四io-请求生命周期">四、I/O 请求生命周期</a></li><li class="toc-depth-2"><a href="#五应用程序-io-接口">五、应用程序 I/O 接口</a></li><li class="toc-depth-3"><a href="#1-io-设备的特点和分类">1. I/O 设备的特点和分类</a></li><li class="toc-depth-3"><a href="#2-非阻塞和异步-io">2. 非阻塞和异步 I/O</a></li><li class="toc-depth-3"><a href="#3-向量io-vectored-io--scatter-gather-io">3. 向量I/O (Vectored I/O / Scatter-Gather I/O)</a></li><li class="toc-depth-2"><a href="#六内核-io-子系统">六、内核 I/O 子系统</a></li><li class="toc-depth-3"><a href="#1-主要功能">1. 主要功能</a></li><li class="toc-depth-3"><a href="#2-内核数据结构">2. 内核数据结构</a></li><li class="toc-depth-2"><a href="#七电源管理-power-management">七、电源管理 (Power Management)</a></li><li class="toc-depth-2"><a href="#八流式-io-streams">八、流式 I/O (STREAMS)</a></li><li class="toc-depth-2"><a href="#九性能">九、性能</a></li><li class="toc-depth-3"><a href="#改进性能的方法">改进性能的方法</a></li><li class="toc-depth-2"><a href="#十总结">十、总结</a></li></ol><div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></div></details></div><aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录"><div class="notes-sidebar-head"><a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a><button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button></div><a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>搜索 Notes</a><nav><ul class="notes-nav-list notes-nav-root"><li><details><summary><span>数学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/">概览</a><ul class="notes-nav-list"><li><details><summary><span>信号与系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/signals_and_systems/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/signals_and_systems/chapter1/">连续时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter2/">离散时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter3/">拉普拉斯变换</a></li><li><a href="/notes/math/signals_and_systems/chapter4/">z 变换</a></li><li><a href="/notes/math/signals_and_systems/FFT/">快速傅立叶变换</a></li></ul></details></li><li><details><summary><span>最优化理论</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/optimization_theory/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/optimization_theory/chapter1/">lec1 · 仿射与凸性</a></li><li><a href="/notes/math/optimization_theory/chapter2/">lec2</a></li><li><a href="/notes/math/optimization_theory/chapter3/">lec3</a></li><li><a href="/notes/math/optimization_theory/chapter4/">lec4</a></li><li><a href="/notes/math/optimization_theory/chapter5/">lec5</a></li><li><a href="/notes/math/optimization_theory/chapter6/">lec6</a></li><li><a href="/notes/math/optimization_theory/chapter7/">lec7</a></li><li><a href="/notes/math/optimization_theory/chapter8/">lec8</a></li></ul></details></li></ul></details></li><li><details open><summary><span>计算机科学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/">概览</a><ul class="notes-nav-list"><li><details open><summary><span>操作系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/os/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/os/chapter1/">操作系统概述</a></li><li><a href="/notes/cs/os/chapter2/">进程、线程与 CPU 调度</a></li><li><a href="/notes/cs/os/chapter3/">进程同步与死锁</a></li><li><a href="/notes/cs/os/chapter4/">内存管理</a></li><li><a href="/notes/cs/os/chapter5/">大容量存储</a></li><li><a href="/notes/cs/os/chapter6/">文件系统</a></li><li><a href="/notes/cs/os/chapter7/" aria-current="page">I/O 管理</a></li></ul></details></li><li><details><summary><span>人工智能</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/ai/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/ai/chapter1/">知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter2/">搜索技术</a></li><li><a href="/notes/cs/ai/chapter3/">不确定性知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter4/">机器学习 · 聚类</a></li><li><a href="/notes/cs/ai/chapter5/">机器学习 · 神经网络</a></li><li><a href="/notes/cs/ai/chapter6/">机器学习 · 决策树</a></li><li><a href="/notes/cs/ai/chapter7/">深度学习</a></li><li><a href="/notes/cs/ai/chapter8/">Transformer</a></li><li><a href="/notes/cs/ai/chapter9/">强化学习</a></li></ul></details></li></ul></details></li></ul></nav></aside><button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button><div class="notes-main"><nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/cs/">计算机科学</a><span aria-hidden="true">/</span><a href="/notes/cs/os/">操作系统</a><span aria-hidden="true">/</span><a href="/notes/cs/os/chapter7/" aria-current="page">I/O 管理</a></nav><article class="notes-article" data-pagefind-body="true" data-note-route="/notes/cs/os/chapter7/"><span hidden data-pagefind-filter="kind:notes">notes</span><span hidden data-pagefind-filter="subject:computer-science">computer-science</span><span hidden data-pagefind-filter="lang:zh">zh</span><span hidden data-pagefind-meta="title">I/O管理</span><div class="notes-prose" data-notes-prose><h1 id="io管理">I/O管理</h1>
+<aside class="note-admonition note-admonition-abstract" data-admonition="abstract">
+<div class="note-admonition-title">课程信息</div>
+<p>主讲人：陈亮</p>
+<p>单位：计算机学院</p>
+<p>日期：2025-06</p>
+</aside>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">学习目标</div>
+<ul>
+<li>剖析操作系统的I/O子系统；</li>
+<li>讨论I/O硬件的原理和复杂性；</li>
+<li>解释I/O硬件和软件的性能问题。</li>
+</ul>
+</aside>
+<h2 id="一概述">一、概述</h2>
+<p>I/O 管理是操作系统设计和运行中的一个主要组成部分，对计算机操作至关重要。I/O 设备种类繁多，控制方法各异，共同构成了I/O子系统。性能管理是I/O管理的一个重要方面，并且新型设备层出不穷。</p>
+<p>I/O设备的关键要素包括：</p>
+<ul>
+<li><strong>端口 (Ports)</strong>：设备的连接点。</li>
+<li><strong>总线 (Busses)</strong>：一组线路和严格定义的协议，用于在线路上传输信息。</li>
+<li><strong>设备控制器 (Device Controllers)</strong>：连接各种设备。</li>
+</ul>
+<p><strong>设备驱动程序 (Device Drivers)</strong> 封装了设备的具体细节，向I/O子系统提供统一的设备访问接口。</p>
+<h2 id="二io-硬件">二、I/O 硬件</h2>
+<h3 id="1-io-结构示例-以pentium-4为例">1. I/O 结构示例 (以Pentium 4为例)</h3>
+<p>典型的PC I/O结构通过芯片组（如北桥和南桥）来协调各个组件之间的数据流：</p>
+<ul>
+<li><strong>CPU</strong> 通过高速总线连接到 <strong>北桥 (Memory Controller Hub - MCH)</strong>。</li>
+<li><strong>北桥</strong> 主要负责连接高速设备：
+<ul>
+<li>内存 (Memory)</li>
+<li>AGP/PCI-Express 插槽 (用于显卡等)</li>
+</ul>
+</li>
+<li><strong>北桥</strong> 通过内部总线连接到 <strong>南桥 (I/O Controller Hub - ICH)</strong>。</li>
+<li><strong>南桥</strong> 主要负责连接中低速设备：
+<ul>
+<li>ATA/IDE (硬盘接口)</li>
+<li>PCI 总线 (扩展卡)</li>
+<li>USB/Firewire 总线</li>
+<li>Serial/Parallel 接口</li>
+<li>DMA 控制器</li>
+<li>中断控制器</li>
+<li>RTC (实时时钟), ACPI (高级配置与电源接口), BIOS 等。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="io" loading="lazy" decoding="async" sizes="(min-width: 536px) 536px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="536" height="610" src="/_assets/io-structure.DqO2C29r_16QCX1.webp" srcset="/_assets/io-structure.DqO2C29r_16QCX1.webp 536w"></p>
+<h3 id="2-io-设备分类">2. I/O 设备分类</h3>
+<p>计算机系统中参与I/O的外设大体上可分为三类：</p>
+<ol>
+<li><strong>存储设备 (Storage)</strong>：如磁盘、磁带。</li>
+<li><strong>传输设备 (Transmission)</strong>：如网络接口卡、调制解调器。</li>
+<li><strong>人机交互设备 (Human-Interface)</strong>：如键盘、鼠标、显示器。</li>
+</ol>
+<p>通用概念：</p>
+<ul>
+<li><strong>端口 (Port)</strong>：设备的连接点。</li>
+<li><strong>总线 (Bus)</strong>：一组线路和通过线路传输信息的严格定义的一个协议。
+<ul>
+<li>常见的有 PCI 总线, PCI Express (PCIe)。</li>
+<li>扩展总线连接相对较慢的设备。</li>
+<li>串行连接 SCSI (SAS) 是公共磁盘接口。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="io-bus" loading="lazy" decoding="async" sizes="(min-width: 618px) 618px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="618" height="386" src="/_assets/io-bus.CwyK5NuT_ZxxjUN.webp" srcset="/_assets/io-bus.CwyK5NuT_ZxxjUN.webp 618w"></p>
+<h3 id="3-io-设备之间的差别">3. I/O 设备之间的差别</h3>
+<p>不同类别设备之间，甚至同一类别不同设备之间，特性和性能差别都很大。</p>
+<h3 id="4-典型io设备的速率">4. 典型I/O设备的速率</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>设备类型</th><th>数据速率</th></tr></thead><tbody><tr><td>键盘</td><td>10 字节/秒</td></tr><tr><td>鼠标</td><td>100 字节/秒</td></tr><tr><td>56K 调制解调器</td><td>7 KB/秒</td></tr><tr><td>USB 1.1</td><td>1.5 MB/秒</td></tr><tr><td>IDE 硬盘驱动器</td><td>最高 133 MB/秒</td></tr><tr><td>以太网 (1Gbps)</td><td>125 MB/秒</td></tr><tr><td>SATA3</td><td>750 MB/秒</td></tr><tr><td>USB 3.0</td><td>最高 625 MB/秒</td></tr><tr><td>PCI Express 3.0 (x16)</td><td>15.75 GB/秒</td></tr><tr><td>Thunderbolt 3</td><td>5 GB/秒</td></tr></tbody></table>
+<p><em>(速率为示例，具体数值可能因技术发展而变化)</em></p>
+<h3 id="5-io-控制器-controller--host-adapter">5. I/O 控制器 (Controller / Host Adapter)</h3>
+<p>I/O 控制器是操作端口、总线和设备的一组电子器件。</p>
+<ul>
+<li><strong>集成或独立</strong>：有时集成在主板上，有时是独立的电路板（称为主机适配器，Host Adapter）。</li>
+<li><strong>内部结构</strong>：包含处理器、微代码 (firmware)、私有内存、总线控制器等。</li>
+<li><strong>分层控制</strong>：有些控制器通过总线控制器、微代码、内存等与每个设备的控制器进行通信。</li>
+<li><strong>示例</strong>：Fibre Channel (FC) 控制器通常是复杂的主机总线适配器 (HBA)，插入到总线中。</li>
+</ul>
+<h3 id="6-io-硬件交互">6. I/O 硬件交互</h3>
+<ul>
+<li><strong>I/O 指令</strong>：CPU 使用专门的I/O指令来控制设备。</li>
+<li><strong>设备寄存器</strong>：设备通常有寄存器，设备驱动程序在其中放置命令、地址和要写入的数据，或在命令执行后从中读取数据。
+<ul>
+<li><strong>数据输入寄存器 (Data-in register)</strong></li>
+<li><strong>数据输出寄存器 (Data-out register)</strong></li>
+<li><strong>状态寄存器 (Status register)</strong>: 包含状态位，如忙/闲、错误、数据就绪等。</li>
+<li><strong>控制寄存器 (Control register)</strong>: 用于发送命令给设备。</li>
+<li>大小通常为1-4字节，或实现为FIFO缓冲区。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="io-total" loading="lazy" decoding="async" sizes="(min-width: 894px) 894px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="894" height="596" src="/_assets/io-total.LeflARkL_ZCCpcK.webp" srcset="/_assets/io-total.LeflARkL_Z14WgaO.webp 640w, /_assets/io-total.LeflARkL_1jrdhk.webp 750w, /_assets/io-total.LeflARkL_I98dy.webp 828w, /_assets/io-total.LeflARkL_ZCCpcK.webp 894w"></p>
+<h2 id="三cpu-与设备的通信方式">三、CPU 与设备的通信方式</h2>
+<p>CPU与I/O设备间的接口，通过特殊指令和寄存器实现。通信方式主要有轮询、中断和DMA。</p>
+<h3 id="1-io-指令和内存映射io">1. I/O 指令和内存映射I/O</h3>
+<p>设备寄存器和存储可以被CPU访问，主要有两种方式：</p>
+<ol>
+<li>
+<p><strong>I/O 指令 (Port-Mapped I/O, PMIO)</strong></p>
+<ul>
+<li>使用特殊的CPU指令（如 <code>in</code>, <code>out</code>）通过I/O端口号访问设备寄存器。</li>
+<li>示例：<code>out 0x21, AL</code></li>
+<li>I/O端口有其独立的地址空间，与内存地址空间分开。</li>
+</ul>
+</li>
+<li>
+<p><strong>内存映射I/O (Memory-Mapped I/O, MMIO)</strong></p>
+<ul>
+<li>设备的寄存器/存储被映射到内存的物理地址空间中。</li>
+<li>通过常规的内存 <code>load/store</code> 指令完成I/O操作。</li>
+<li>MMU (内存管理单元) 设置映射，或通过硬件跳线/启动程序设置地址。</li>
+</ul>
+</li>
+</ol>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">PC设备中的I/O端口位置示例</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>I/O 地址范围 (十六进制)</th><th>设备</th></tr></thead><tbody><tr><td><code>000-01F</code></td><td>DMA 控制器</td></tr><tr><td><code>020-021</code></td><td>中断控制器</td></tr><tr><td><code>040-043</code></td><td>定时器</td></tr><tr><td><code>200-20F</code></td><td>游戏控制器</td></tr><tr><td><code>2F8-2FF</code></td><td>串行端口 (COM2)</td></tr><tr><td><code>320-32F</code></td><td>硬盘控制器</td></tr><tr><td><code>378-37F</code></td><td>并行端口</td></tr><tr><td><code>3D0-3DF</code></td><td>图形适配器</td></tr><tr><td><code>3F0-3F7</code></td><td>软盘驱动器控制器</td></tr><tr><td><code>3F8-3FF</code></td><td>串行端口 (COM1)</td></tr></tbody></table>
+</aside>
+<h3 id="2-轮询-polling">2. 轮询 (Polling)</h3>
+<p>轮询是CPU主动、重复地查询设备状态以确定操作是否完成的方法。</p>
+<p><strong>过程 (以字节I/O为例):</strong></p>
+<ol>
+<li>CPU从状态寄存器读取<strong>忙位 (busy bit)</strong>，直到该位清零。</li>
+<li>主机设置<strong>读/写位</strong>，若写入，则将数据复制到<strong>数据输出寄存器</strong>。</li>
+<li>主机设置<strong>命令就绪位 (command-ready bit)</strong>。</li>
+<li>控制器检测到命令就绪，设置<strong>忙位</strong>。</li>
+<li>控制器读取命令寄存器，执行操作（如从数据输出寄存器读取字节并发送给设备）。</li>
+<li>传输完成时，控制器清除忙位、错误位、命令就绪位。</li>
+</ol>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">轮询的特点</div>
+<ul>
+<li><strong>忙等待 (Busy-waiting)</strong>：步骤1是忙等待周期。</li>
+<li><strong>适用场景</strong>：如果设备速度快，轮询是合理的。</li>
+<li><strong>缺点</strong>：如果设备慢，CPU会浪费大量时间在等待上，效率低下。若错过一个周期，数据可能被覆盖或丢失。</li>
+<li><strong>改进</strong>：如果设备很少就绪，可以考虑中断。</li>
+</ul>
+</aside>
+<h3 id="3-中断-interrupts">3. 中断 (Interrupts)</h3>
+<p>中断是由I/O设备触发的，通知CPU某个事件已发生的机制。</p>
+<p><strong>过程:</strong></p>
+<ol>
+<li>设备驱动程序初始化I/O请求，CPU继续执行其他任务。</li>
+<li>I/O控制器完成操作或发生错误后，向CPU发送中断请求信号。</li>
+<li>CPU在执行完当前指令后，检查中断请求。</li>
+<li>若有中断，CPU保存当前进程的上下文，暂停当前进程。</li>
+<li>CPU根据中断信号（通常通过中断向量）找到对应的<strong>中断服务例程 (Interrupt Service Routine, ISR)</strong> 并执行它。</li>
+<li>ISR处理中断（如读取数据，检查错误，通知设备驱动）。</li>
+<li>处理完毕后，CPU恢复被中断进程的上下文并继续执行。</li>
+</ol>
+<p><strong>中断的特性:</strong></p>
+<ul>
+<li><strong>效率</strong>：比轮询更高效，尤其对于慢速设备。</li>
+<li><strong>中断向量</strong>：一个表格，将中断类型映射到对应的ISR地址。</li>
+<li><strong>中断优先级</strong>：允许高优先级中断抢占低优先级中断处理。</li>
+<li><strong>中断请求线</strong>：
+<ul>
+<li><strong>非屏蔽中断 (NMI)</strong>：通常用于严重错误，不能被忽略。</li>
+<li><strong>可屏蔽中断 (Maskable Interrupt)</strong>：可以被CPU暂时忽略。</li>
+</ul>
+</li>
+<li><strong>中断链</strong>：如果多个设备共享同一中断号，则形成中断链，ISR需要查询链上的设备以确定中断源。</li>
+<li><strong>其他用途</strong>：异常处理 (如硬件错误、页错误)、系统调用 (通过陷阱指令)。</li>
+</ul>
+<p><img alt="io-interrupt" loading="lazy" decoding="async" sizes="(min-width: 984px) 984px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="984" height="792" src="/_assets/io-interrupt.CayVaKHE_2hJ3Mw.webp" srcset="/_assets/io-interrupt.CayVaKHE_Z1soPpA.webp 640w, /_assets/io-interrupt.CayVaKHE_ZsHksP.webp 750w, /_assets/io-interrupt.CayVaKHE_Z1eSVgs.webp 828w, /_assets/io-interrupt.CayVaKHE_2hJ3Mw.webp 984w"></p>
+<h3 id="4-直接内存访问-dma">4. 直接内存访问 (DMA)</h3>
+<p>DMA用于大量数据传输，允许I/O设备直接与内存交换数据，而无需CPU的直接参与（除了初始化和结束）。</p>
+<p><strong>过程:</strong></p>
+<ol>
+<li>设备驱动程序收到I/O请求（如从磁盘读取数据到内存地址X）。</li>
+<li>设备驱动程序设置DMA控制器：
+<ul>
+<li>将DMA命令块写入内存，包含：源地址、目标地址、读/写模式、传输字节数。</li>
+<li>将命令块的内存地址写入DMA控制器。</li>
+</ul>
+</li>
+<li>设备驱动程序指示磁盘控制器从磁盘读取数据。</li>
+<li>磁盘控制器将数据传输给DMA控制器。</li>
+<li>DMA控制器获得总线控制权 (Bus Mastering)，直接将数据从设备（或其缓冲区）传输到指定内存地址X。CPU在此期间可以执行其他任务（DMA可能”窃取”总线周期，称为Cycle Stealing，但总体效率高得多）。</li>
+<li>DMA控制器完成数据传送后，向CPU发送中断请求，通知传送完成。</li>
+</ol>
+<aside class="note-admonition note-admonition-success" data-admonition="success">
+<div class="note-admonition-title">DMA的优势</div>
+<ul>
+<li><strong>减少CPU开销</strong>：CPU只需在传输开始和结束时介入。</li>
+<li><strong>提高数据传输速率</strong>：绕过CPU，直接在设备和内存间传输。</li>
+<li><strong>DVMA (Direct Virtual Memory Access)</strong>：支持虚拟地址的DMA控制器，可以进一步提高效率，无需操作系统进行物理地址和虚拟地址之间的转换。</li>
+</ul>
+</aside>
+<p><img alt="dma" loading="lazy" decoding="async" sizes="(min-width: 984px) 984px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="984" height="602" src="/_assets/dma.CtKwR8xs_Z5xF4C.webp" srcset="/_assets/dma.CtKwR8xs_ZU6JEx.webp 640w, /_assets/dma.CtKwR8xs_V7BzE.webp 750w, /_assets/dma.CtKwR8xs_1UKfRl.webp 828w, /_assets/dma.CtKwR8xs_Z5xF4C.webp 984w"></p>
+<h2 id="四io-请求生命周期">四、I/O 请求生命周期</h2>
+<p>一个I/O请求从用户进程发起，到最终完成并返回结果，经历以下主要阶段：</p>
+<ol>
+<li><strong>用户进程</strong>：发起系统调用（如 <code>read()</code>, <code>write()</code>）。</li>
+<li><strong>内核I/O子系统</strong>：
+<ul>
+<li>接收请求，检查参数合法性。</li>
+<li>判断是否已有缓存结果（如读请求的数据已在缓冲区）。</li>
+<li>若是，直接与进程交换数据，返回。</li>
+<li>若否，向设备驱动发送I/O请求，并可能使进程等待。</li>
+</ul>
+</li>
+<li><strong>设备驱动程序</strong>：
+<ul>
+<li>将抽象的I/O请求转换为具体的设备命令。</li>
+<li>向设备控制器发送控制命令。</li>
+<li>等待设备操作完成（通常通过中断）。</li>
+</ul>
+</li>
+<li><strong>硬件设备/设备控制器</strong>：
+<ul>
+<li>执行具体的I/O操作。</li>
+<li>操作完成时，产生中断。</li>
+</ul>
+</li>
+<li><strong>中断处理例程</strong>：
+<ul>
+<li>CPU接收中断，保存当前状态，跳转到ISR。</li>
+<li>ISR确定I/O操作完成状态，获取结果（如数据、错误码）。</li>
+<li>通知设备驱动程序。</li>
+</ul>
+</li>
+<li><strong>设备驱动程序</strong>：
+<ul>
+<li>接收中断处理结果。</li>
+<li>通知内核I/O子系统操作完成。</li>
+</ul>
+</li>
+<li><strong>内核I/O子系统</strong>：
+<ul>
+<li>唤醒等待的进程。</li>
+<li>与进程交换数据（如将读取的数据从内核缓冲区复制到用户缓冲区）。</li>
+<li>系统调用返回，将完成结果或错误信息返回给用户进程。</li>
+</ul>
+</li>
+</ol>
+<p><img alt="io-life" loading="lazy" decoding="async" sizes="(min-width: 477px) 477px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="477" height="158" src="/_assets/io-life.C6L5fM-u_Z1bsSvQ.webp" srcset="/_assets/io-life.C6L5fM-u_Z1bsSvQ.webp 477w"></p>
+<h2 id="五应用程序-io-接口">五、应用程序 I/O 接口</h2>
+<p>操作系统通过I/O系统调用将设备行为封装在通用类中，设备驱动程序层则隐藏了不同I/O控制器之间的差异。</p>
+<h3 id="1-io-设备的特点和分类">1. I/O 设备的特点和分类</h3>
+<p>设备在多个维度上有所不同：</p>
+<ul>
+<li><strong>数据传输单元</strong>：
+<ul>
+<li><strong>字符流设备 (Character-stream)</strong>：一次传输一个字符，如键盘、鼠标、串口。命令通常是 <code>get()</code>、<code>put()</code>。</li>
+<li><strong>块设备 (Block)</strong>：一次传输固定大小的数据块，如磁盘驱动器。命令包括 <code>read</code>、<code>write</code>、<code>seek</code>。支持裸I/O (Raw I/O)、直接I/O或文件系统访问。</li>
+</ul>
+</li>
+<li><strong>访问模式</strong>：
+<ul>
+<li><strong>顺序访问 (Sequential)</strong>：按固定顺序访问数据，如磁带。</li>
+<li><strong>随机访问 (Random-access)</strong>：可直接访问任意位置数据，如磁盘。</li>
+</ul>
+</li>
+<li><strong>同步/异步</strong>：
+<ul>
+<li><strong>同步 (Synchronous)</strong>：I/O操作开始后，进程阻塞直到操作完成。</li>
+<li><strong>异步 (Asynchronous)</strong>：I/O操作开始后，进程继续运行，操作完成后通过某种机制（如信号、回调）通知进程。</li>
+</ul>
+</li>
+<li><strong>共享性</strong>：
+<ul>
+<li><strong>可共享 (Sharable)</strong>：可被多个进程同时访问，如磁盘。</li>
+<li><strong>专用 (Dedicated)</strong>：一次只能被一个进程访问，如打印机。</li>
+</ul>
+</li>
+<li><strong>操作速度</strong>：差异巨大。</li>
+<li><strong>操作方向</strong>：读写、只读、只写。</li>
+</ul>
+<p><strong>其他接口类型：</strong></p>
+<ul>
+<li><strong>内存映射文件访问</strong>：文件被映射到虚拟内存，通过缺页中断按需调入数据。</li>
+<li><strong>网络套接字 (Network Sockets)</strong>：用于网络通信，如 <code>connect()</code>, <code>accept()</code>, <code>send()</code>, <code>receive()</code>。<code>select()</code> 等函数支持服务器管理多个套接字。</li>
+<li><strong>时钟和定时器</strong>：提供当前时间、流逝时间、定时器功能。可编程间隔定时器用于定时和周期性中断。</li>
+</ul>
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">`ioctl()` (Unix/Linux)</div>
+<p><code>ioctl()</code> (Input/Output Control) 是一个特殊的系统调用，用于处理设备特定的、不适合标准读写接口的操作。它可以向设备控制寄存器发送任意命令，或与设备数据寄存器交换数据。例如，设置串口参数、获取磁盘几何信息等。</p>
+</aside>
+<aside class="note-admonition note-admonition-example" data-admonition="example">
+<div class="note-admonition-title">Unix/Linux 设备标识</div>
+<p>Unix和Linux使用“主设备号 (major)”和“次设备号 (minor)”的元组来唯一标识设备的类型和实例。</p>
+<p>例如，<code>ls -l /dev/sda*</code> 可能显示：</p>
+<p><code>brw-rw---- 1 root disk 8, 0 Jun 10 10:00 /dev/sda</code> (主设备号8，次设备号0)</p>
+<p><code>brw-rw---- 1 root disk 8, 1 Jun 10 10:00 /dev/sda1</code> (主设备号8，次设备号1)</p>
+</aside>
+<h3 id="2-非阻塞和异步-io">2. 非阻塞和异步 I/O</h3>
+<ul>
+<li><strong>阻塞I/O (Blocking I/O)</strong>：进程发起I/O调用后被挂起，直到I/O完成。易于使用和理解，但可能降低并发性。</li>
+<li><strong>非阻塞I/O (Nonblocking I/O)</strong>：I/O调用立即返回，返回已成功传输的字节数（可能为0）。常用于用户界面和数据复制（缓冲I/O）。通常通过多线程或 <code>select()</code>/<code>poll()</code>/<code>epoll()</code> 与实际的读写操作结合使用。</li>
+<li><strong>异步I/O (Asynchronous I/O)</strong>：进程发起I/O调用后继续运行，I/O操作在后台执行。当I/O完成后，I/O子系统通过信号或回调函数通知进程。使用起来较复杂。</li>
+</ul>
+<p><img alt="io-cmp" loading="lazy" decoding="async" sizes="(min-width: 648px) 648px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="648" height="355" src="/_assets/io-cmp.Bg-IVUnK_1KfG8b.webp" srcset="/_assets/io-cmp.Bg-IVUnK_1RVc9f.webp 640w, /_assets/io-cmp.Bg-IVUnK_1KfG8b.webp 648w"></p>
+<h3 id="3-向量io-vectored-io--scatter-gather-io">3. 向量I/O (Vectored I/O / Scatter-Gather I/O)</h3>
+<p>向量I/O允许单个系统调用执行多个分散或集中的I/O操作。</p>
+<ul>
+<li>例如，Unix的 <code>readv()</code> 和 <code>writev()</code> 接受一个缓冲区描述符向量，可以从多个不连续的内存区域读取数据到设备，或从设备读取数据到多个不连续的内存区域。</li>
+<li><strong>优点</strong>：
+<ul>
+<li>减少上下文切换和系统调用开销（相比多次单独I/O调用）。</li>
+<li>某些实现提供原子性，避免多线程并发修改数据时的问题。</li>
+</ul>
+</li>
+</ul>
+<h2 id="六内核-io-子系统">六、内核 I/O 子系统</h2>
+<p>内核I/O子系统提供了一系列服务来管理I/O操作。</p>
+<p><img alt="io-kernel" loading="lazy" decoding="async" sizes="(min-width: 1150px) 1150px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="1150" height="562" src="/_assets/io-kernel.t4JbVuRS_Zxyj9s.webp" srcset="/_assets/io-kernel.t4JbVuRS_277iQQ.webp 640w, /_assets/io-kernel.t4JbVuRS_Z1fcrmo.webp 750w, /_assets/io-kernel.t4JbVuRS_zMDos.webp 828w, /_assets/io-kernel.t4JbVuRS_cXL1E.webp 1080w, /_assets/io-kernel.t4JbVuRS_Zxyj9s.webp 1150w"></p>
+<h3 id="1-主要功能">1. 主要功能</h3>
+<ul>
+<li><strong>I/O调度 (Scheduling)</strong>：
+<ul>
+<li>通过为每个设备维护请求队列来安排I/O请求的顺序。</li>
+<li>目标可以是公平性、吞吐量最大化、响应时间最小化等。</li>
+<li>一些操作系统实现服务质量 (QoS) 保证 (如 IPQOS)。</li>
+</ul>
+</li>
+<li><strong>缓冲 (Buffering)</strong>：
+<ul>
+<li>在内存中临时存储数据，用于设备之间或设备与应用程序之间的数据传输。</li>
+<li><strong>目的</strong>：
+<ul>
+<li>处理设备速度不匹配问题。</li>
+<li>处理设备传输大小不匹配问题。</li>
+<li>维护“拷贝语义”(copy semantics)，确保应用程序操作的是数据的副本，避免数据在传输过程中被意外修改。</li>
+</ul>
+</li>
+<li><strong>双缓冲 (Double buffering)</strong>：使用两个缓冲区，一个用于填充/处理，另一个用于消耗/使用，交替进行。</li>
+<li><strong>写时复制 (Copy-on-write)</strong>：可用于提高某些情况下的效率。</li>
+</ul>
+</li>
+<li><strong>缓存 (Caching)</strong>：
+<ul>
+<li>在更快的设备（通常是内存）中保存较慢设备数据的副本。</li>
+<li><strong>目的</strong>：提高访问速度，因为后续对相同数据的访问可以直接从缓存中获取。</li>
+<li>缓存中的数据始终是副本。</li>
+<li>对系统性能至关重要。</li>
+<li>有时与缓冲结合使用。</li>
+</ul>
+</li>
+<li><strong>假脱机 (Spooling - Simultaneous Peripheral Operations On-Line)</strong>：
+<ul>
+<li>将输出数据暂存起来（通常在磁盘上），供那些一次只能处理一个请求的设备（如打印机）按顺序使用。</li>
+<li>允许应用程序快速“完成”输出操作，而实际的物理输出由后台进程处理。</li>
+</ul>
+</li>
+<li><strong>设备预留 (Device Reservation)</strong>：
+<ul>
+<li>提供对设备的独占访问。</li>
+<li>通过系统调用进行分配和释放。</li>
+<li>需要注意避免死锁。</li>
+</ul>
+</li>
+<li><strong>错误处理 (Error Handling)</strong>：
+<ul>
+<li>操作系统可以从某些I/O错误中恢复，如磁盘读取错误、设备暂时不可用、瞬时写入失败（可以尝试重试）。</li>
+<li>高级系统（如 Solaris FMA, AIX）会跟踪错误频率，当可重试错误的频率增加时，可能会停止使用该设备。</li>
+<li>I/O请求失败时，通常返回错误号或代码。</li>
+<li>系统错误日志记录问题报告。</li>
+</ul>
+</li>
+<li><strong>I/O保护 (I/O Protection)</strong>：
+<ul>
+<li>用户进程可能意外或故意通过非法的I/O指令扰乱系统正常运行。</li>
+<li><strong>措施</strong>：
+<ul>
+<li>所有I/O指令被定义为<strong>特权指令 (privileged instructions)</strong>，只能在内核模式下执行。</li>
+<li>用户模式的I/O请求必须通过<strong>系统调用 (system calls)</strong> 来完成。</li>
+<li>内存映射I/O区域和I/O端口内存位置也必须受到保护，防止用户进程直接访问。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img alt="alt text" loading="lazy" decoding="async" sizes="(min-width: 426px) 426px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="426" height="415" src="/_assets/io-exec.CkEA-71B_ZL8WNy.webp" srcset="/_assets/io-exec.CkEA-71B_ZL8WNy.webp 426w"></p>
+<h3 id="2-内核数据结构">2. 内核数据结构</h3>
+<p>内核维护各种数据结构来跟踪I/O组件的状态信息，例如：</p>
+<ul>
+<li>打开文件表</li>
+<li>网络连接信息</li>
+<li>字符设备状态</li>
+<li>缓冲区管理结构</li>
+<li>内存分配信息</li>
+<li>“脏”块（已修改但未写回磁盘的缓存块）列表</li>
+</ul>
+<p>一些操作系统采用面向对象的方法和消息传递来实现I/O子系统（如Windows）。</p>
+<p><img alt="alt text" loading="lazy" decoding="async" sizes="(min-width: 504px) 504px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="504" height="384" src="/_assets/io-unix.CsBJWoa1_ZCXAtw.webp" srcset="/_assets/io-unix.CsBJWoa1_ZCXAtw.webp 504w"></p>
+<h2 id="七电源管理-power-management">七、电源管理 (Power Management)</h2>
+<p>电源管理虽然不严格属于I/O领域，但许多方面与I/O设备密切相关。</p>
+<ul>
+<li><strong>目标</strong>：减少计算机和设备的电力消耗，减少发热，延长电池寿命（移动设备）。</li>
+<li><strong>操作系统角色</strong>：
+<ul>
+<li><strong>组件级电源管理</strong>：了解组件间的依赖关系，构建设备树表示物理设备拓扑。</li>
+<li><strong>状态跟踪</strong>：设备驱动程序跟踪设备是否在使用中。未使用的组件或整个树分支可以被关闭以省电。</li>
+<li><strong>唤醒锁 (Wakelocks)</strong> (如Android)：防止设备在特定操作（如数据下载）完成前进入睡眠状态。</li>
+<li><strong>电源崩溃 (Power Collapse)</strong>：使设备进入深度睡眠状态，只保留足够的唤醒能力以响应外部刺激（如按键、来电）。</li>
+<li><strong>ACPI (Advanced Configuration and Power Interface)</strong>：固件标准，提供操作系统可调用的例程，用于设备发现、管理、错误处理和电源管理。</li>
+</ul>
+</li>
+<li><strong>云计算环境</strong>：在服务器间迁移虚拟机，最终可能整合工作负载并关闭空闲服务器。</li>
+<li><strong>移动计算</strong>：电源管理是首要考虑因素。</li>
+</ul>
+<h2 id="八流式-io-streams">八、流式 I/O (STREAMS)</h2>
+<p>STREAMS 是 Unix System V 及后续版本中引入的一种机制，用于在用户级进程和设备之间建立灵活的全双工通信通道。</p>
+<ul>
+<li><strong>组成部分</strong>：
+<ul>
+<li><strong>流头 (Stream head)</strong>：与用户进程接口。</li>
+<li><strong>驱动程序端 (Driver end)</strong>：与物理设备或伪设备接口。</li>
+<li><strong>零个或多个流模块 (Stream modules)</strong>：位于流头和驱动程序端之间，每个模块提供特定的处理功能（如协议处理、数据转换）。</li>
+</ul>
+</li>
+<li><strong>结构</strong>：每个模块包含一个读队列和一个写队列。</li>
+<li><strong>通信</strong>：通过消息在队列之间传递。</li>
+<li><strong>流控制</strong>：指示队列可用或繁忙。</li>
+<li><strong>同步性</strong>：模块间通信是异步的，但用户进程与流头的通信通常是同步的。</li>
+</ul>
+<p><img alt="alt text" loading="lazy" decoding="async" sizes="(min-width: 390px) 390px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="390" height="406" src="/_assets/io-stream.km_Wtsga_Z18yxvi.webp" srcset="/_assets/io-stream.km_Wtsga_Z18yxvi.webp 390w"></p>
+<h2 id="九性能">九、性能</h2>
+<p>I/O是影响系统整体性能的主要因素。性能瓶颈可能由以下原因造成：</p>
+<ul>
+<li>CPU执行设备驱动程序和内核I/O代码的开销。</li>
+<li>中断处理导致的上下文切换。</li>
+<li>内存中数据的多次复制（如用户缓冲区 &#x3C;-> 内核缓冲区 &#x3C;-> 设备缓冲区）。</li>
+<li>网络流量密度。</li>
+</ul>
+<h3 id="改进性能的方法">改进性能的方法</h3>
+<ul>
+<li><strong>减少上下文切换次数</strong>。</li>
+<li><strong>减少数据复制次数</strong>（如使用零拷贝技术）。</li>
+<li><strong>减少中断频率</strong>：通过使用大型传输、智能控制器和在适当情况下使用轮询。</li>
+<li><strong>使用DMA</strong>。</li>
+<li><strong>使用更智能的硬件设备</strong>（卸载部分处理任务到设备控制器）。</li>
+<li><strong>平衡CPU、内存、总线和I/O性能</strong>以获得最高吞吐量。</li>
+<li>将某些用户模式的I/O相关进程/守护进程移至内核线程以减少开销。</li>
+</ul>
+<h2 id="十总结">十、总结</h2>
+<p>I/O子系统协调了应用程序和内核其他部分可用的大量服务，其核心职责包括：</p>
+<ul>
+<li>管理文件和设备的名称空间。</li>
+<li>对文件和设备的访问控制。</li>
+<li>操作控制（例如，调制解调器不能执行 <code>seek()</code> 操作）。</li>
+<li>文件系统空间分配。</li>
+<li>设备分配与回收。</li>
+<li>缓冲、缓存和假脱机。</li>
+<li>I/O调度。</li>
+<li>设备状态监视、错误处理和故障恢复。</li>
+<li>设备驱动程序的配置和初始化。</li>
+<li>I/O设备的电源管理。</li>
+</ul>
+<p>I/O子系统的上层通过设备驱动程序提供的统一接口访问各种不同的硬件设备，从而实现了硬件无关性。</p></div><footer class="notes-article-footer" data-pagefind-ignore><p><span>更新于</span> <time datetime="2025-06-18T07:22:10.000Z">2025年6月18日</time></p><div><a href="https://github.com/allenge007/allenge007.github.io/edit/main/src/content/notes/cs/os/chapter7.md">编辑本页 ↗</a><a href="https://github.com/allenge007/allenge007.github.io/blob/main/src/content/notes/cs/os/chapter7.md">查看源文件 ↗</a></div></footer></article><nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore><a href="/notes/cs/os/chapter6/"><span>上一篇</span><strong>文件系统</strong></a><a href="/notes/cs/ai/"><span>下一篇</span><strong>人工智能</strong></a></nav><section class="notes-comments" aria-label="评论" data-pagefind-ignore><div class="giscus" data-giscus-host data-giscus-pathname="/notes/cs/os/chapter7/"></div></section><script type="module">var e=document.querySelector(`[data-giscus-host]`);if(e){let t=document.documentElement.dataset.theme===`dark`?`dark_dimmed`:`light`,n=document.createElement(`script`);n.src=`https://giscus.app/client.js`,n.async=!0,n.crossOrigin=`anonymous`,n.dataset.repo=`allenge008/Discussions`,n.dataset.repoId=`R_kgDOOsnx4A`,n.dataset.category=`Announcements`,n.dataset.categoryId=`DIC_kwDOOsnx4M4CqVVF`,n.dataset.mapping=`pathname`,n.dataset.strict=`0`,n.dataset.reactionsEnabled=`1`,n.dataset.emitMetadata=`0`,n.dataset.inputPosition=`bottom`,n.dataset.theme=t,n.dataset.lang=`zh-CN`,n.dataset.loading=`lazy`,e.append(n),addEventListener(`allenge:themechange`,(e=>{document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:{theme:e.detail.theme===`dark`?`dark_dimmed`:`light`}}},`https://giscus.app`)}))}</script></div><aside class="notes-toc" data-pagefind-ignore aria-label="本页目录"><p>本页目录</p><ol><li class="toc-depth-2"><a href="#一概述">一、概述</a></li><li class="toc-depth-2"><a href="#二io-硬件">二、I/O 硬件</a></li><li class="toc-depth-3"><a href="#1-io-结构示例-以pentium-4为例">1. I/O 结构示例 (以Pentium 4为例)</a></li><li class="toc-depth-3"><a href="#2-io-设备分类">2. I/O 设备分类</a></li><li class="toc-depth-3"><a href="#3-io-设备之间的差别">3. I/O 设备之间的差别</a></li><li class="toc-depth-3"><a href="#4-典型io设备的速率">4. 典型I/O设备的速率</a></li><li class="toc-depth-3"><a href="#5-io-控制器-controller--host-adapter">5. I/O 控制器 (Controller / Host Adapter)</a></li><li class="toc-depth-3"><a href="#6-io-硬件交互">6. I/O 硬件交互</a></li><li class="toc-depth-2"><a href="#三cpu-与设备的通信方式">三、CPU 与设备的通信方式</a></li><li class="toc-depth-3"><a href="#1-io-指令和内存映射io">1. I/O 指令和内存映射I/O</a></li><li class="toc-depth-3"><a href="#2-轮询-polling">2. 轮询 (Polling)</a></li><li class="toc-depth-3"><a href="#3-中断-interrupts">3. 中断 (Interrupts)</a></li><li class="toc-depth-3"><a href="#4-直接内存访问-dma">4. 直接内存访问 (DMA)</a></li><li class="toc-depth-2"><a href="#四io-请求生命周期">四、I/O 请求生命周期</a></li><li class="toc-depth-2"><a href="#五应用程序-io-接口">五、应用程序 I/O 接口</a></li><li class="toc-depth-3"><a href="#1-io-设备的特点和分类">1. I/O 设备的特点和分类</a></li><li class="toc-depth-3"><a href="#2-非阻塞和异步-io">2. 非阻塞和异步 I/O</a></li><li class="toc-depth-3"><a href="#3-向量io-vectored-io--scatter-gather-io">3. 向量I/O (Vectored I/O / Scatter-Gather I/O)</a></li><li class="toc-depth-2"><a href="#六内核-io-子系统">六、内核 I/O 子系统</a></li><li class="toc-depth-3"><a href="#1-主要功能">1. 主要功能</a></li><li class="toc-depth-3"><a href="#2-内核数据结构">2. 内核数据结构</a></li><li class="toc-depth-2"><a href="#七电源管理-power-management">七、电源管理 (Power Management)</a></li><li class="toc-depth-2"><a href="#八流式-io-streams">八、流式 I/O (STREAMS)</a></li><li class="toc-depth-2"><a href="#九性能">九、性能</a></li><li class="toc-depth-3"><a href="#改进性能的方法">改进性能的方法</a></li><li class="toc-depth-2"><a href="#十总结">十、总结</a></li></ol><div class="notes-font-controls" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></aside></div><button class="notes-back-top" type="button" data-notes-back-top aria-label="返回顶部">↑</button><script>(function(){const legacyHeadings = [{"level":1,"id":"io","text":"I/O管理"},{"level":2,"id":"_1","text":"一、概述"},{"level":2,"id":"io_1","text":"二、I/O 硬件"},{"level":3,"id":"1-io-pentium-4","text":"1. I/O 结构示例 (以Pentium 4为例)"},{"level":3,"id":"2-io","text":"2. I/O 设备分类"},{"level":3,"id":"3-io","text":"3. I/O 设备之间的差别"},{"level":3,"id":"4-io","text":"4. 典型I/O设备的速率"},{"level":3,"id":"5-io-controller-host-adapter","text":"5. I/O 控制器 (Controller / Host Adapter)"},{"level":3,"id":"6-io","text":"6. I/O 硬件交互"},{"level":2,"id":"cpu","text":"三、CPU 与设备的通信方式"},{"level":3,"id":"1-io-io","text":"1. I/O 指令和内存映射I/O"},{"level":3,"id":"2-polling","text":"2. 轮询 (Polling)"},{"level":3,"id":"3-interrupts","text":"3. 中断 (Interrupts)"},{"level":3,"id":"4-dma","text":"4. 直接内存访问 (DMA)"},{"level":2,"id":"io_2","text":"四、I/O 请求生命周期"},{"level":2,"id":"io_3","text":"五、应用程序 I/O 接口"},{"level":3,"id":"1-io","text":"1. I/O 设备的特点和分类"},{"level":3,"id":"2-io_1","text":"2. 非阻塞和异步 I/O"},{"level":3,"id":"3-io-vectored-io-scatter-gather-io","text":"3. 向量I/O (Vectored I/O / Scatter-Gather I/O)"},{"level":2,"id":"io_4","text":"六、内核 I/O 子系统"},{"level":3,"id":"1","text":"1. 主要功能"},{"level":3,"id":"2","text":"2. 内核数据结构"},{"level":2,"id":"power-management","text":"七、电源管理 (Power Management)"},{"level":2,"id":"io-streams","text":"八、流式 I/O (STREAMS)"},{"level":2,"id":"_2","text":"九、性能"},{"level":3,"id":"_3","text":"改进性能的方法"},{"level":2,"id":"_4","text":"十、总结"}];
+
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  })();</script><script type="module" src="/_assets/NotesLayout.astro_astro_type_script_index_0_lang.CCNl8DEr.js"></script></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

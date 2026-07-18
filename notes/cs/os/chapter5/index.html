@@ -1,0 +1,577 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="描述外存设备的物理结构及其对设备使用的影响； 解释大容量存储设备的性能特点； 评估磁盘调度算法； 讨论大容量存储（RAID）提供的操作系统服务。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/notes/cs/os/chapter5/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>大容量存储 · Allenge</title><meta property="og:type" content="article"><meta property="og:title" content="大容量存储 · Allenge"><meta property="og:description" content="描述外存设备的物理结构及其对设备使用的影响； 解释大容量存储设备的性能特点； 评估磁盘调度算法； 讨论大容量存储（RAID）提供的操作系统服务。"><meta property="og:url" content="https://www.allenge.me/notes/cs/os/chapter5/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="大容量存储 · Allenge"><meta name="twitter:description" content="描述外存设备的物理结构及其对设备使用的影响； 解释大容量存储设备的性能特点； 评估磁盘调度算法； 讨论大容量存储（RAID）提供的操作系统服务。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><link rel="stylesheet" href="/_assets/notes.dEZUHJcM.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content"><div class="notes-frame" data-notes-frame><div class="notes-mobile-bar" data-pagefind-ignore><button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span> 目录</button><a href="/notes/search/"><span aria-hidden="true">⌕</span> 搜索 Notes</a><details class="notes-mobile-toc"><summary>本页目录</summary><div class="notes-mobile-popover"><ol><li class="toc-depth-2"><a href="#一存储系统概述">一、存储系统概述</a></li><li class="toc-depth-2"><a href="#二磁盘结构-hdd">二、磁盘结构 (HDD)</a></li><li class="toc-depth-3"><a href="#21-物理结构">2.1 物理结构</a></li><li class="toc-depth-3"><a href="#22-磁盘工作机制">2.2 磁盘工作机制</a></li><li class="toc-depth-3"><a href="#23-hdd-性能参数">2.3 HDD 性能参数</a></li><li class="toc-depth-2"><a href="#三非易失性内存-nvm">三、非易失性内存 (NVM)</a></li><li class="toc-depth-2"><a href="#四磁盘与主机的连接">四、磁盘与主机的连接</a></li><li class="toc-depth-2"><a href="#五地址映射">五、地址映射</a></li><li class="toc-depth-2"><a href="#六磁盘调度">六、磁盘调度</a></li><li class="toc-depth-3"><a href="#61-磁盘调度算法">6.1 磁盘调度算法</a></li><li class="toc-depth-3"><a href="#62-选择磁盘调度算法">6.2 选择磁盘调度算法</a></li><li class="toc-depth-3"><a href="#63-nvm-调度">6.3 NVM 调度</a></li><li class="toc-depth-2"><a href="#七错误检测与纠正">七、错误检测与纠正</a></li><li class="toc-depth-2"><a href="#八存储设备管理">八、存储设备管理</a></li><li class="toc-depth-3"><a href="#81-格式化与分区">8.1 格式化与分区</a></li><li class="toc-depth-3"><a href="#82-引导与挂载">8.2 引导与挂载</a></li><li class="toc-depth-3"><a href="#83-坏块管理">8.3 坏块管理</a></li><li class="toc-depth-2"><a href="#九交换空间管理-swap-space">九、交换空间管理 (Swap Space)</a></li><li class="toc-depth-2"><a href="#十网络存储">十、网络存储</a></li><li class="toc-depth-3"><a href="#101-网络附加存储-nas---network-attached-storage">10.1 网络附加存储 (NAS - Network Attached Storage)</a></li><li class="toc-depth-3"><a href="#102-存储区域网络-san---storage-area-network">10.2 存储区域网络 (SAN - Storage Area Network)</a></li><li class="toc-depth-2"><a href="#十一raid-redundant-array-of-independent-disks">十一、RAID (Redundant Array of Independent Disks)</a></li><li class="toc-depth-3"><a href="#111-raid-级别">11.1 RAID 级别</a></li><li class="toc-depth-3"><a href="#112-raid-扩展-如-zfs">11.2 RAID 扩展 (如 ZFS)</a></li><li class="toc-depth-2"><a href="#十二新兴-nvm-技术与存储级内存-scm">十二、新兴 NVM 技术与存储级内存 (SCM)</a></li></ol><div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></div></details></div><aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录"><div class="notes-sidebar-head"><a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a><button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button></div><a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>搜索 Notes</a><nav><ul class="notes-nav-list notes-nav-root"><li><details><summary><span>数学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/">概览</a><ul class="notes-nav-list"><li><details><summary><span>信号与系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/signals_and_systems/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/signals_and_systems/chapter1/">连续时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter2/">离散时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter3/">拉普拉斯变换</a></li><li><a href="/notes/math/signals_and_systems/chapter4/">z 变换</a></li><li><a href="/notes/math/signals_and_systems/FFT/">快速傅立叶变换</a></li></ul></details></li><li><details><summary><span>最优化理论</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/optimization_theory/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/optimization_theory/chapter1/">lec1 · 仿射与凸性</a></li><li><a href="/notes/math/optimization_theory/chapter2/">lec2</a></li><li><a href="/notes/math/optimization_theory/chapter3/">lec3</a></li><li><a href="/notes/math/optimization_theory/chapter4/">lec4</a></li><li><a href="/notes/math/optimization_theory/chapter5/">lec5</a></li><li><a href="/notes/math/optimization_theory/chapter6/">lec6</a></li><li><a href="/notes/math/optimization_theory/chapter7/">lec7</a></li><li><a href="/notes/math/optimization_theory/chapter8/">lec8</a></li></ul></details></li></ul></details></li><li><details open><summary><span>计算机科学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/">概览</a><ul class="notes-nav-list"><li><details open><summary><span>操作系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/os/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/os/chapter1/">操作系统概述</a></li><li><a href="/notes/cs/os/chapter2/">进程、线程与 CPU 调度</a></li><li><a href="/notes/cs/os/chapter3/">进程同步与死锁</a></li><li><a href="/notes/cs/os/chapter4/">内存管理</a></li><li><a href="/notes/cs/os/chapter5/" aria-current="page">大容量存储</a></li><li><a href="/notes/cs/os/chapter6/">文件系统</a></li><li><a href="/notes/cs/os/chapter7/">I/O 管理</a></li></ul></details></li><li><details><summary><span>人工智能</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/ai/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/ai/chapter1/">知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter2/">搜索技术</a></li><li><a href="/notes/cs/ai/chapter3/">不确定性知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter4/">机器学习 · 聚类</a></li><li><a href="/notes/cs/ai/chapter5/">机器学习 · 神经网络</a></li><li><a href="/notes/cs/ai/chapter6/">机器学习 · 决策树</a></li><li><a href="/notes/cs/ai/chapter7/">深度学习</a></li><li><a href="/notes/cs/ai/chapter8/">Transformer</a></li><li><a href="/notes/cs/ai/chapter9/">强化学习</a></li></ul></details></li></ul></details></li></ul></nav></aside><button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button><div class="notes-main"><nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/cs/">计算机科学</a><span aria-hidden="true">/</span><a href="/notes/cs/os/">操作系统</a><span aria-hidden="true">/</span><a href="/notes/cs/os/chapter5/" aria-current="page">大容量存储</a></nav><article class="notes-article" data-pagefind-body="true" data-note-route="/notes/cs/os/chapter5/"><span hidden data-pagefind-filter="kind:notes">notes</span><span hidden data-pagefind-filter="subject:computer-science">computer-science</span><span hidden data-pagefind-filter="lang:zh">zh</span><span hidden data-pagefind-meta="title">大容量存储</span><div class="notes-prose" data-notes-prose><h1 id="大容量存储">大容量存储</h1>
+<aside class="note-admonition note-admonition-abstract" data-admonition="abstract">
+<div class="note-admonition-title">课程目标</div>
+<ul>
+<li>描述外存设备的物理结构及其对设备使用的影响；</li>
+<li>解释大容量存储设备的性能特点；</li>
+<li>评估磁盘调度算法；</li>
+<li>讨论大容量存储（RAID）提供的操作系统服务。</li>
+</ul>
+</aside>
+<h2 id="一存储系统概述">一、存储系统概述</h2>
+<p>计算机系统中的存储设备是分层次组织的，主要目的是在成本、速度和容量之间取得平衡。</p>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">存储分层 (Storage Hierarchy)</div>
+<p>典型的存储层次从上到下，速度递减，容量递增，每比特成本递减：</p>
+<ol>
+<li><strong>寄存器 (Registers)</strong></li>
+<li><strong>高速缓存 (Cache)</strong></li>
+<li><strong>主存 (Main Memory - DRAM)</strong></li>
+<li><strong>电子磁盘 (Solid State Disk - SSD)</strong></li>
+<li><strong>磁盘 (Magnetic Disk - HDD)</strong></li>
+<li><strong>光盘 (Optical Disk)</strong></li>
+<li><strong>磁带 (Magnetic Tapes)</strong></li>
+</ol>
+</aside>
+<p>本章主要关注大容量存储，特别是磁盘驱动器（HDD）和非易失性存储器（NVM）。</p>
+<h2 id="二磁盘结构-hdd">二、磁盘结构 (HDD)</h2>
+<h3 id="21-物理结构">2.1 物理结构</h3>
+<p>传统的机械硬盘（HDD）主要由以下物理组件构成：</p>
+<p><img alt="disk" loading="lazy" decoding="async" sizes="(min-width: 652px) 652px, 100vw" data-astro-image="constrained" data-astro-image-pos="center" width="652" height="378" src="/_assets/disk.M1N_m2AS_1CUUzo.webp" srcset="/_assets/disk.M1N_m2AS_wH1zx.webp 640w, /_assets/disk.M1N_m2AS_1CUUzo.webp 652w"></p>
+<ul>
+<li><strong>盘片 (Platters)</strong>：圆形盘片，表面涂有磁性材料用于存储数据。</li>
+<li><strong>磁头 (Heads)</strong>：每个盘面都有一个磁头，负责读写数据。所有磁头固定在一个磁头臂上，同步移动。</li>
+<li><strong>磁道 (Tracks)</strong>：盘片上的一系列同心圆，数据记录在磁道上。</li>
+<li><strong>柱面 (Cylinders)</strong>：所有盘片上半径相同的磁道的集合。磁头在不同盘面之间切换比在同一盘面移动磁道要快，因此数据倾向于按柱面存储。</li>
+<li><strong>扇区 (Sectors)</strong>：磁道被划分成的若干个弧段，是磁盘读写的最小物理单位，通常为 512 字节或 4KB。</li>
+<li><strong>簇 (Clusters)</strong>：文件系统层面，由一个或多个连续的扇区组成，是文件分配的最小逻辑单位。</li>
+</ul>
+<aside class="note-admonition note-admonition-question" data-admonition="question">
+<div class="note-admonition-title">扇区大小与数量</div>
+<ul>
+<li><strong>扇区大小是固定的吗？</strong> 在低级格式化时确定，对于一个磁盘而言，其物理扇区大小是固定的。</li>
+<li><strong>每个磁道的扇区数量是一样的吗？</strong>
+<ul>
+<li>传统磁盘（CAV - Constant Angular Velocity，恒定角速度）：内圈磁道和外圈磁道扇区数相同，但外圈磁道扇区物理长度更长，导致空间利用率不高。</li>
+<li>现代磁盘（CLV - Constant Linear Velocity，恒定线速度，或 ZBR - Zone Bit Recording，区域位记录）：外圈磁道比较内圈磁道拥有更多的扇区，以提高存储密度和数据传输率。</li>
+</ul>
+</li>
+</ul>
+</aside>
+<h3 id="22-磁盘工作机制">2.2 磁盘工作机制</h3>
+<p>读取或写入数据时，磁头必须被定位到期望的磁道，并等待所期望的扇区旋转到磁头下方。这个过程主要包含两个时间：</p>
+<ol>
+<li><strong>寻道时间 (Seek Time)</strong>：将磁头臂移动到目标磁道（柱面）所花费的时间。这是影响磁盘性能的最主要因素。
+<ul>
+<li>平均寻道时间通常在 3ms 到 12ms 之间。</li>
+</ul>
+</li>
+<li><strong>旋转延迟 (Rotational Latency)</strong>：等待目标扇区的起始位置旋转到磁头下方所花费的时间。
+<ul>
+<li>平均旋转延迟 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>×</mo><mtext>磁盘旋转一周所需时间</mtext></mrow><annotation encoding="application/x-tex">\frac{1}{2} \times \text{磁盘旋转一周所需时间}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">磁盘旋转一周所需时间</span></span></span></span></span></li>
+<li>磁盘旋转一周所需时间 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>60</mn><mtext>RPM</mtext></mfrac></mrow><annotation encoding="application/x-tex">\frac{60}{\text{RPM}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">RPM</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">60</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> (秒)，其中 RPM 是每分钟转数。</li>
+<li>例如，7200 RPM 的磁盘，平均旋转延迟 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>×</mo><mfrac><mn>60</mn><mn>7200</mn></mfrac><mtext> s</mtext><mo>=</mo><mn>4.17</mn><mtext> ms</mtext></mrow><annotation encoding="application/x-tex">\frac{1}{2} \times \frac{60}{7200} \text{ s} = 4.17 \text{ ms}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">7200</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">60</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord text"><span class="mord"> s</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4.17</span><span class="mord text"><span class="mord"> ms</span></span></span></span></span>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="23-hdd-性能参数">2.3 HDD 性能参数</h3>
+<ul>
+<li>
+<p><strong>传输速率 (Transfer Rate)</strong>：数据从磁盘传输到内存（或反之）的速率。</p>
+<ul>
+<li>理论传输速率 (e.g., 6 Gb/sec for SATA 3)</li>
+<li>有效传输速率 (e.g., 1 Gb/sec)</li>
+</ul>
+</li>
+<li>
+<p><strong>访问延迟 (Access Latency)</strong>：</p>
+<p><code>Access Latency = Average Seek Time + Average Rotational Latency</code></p>
+<ul>
+<li>例如，对于高速磁盘: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mi>m</mi><mi>s</mi><mo>+</mo><mn>2</mn><mi>m</mi><mi>s</mi><mo>=</mo><mn>5</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">3ms + 2ms = 5ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+<li>例如，对于低速磁盘: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn><mi>m</mi><mi>s</mi><mo>+</mo><mn>5.56</mn><mi>m</mi><mi>s</mi><mo>=</mo><mn>14.56</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">9ms + 5.56ms = 14.56ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">9</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5.56</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">14.56</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+</ul>
+</li>
+<li>
+<p><strong>平均 I/O 时间 (Average I/O Time)</strong>：</p>
+<p><code>Average I/O Time = Access Latency + (Amount to Transfer / Transfer Rate) + Controller Overhead</code></p>
+<ul>
+<li>
+<p><strong>示例</strong>：传输一个 4KB 的块，磁盘参数为 7200 RPM，平均寻道时间 5ms，传输速率 1Gb/sec，控制器开销 0.1ms。</p>
+<ul>
+<li>平均寻道时间 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">5ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">5</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+<li>平均旋转延迟 (7200 RPM) = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>×</mo><mfrac><mn>60</mn><mn>7200</mn></mfrac><mi>s</mi><mo>=</mo><mn>4.17</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">\frac{1}{2} \times \frac{60}{7200}s = 4.17ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.1901em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">7200</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">60</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4.17</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+<li>控制器开销 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.1</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">0.1ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.1</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+<li>传输时间 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mn>4</mn><mi>K</mi><mi>B</mi></mrow><mrow><mn>1</mn><mi>G</mi><mi>b</mi><mi mathvariant="normal">/</mi><mi>s</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>4</mn><mo>×</mo><mn>1024</mn><mo>×</mo><mn>8</mn><mtext> bits</mtext></mrow><mrow><mn>1</mn><mo>×</mo><msup><mn>10</mn><mn>9</mn></msup><mtext> bits/s</mtext></mrow></mfrac><mo>≈</mo><mfrac><mrow><mn>4</mn><mo>×</mo><mn>8</mn></mrow><mrow><msup><mn>1024</mn><mn>2</mn></msup><mo>×</mo><mn>1000</mn><mi mathvariant="normal">/</mi><mo stretchy="false">(</mo><msup><mn>1024</mn><mn>2</mn></msup><mo stretchy="false">)</mo></mrow></mfrac><mtext> ms</mtext><mo>=</mo><mfrac><mrow><mn>32</mn><mtext> Kb</mtext></mrow><mrow><mn>1000</mn><mtext> Mb/s</mtext></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>0.032</mn><mtext> Mb</mtext></mrow><mrow><mn>1000</mn><mtext> Mb/s</mtext></mrow></mfrac><mo>=</mo><mn>0.000032</mn><mi>s</mi><mo>=</mo><mn>0.032</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">\frac{4KB}{1Gb/s} = \frac{4 \times 1024 \times 8 \text{ bits}}{1 \times 10^9 \text{ bits/s}} \approx \frac{4 \times 8}{1024^2 \times 1000 / (1024^2)} \text{ ms} = \frac{32 \text{ Kb}}{1000 \text{ Mb/s}} = \frac{0.032 \text{ Mb}}{1000 \text{ Mb/s}} = 0.000032s = 0.032ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3923em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mathnormal mtight">G</span><span class="mord mathnormal mtight">b</span><span class="mord mtight">/</span><span class="mord mathnormal mtight">s</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mathnormal mtight" style="margin-right:0.0715em;">K</span><span class="mord mathnormal mtight" style="margin-right:0.0502em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.4001em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">×</span><span class="mord mtight">1</span><span class="mord mtight"><span class="mord mtight">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mord text mtight"><span class="mord mtight"> bits/s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mbin mtight">×</span><span class="mord mtight">1024</span><span class="mbin mtight">×</span><span class="mord mtight">8</span><span class="mord text mtight"><span class="mord mtight"> bits</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.3651em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">102</span><span class="mord mtight"><span class="mord mtight">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mbin mtight">×</span><span class="mord mtight">1000/</span><span class="mopen mtight">(</span><span class="mord mtight">102</span><span class="mord mtight"><span class="mord mtight">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7463em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mbin mtight">×</span><span class="mord mtight">8</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord text"><span class="mord"> ms</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.4001em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1000</span><span class="mord text mtight"><span class="mord mtight"> Mb/s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">32</span><span class="mord text mtight"><span class="mord mtight"> Kb</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.4001em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1000</span><span class="mord text mtight"><span class="mord mtight"> Mb/s</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0.032</span><span class="mord text mtight"><span class="mord mtight"> Mb</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.000032</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.032</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span>
+<ul>
+<li>PPT 中的计算: <code>Transfer time = 4KB / 1Gb/s * 8Gb / GB * 1GB / 1024^2KB = 32 / (1024^2) = 0.031 ms</code> (这里 PPT 的单位转换有点简化，但结果近似)</li>
+</ul>
+</li>
+<li>平均 I/O 时间 = <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>m</mi><mi>s</mi><mo>+</mo><mn>4.17</mn><mi>m</mi><mi>s</mi><mo>+</mo><mn>0.1</mn><mi>m</mi><mi>s</mi><mo>+</mo><mn>0.031</mn><mi>m</mi><mi>s</mi><mo>=</mo><mn>9.301</mn><mi>m</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">5ms + 4.17ms + 0.1ms + 0.031ms = 9.301ms</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4.17</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">0.1</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0.031</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9.301</span><span class="mord mathnormal">m</span><span class="mord mathnormal">s</span></span></span></span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-info" data-admonition="info">
+<div class="note-admonition-title">第一块硬盘</div>
+<p>1956 年，IBM RAMDAC 计算机包含了 IBM Model 350 磁盘存储系统，容量为 5M (7位) 字符，由 50 个 24 英寸的盘片组成，访问时间小于 1 秒。</p>
+</aside>
+<h2 id="三非易失性内存-nvm">三、非易失性内存 (NVM)</h2>
+<p>NVM（如固态硬盘 SSD）是一种即使在断电后也能保持数据存储的内存技术。</p>
+<ul>
+<li><strong>特点</strong>：
+<ul>
+<li>比 HDD 更可靠（无移动部件）。</li>
+<li>每 MB 成本更高。</li>
+<li>可能有较短的寿命（写入次数限制），需要磨损均衡等管理技术。</li>
+<li>容量相对 HDD 可能较小（但差距在缩小）。</li>
+<li><strong>速度远快于 HDD</strong>。</li>
+<li>无寻道时间或旋转延迟。</li>
+</ul>
+</li>
+<li><strong>接口</strong>：传统 SATA 总线可能成为瓶颈，新的接口如 <strong>NVMe (NVM Express)</strong> 直接连接到 PCI-e 总线，提供更高带宽和更低延迟。</li>
+<li><strong>形式</strong>：SSD、USB 驱动器、主板集成存储、智能手机存储等。</li>
+</ul>
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">易失性存储用作大容量存储</div>
+<p>DRAM 也可以配置为 RAM 驱动器（RAM disk），提供极快的 I/O 性能，但数据在断电后会丢失。</p>
+<ul>
+<li>操作系统通过 RAM 进行缓冲和缓存。</li>
+<li>RAM 驱动器由用户控制，可用作高速临时存储。</li>
+<li>Linux 中有 <code>/dev/ram</code>，macOS 可用 <code>diskutil</code> 创建，文件系统类型如 <code>tmpfs</code>。</li>
+</ul>
+</aside>
+<h2 id="四磁盘与主机的连接">四、磁盘与主机的连接</h2>
+<p>磁盘驱动器通过 I/O 总线与主机系统连接。</p>
+<ul>
+<li><strong>总线类型</strong>：ATA, SATA (最常见), eSATA, SAS, USB, Fibre Channel (FC)。</li>
+<li><strong>控制器</strong>：
+<ul>
+<li><strong>主机控制器 (Host Bus Adapter - HBA)</strong>：在计算机端，管理总线。</li>
+<li><strong>磁盘控制器 (Device Controller)</strong>：内置于磁盘驱动器中。</li>
+</ul>
+</li>
+<li><strong>通信</strong>：主机通过内存映射 I/O 端口向主机控制器发送命令，主机控制器再向设备控制器发送消息。数据传输通常通过 DMA (Direct Memory Access) 在设备和主存之间进行。</li>
+</ul>
+<h2 id="五地址映射">五、地址映射</h2>
+<p>操作系统将磁盘视为一个由<strong>逻辑块 (Logical Blocks)</strong> 构成的一维数组。逻辑块是最小的传输单元。</p>
+<ul>
+<li><strong>低级格式化 (Low-Level Formatting / Physical Formatting)</strong>：在物理介质上创建逻辑块（扇区），并写入扇区头、数据区和 ECC（纠错码）。</li>
+<li><strong>映射方式</strong>：逻辑块号按顺序映射到磁盘扇区。通常从最外层柱面的第一个磁道的第一个扇区开始 (扇区0)，依次映射完一个磁道，然后是该柱面中的其余磁道，再从外向内扫描其他柱面。</li>
+<li><strong>挑战</strong>：
+<ul>
+<li><strong>坏扇区 (Bad Sectors)</strong>：磁盘控制器通常会维护一个坏扇区列表，并透明地将坏扇区重映射到备用扇区。</li>
+<li><strong>可变扇区数</strong>：对于采用 CLV/ZBR 技术的磁盘，外圈磁道扇区更多，逻辑到物理地址的映射更复杂。</li>
+</ul>
+</li>
+</ul>
+<h2 id="六磁盘调度">六、磁盘调度</h2>
+<p>操作系统负责高效使用磁盘硬件，主要目标是：</p>
+<ol>
+<li><strong>快速的访问时间 (Fast Access Time)</strong>：主要通过最小化寻道时间实现。</li>
+<li><strong>高磁盘带宽 (High Disk Bandwidth)</strong>：单位时间内传输的总字节数。
+<code>Disk Bandwidth = Total Bytes Transferred / (Time of First Request - Time of Last Transfer Completion)</code></li>
+</ol>
+<p>磁盘 I/O 请求可能来自操作系统、系统进程或用户进程。操作系统为每个磁盘维护一个请求队列。当磁盘繁忙时，新的请求必须排队，此时调度算法才有意义。</p>
+<h3 id="61-磁盘调度算法">6.1 磁盘调度算法</h3>
+<p>假设当前磁头位置在 <strong>53</strong>，请求队列为：<strong>98, 183, 37, 122, 14, 124, 65, 67</strong></p>
+<ol>
+<li>
+<p><strong>先来先服务 (FCFS - First-Come, First-Served)</strong></p>
+<ul>
+<li>按请求到达顺序处理。</li>
+<li>公平，但效率不高，可能导致磁头臂移动距离过大。</li>
+<li>移动序列: 53 → 98 → 183 → 37 → 122 → 14 → 124 → 65 → 67</li>
+<li>总寻道长度: (98-53) + (183-98) + (183-37) + (122-37) + (122-14) + (124-14) + (124-65) + (67-65) = 45 + 85 + 146 + 85 + 108 + 110 + 59 + 2 = <strong>640</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>最短寻道时间优先 (SSTF - Shortest Seek Time First)</strong></p>
+<ul>
+<li>选择使磁头臂从当前位置移动最少的请求。</li>
+<li>可能导致某些请求饥饿（Starvation）。</li>
+<li>移动序列: 53 → 65 → 67 → 37 → 14 → 98 → 122 → 124 → 183</li>
+<li>总寻道长度: (65-53) + (67-65) + (67-37) + (37-14) + (98-14) + (122-98) + (124-122) + (183-124) = 12 + 2 + 30 + 23 + 84 + 24 + 2 + 59 = <strong>236</strong> 个柱面。</li>
+</ul>
+<aside class="note-admonition note-admonition-warning" data-admonition="warning">
+<div class="note-admonition-title">SSTF 缺点</div>
+<p>SSTF 算法虽然平均寻道时间较短，但如果不断有靠近当前磁头位置的新请求到达，远离磁头位置的请求可能会长时间得不到服务，产生“饥饿”现象。</p>
+</aside>
+</li>
+<li>
+<p><strong>扫描算法 (SCAN / 电梯算法 - Elevator Algorithm)</strong></p>
+<ul>
+<li>磁头在一个方向上移动，服务所有该方向上的请求，直到到达磁盘末端，然后反向。</li>
+<li>对两端的请求更友好。</li>
+<li>假设当前磁头从 53 开始向磁道号减小的方向移动 (朝0移动)。</li>
+<li>移动序列: 53 → 37 → 14 → 0 (到达端点) → 65 → 67 → 98 → 122 → 124 → 183</li>
+<li>总寻道长度: (53-37) + (37-14) + (14-0) + (65-0) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) = 16 + 23 + 14 + 65 + 2 + 31 + 24 + 2 + 59 = <strong>236</strong> 个柱面 (如果假设磁盘柱面从0到199)。</li>
+<li>如果磁头从 53 开始向磁道号增大的方向移动 (朝199移动)。</li>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 → 199 (到达端点) → 37 → 14</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (199-183) + (199-37) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 16 + 162 + 23 = <strong>331</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>循环扫描算法 (C-SCAN - Circular SCAN)</strong></p>
+<ul>
+<li>磁头只在一个方向上扫描并服务请求（例如，从外到内）。当到达磁盘一端后，立即返回到另一端（不服务任何请求），然后重新开始扫描。</li>
+<li>提供更均匀的等待时间。</li>
+<li>假设当前磁头从 53 开始向磁道号增大的方向移动。</li>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 → 199 (到达端点) → 0 (快速返回) → 14 → 37</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (199-183) + (199-0) + (14-0) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 16 + 199 + 14 + 23 = <strong>382</strong> 个柱面。</li>
+</ul>
+</li>
+<li>
+<p><strong>LOOK 和 C-LOOK 算法</strong></p>
+<ul>
+<li>SCAN 和 C-SCAN 的改进版。磁头只移动到最远端的请求处，而不是磁盘的物理末端，然后反向。</li>
+<li><strong>C-LOOK 示例 (从53向大号移动)</strong>:
+<ul>
+<li>移动序列: 53 → 65 → 67 → 98 → 122 → 124 → 183 (最远请求) → 14 (直接跳到最小号请求) → 37</li>
+<li>总寻道长度: (65-53) + (67-65) + (98-67) + (122-98) + (124-122) + (183-124) + (183-14) + (37-14) = 12 + 2 + 31 + 24 + 2 + 59 + 169 + 23 = <strong>322</strong> 个柱面。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>N步SCAN (N-Step SCAN)</strong></p>
+<ul>
+<li>将磁盘请求队列分成长度为 N 的子队列。</li>
+<li>按 SCAN 算法依次处理每个子队列。</li>
+<li>处理一个子队列时，新请求加入其他队列。</li>
+</ul>
+</li>
+<li>
+<p><strong>FSCAN</strong></p>
+<ul>
+<li>使用两个子队列。一个队列用于当前扫描，另一个队列用于收集扫描期间到达的新请求。</li>
+<li>当前队列处理完毕后，再处理新请求队列。</li>
+</ul>
+</li>
+</ol>
+<h3 id="62-选择磁盘调度算法">6.2 选择磁盘调度算法</h3>
+<ul>
+<li><strong>SSTF</strong>：常见且有吸引力，但有饥饿风险。</li>
+<li><strong>SCAN / C-SCAN</strong>：对于磁盘负载较大的系统性能更好，减少饥饿。</li>
+<li><strong>Linux 中的调度器</strong>：
+<ul>
+<li><strong>Deadline Scheduler</strong>: 维护读/写队列，读优先。实现四个队列（2个读，2个写），其中读/写各有一个按 LBA 排序（类似 C-SCAN），各有一个按 FCFS 排序。批处理后检查 FCFS 队列中是否有超时请求。</li>
+<li><strong>NOOP (No Operation)</strong>: 简单的 FCFS，但会合并相邻请求。适用于随机访问性能好的设备（如 SSD）。</li>
+<li><strong>CFQ (Completely Fair Queuing)</strong>: 为每个进程维护请求队列，试图公平分配 I/O 带宽。</li>
+</ul>
+</li>
+</ul>
+<h3 id="63-nvm-调度">6.3 NVM 调度</h3>
+<ul>
+<li>NVM (如 SSD) 没有磁头移动或旋转延迟，传统调度算法优化寻道时间的意义不大。</li>
+<li>调度目标可能变为：
+<ul>
+<li>合并相邻的 LBA 请求以减少 I/O 次数。</li>
+<li>考虑 NVM 的内部并行性。</li>
+<li>减少写入放大 (Write Amplification)。</li>
+</ul>
+</li>
+<li>RHEL 7 中，对于 NVM 设备，通常使用 <strong>NOOP</strong> 调度器，并合并相邻 LBA 请求。</li>
+<li>NVM 的 IOPS (Input/Output Operations Per Second) 远高于 HDD。</li>
+</ul>
+<h2 id="七错误检测与纠正">七、错误检测与纠正</h2>
+<ul>
+<li><strong>错误检测</strong>：确定是否发生数据错误（如位翻转）。
+<ul>
+<li><strong>奇偶校验位 (Parity Bit)</strong>：一种简单的校验和。</li>
+<li><strong>循环冗余校验 (CRC - Cyclic Redundancy Check)</strong>：使用哈希函数检测多个位错误，常用于网络。</li>
+</ul>
+</li>
+<li><strong>纠错码 (ECC - Error-Correcting Code)</strong>：不仅能检测错误，还能纠正一定程度的错误。
+<ul>
+<li>软错误可纠正，硬错误（物理损坏）可检测但通常无法纠正。</li>
+</ul>
+</li>
+</ul>
+<h2 id="八存储设备管理">八、存储设备管理</h2>
+<h3 id="81-格式化与分区">8.1 格式化与分区</h3>
+<ol>
+<li><strong>低级格式化 (物理格式化)</strong>：
+<ul>
+<li>将磁盘划分为扇区，每个扇区包含头信息、数据区和 ECC。</li>
+<li>通常在出厂时完成。</li>
+</ul>
+</li>
+<li><strong>分区 (Partitioning)</strong>：
+<ul>
+<li>将磁盘划分为一个或多个逻辑区域（分区），每个分区可以被视为一个独立的逻辑磁盘。</li>
+<li>根分区包含操作系统。</li>
+</ul>
+</li>
+<li><strong>逻辑格式化 (创建文件系统)</strong>：
+<ul>
+<li>在分区上建立文件系统的数据结构（如目录、inode 表、空闲空间管理结构）。</li>
+<li>文件系统通常将块 (逻辑块) 分组成簇 (Cluster) 进行管理。磁盘 I/O 以块为单位，文件 I/O 以簇为单位。</li>
+</ul>
+</li>
+</ol>
+<h3 id="82-引导与挂载">8.2 引导与挂载</h3>
+<ul>
+<li><strong>引导块 (Boot Block)</strong>：磁盘的特定位置（如 MBR - Master Boot Record）存储引导加载程序 (Bootloader)，用于加载操作系统内核。</li>
+<li><strong>挂载 (Mounting)</strong>：将一个文件系统（通常在某个分区上）连接到操作系统的目录树中的一个点（挂载点），使其内容可访问。
+<ul>
+<li>挂载时会检查文件系统一致性。</li>
+</ul>
+</li>
+</ul>
+<h3 id="83-坏块管理">8.3 坏块管理</h3>
+<ul>
+<li>磁盘控制器或操作系统可以管理坏块。</li>
+<li>常用方法是<strong>扇区备用 (Sector Sparing)</strong> 或<strong>扇区转发 (Sector Forwarding)</strong>：将坏扇区逻辑上重映射到一个备用好扇区。</li>
+</ul>
+<h2 id="九交换空间管理-swap-space">九、交换空间管理 (Swap Space)</h2>
+<p>当物理内存 (DRAM) 不足以容纳所有进程时，操作系统使用辅助存储（如磁盘）作为交换空间。</p>
+<ul>
+<li><strong>交换 (Swapping)</strong>：将整个进程移出/移入内存。</li>
+<li><strong>分页 (Paging)</strong>：将进程的页面移出/移入内存。</li>
+<li><strong>位置</strong>：交换空间可以在专用分区（性能较好）或文件系统中的文件（灵活性较高）。</li>
+<li><strong>管理</strong>：操作系统管理交换空间的使用，例如 Linux 使用特定的数据结构来跟踪交换区。</li>
+<li><strong>优化</strong>：可以使用多个交换空间分布在不同设备上，以减少 I/O 瓶颈。</li>
+</ul>
+<h2 id="十网络存储">十、网络存储</h2>
+<h3 id="101-网络附加存储-nas---network-attached-storage">10.1 网络附加存储 (NAS - Network Attached Storage)</h3>
+<ul>
+<li>通过网络提供文件级访问的存储设备。</li>
+<li>客户端通过网络文件系统协议（如 NFS, CIFS/SMB）访问 NAS 上的文件。</li>
+<li>协议通常在 IP 网络上通过 TCP 或 UDP 实现，使用 RPC (Remote Procedure Calls)。</li>
+</ul>
+<h3 id="102-存储区域网络-san---storage-area-network">10.2 存储区域网络 (SAN - Storage Area Network)</h3>
+<ul>
+<li>提供块级访问的高速专用网络，连接服务器与存储阵列。</li>
+<li>主机将 SAN 上的存储视为本地连接的磁盘。</li>
+<li><strong>协议</strong>：
+<ul>
+<li><strong>Fibre Channel (FC)</strong>：传统的 SAN 协议。</li>
+<li><strong>iSCSI (Internet SCSI)</strong>：在 IP 网络上传输 SCSI 命令，允许使用标准以太网硬件构建 SAN。</li>
+<li><strong>FCoE (Fibre Channel over Ethernet)</strong>：在以太网上传输光纤通道帧。</li>
+</ul>
+</li>
+<li><strong>特点</strong>：
+<ul>
+<li>多台主机可连接到多个存储阵列，灵活性高。</li>
+<li>通过 LUN (Logical Unit Number) 屏蔽，将特定存储阵列的存储分配给特定服务器。</li>
+<li>易于扩展和管理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="十一raid-redundant-array-of-independent-disks">十一、RAID (Redundant Array of Independent Disks)</h2>
+<p>RAID 是一种将多个独立磁盘驱动器组合成一个逻辑单元的技术，旨在提高性能、数据冗余或两者兼备。</p>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">RAID 的核心思想</div>
+<ul>
+<li><strong>数据分布 (Data Striping)</strong>：将数据分成块，并分布在多个磁盘上，提高并行访问能力和性能。</li>
+<li><strong>冗余 (Redundancy)</strong>：通过存储额外的校验信息（如奇偶校验）或数据副本，实现在磁盘故障时的数据恢复。</li>
+</ul>
+</aside>
+<h3 id="111-raid-级别">11.1 RAID 级别</h3>
+<ul>
+<li>
+<p><strong>RAID 0 (Striping - 条带化)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据分块（条带）存储在多个磁盘上。</li>
+<li><strong>优点</strong>：读写性能高（并行访问）。</li>
+<li><strong>缺点</strong>：无冗余，任何一个磁盘损坏都会导致所有数据丢失。</li>
+<li><strong>磁盘数</strong>：至少 2 个。</li>
+<li><strong>容量</strong>：N * (单个磁盘容量)，N 为磁盘数。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 1 (Mirroring - 镜像)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据完全复制到另一个（或多个）磁盘上。</li>
+<li><strong>优点</strong>：高数据可靠性（一个磁盘坏了，数据仍在另一个上）。读取性能可能提高。</li>
+<li><strong>缺点</strong>：写入性能略有下降（需写两份），成本高（有效容量减半）。</li>
+<li><strong>磁盘数</strong>：至少 2 个 (通常为偶数)。</li>
+<li><strong>容量</strong>：(单个磁盘容量)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 2 (Hamming Code ECC)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据位级条带化，使用汉明码进行错误检测和纠正。需要专门的同步磁盘。</li>
+<li><strong>缺点</strong>：控制器复杂，成本高，很少实际使用。所有磁盘必须同步旋转。</li>
+<li><strong>磁盘数</strong>：N (数据) + m (ECC，m与logN成正比)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 3 (Byte-Level Striping with Dedicated Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据字节级条带化，使用一个专用磁盘存储奇偶校验信息。</li>
+<li><strong>优点</strong>：高传输率（适合大块顺序读写）。</li>
+<li><strong>缺点</strong>：校验盘可能成为瓶颈，不适合大量小 I/O。</li>
+<li><strong>磁盘数</strong>：至少 3 个 (N数据盘 + 1校验盘)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 4 (Block-Level Striping with Dedicated Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，使用一个专用磁盘存储奇偶校验信息。</li>
+<li><strong>优点</strong>：并发小块读取性能好。</li>
+<li><strong>缺点</strong>：写入时校验盘仍是瓶颈（写惩罚：每次写数据盘，都要读旧数据、旧校验，计算新校验，写新数据、新校验）。</li>
+<li><strong>磁盘数</strong>：至少 3 个。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 5 (Block-Level Striping with Distributed Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，奇偶校验信息分布式存储在所有磁盘上。</li>
+<li><strong>优点</strong>：读性能好，写性能优于 RAID 4（校验分布，减轻单一校验盘瓶颈）。允许一个磁盘故障。</li>
+<li><strong>缺点</strong>：写操作仍有一定开销（读-修改-写）。</li>
+<li><strong>磁盘数</strong>：至少 3 个。</li>
+<li><strong>容量</strong>：(N-1) * (单个磁盘容量)。</li>
+</ul>
+</li>
+<li>
+<p><strong>RAID 6 (Block-Level Striping with Dual Distributed Parity)</strong></p>
+<ul>
+<li><strong>特点</strong>：数据块级条带化，使用两种独立的分布式奇偶校验信息。</li>
+<li><strong>优点</strong>：极高的数据可用性，允许两个磁盘同时故障。</li>
+<li><strong>缺点</strong>：写入开销大（需要更新两个校验块），控制器复杂，成本更高。</li>
+<li><strong>磁盘数</strong>：至少 4 个。</li>
+<li><strong>容量</strong>：(N-2) * (单个磁盘容量)。</li>
+</ul>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-summary" data-admonition="summary">
+<div class="note-admonition-title">RAID 级别对比</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">RAID 级别</th><th align="left">描述</th><th align="left">最小磁盘数</th><th align="left">冗余性</th><th align="left">读性能</th><th align="left">写性能</th><th align="left">容量利用率</th><th align="left">主要应用场景</th></tr></thead><tbody><tr><td align="left">RAID 0</td><td align="left">条带化</td><td align="left">2</td><td align="left">无</td><td align="left">++</td><td align="left">++</td><td align="left">100%</td><td align="left">高性能，非关键数据</td></tr><tr><td align="left">RAID 1</td><td align="left">镜像</td><td align="left">2</td><td align="left">高</td><td align="left">+</td><td align="left">o</td><td align="left">50%</td><td align="left">高可靠性，操作系统盘</td></tr><tr><td align="left">RAID 3</td><td align="left">字节级条带+专用校验</td><td align="left">3</td><td align="left">中</td><td align="left">++</td><td align="left">-</td><td align="left">(N-1)/N</td><td align="left">大文件，视频编辑 (较少用)</td></tr><tr><td align="left">RAID 4</td><td align="left">块级条带+专用校验</td><td align="left">3</td><td align="left">中</td><td align="left">+</td><td align="left">—</td><td align="left">(N-1)/N</td><td align="left">(较少用，被RAID 5取代)</td></tr><tr><td align="left">RAID 5</td><td align="left">块级条带+分布式校验</td><td align="left">3</td><td align="left">中</td><td align="left">+</td><td align="left">o</td><td align="left">(N-1)/N</td><td align="left">通用，兼顾性能、容量、可靠性</td></tr><tr><td align="left">RAID 6</td><td align="left">块级条带+双分布式校验</td><td align="left">4</td><td align="left">高</td><td align="left">+</td><td align="left">—</td><td align="left">(N-2)/N</td><td align="left">对数据可靠性要求极高的场景</td></tr></tbody></table>
+<p><em>(++: 很好, +: 好, o: 一般, -: 差, —: 很差)</em></p>
+</aside>
+<h3 id="112-raid-扩展-如-zfs">11.2 RAID 扩展 (如 ZFS)</h3>
+<ul>
+<li>RAID 本身主要防止磁盘物理故障，不能防止数据损坏（如位衰减、写错误）。</li>
+<li><strong>ZFS (Zettabyte File System)</strong>：
+<ul>
+<li>集成了文件系统和卷管理器功能。</li>
+<li>对所有数据和元数据进行<strong>校验和 (Checksumming)</strong>，并与指向该数据的指针一起存储。</li>
+<li>可以检测并纠正数据损坏（静默错误）。</li>
+<li>使用存储池 (Pools of storage) 的概念，文件系统动态共享池中的空间。</li>
+<li>支持类似 RAID 的冗余级别 (RAID-Z, RAID-Z2, RAID-Z3)。</li>
+</ul>
+</li>
+</ul>
+<h2 id="十二新兴-nvm-技术与存储级内存-scm">十二、新兴 NVM 技术与存储级内存 (SCM)</h2>
+<ul>
+<li><strong>3D XPoint 技术 (Intel Optane)</strong>：一种介于 DRAM 和 NAND Flash 之间的存储技术，旨在提供比 NAND 更高的性能和耐用性，以及比 DRAM 更高的密度和非易失性。</li>
+<li><strong>存储级内存 (SCM - Storage Class Memory)</strong>：一类具有内存般访问速度和存储般持久性的技术。</li>
+<li><strong>目标</strong>：打破 I/O 瓶颈，实现新的内存计算架构。</li>
+</ul></div><footer class="notes-article-footer" data-pagefind-ignore><p><span>更新于</span> <time datetime="2025-06-18T07:22:10.000Z">2025年6月18日</time></p><div><a href="https://github.com/allenge007/allenge007.github.io/edit/main/src/content/notes/cs/os/chapter5.md">编辑本页 ↗</a><a href="https://github.com/allenge007/allenge007.github.io/blob/main/src/content/notes/cs/os/chapter5.md">查看源文件 ↗</a></div></footer></article><nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore><a href="/notes/cs/os/chapter4/"><span>上一篇</span><strong>内存管理</strong></a><a href="/notes/cs/os/chapter6/"><span>下一篇</span><strong>文件系统</strong></a></nav><section class="notes-comments" aria-label="评论" data-pagefind-ignore><div class="giscus" data-giscus-host data-giscus-pathname="/notes/cs/os/chapter5/"></div></section><script type="module">var e=document.querySelector(`[data-giscus-host]`);if(e){let t=document.documentElement.dataset.theme===`dark`?`dark_dimmed`:`light`,n=document.createElement(`script`);n.src=`https://giscus.app/client.js`,n.async=!0,n.crossOrigin=`anonymous`,n.dataset.repo=`allenge008/Discussions`,n.dataset.repoId=`R_kgDOOsnx4A`,n.dataset.category=`Announcements`,n.dataset.categoryId=`DIC_kwDOOsnx4M4CqVVF`,n.dataset.mapping=`pathname`,n.dataset.strict=`0`,n.dataset.reactionsEnabled=`1`,n.dataset.emitMetadata=`0`,n.dataset.inputPosition=`bottom`,n.dataset.theme=t,n.dataset.lang=`zh-CN`,n.dataset.loading=`lazy`,e.append(n),addEventListener(`allenge:themechange`,(e=>{document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:{theme:e.detail.theme===`dark`?`dark_dimmed`:`light`}}},`https://giscus.app`)}))}</script></div><aside class="notes-toc" data-pagefind-ignore aria-label="本页目录"><p>本页目录</p><ol><li class="toc-depth-2"><a href="#一存储系统概述">一、存储系统概述</a></li><li class="toc-depth-2"><a href="#二磁盘结构-hdd">二、磁盘结构 (HDD)</a></li><li class="toc-depth-3"><a href="#21-物理结构">2.1 物理结构</a></li><li class="toc-depth-3"><a href="#22-磁盘工作机制">2.2 磁盘工作机制</a></li><li class="toc-depth-3"><a href="#23-hdd-性能参数">2.3 HDD 性能参数</a></li><li class="toc-depth-2"><a href="#三非易失性内存-nvm">三、非易失性内存 (NVM)</a></li><li class="toc-depth-2"><a href="#四磁盘与主机的连接">四、磁盘与主机的连接</a></li><li class="toc-depth-2"><a href="#五地址映射">五、地址映射</a></li><li class="toc-depth-2"><a href="#六磁盘调度">六、磁盘调度</a></li><li class="toc-depth-3"><a href="#61-磁盘调度算法">6.1 磁盘调度算法</a></li><li class="toc-depth-3"><a href="#62-选择磁盘调度算法">6.2 选择磁盘调度算法</a></li><li class="toc-depth-3"><a href="#63-nvm-调度">6.3 NVM 调度</a></li><li class="toc-depth-2"><a href="#七错误检测与纠正">七、错误检测与纠正</a></li><li class="toc-depth-2"><a href="#八存储设备管理">八、存储设备管理</a></li><li class="toc-depth-3"><a href="#81-格式化与分区">8.1 格式化与分区</a></li><li class="toc-depth-3"><a href="#82-引导与挂载">8.2 引导与挂载</a></li><li class="toc-depth-3"><a href="#83-坏块管理">8.3 坏块管理</a></li><li class="toc-depth-2"><a href="#九交换空间管理-swap-space">九、交换空间管理 (Swap Space)</a></li><li class="toc-depth-2"><a href="#十网络存储">十、网络存储</a></li><li class="toc-depth-3"><a href="#101-网络附加存储-nas---network-attached-storage">10.1 网络附加存储 (NAS - Network Attached Storage)</a></li><li class="toc-depth-3"><a href="#102-存储区域网络-san---storage-area-network">10.2 存储区域网络 (SAN - Storage Area Network)</a></li><li class="toc-depth-2"><a href="#十一raid-redundant-array-of-independent-disks">十一、RAID (Redundant Array of Independent Disks)</a></li><li class="toc-depth-3"><a href="#111-raid-级别">11.1 RAID 级别</a></li><li class="toc-depth-3"><a href="#112-raid-扩展-如-zfs">11.2 RAID 扩展 (如 ZFS)</a></li><li class="toc-depth-2"><a href="#十二新兴-nvm-技术与存储级内存-scm">十二、新兴 NVM 技术与存储级内存 (SCM)</a></li></ol><div class="notes-font-controls" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></aside></div><button class="notes-back-top" type="button" data-notes-back-top aria-label="返回顶部">↑</button><script>(function(){const legacyHeadings = [{"level":1,"id":"_1","text":"大容量存储"},{"level":2,"id":"_2","text":"一、存储系统概述"},{"level":2,"id":"hdd","text":"二、磁盘结构 (HDD)"},{"level":3,"id":"21","text":"2.1 物理结构"},{"level":3,"id":"22","text":"2.2 磁盘工作机制"},{"level":3,"id":"23-hdd","text":"2.3 HDD 性能参数"},{"level":2,"id":"nvm","text":"三、非易失性内存 (NVM)"},{"level":2,"id":"_3","text":"四、磁盘与主机的连接"},{"level":2,"id":"_4","text":"五、地址映射"},{"level":2,"id":"_5","text":"六、磁盘调度"},{"level":3,"id":"61","text":"6.1 磁盘调度算法"},{"level":3,"id":"62","text":"6.2 选择磁盘调度算法"},{"level":3,"id":"63-nvm","text":"6.3 NVM 调度"},{"level":2,"id":"_6","text":"七、错误检测与纠正"},{"level":2,"id":"_7","text":"八、存储设备管理"},{"level":3,"id":"81","text":"8.1 格式化与分区"},{"level":3,"id":"82","text":"8.2 引导与挂载"},{"level":3,"id":"83","text":"8.3 坏块管理"},{"level":2,"id":"swap-space","text":"九、交换空间管理 (Swap Space)"},{"level":2,"id":"_8","text":"十、网络存储"},{"level":3,"id":"101-nas-network-attached-storage","text":"10.1 网络附加存储 (NAS - Network Attached Storage)"},{"level":3,"id":"102-san-storage-area-network","text":"10.2 存储区域网络 (SAN - Storage Area Network)"},{"level":2,"id":"raid-redundant-array-of-independent-disks","text":"十一、RAID (Redundant Array of Independent Disks)"},{"level":3,"id":"111-raid","text":"11.1 RAID 级别"},{"level":3,"id":"112-raid-zfs","text":"11.2 RAID 扩展 (如 ZFS)"},{"level":2,"id":"nvm-scm","text":"十二、新兴 NVM 技术与存储级内存 (SCM)"}];
+
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  })();</script><script type="module" src="/_assets/NotesLayout.astro_astro_type_script_index_0_lang.CCNl8DEr.js"></script></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>

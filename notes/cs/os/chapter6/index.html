@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v7.0.9"><meta name="description" content="本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。 主讲人: 陈亮 单位: 计算机学院 日期: 2025-5 理解文件系统的基本功能。 掌握文件系统提供的接口。 探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。 了解文件系统的保护机制。"><meta name="theme-color" content="#eef3fb" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#07101c" media="(prefers-color-scheme: dark)"><link rel="canonical" href="https://www.allenge.me/notes/cs/os/chapter6/"><link rel="alternate" type="application/rss+xml" title="Allenge RSS" href="/rss.xml"><link rel="icon" href="/favicon.ico" sizes="any"><title>文件系统 · Allenge</title><meta property="og:type" content="article"><meta property="og:title" content="文件系统 · Allenge"><meta property="og:description" content="本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。 主讲人: 陈亮 单位: 计算机学院 日期: 2025-5 理解文件系统的基本功能。 掌握文件系统提供的接口。 探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。 了解文件系统的保护机制。"><meta property="og:url" content="https://www.allenge.me/notes/cs/os/chapter6/"><meta property="og:site_name" content="Allenge"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://www.allenge.me/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Allenge — Projects, Writing and Notes"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="文件系统 · Allenge"><meta name="twitter:description" content="本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。 主讲人: 陈亮 单位: 计算机学院 日期: 2025-5 理解文件系统的基本功能。 掌握文件系统提供的接口。 探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。 了解文件系统的保护机制。"><meta name="twitter:image" content="https://www.allenge.me/og.png"><meta name="twitter:image:alt" content="Allenge — Projects, Writing and Notes"><script>
+      (() => {
+        const root = document.documentElement;
+        root.classList.add('js');
+        let theme = 'light';
+        try {
+          const saved = localStorage.getItem('allenge-theme');
+          theme = saved === 'light' || saved === 'dark'
+            ? saved
+            : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q64PQRHYP9"></script><script>(function(){const measurementId = "G-Q64PQRHYP9";
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', measurementId, { anonymize_ip: true });
+        })();</script><link rel="stylesheet" href="/_assets/BaseLayout.D6iNErOC.css"><link rel="stylesheet" href="/_assets/notes.dEZUHJcM.css"><style>@layer astro.images{:where([data-astro-image]){height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}[data-astro-image-fit=fill]{object-fit:fill}[data-astro-image-fit=contain]{object-fit:contain}[data-astro-image-fit=cover]{object-fit:cover}[data-astro-image-fit=scale-down]{object-fit:scale-down}[data-astro-image-pos=top]{object-position:top}[data-astro-image-pos=bottom]{object-position:bottom}[data-astro-image-pos=left]{object-position:left}[data-astro-image-pos=right]{object-position:right}[data-astro-image-pos=center]{object-position:center}[data-astro-image-pos=top-bottom]{object-position:top bottom}[data-astro-image-pos=top-left]{object-position:top left}[data-astro-image-pos=top-right]{object-position:top right}[data-astro-image-pos=top-center]{object-position:top center}[data-astro-image-pos=bottom-top]{object-position:bottom top}[data-astro-image-pos=bottom-left]{object-position:bottom left}[data-astro-image-pos=bottom-right]{object-position:bottom right}[data-astro-image-pos=bottom-center]{object-position:bottom center}[data-astro-image-pos=left-top]{object-position:left top}[data-astro-image-pos=left-bottom]{object-position:left bottom}[data-astro-image-pos=left-right]{object-position:left right}[data-astro-image-pos=left-center]{object-position:left center}[data-astro-image-pos=right-top]{object-position:right top}[data-astro-image-pos=right-bottom]{object-position:right bottom}[data-astro-image-pos=right-left]{object-position:right left}[data-astro-image-pos=right-center]{object-position:right center}[data-astro-image-pos=center-top]{object-position:center top}[data-astro-image-pos=center-bottom]{object-position:center bottom}[data-astro-image-pos=center-left]{object-position:center left}[data-astro-image-pos=center-right]{object-position:center right}}
+</style></head><body><a class="skip-link" href="#main-content">跳到主要内容</a><header class="site-header"><div class="shell header-inner"><a class="wordmark" href="/" aria-label="Allenge 首页"><span class="wordmark-mark" data-image-shell><picture><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_1Oifgg.avif 40w, /_assets/monthly-salary-cat-static.DOzodXXH_Z1eBqJJ.avif 80w" type="image/avif" sizes="40px"><source srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" type="image/webp" sizes="40px"><img src="/_assets/monthly-salary-cat-static.DOzodXXH_xlRG4.webp" srcset="/_assets/monthly-salary-cat-static.DOzodXXH_cmFmJ.webp 40w, /_assets/monthly-salary-cat-static.DOzodXXH_2dE8aF.webp 80w" alt sizes="40px" loading="eager" decoding="async" data-astro-image="constrained" data-astro-image-fit="cover" data-astro-image-pos="center" width="192" height="208"></picture></span><span>allenge<span class="wordmark-dot">.</span></span></a><nav class="desktop-nav" aria-label="主导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav><div class="header-actions"><a class="language-link" href="/en/" aria-label="Switch to English">EN</a><a class="search-link" href="/search/" aria-label="搜索"><span aria-hidden="true">⌕</span></a><button class="theme-toggle" type="button" data-theme-toggle data-label-dark="切换到深色模式" data-label-light="切换到浅色模式" aria-label="切换到深色模式" aria-pressed="false"><span data-theme-icon aria-hidden="true">◐</span></button><details class="mobile-menu"><summary aria-label="打开导航"><span></span><span></span></summary><nav aria-label="移动端导航"><a href="/">首页</a><a href="/projects/">项目</a><a href="/blog/">写作</a><a href="/notes/" aria-current="page">Notes</a><a href="/about/">关于</a></nav></details></div></div></header><main id="main-content"><div class="notes-frame" data-notes-frame><div class="notes-mobile-bar" data-pagefind-ignore><button type="button" data-notes-nav-open aria-controls="notes-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span> 目录</button><a href="/notes/search/"><span aria-hidden="true">⌕</span> 搜索 Notes</a><details class="notes-mobile-toc"><summary>本页目录</summary><div class="notes-mobile-popover"><ol><li class="toc-depth-2"><a href="#学习目标">学习目标</a></li><li class="toc-depth-2"><a href="#一文件基本概念">一、文件基本概念</a></li><li class="toc-depth-3"><a href="#11-什么是文件">1.1 什么是文件？</a></li><li class="toc-depth-3"><a href="#12-文件逻辑结构">1.2 文件逻辑结构</a></li><li class="toc-depth-3"><a href="#13-文件属性">1.3 文件属性</a></li><li class="toc-depth-2"><a href="#二文件操作">二、文件操作</a></li><li class="toc-depth-3"><a href="#21-文件打开open的管理">2.1 文件打开（Open）的管理</a></li><li class="toc-depth-3"><a href="#22-文件锁-file-locks">2.2 文件锁 (File Locks)</a></li><li class="toc-depth-2"><a href="#三文件类型与结构">三、文件类型与结构</a></li><li class="toc-depth-3"><a href="#31-文件类型识别">3.1 文件类型识别</a></li><li class="toc-depth-3"><a href="#32-文件结构">3.2 文件结构</a></li><li class="toc-depth-2"><a href="#四文件访问方法">四、文件访问方法</a></li><li class="toc-depth-3"><a href="#41-顺序访问-sequential-access">4.1 顺序访问 (Sequential Access)</a></li><li class="toc-depth-3"><a href="#42-直接访问-direct-access--relative-access">4.2 直接访问 (Direct Access / Relative Access)</a></li><li class="toc-depth-3"><a href="#43-其他访问方法-indexed-access">4.3 其他访问方法 (Indexed Access)</a></li><li class="toc-depth-2"><a href="#五磁盘与存储结构">五、磁盘与存储结构</a></li><li class="toc-depth-3"><a href="#51-磁盘结构">5.1 磁盘结构</a></li><li class="toc-depth-3"><a href="#52-存储结构层次">5.2 存储结构层次</a></li><li class="toc-depth-3"><a href="#53-文件系统的类型">5.3 文件系统的类型</a></li><li class="toc-depth-2"><a href="#六目录结构">六、目录结构</a></li><li class="toc-depth-3"><a href="#61-目录操作">6.1 目录操作</a></li><li class="toc-depth-3"><a href="#62-目录组织目标">6.2 目录组织目标</a></li><li class="toc-depth-3"><a href="#63-常见目录结构">6.3 常见目录结构</a></li><li class="toc-depth-4"><a href="#1-单级目录-single-level-directory">1. 单级目录 (Single-Level Directory)</a></li><li class="toc-depth-4"><a href="#2-两级目录-two-level-directory">2. 两级目录 (Two-Level Directory)</a></li><li class="toc-depth-4"><a href="#3-树形目录-tree-structured-directory">3. 树形目录 (Tree-Structured Directory)</a></li><li class="toc-depth-4"><a href="#4-无环图目录-acyclic-graph-directories">4. 无环图目录 (Acyclic-Graph Directories)</a></li><li class="toc-depth-4"><a href="#5-通用图目录-general-graph-directory">5. 通用图目录 (General Graph Directory)</a></li><li class="toc-depth-2"><a href="#七文件系统保护">七、文件系统保护</a></li><li class="toc-depth-3"><a href="#71-访问类型-types-of-access">7.1 访问类型 (Types of Access)</a></li><li class="toc-depth-3"><a href="#72-linuxunix-文件访问控制">7.2 Linux/Unix 文件访问控制</a></li></ol><div class="notes-font-controls notes-font-controls-mobile" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></div></details></div><aside id="notes-sidebar" class="notes-sidebar" data-notes-sidebar data-pagefind-ignore aria-label="Notes 目录"><div class="notes-sidebar-head"><a href="/notes/" class="notes-sidebar-brand">Allenge Notes</a><button type="button" data-notes-nav-close aria-label="关闭 Notes 目录">×</button></div><a class="notes-search-link" href="/notes/search/"><span aria-hidden="true">⌕</span>搜索 Notes</a><nav><ul class="notes-nav-list notes-nav-root"><li><details><summary><span>数学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/">概览</a><ul class="notes-nav-list"><li><details><summary><span>信号与系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/signals_and_systems/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/signals_and_systems/chapter1/">连续时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter2/">离散时间傅里叶变换</a></li><li><a href="/notes/math/signals_and_systems/chapter3/">拉普拉斯变换</a></li><li><a href="/notes/math/signals_and_systems/chapter4/">z 变换</a></li><li><a href="/notes/math/signals_and_systems/FFT/">快速傅立叶变换</a></li></ul></details></li><li><details><summary><span>最优化理论</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/math/optimization_theory/">概览</a><ul class="notes-nav-list"><li><a href="/notes/math/optimization_theory/chapter1/">lec1 · 仿射与凸性</a></li><li><a href="/notes/math/optimization_theory/chapter2/">lec2</a></li><li><a href="/notes/math/optimization_theory/chapter3/">lec3</a></li><li><a href="/notes/math/optimization_theory/chapter4/">lec4</a></li><li><a href="/notes/math/optimization_theory/chapter5/">lec5</a></li><li><a href="/notes/math/optimization_theory/chapter6/">lec6</a></li><li><a href="/notes/math/optimization_theory/chapter7/">lec7</a></li><li><a href="/notes/math/optimization_theory/chapter8/">lec8</a></li></ul></details></li></ul></details></li><li><details open><summary><span>计算机科学</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/">概览</a><ul class="notes-nav-list"><li><details open><summary><span>操作系统</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/os/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/os/chapter1/">操作系统概述</a></li><li><a href="/notes/cs/os/chapter2/">进程、线程与 CPU 调度</a></li><li><a href="/notes/cs/os/chapter3/">进程同步与死锁</a></li><li><a href="/notes/cs/os/chapter4/">内存管理</a></li><li><a href="/notes/cs/os/chapter5/">大容量存储</a></li><li><a href="/notes/cs/os/chapter6/" aria-current="page">文件系统</a></li><li><a href="/notes/cs/os/chapter7/">I/O 管理</a></li></ul></details></li><li><details><summary><span>人工智能</span><span aria-hidden="true">⌄</span></summary><a class="notes-nav-index" href="/notes/cs/ai/">概览</a><ul class="notes-nav-list"><li><a href="/notes/cs/ai/chapter1/">知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter2/">搜索技术</a></li><li><a href="/notes/cs/ai/chapter3/">不确定性知识表示与推理</a></li><li><a href="/notes/cs/ai/chapter4/">机器学习 · 聚类</a></li><li><a href="/notes/cs/ai/chapter5/">机器学习 · 神经网络</a></li><li><a href="/notes/cs/ai/chapter6/">机器学习 · 决策树</a></li><li><a href="/notes/cs/ai/chapter7/">深度学习</a></li><li><a href="/notes/cs/ai/chapter8/">Transformer</a></li><li><a href="/notes/cs/ai/chapter9/">强化学习</a></li></ul></details></li></ul></details></li></ul></nav></aside><button class="notes-drawer-scrim" type="button" data-notes-nav-close tabindex="-1" aria-label="关闭 Notes 目录"></button><div class="notes-main"><nav class="notes-breadcrumbs" aria-label="面包屑" data-pagefind-ignore><a href="/notes/">Notes</a><span aria-hidden="true">/</span><a href="/notes/cs/">计算机科学</a><span aria-hidden="true">/</span><a href="/notes/cs/os/">操作系统</a><span aria-hidden="true">/</span><a href="/notes/cs/os/chapter6/" aria-current="page">文件系统</a></nav><article class="notes-article" data-pagefind-body="true" data-note-route="/notes/cs/os/chapter6/"><span hidden data-pagefind-filter="kind:notes">notes</span><span hidden data-pagefind-filter="subject:computer-science">computer-science</span><span hidden data-pagefind-filter="lang:zh">zh</span><span hidden data-pagefind-meta="title">文件系统</span><div class="notes-prose" data-notes-prose><h1 id="文件系统">文件系统</h1>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">课程信息</div>
+<p>本笔记根据陈亮老师《操作系统》课程第十二讲“文件系统”PPT整理而成，旨在帮助学习和复习文件系统相关概念。</p>
+<ul>
+<li><strong>主讲人</strong>: 陈亮</li>
+<li><strong>单位</strong>: 计算机学院</li>
+<li><strong>日期</strong>: 2025-5</li>
+</ul>
+</aside>
+<h2 id="学习目标">学习目标</h2>
+<ul>
+<li>理解文件系统的基本功能。</li>
+<li>掌握文件系统提供的接口。</li>
+<li>探讨文件系统设计中的权衡因素，包括访问方法、文件共享、文件加锁机制以及目录结构。</li>
+<li>了解文件系统的保护机制。</li>
+</ul>
+<h2 id="一文件基本概念">一、文件基本概念</h2>
+<h3 id="11-什么是文件">1.1 什么是文件？</h3>
+<p>操作系统对存储设备的物理属性进行抽象，定义出逻辑存储单位——<strong>文件</strong>。文件由操作系统负责映射到物理设备上。</p>
+<ul>
+<li>文件是用户创建的数据集合（Data collections created by users）。</li>
+<li>对用户而言，文件系统是操作系统最重要的组成部分之一（The File System is one of the most important parts of the OS to a user）。</li>
+</ul>
+<h3 id="12-文件逻辑结构">1.2 文件逻辑结构</h3>
+<p>文件表现为一段<strong>连续的逻辑地址空间</strong>。</p>
+<ul>
+<li><strong>文件类型</strong>:
+<ul>
+<li><strong>数据文件</strong>:
+<ul>
+<li>数值型 (Numeric)</li>
+<li>字符型 (Character)</li>
+<li>二进制型 (Binary)</li>
+</ul>
+</li>
+<li><strong>程序文件</strong>:
+<ul>
+<li>源代码文件 (source file)</li>
+<li>可执行文件 (executable file)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件的<strong>内容</strong>由其创建者定义。常见的有文本文件、源文件、可执行文件等。</li>
+</ul>
+<h3 id="13-文件属性">1.3 文件属性</h3>
+<p>文件属性是描述文件特性的元数据，保存在目录结构中（通常在磁盘上）。</p>
+<ul>
+<li><strong>名称 (Name)</strong>: 人类可读的文件标识。</li>
+<li><strong>标识符 (Identifier)</strong>: 文件系统内部唯一的标签（通常是数字）。</li>
+<li><strong>类型 (Type)</strong>: 支持不同文件类型的系统需要此属性。</li>
+<li><strong>位置 (Location)</strong>: 指向文件在设备上存储位置的指针。</li>
+<li><strong>大小 (Size)</strong>: 文件当前的大小。</li>
+<li><strong>保护 (Protection)</strong>: 控制用户对文件的读、写、执行等权限。</li>
+<li><strong>时间、日期和用户标识 (Time, date, and user identification)</strong>: 用于保护、安全和使用情况监控。</li>
+<li><strong>扩展属性</strong>: 例如文件校验和 (file checksum) 等。</li>
+</ul>
+<!-- PPT Slide 10: Mac OS上的文件属性 (图片展示了Finder中文件的详细信息，如种类、大小、位置、创建修改时间、权限等) -->
+<h2 id="二文件操作">二、文件操作</h2>
+<p>操作系统提供了一系列基本的文件操作：</p>
+<ol>
+<li><strong>创建 (Create)</strong>: 创建一个新文件。</li>
+<li><strong>写入 (Write)</strong>: 在文件的当前写指针位置写入数据。</li>
+<li><strong>读取 (Read)</strong>: 从文件的当前读指针位置读取数据。</li>
+<li><strong>文件内重定位 (Reposition within file / seek)</strong>: 移动文件读/写指针到指定位置。</li>
+<li><strong>删除 (Delete)</strong>: 删除文件，释放其占用的空间。</li>
+<li><strong>截断 (Truncate)</strong>: 清空文件内容，但保留文件本身，大小变为0。</li>
+</ol>
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">核心操作</div>
+<p>以上6个基本操作构成了文件操作的最小集合。</p>
+</aside>
+<p>此外，还有两个重要的管理操作：</p>
+<ul>
+<li><strong>打开 (Open)</strong>:
+<ol>
+<li>在磁盘上的目录结构中搜索文件条目 <code>Fi</code>。</li>
+<li>将该条目的内容加载到内存中（通常是打开文件表）。</li>
+</ol>
+</li>
+<li><strong>关闭 (Close)</strong>:
+<ol>
+<li>将内存中关于文件 <code>Fi</code> 的条目内容（可能已更新）写回到磁盘上的目录结构中。</li>
+<li>释放内存中占用的相关资源。</li>
+</ol>
+</li>
+</ul>
+<h3 id="21-文件打开open的管理">2.1 文件打开（Open）的管理</h3>
+<p>当文件被打开时，操作系统需要维护以下信息来管理：</p>
+<ul>
+<li><strong>打开文件表 (Open-file table)</strong>: 跟踪系统中所有打开的文件。通常分为进程级打开文件表和系统级打开文件表。</li>
+<li><strong>文件指针 (File pointer)</strong>: 每个打开文件的进程都有一个指针，指向下一次读/写操作的位置。</li>
+<li><strong>文件打开计数 (File-open count)</strong>: 记录一个文件被多少个进程打开。当最后一个进程关闭该文件时，相关条目才能从系统打开文件表中移除。</li>
+<li><strong>文件在磁盘上的位置 (Disk location of the file)</strong>: 数据访问信息的缓存，加速后续I/O。</li>
+<li><strong>访问权限 (Access rights)</strong>: 每个进程对该文件的访问模式信息（如只读、读写）。</li>
+</ul>
+<h3 id="22-文件锁-file-locks">2.2 文件锁 (File Locks)</h3>
+<p>某些操作系统和文件系统提供文件锁机制，用于协调对文件的并发访问。</p>
+<ul>
+<li>类似于<strong>读者-写者锁 (reader-writer locks)</strong>:
+<ul>
+<li><strong>共享锁 (Shared lock)</strong>: 类似读者锁，多个进程可以同时获取。</li>
+<li><strong>互斥锁 (Exclusive lock)</strong>: 类似写者锁，同一时间只允许一个进程获取。</li>
+</ul>
+</li>
+<li><strong>作用</strong>: 调节对文件的访问。</li>
+<li><strong>类型</strong>:
+<ul>
+<li><strong>强制锁 (Mandatory locks)</strong>: (如 Windows) 系统根据锁的持有情况和请求来决定是否拒绝访问。如果一个进程试图以与已持有的锁不兼容的方式访问文件，访问将被拒绝。</li>
+<li><strong>劝告锁 (Advisory locks)</strong>: (如 Unix) 系统允许进程查询锁的状态，但由进程自己决定如何行动。即使有锁，进程也可以选择忽略它（除非内核强制执行）。</li>
+</ul>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-example" data-admonition="example">
+<div class="note-admonition-title">Java 文件锁案例</div>
+<p>以下Java代码演示了如何使用文件通道 (FileChannel) 对文件部分内容进行加锁：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="java"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> java.io.</span><span style="color:#005CC5;--shiki-dark:#79B8FF">*</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">import</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> java.nio.channels.</span><span style="color:#005CC5;--shiki-dark:#79B8FF">*</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">public</span><span style="color:#D73A49;--shiki-dark:#F97583"> class</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> LockingExample</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> static</span><span style="color:#D73A49;--shiki-dark:#F97583"> final</span><span style="color:#D73A49;--shiki-dark:#F97583"> boolean</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> EXCLUSIVE </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">; </span><span style="color:#6A737D;--shiki-dark:#6A737D">// true for exclusive lock in FileChannel.lock()</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> static</span><span style="color:#D73A49;--shiki-dark:#F97583"> final</span><span style="color:#D73A49;--shiki-dark:#F97583"> boolean</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> SHARED </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;    </span><span style="color:#6A737D;--shiki-dark:#6A737D">// false for shared lock in FileChannel.lock()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">    public</span><span style="color:#D73A49;--shiki-dark:#F97583"> static</span><span style="color:#D73A49;--shiki-dark:#F97583"> void</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> main</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(String </span><span style="color:#E36209;--shiki-dark:#FFAB70">arsg</span><span style="color:#24292E;--shiki-dark:#E1E4E8">[]) </span><span style="color:#D73A49;--shiki-dark:#F97583">throws</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> IOException {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        FileLock sharedLock </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        FileLock exclusiveLock </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#24292E;--shiki-dark:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">        try</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            RandomAccessFile raf </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#D73A49;--shiki-dark:#F97583"> new</span><span style="color:#6F42C1;--shiki-dark:#B392F0"> RandomAccessFile</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"file.txt"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"rw"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // get the channel for the file</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            FileChannel ch </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> raf.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">getChannel</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // this locks the first half of the file - exclusive</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // Note: In FileChannel.lock(), the third parameter 'shared'</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // should be 'false' for an exclusive lock and 'true' for a shared lock.</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // The constants in the PPT seem to have this reversed based on their names.</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // Assuming EXCLUSIVE constant means we want an exclusive lock.</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            exclusiveLock </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ch.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">lock</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#005CC5;--shiki-dark:#79B8FF">0</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, raf.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">() </span><span style="color:#D73A49;--shiki-dark:#F97583">/</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// Corrected based on standard API</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            /** Now modify the data . . . */</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            System.out.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">println</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Exclusive lock acquired on first half."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // release the lock</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            exclusiveLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">release</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            System.out.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">println</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Exclusive lock released."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // this locks the second half of the file - shared</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            sharedLock </span><span style="color:#D73A49;--shiki-dark:#F97583">=</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> ch.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">lock</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(raf.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">() </span><span style="color:#D73A49;--shiki-dark:#F97583">/</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#D73A49;--shiki-dark:#F97583"> +</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, raf.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">() </span><span style="color:#D73A49;--shiki-dark:#F97583">-</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (raf.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">length</span><span style="color:#24292E;--shiki-dark:#E1E4E8">() </span><span style="color:#D73A49;--shiki-dark:#F97583">/</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 2</span><span style="color:#D73A49;--shiki-dark:#F97583"> +</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="color:#24292E;--shiki-dark:#E1E4E8">), </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span><span style="color:#24292E;--shiki-dark:#E1E4E8">); </span><span style="color:#6A737D;--shiki-dark:#6A737D">// Corrected</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            /** Now read the data . . . */</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            System.out.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">println</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Shared lock acquired on second half."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">            // release the lock</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            sharedLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">release</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            System.out.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">println</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Shared lock released."</span><span style="color:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        } </span><span style="color:#D73A49;--shiki-dark:#F97583">catch</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (java.io.IOException </span><span style="color:#E36209;--shiki-dark:#FFAB70">ioe</span><span style="color:#24292E;--shiki-dark:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">            System.err.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">println</span><span style="color:#24292E;--shiki-dark:#E1E4E8">(ioe);</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        } </span><span style="color:#D73A49;--shiki-dark:#F97583">finally</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">            if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (exclusiveLock </span><span style="color:#D73A49;--shiki-dark:#F97583">!=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;&#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> exclusiveLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isValid</span><span style="color:#24292E;--shiki-dark:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">                exclusiveLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">release</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">            if</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> (sharedLock </span><span style="color:#D73A49;--shiki-dark:#F97583">!=</span><span style="color:#005CC5;--shiki-dark:#79B8FF"> null</span><span style="color:#D73A49;--shiki-dark:#F97583"> &#x26;&#x26;</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> sharedLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">isValid</span><span style="color:#24292E;--shiki-dark:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">                sharedLock.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">release</span><span style="color:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p><strong>注意</strong>: <code>FileChannel.lock()</code> 方法的第三个参数 <code>shared</code>：<code>true</code> 表示共享锁，<code>false</code> 表示互斥锁。PPT中的 <code>EXCLUSIVE = false</code> 和 <code>SHARED = true</code> 可能与 <code>FileChannel.lock()</code> API 的直接布尔参数含义相反，或者它们是用于自定义逻辑的常量。上述代码已根据标准API进行调整。</p>
+</aside>
+<h2 id="三文件类型与结构">三、文件类型与结构</h2>
+<h3 id="31-文件类型识别">3.1 文件类型识别</h3>
+<ul>
+<li><strong>Windows</strong>: 主要通过<strong>扩展名</strong> (e.g., <code>.txt</code>, <code>.exe</code>, <code>.docx</code>) 识别。</li>
+<li><strong>Unix/Linux</strong>: 通常通过文件开头的<strong>魔数 (magic number)</strong> 识别。这是一个特定字节序列，用于标识文件类型。</li>
+</ul>
+<h3 id="32-文件结构">3.2 文件结构</h3>
+<p>文件内部数据的组织方式：</p>
+<ul>
+<li><strong>无结构 (None)</strong>: 文件被视为字节序列或字序列 (sequence of words, bytes)。</li>
+<li><strong>简单记录结构 (Simple record structure)</strong>:
+<ul>
+<li>行 (Lines)</li>
+<li>定长记录 (Fixed length)</li>
+<li>变长记录 (Variable length)</li>
+</ul>
+</li>
+<li><strong>复杂结构 (Complex Structures)</strong>:
+<ul>
+<li>格式化文档 (Formatted document)</li>
+<li>可重定位加载文件 (Relocatable load file)</li>
+</ul>
+</li>
+</ul>
+<aside class="note-admonition note-admonition-note" data-admonition="note">
+<div class="note-admonition-title">谁来决定结构？</div>
+<p>文件结构可以由操作系统定义，也可以由应用程序自己解释。简单的无结构方式可以通过在文件中插入适当的控制字符来模拟复杂结构。</p>
+</aside>
+<h2 id="四文件访问方法">四、文件访问方法</h2>
+<p>文件由定长的逻辑记录组成时，常见的访问方法有：</p>
+<h3 id="41-顺序访问-sequential-access">4.1 顺序访问 (Sequential Access)</h3>
+<p>文件信息按顺序处理，这是最常见的访问方法。</p>
+<ul>
+<li><strong>操作</strong>:
+<ul>
+<li><code>read next</code>: 读取下一个记录。</li>
+<li><code>write next</code>: 写入下一个记录。</li>
+<li><code>reset</code>: 将文件指针重置到文件开头。</li>
+</ul>
+</li>
+<li>磁带等设备天然支持顺序访问。</li>
+</ul>
+<!-- PPT Slide 24: 顺序访问示意图 (通常展示一个文件指针从头到尾依次移动) -->
+<h3 id="42-直接访问-direct-access--relative-access">4.2 直接访问 (Direct Access / Relative Access)</h3>
+<p>文件被视为由编号的逻辑块或记录组成，可以快速访问任意块/记录。</p>
+<ul>
+<li><strong>操作</strong>:
+<ul>
+<li><code>read n</code>: 读取第 <code>n</code> 个块/记录。</li>
+<li><code>write n</code>: 写入第 <code>n</code> 个块/记录。</li>
+<li><code>position to n</code>: 将文件指针定位到第 <code>n</code> 个块/记录。</li>
+<li><code>read next</code>: 读取当前位置的下一个块/记录。</li>
+<li><code>write next</code>: 写入当前位置的下一个块/记录。</li>
+<li><code>rewrite n</code>: 重写第 <code>n</code> 个块/记录。</li>
+</ul>
+</li>
+<li><code>n</code> 是<strong>相对块号 (relative block number)</strong>。</li>
+<li>适用于由固定长度逻辑记录组成的文件。数据库通常采用此方式。</li>
+</ul>
+<!-- PPT Slide 25: 直接访问示意图 (通常展示可以直接跳转到文件的任意记录) -->
+<aside class="note-admonition note-admonition-tip" data-admonition="tip">
+<div class="note-admonition-title">模拟</div>
+<p>可以直接访问模拟顺序访问（例如，通过 <code>position to n</code> 然后 <code>read next</code>）。</p>
+</aside>
+<h3 id="43-其他访问方法-indexed-access">4.3 其他访问方法 (Indexed Access)</h3>
+<p>在基本访问方法之上构建更复杂的访问方法，通常涉及为文件创建<strong>索引 (index)</strong>。</p>
+<ul>
+<li>索引将文件的某些部分（键）映射到其在磁盘上的位置。</li>
+<li>索引可以保存在内存中以加速查找。</li>
+<li>如果索引过大，可以创建磁盘索引的内存索引（多级索引）。</li>
+<li><strong>示例</strong>: IBM 的索引顺序存取方法 (ISAM - Indexed Sequential-Access Method)。
+<ul>
+<li>小型主索引指向二级索引的磁盘块。</li>
+<li>文件按定义的键排序。</li>
+<li>通过记录的键，至多两次直接访问就可以定位记录。</li>
+</ul>
+</li>
+<li>VMS 操作系统也提供索引文件和相关文件。</li>
+</ul>
+<!-- PPT Slide 30: 索引文件和相关文件的例子 (通常展示数据文件和其对应的索引文件结构) -->
+<h2 id="五磁盘与存储结构">五、磁盘与存储结构</h2>
+<h3 id="51-磁盘结构">5.1 磁盘结构</h3>
+<ul>
+<li>磁盘可以被划分为多个<strong>分区 (partitions)</strong> (也称作 minidisks, slices)。</li>
+<li>磁盘或分区可以通过 <strong>RAID</strong> 技术进行保护以防故障。</li>
+<li>磁盘或分区可以<strong>裸用 (raw)</strong>，即不带文件系统，或者用文件系统进行<strong>格式化 (formatted)</strong>。</li>
+<li>包含文件系统的实体称为<strong>卷 (volume)</strong>。</li>
+<li>每个包含文件系统的卷也会在<strong>设备目录 (device directory)</strong> 或 <strong>卷内容表 (volume table of contents)</strong> 中跟踪该文件系统的信息。</li>
+</ul>
+<h3 id="52-存储结构层次">5.2 存储结构层次</h3>
+<!-- PPT Slide 32: 存储结构 (通常展示从应用程序到逻辑文件系统，再到物理文件系统，最后到存储设备的层次结构) -->
+<p>存储系统通常是分层的，从用户视角的文件到底层物理块的映射。</p>
+<h3 id="53-文件系统的类型">5.3 文件系统的类型</h3>
+<p>除了通用的文件系统，系统中常有多种特殊用途的文件系统。</p>
+<ul>
+<li><strong>示例 (Solaris)</strong>:
+<ul>
+<li><code>tmpfs</code>: 基于内存的易失性文件系统，用于快速临时I/O。</li>
+<li><code>objfs</code>: 内核内存接口，用于获取内核符号进行调试。</li>
+<li><code>ctfs</code>: 契约文件系统，用于管理守护进程。</li>
+<li><code>lofs</code>: 环回文件系统，允许一个文件系统在另一个位置被访问。</li>
+<li><code>procfs</code>: 内核到进程结构的接口。</li>
+<li><code>ufs</code>, <code>zfs</code>: 通用文件系统。</li>
+</ul>
+</li>
+</ul>
+<h2 id="六目录结构">六、目录结构</h2>
+<p>目录是包含所有文件信息的节点的集合。目录结构和文件本身都驻留在磁盘上。</p>
+<h3 id="61-目录操作">6.1 目录操作</h3>
+<ul>
+<li><strong>搜索文件 (Search for a file)</strong></li>
+<li><strong>创建文件 (Create a file)</strong></li>
+<li><strong>删除文件 (Delete a file)</strong></li>
+<li><strong>列出目录内容 (List a directory)</strong></li>
+<li><strong>重命名文件 (Rename a file)</strong></li>
+<li><strong>遍历文件系统 (Traverse the file system)</strong></li>
+</ul>
+<h3 id="62-目录组织目标">6.2 目录组织目标</h3>
+<ul>
+<li><strong>效率 (Efficiency)</strong>: 快速定位文件。</li>
+<li><strong>命名 (Naming)</strong>: 方便用户。
+<ul>
+<li>不同用户可以为不同文件使用相同名称。</li>
+<li>同一文件可以有多个不同名称 (别名)。</li>
+</ul>
+</li>
+<li><strong>分组 (Grouping)</strong>: 按属性对文件进行逻辑分组 (例如，所有Java程序、所有游戏等)。</li>
+</ul>
+<h3 id="63-常见目录结构">6.3 常见目录结构</h3>
+<h4 id="1-单级目录-single-level-directory">1. 单级目录 (Single-Level Directory)</h4>
+<p>所有用户共享一个目录。</p>
+<ul>
+<li><strong>问题</strong>:
+<ul>
+<li>命名冲突 (Naming problem): 不同用户的文件名必须唯一。</li>
+<li>分组困难 (Grouping problem)。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-两级目录-two-level-directory">2. 两级目录 (Two-Level Directory)</h4>
+<p>为每个用户创建一个独立的目录。</p>
+<ul>
+<li><strong>路径名 (Path name)</strong>: 通常是 <code>用户目录/文件名</code>。</li>
+<li>不同用户可以使用相同的文件名。</li>
+<li>搜索效率较高（在用户自己的目录内）。</li>
+</ul>
+<h4 id="3-树形目录-tree-structured-directory">3. 树形目录 (Tree-Structured Directory)</h4>
+<p>目录可以包含文件和其他目录，形成树状结构。这是最常用的一种结构。</p>
+<ul>
+<li>每个文件都有唯一的路径名。</li>
+<li>可以方便地进行分组。</li>
+<li><strong>当前目录 (Current Directory / Working Directory)</strong>: 用户可以指定一个目录作为当前工作目录，文件引用可以相对于此目录。
+<ul>
+<li><code>cd /spell/mail/prog</code>：改变当前目录。</li>
+<li><code>mkdir &#x3C;dir-name></code>：在当前目录下创建新目录。</li>
+<li>删除一个目录（如 “mail”）通常意味着删除其下的整个子树。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-无环图目录-acyclic-graph-directories">4. 无环图目录 (Acyclic-Graph Directories)</h4>
+<p>允许目录共享子目录和文件，形成一个有向无环图 (DAG)。</p>
+<ul>
+<li><strong>别名 (Aliasing)</strong>: 同一个文件或子目录可以有两个或多个不同的路径名。</li>
+<li><strong>问题</strong>:
+<ul>
+<li><strong>悬空指针 (Dangling pointer)</strong>: 如果一个共享文件被删除，指向它的其他目录条目会变成悬空指针。
+<ul>
+<li><strong>解决方案</strong>:
+<ul>
+<li><strong>反向指针 (Backpointers)</strong>: 记录所有指向该文件的指针，删除文件时一并删除。实现复杂，尤其当记录大小可变时。可以使用菊花链组织反向指针。</li>
+<li><strong>入口保持计数 (Entry-hold-count / Reference count)</strong>: 每个文件维护一个计数器，记录有多少目录条目指向它。只有当计数为0时才真正删除文件。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>链接 (Link)</strong>:
+<ul>
+<li><strong>软链接 (Symbolic Link / Soft Link)</strong>: 创建一个特殊文件，内容是另一个文件的路径名。删除原文件会导致软链接失效。</li>
+<li><strong>硬链接 (Hard Link)</strong>: 创建一个指向文件物理数据块的目录条目。只有当所有硬链接都被删除（引用计数为0）时，文件数据才会被删除。通常不允许对目录创建硬链接（以防循环）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-通用图目录-general-graph-directory">5. 通用图目录 (General Graph Directory)</h4>
+<p>允许目录结构中存在<strong>循环 (cycles)</strong>。</p>
+<ul>
+<li><strong>问题</strong>: 搜索算法可能陷入死循环，计算空间占用等变得复杂。</li>
+<li><strong>如何保证无环或处理循环?</strong>
+<ul>
+<li>只允许链接到文件，不允许链接到子目录（这是许多系统避免循环的方式）。</li>
+<li><strong>垃圾收集 (Garbage collection)</strong>: 定期扫描文件系统，回收不可达的块。</li>
+<li>每次添加新链接时，使用<strong>循环检测算法 (cycle detection algorithm)</strong> 来确定是否会形成循环。</li>
+</ul>
+</li>
+</ul>
+<h2 id="七文件系统保护">七、文件系统保护</h2>
+<p>文件所有者/创建者应该能够控制：</p>
+<ul>
+<li><strong>可以执行哪些操作 (What can be done)</strong></li>
+<li><strong>由谁执行 (By whom)</strong></li>
+</ul>
+<h3 id="71-访问类型-types-of-access">7.1 访问类型 (Types of Access)</h3>
+<ul>
+<li><strong>读取 (Read)</strong>: 从文件读取数据。</li>
+<li><strong>写入 (Write)</strong>: 修改或追加数据到文件。</li>
+<li><strong>执行 (Execute)</strong>: 将文件作为程序加载到内存并运行。</li>
+<li><strong>追加 (Append)</strong>: 只能在文件末尾添加数据，不能修改已有数据。</li>
+<li><strong>删除 (Delete)</strong>: 删除文件。</li>
+<li><strong>列出 (List)</strong>: 列出目录内容（适用于目录）。</li>
+</ul>
+<h3 id="72-linuxunix-文件访问控制">7.2 Linux/Unix 文件访问控制</h3>
+<ul>
+<li><strong>访问模式 (Mode of access)</strong>: 读 (r), 写 (w), 执行 (x)。</li>
+<li><strong>三类用户</strong>:
+<ol>
+<li><strong>所有者 (Owner)</strong>: 创建文件的用户。</li>
+<li><strong>组 (Group)</strong>: 一组用户，共享访问权限。</li>
+<li><strong>其他/公共 (Public/Others)</strong>: 系统中的所有其他用户。</li>
+</ol>
+</li>
+<li><strong>权限表示</strong>:
+<ul>
+<li>通常用9个字符表示，如 <code>rwxr-xr--</code>。</li>
+<li>八进制表示：<code>r=4, w=2, x=1</code>。
+<ul>
+<li><code>owner access: 7 (rwx) implies 111_binary</code></li>
+<li><code>group access: 6 (rw-) implies 110_binary</code></li>
+<li><code>public access: 1 (--x) implies 001_binary</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>组管理</strong>: 管理员可以创建组，并将用户添加到组中。</li>
+<li><code>chgrp G filename</code>: 将文件 <code>filename</code> 的所属组更改为 <code>G</code>。</li>
+<li><code>chmod &#x3C;mode> filename</code>: 更改文件 <code>filename</code> 的权限。</li>
+</ul>
+<!-- PPT Slide 38: Unix文件目录示例 (类似ls -l输出，展示了文件类型、权限、链接数、所有者、组、大小、修改时间、文件名) -->
+<!-- 例如: drwxr-xr-x 2 user group 4096 May 15 10:00 mydir -->
+<!-- -rw-r--r-- 1 user group 1024 May 14 09:30 myfile.txt --></div><footer class="notes-article-footer" data-pagefind-ignore><p><span>更新于</span> <time datetime="2025-06-18T07:22:10.000Z">2025年6月18日</time></p><div><a href="https://github.com/allenge007/allenge007.github.io/edit/main/src/content/notes/cs/os/chapter6.md">编辑本页 ↗</a><a href="https://github.com/allenge007/allenge007.github.io/blob/main/src/content/notes/cs/os/chapter6.md">查看源文件 ↗</a></div></footer></article><nav class="notes-pagination" aria-label="Notes 翻页" data-pagefind-ignore><a href="/notes/cs/os/chapter5/"><span>上一篇</span><strong>大容量存储</strong></a><a href="/notes/cs/os/chapter7/"><span>下一篇</span><strong>I/O 管理</strong></a></nav><section class="notes-comments" aria-label="评论" data-pagefind-ignore><div class="giscus" data-giscus-host data-giscus-pathname="/notes/cs/os/chapter6/"></div></section><script type="module">var e=document.querySelector(`[data-giscus-host]`);if(e){let t=document.documentElement.dataset.theme===`dark`?`dark_dimmed`:`light`,n=document.createElement(`script`);n.src=`https://giscus.app/client.js`,n.async=!0,n.crossOrigin=`anonymous`,n.dataset.repo=`allenge008/Discussions`,n.dataset.repoId=`R_kgDOOsnx4A`,n.dataset.category=`Announcements`,n.dataset.categoryId=`DIC_kwDOOsnx4M4CqVVF`,n.dataset.mapping=`pathname`,n.dataset.strict=`0`,n.dataset.reactionsEnabled=`1`,n.dataset.emitMetadata=`0`,n.dataset.inputPosition=`bottom`,n.dataset.theme=t,n.dataset.lang=`zh-CN`,n.dataset.loading=`lazy`,e.append(n),addEventListener(`allenge:themechange`,(e=>{document.querySelector(`iframe.giscus-frame`)?.contentWindow?.postMessage({giscus:{setConfig:{theme:e.detail.theme===`dark`?`dark_dimmed`:`light`}}},`https://giscus.app`)}))}</script></div><aside class="notes-toc" data-pagefind-ignore aria-label="本页目录"><p>本页目录</p><ol><li class="toc-depth-2"><a href="#学习目标">学习目标</a></li><li class="toc-depth-2"><a href="#一文件基本概念">一、文件基本概念</a></li><li class="toc-depth-3"><a href="#11-什么是文件">1.1 什么是文件？</a></li><li class="toc-depth-3"><a href="#12-文件逻辑结构">1.2 文件逻辑结构</a></li><li class="toc-depth-3"><a href="#13-文件属性">1.3 文件属性</a></li><li class="toc-depth-2"><a href="#二文件操作">二、文件操作</a></li><li class="toc-depth-3"><a href="#21-文件打开open的管理">2.1 文件打开（Open）的管理</a></li><li class="toc-depth-3"><a href="#22-文件锁-file-locks">2.2 文件锁 (File Locks)</a></li><li class="toc-depth-2"><a href="#三文件类型与结构">三、文件类型与结构</a></li><li class="toc-depth-3"><a href="#31-文件类型识别">3.1 文件类型识别</a></li><li class="toc-depth-3"><a href="#32-文件结构">3.2 文件结构</a></li><li class="toc-depth-2"><a href="#四文件访问方法">四、文件访问方法</a></li><li class="toc-depth-3"><a href="#41-顺序访问-sequential-access">4.1 顺序访问 (Sequential Access)</a></li><li class="toc-depth-3"><a href="#42-直接访问-direct-access--relative-access">4.2 直接访问 (Direct Access / Relative Access)</a></li><li class="toc-depth-3"><a href="#43-其他访问方法-indexed-access">4.3 其他访问方法 (Indexed Access)</a></li><li class="toc-depth-2"><a href="#五磁盘与存储结构">五、磁盘与存储结构</a></li><li class="toc-depth-3"><a href="#51-磁盘结构">5.1 磁盘结构</a></li><li class="toc-depth-3"><a href="#52-存储结构层次">5.2 存储结构层次</a></li><li class="toc-depth-3"><a href="#53-文件系统的类型">5.3 文件系统的类型</a></li><li class="toc-depth-2"><a href="#六目录结构">六、目录结构</a></li><li class="toc-depth-3"><a href="#61-目录操作">6.1 目录操作</a></li><li class="toc-depth-3"><a href="#62-目录组织目标">6.2 目录组织目标</a></li><li class="toc-depth-3"><a href="#63-常见目录结构">6.3 常见目录结构</a></li><li class="toc-depth-4"><a href="#1-单级目录-single-level-directory">1. 单级目录 (Single-Level Directory)</a></li><li class="toc-depth-4"><a href="#2-两级目录-two-level-directory">2. 两级目录 (Two-Level Directory)</a></li><li class="toc-depth-4"><a href="#3-树形目录-tree-structured-directory">3. 树形目录 (Tree-Structured Directory)</a></li><li class="toc-depth-4"><a href="#4-无环图目录-acyclic-graph-directories">4. 无环图目录 (Acyclic-Graph Directories)</a></li><li class="toc-depth-4"><a href="#5-通用图目录-general-graph-directory">5. 通用图目录 (General Graph Directory)</a></li><li class="toc-depth-2"><a href="#七文件系统保护">七、文件系统保护</a></li><li class="toc-depth-3"><a href="#71-访问类型-types-of-access">7.1 访问类型 (Types of Access)</a></li><li class="toc-depth-3"><a href="#72-linuxunix-文件访问控制">7.2 Linux/Unix 文件访问控制</a></li></ol><div class="notes-font-controls" role="group" aria-label="正文字号"><span>正文字号</span><button type="button" data-notes-font="decrease" aria-label="减小 Notes 正文字号">A−</button><button type="button" data-notes-font="reset" aria-label="恢复 Notes 默认字号">A</button><button type="button" data-notes-font="increase" aria-label="增大 Notes 正文字号">A+</button></div></aside></div><button class="notes-back-top" type="button" data-notes-back-top aria-label="返回顶部">↑</button><script>(function(){const legacyHeadings = [{"level":1,"id":"_1","text":"文件系统"},{"level":2,"id":"_2","text":"学习目标"},{"level":2,"id":"_3","text":"一、文件基本概念"},{"level":3,"id":"11","text":"1.1 什么是文件？"},{"level":3,"id":"12","text":"1.2 文件逻辑结构"},{"level":3,"id":"13","text":"1.3 文件属性"},{"level":2,"id":"_4","text":"二、文件操作"},{"level":3,"id":"21-open","text":"2.1 文件打开（Open）的管理"},{"level":3,"id":"22-file-locks","text":"2.2 文件锁 (File Locks)"},{"level":2,"id":"_5","text":"三、文件类型与结构"},{"level":3,"id":"31","text":"3.1 文件类型识别"},{"level":3,"id":"32","text":"3.2 文件结构"},{"level":2,"id":"_6","text":"四、文件访问方法"},{"level":3,"id":"41-sequential-access","text":"4.1 顺序访问 (Sequential Access)"},{"level":3,"id":"42-direct-access-relative-access","text":"4.2 直接访问 (Direct Access / Relative Access)"},{"level":3,"id":"43-indexed-access","text":"4.3 其他访问方法 (Indexed Access)"},{"level":2,"id":"_7","text":"五、磁盘与存储结构"},{"level":3,"id":"51","text":"5.1 磁盘结构"},{"level":3,"id":"52","text":"5.2 存储结构层次"},{"level":3,"id":"53","text":"5.3 文件系统的类型"},{"level":2,"id":"_8","text":"六、目录结构"},{"level":3,"id":"61","text":"6.1 目录操作"},{"level":3,"id":"62","text":"6.2 目录组织目标"},{"level":3,"id":"63","text":"6.3 常见目录结构"},{"level":4,"id":"1-single-level-directory","text":"1. 单级目录 (Single-Level Directory)"},{"level":4,"id":"2-two-level-directory","text":"2. 两级目录 (Two-Level Directory)"},{"level":4,"id":"3-tree-structured-directory","text":"3. 树形目录 (Tree-Structured Directory)"},{"level":4,"id":"4-acyclic-graph-directories","text":"4. 无环图目录 (Acyclic-Graph Directories)"},{"level":4,"id":"5-general-graph-directory","text":"5. 通用图目录 (General Graph Directory)"},{"level":2,"id":"_9","text":"七、文件系统保护"},{"level":3,"id":"71-types-of-access","text":"7.1 访问类型 (Types of Access)"},{"level":3,"id":"72-linuxunix","text":"7.2 Linux/Unix 文件访问控制"}];
+
+    (() => {
+      const prose = document.querySelector('[data-notes-prose]');
+      if (!prose) return;
+      const headings = [...prose.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+      headings.forEach((heading, index) => {
+        const oldId = legacyHeadings[index]?.id;
+        if (oldId && oldId !== heading.id && !document.getElementById(oldId)) {
+          const alias = document.createElement('span');
+          alias.id = oldId;
+          alias.className = 'legacy-anchor';
+          alias.setAttribute('aria-hidden', 'true');
+          heading.before(alias);
+        }
+        if (heading.id) {
+          const anchor = document.createElement('a');
+          anchor.className = 'heading-anchor';
+          anchor.href = `#${heading.id}`;
+          anchor.setAttribute('aria-label', `链接到“${heading.textContent?.trim() || '本节'}”`);
+          anchor.textContent = '#';
+          heading.append(anchor);
+        }
+      });
+      if (location.hash) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());
+    })();
+  })();</script><script type="module" src="/_assets/NotesLayout.astro_astro_type_script_index_0_lang.CCNl8DEr.js"></script></main><footer class="site-footer" data-pagefind-ignore><div class="shell footer-inner"><div><p class="footer-name">Allenge</p><p>在广州读书，做系统，也记录生活。</p></div><div class="footer-links"><a href="https://github.com/allenge007">GitHub</a><a href="mailto:chenzhy337@mail2.sysu.edu.cn">邮件</a><a href="/rss.xml">RSS</a><a href="/notes/">Notes</a></div><p class="footer-meta">© 2026 Allenge · 文字与生活切片</p></div></footer><script type="module">var e=document.documentElement,t=document.querySelector(`[data-theme-toggle]`),n=()=>{if(!t)return;let n=e.dataset.theme===`dark`;t.setAttribute(`aria-pressed`,String(n)),t.setAttribute(`aria-label`,n?t.dataset.labelLight:t.dataset.labelDark);let r=t.querySelector(`[data-theme-icon]`);r&&(r.textContent=n?`☀`:`◐`)};t?.addEventListener(`click`,()=>{let t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,e.style.colorScheme=t;try{localStorage.setItem(`allenge-theme`,t)}catch{}n(),dispatchEvent(new CustomEvent(`allenge:themechange`,{detail:{theme:t}}))}),n();var r=matchMedia(`(prefers-reduced-motion: reduce)`).matches,i=document.querySelectorAll(`[data-reveal]`);if(r||!(`IntersectionObserver`in window))i.forEach(e=>e.classList.add(`is-visible`));else{let e=new IntersectionObserver(t=>{t.forEach(t=>{t.isIntersecting&&(t.target.classList.add(`is-visible`),e.unobserve(t.target))})},{rootMargin:`0px 0px -8% 0px`,threshold:.08});i.forEach(t=>e.observe(t))}var a=document.querySelector(`[data-parallax]`);if(a&&!r){let e=!1,t=()=>{let t=Math.min(scrollY*.055,34);a.style.setProperty(`--parallax-y`,`${t}px`),e=!1};addEventListener(`scroll`,()=>{e||=(requestAnimationFrame(t),!0)},{passive:!0})}document.querySelectorAll(`[data-fallback-image]`).forEach(e=>{e.addEventListener(`error`,()=>e.closest(`[data-image-shell]`)?.classList.add(`is-image-error`))});</script></body></html>
