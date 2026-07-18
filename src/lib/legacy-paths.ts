@@ -11,7 +11,7 @@ function walkMarkdown(directory: string): string[] {
 }
 
 export function legacyNotePaths(section: 'math' | 'cs') {
-  const root = join(process.cwd(), 'docs', section);
+  const root = join(process.cwd(), 'src', 'content', 'notes', section);
   return walkMarkdown(root).map((file) => {
     const markdownPath = relative(root, file).split(sep).join('/').replace(/\.md$/, '');
     const slug = markdownPath === 'index'

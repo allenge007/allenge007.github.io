@@ -28,29 +28,19 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-          cache: pip
-
       - name: Install JavaScript dependencies
         run: npm ci
-
-      - name: Install MkDocs dependencies
-        run: pip install -r requirements.txt
 
       - name: Type-check Astro
         run: npm run check
 
-      - name: Build Astro, Notes, CNAME, and Pagefind
+      - name: Build Astro Notes, CNAME, and Pagefind
         run: npm run build
 
-      - name: Verify links and content contracts
-        run: npm run test:links && npm run test:content
+      - name: Verify links, Notes regression, and content contracts
+        run: npm run test:links && npm run test:notes && npm run test:content
 
       - name: Upload combined build
-        if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: combined-site

@@ -8,14 +8,15 @@
   },
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "build:astro": "ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "build:notes": "node scripts/prepare-notes.mjs && mkdocs build --site-dir dist/notes",
+    "prepare:notes": "node scripts/prepare-notes.mjs",
+    "check": "node scripts/prepare-notes.mjs && ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "build:astro": "node scripts/prepare-notes.mjs && ASTRO_TELEMETRY_DISABLED=1 astro build",
     "build:search": "pagefind --site dist",
-    "build": "npm run build:astro && npm run build:notes && node scripts/postbuild.mjs && npm run build:search",
+    "build": "node scripts/prepare-notes.mjs && ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/postbuild.mjs && pagefind --site dist",
     "test:links": "node scripts/check-links.mjs",
+    "test:notes": "node scripts/check-notes-regression.mjs",
     "test:content": "node scripts/check-content-contracts.mjs",
-    "verify": "npm run check && npm run build && npm run test:links && npm run test:content"
+    "verify": "node scripts/prepare-notes.mjs && ASTRO_TELEMETRY_DISABLED=1 astro check && ASTRO_TELEMETRY_DISABLED=1 astro build && node scripts/postbuild.mjs && pagefind --site dist && node scripts/check-links.mjs && node scripts/check-notes-regression.mjs && node scripts/check-content-contracts.mjs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.1",
@@ -28,7 +29,9 @@
     "katex": "^0.17.0",
     "mermaid": "^11.16.0",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

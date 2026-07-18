@@ -1,5 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "docs/.generated", "docs/javascripts/generated"]
+  "exclude": ["dist", ".notes-generated", "docs/.generated", "docs/javascripts/generated"]
 }

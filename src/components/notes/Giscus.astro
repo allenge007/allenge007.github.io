@@ -1,0 +1,39 @@
+---
+interface Props { pathname: string }
+const { pathname } = Astro.props;
+---
+
+<section class="notes-comments" aria-label="评论" data-pagefind-ignore>
+  <div class="giscus" data-giscus-host data-giscus-pathname={pathname}></div>
+</section>
+
+<script>
+  const host = document.querySelector<HTMLElement>('[data-giscus-host]');
+  if (host) {
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'dark_dimmed' : 'light';
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.dataset.repo = 'allenge008/Discussions';
+    script.dataset.repoId = 'R_kgDOOsnx4A';
+    script.dataset.category = 'Announcements';
+    script.dataset.categoryId = 'DIC_kwDOOsnx4M4CqVVF';
+    script.dataset.mapping = 'pathname';
+    script.dataset.strict = '0';
+    script.dataset.reactionsEnabled = '1';
+    script.dataset.emitMetadata = '0';
+    script.dataset.inputPosition = 'bottom';
+    script.dataset.theme = theme;
+    script.dataset.lang = 'zh-CN';
+    script.dataset.loading = 'lazy';
+    host.append(script);
+
+    addEventListener('allenge:themechange', ((event: CustomEvent<{ theme: 'light' | 'dark' }>) => {
+      const iframe = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+      iframe?.contentWindow?.postMessage({
+        giscus: { setConfig: { theme: event.detail.theme === 'dark' ? 'dark_dimmed' : 'light' } },
+      }, 'https://giscus.app');
+    }) as EventListener);
+  }
+</script>

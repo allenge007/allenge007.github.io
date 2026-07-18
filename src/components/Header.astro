@@ -7,9 +7,10 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const pathname = Astro.url.pathname;
 const isOriginalLanguagePost = pathname.startsWith('/blog/') && pathname !== '/blog/';
+const isOriginalLanguageNotes = pathname.startsWith('/notes/');
 const isNotFound = pathname === '/404/' || pathname === '/404.html';
 const languageHref = locale === 'zh'
-  ? (isNotFound ? '/en/' : (isOriginalLanguagePost ? '/en/blog/' : (pathname === '/' ? '/en/' : `/en${pathname}`)))
+  ? (isNotFound ? '/en/' : (isOriginalLanguageNotes ? '/en/' : (isOriginalLanguagePost ? '/en/blog/' : (pathname === '/' ? '/en/' : `/en${pathname}`))))
   : (pathname === '/en/' ? '/' : pathname.replace(/^\/en/, '') || '/');
 const languageLabel = locale === 'zh' ? 'EN' : '中文';
 const languageAria = locale === 'zh' ? 'Switch to English' : '切换到中文';

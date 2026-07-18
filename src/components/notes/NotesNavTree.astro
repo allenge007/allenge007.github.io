@@ -1,0 +1,30 @@
+---
+import type { NoteNavItem } from '../../../notes.config';
+
+interface Props {
+  items: readonly NoteNavItem[];
+  pathname: string;
+  depth?: number;
+}
+
+const { items, pathname, depth = 0 } = Astro.props;
+---
+
+<ul class:list={['notes-nav-list', { 'notes-nav-root': depth === 0 }]}>
+  {items.map((item) => item.children?.length ? (
+    <li>
+      <details open={pathname === item.href || pathname.startsWith(item.href)}>
+        <summary>
+          <span>{item.title}</span>
+          <span aria-hidden="true">⌄</span>
+        </summary>
+        <a class="notes-nav-index" href={item.href} aria-current={pathname === item.href ? 'page' : undefined}>概览</a>
+        <Astro.self items={item.children} pathname={pathname} depth={depth + 1} />
+      </details>
+    </li>
+  ) : (
+    <li>
+      <a href={item.href} aria-current={pathname === item.href ? 'page' : undefined}>{item.title}</a>
+    </li>
+  ))}
+</ul>

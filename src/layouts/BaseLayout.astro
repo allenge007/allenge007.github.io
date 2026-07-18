@@ -126,6 +126,7 @@ const measurementId = siteConfig.analytics.googleMeasurementId;
         root.style.colorScheme = next;
         try { localStorage.setItem('allenge-theme', next); } catch {}
         updateThemeButton();
+        dispatchEvent(new CustomEvent('allenge:themechange', { detail: { theme: next } }));
       });
       updateThemeButton();
 
